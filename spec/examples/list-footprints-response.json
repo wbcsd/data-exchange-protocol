@@ -1,0 +1,54 @@
+{
+  "data": [
+    {
+      "id": "d9be4477-e351-45b3-acd9-e1da05e6f633",
+      "specVersion": "1.0.0",
+      "version": 0,
+      "created": "2022-05-22T21:47:32Z",
+      "companyName": "My Corp",
+      "companyIds": [
+        "urn:uuid:51131FB5-42A2-4267-A402-0ECFEFAD1619",
+        "urn:epc:id:sgln:4063973.00000.8"
+      ],
+      "productDescription": "Cote'd Or Ethanol",
+      "productIds": [
+        "urn:gtin:4712345060507"
+      ],
+      "productCategoryCpc": "3342",
+      "productNameCompany": "Green Ethanol",
+      "comment": "",
+      "pcf": {
+        "declaredUnit": "liter",
+        "unitaryProductAmount": "12.0",
+        "fossilGhgEmissions": "0.123",
+        "biogenicEmissions": {
+          "landUseEmissions": "0.001",
+          "otherEmissions": "0"
+        },
+        "biogenicCarbonContent": "0.0",
+        "reportingPeriodStart": "2021-01-01T00:00:00Z",
+        "reportingPeriodEnd": "2022-01-01T00:00:00Z",
+        "geography_country": "FR",
+        "primaryDataShare": 56.12,
+        "emissionFactorSources": [
+          {
+            "name": "Ecoinvent",
+            "version": "1.2.3"
+          }
+        ],
+        "boundaryProcessesDescription": "End-of-life included",
+        "crossSectoralStandardsUsed": [
+          "GHG Protocol Product standard"
+        ],
+        "productOrSectorSpecificRules": [
+          {
+            "operator": "EPD International",
+            "ruleNames": [
+              "ABC 2021"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

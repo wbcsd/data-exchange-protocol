@@ -1,0 +1,2208 @@
+<pre class='metadata'>
+Title: Technical Specifications for PCF Data Exchange (Version 2.0.0 - Consultation Draft)
+Shortname: data-exchange-protocol
+Level: 1
+Status: LD
+URL: http://wbcsd.github.io/data-exchange-protocol/v2/
+Mailing List: public-dev@pathfinder.sine.dev
+Editor: Martin Pompéry (SINE Foundation), https://sine.foundation, martin@sine.foundation
+Editor: Cecilia Valeri (WBCSD), https://www.wbcsd.org, valeri@wbcsd.org
+Abstract: This document specifies a data model for GHG emission data at product level based on the Pathfinder Framework Version 2, and a protocol for interoperable exchange of GHG emission data at product level.
+Markup Shorthands: markdown yes, idl yes, dfn yes
+Boilerplate: omit copyright, omit conformance
+</pre>
+
+# Introduction # {#intro}
+
+This document contains the necessary technical foundation for the [=Pathfinder Network=], an open and global network for emission data exchange. 
+
+The goal of this document is to enable the [=interoperable=] exchange of [=PCF|Product Carbon Footprints=] across [[#conformance|conforming]] [=host systems=].
+
+The methodological foundation of the specification is the Pathfinder Framework Version 2.0 ([[!PATHFINDER-FRAMEWORK]]).
+
+Developer resources can be found at [GitHub](https://github.com/wbcsd/pathfinder-use-case-001).
+
+## Status ## {#status}
+
+The status of this document is **Consultation Draft** for use within the PACT Ecosystem. This means that the document is not yet finalized and may be subject to change.
+
+## Scope ## {#scope}
+
+The scope of this document is to reach interoperability for product-level GHG emission data exchange through the definition of a data model ([[#data-model]]) based on the [=Pathfinder Framework=] Version 2.0 and the definition of a HTTP REST API ([[#api]]).
+
+
+## Intended Audience ## {#audience}
+
+This technical specification is for
+
+- software developers who want to build software for the exchange of product footprints according to the [=Pathfinder Framework=];
+- auditors and sustainability experts who want to understand the data semantics of product footprints or how they are exchanged between partners; and
+- anyone that wants to understand more about the technological foundations of the Pathfinder Network.
+
+All parties are encouraged to review the technical specifications, inform the Partnership for Carbon Transparency (PACT), and [SINE Foundation](https://sine.foundation/) of any feedback ([pact@wbcsd.org](mailto:pact@wbcsd.org)), and implement their own interoperable solutions.
+
+
+## About PACT and the Pathfinder Network ## {#about-pact}
+
+The Pathfinder Network is a concept developed by PACT and powered by the World Business Council for Sustainable Development (WBCSD). PACT is working toward the vision of an open and global network of interoperable solutions for the secure peer-to-peer exchange of accurate, primary and verified product emissions data – across all industries and value chains.
+
+For further information, please refer to the [PACT website](https://www.carbon-transparency.com) and the [Pathfinder vision paper](https://www.carbon-transparency.com/media/luhii1or/pathfinder-network-vision-paper.pdf).
+
+
+## Disclaimer ## {#disclaimer}
+
+This document is published as a Consultation Draft Version 2.0.0, acknowledging that additions or adjustments may be necessary.
+
+While PACT encourages the implementation of the technical specifications by all entities to start creating a harmonized system, neither PACT, WBCSD, nor any other individuals who contributed to the development of this document assume responsibility for any consequences or damages resulting directly or indirectly from the use of this document.
+
+
+## Acknowledgements ## {#acknowledgements}
+
+WBCSD would like to thank all PACT members, WBCSD staff, and others who shared their detailed and thoughtful input and contributed actively to the development of this document.
+
+WBCSD would also like to express special thanks to the companies participating in the pilot for testing the [=interoperable=] exchange of GHG emissions data across different solutions, as well as to those [=Solution Providers=] who have contributed to this document.
+
+
+## License ## {#section-license}
+
+The license can be found in [[#license]].
+
+
+# Terminology # {#terminology}
+
+: <dfn>Data Model Extension</dfn>
+::
+    A data model extension is a set of definitions that extends the data model of this document.
+
+    The encoding of a data model extension in the data model is specified in [[#dt-datamodelextension]].
+
+    See [[!DATA-MODEL-EXTENSIONS]] and [[!EXTENSIONS-GUIDANCE]] for further details.
+
+: <dfn>Data recipient</dfn>
+:: The [=SCA|Supply Chain Actor=] requesting and/or receiving [=PCF=] data from another [=SCA=].
+
+: <dfn>Data owner</dfn>
+:: The Supply Chain Actor (SCA) exchanging PCF data with another SCA.
+
+: <dfn>interoperable</dfn>
+:: The quality of being able to exchange data between [=host systems=] irrespective of the vendors of the host systems, without the need for translation or transformation of the data.
+
+: Greenhouse Gas (emissions) (<dfn>GHG</dfn>)
+:: Gaseous constituents of the atmosphere, both natural and anthropogenic, that absorb and emit radiation at specific wavelengths within the spectrum of infrared radiation emitted by the Earth’s surface, its atmosphere and clouds. GHGs include CDCO₂, Methane (CH4), Nitrous Oxide(N₂O), Hydrofluoro-Carbons (HFCs), Perfluorocarbons (PFCs) and Sulfur Hexafluoride (SF6).
+
+: Partnership for Carbon Transparency (<dfn>PACT</dfn>)
+:: A WBCSD-led group of companies and organizations working together to develop a global and open network for the secure peer-to-peer exchange of accurate, primary and verified product emissions data. See [www.carbon-transparency.com](www.carbon-transparency.com) for more information.
+
+: Pathfinder Framework Version 2.0 (<dfn>Pathfinder Framework</dfn>)
+:: Guidance for the Accounting and Exchange of Product Life Cycle Emissions,
+    building on existing standards and protocols, such as the GHG Protocol
+	  Product standard. See [[!PATHFINDER-FRAMEWORK]] for further details.
+
+: <dfn>Pathfinder Network</dfn>
+:: An information network of and for supply chain actors to securely exchange environmental data with each other, with an initial focus on PCF data.
+
+: Product Carbon Footprint (<dfn>PCF</dfn>)
+:: The carbon (equivalent) emissions relating to a product. Products can be any kind of item exchanged between entities, including “pieces”, metric or volumetric quantities of a product, etc. The <{ProductFootprint}> data model is a digital representation of a PCF in accordance with the [=Pathfinder Framework=].
+
+: Supply Chain Actor (<dfn>SCA</dfn>)
+:: An entity intending on exchanging PCF data with another entity using the technical means specified in this document.
+
+: <dfn>Solution Provider</dfn>
+:: An entity providing technical solutions to SCAs by implementing and offering [=host systems=].
+
+: <dfn>UN geographic region</dfn>, <dfn>UN geographic subregion</dfn>
+:: See [https://unstats.un.org/unsd/methodology/m49/](https://unstats.un.org/unsd/methodology/m49/) for details.
+
+
+
+
+# Conformance # {#conformance}
+
+As well as sections marked as non-normative, all authoring guidelines, diagrams, examples, and notes in this specification are non-normative. Everything else in this specification is normative.
+
+The key words MAY, MUST, MUST NOT, OPTIONAL, RECOMMENDED, REQUIRED, SHOULD, and SHOULD NOT in this document are to be interpreted as described in [[!RFC2119]] [[!RFC8174]] when, and only when, they appear in all capitals, as shown here.
+
+A conforming [=host system=] is any algorithm realized as software and/or hardware that complies with the relevant normative statements in [[#api]].
+
+A conforming requesting [=data recipient=] is any algorithm realized as software and/or hardware that complies with the relevant normative statements in [[#api]].
+
+
+
+
+# Data Model # {#data-model}
+
+This section specifies a data model for [[#dt-pf|product footprints]] conforming
+with the [=Pathfinder Framework=] Version 2.
+
+The data model consists of the following major data types:
+
+1. <{ProductFootprint}>: contains information to identify a product,
+    plus further information such as the <{CarbonFootprint}> (see [[#dt-pf]])
+2. <{CarbonFootprint}>: contains information related to the carbon footprint
+    of a product (see [[#dt-carbonfootprint]])
+3. <{DataModelExtension}>: contains additional information beyond the data model
+    specified in this document.
+
+The overall data model is designed for interactions between [=data owners=] and
+[=data recipients=], to enable
+(i) interoperability,
+(ii) comparability of and transparency over product footprints, or
+(iii) the calculation of derived <{CarbonFootprint|CarbonFootprints}> from other <{CarbonFootprint|CarbonFootprints}>.
+
+Additional uses of the data model are supported through the concept of
+[=Data Model Extensions=]. These allow [=data owners=] to add
+further information to a <{ProductFootprint}>.
+
+
+## Data Type: <dfn element>ProductFootprint</dfn> ## {#dt-pf}
+
+`ProductFootprint` is a data type which represents the carbon footprint
+of a product under a specific scope ([[#dt-carbonfootprint-scope]])
+and with values calculated in accordance with the [=Pathfinder Framework=].
+
+The objective of a `ProductFootprint` is to provide interoperability between
+the creator (the [=data owner=]) and the consumer (the [=data recipient=]) of
+ProductFootprints. The details on the exchange of ProductFootprints are
+specified in [[#api]].
+
+Conceptually, the data type <{ProductFootprint}> is modeled as a multi-purpose
+container for product-specific emissions factors which is supported by
+extensibility through [=Data Model Extensions=].
+
+Data Model Extensions enable [=data owners=] to exchange additional information
+related to a product with [=data recipients=]. The details are specified
+in [[#dt-datamodelextension]] as well as [[!EXTENSIONS-GUIDANCE]], and [[!DATA-MODEL-EXTENSIONS]].
+
+Each `ProductFootprint` can and should be updated over time, for instance to
+incorporate new or refined data from [=data owners=] (see [[#lifecycle]]).
+
+
+### Properties ### {#pf-properties}
+
+A ProductFootprint has the following properties:
+
+<figure id="pf-properties-table" dfn-type="element-attr" dfn-for="ProductFootprint">
+	<table class="data">
+		<thead>
+			<tr>
+				<th>Property
+				<th>Type
+				<th>Req
+				<th>Specification
+		<tbody>
+			<tr>
+				<td><dfn>id</dfn> : [=PfId=]
+				<td>String
+				<td>M
+        <td>The product footprint identifier, See [[#dt-pfid]] for details.
+			<tr>
+				<td><dfn>specVersion</dfn>
+				<td>String
+				<td>M
+        <td>
+            The version of the ProductFootprint data specification with value `2.0.0`.
+			<tr>
+				<td><dfn>version</dfn>
+				<td>Number
+				<td>M
+        <td>The version of the <{ProductFootprint}> with value an integer in the inclusive range of `0..2^31-1`.
+			<tr>
+				<td><dfn>created</dfn> : [=DateTime=]
+				<td>String
+				<td>M
+        <td>A ProductFootprint MUST include the property `created` with value the timestamp of the creation of the ProductFootprint.
+			<tr>
+				<td><dfn>updated</dfn> : [=DateTime=]
+				<td>String
+				<td>O
+        <td>A ProductFootprint SHOULD include the property `updated` with value the timestamp of the ProductFootprint update. A ProductFootprint MUST NOT include this property if an update has never been performed. The timestamp MUST be in UTC.
+			<tr>
+				<td><dfn>validityPeriodStart</dfn> : [=DateTime=]
+				<td>String
+				<td>O
+				<td>If defined, the start of the validity period of the ProductFootprint.
+				      The <dfn>validity period</dfn> is the time interval during which the ProductFootprint is declared as valid for use by a receiving [=data recipient=].
+
+				      The validity period is defined by the properties <{ProductFootprint/validityPeriodStart}> (including) and <{ProductFootprint/validityPeriodEnd}> (excluding).
+
+				      The validity period is optional.
+
+				      If no validity period is specified, the ProductFootprint is valid for 3 years starting with <{CarbonFootprint/referencePeriodEnd}>.
+
+				      If a validity period is to be specified, then
+				      1. the value of <{ProductFootprint/validityPeriodStart}> MUST be defined with value greater than or equal to the value of <{CarbonFootprint/referencePeriodEnd}>.
+				      2. the value of <{ProductFootprint/validityPeriodEnd}> MUST be defined with value
+				         1. strictly greater than <{ProductFootprint/validityPeriodStart}>, and
+				         2. less than or equal to <{CarbonFootprint/referencePeriodEnd}> + 3 years.
+			<tr>
+				<td><dfn>validityPeriodEnd</dfn> : [=DateTime=]
+				<td>String
+				<td>O
+				<td>The end (excluding) of the valid period of the ProductFootprint. See <{ProductFootprint/validityPeriodStart}> for further details.
+			<tr>
+				<td><dfn>companyName</dfn>
+				<td>String
+				<td>M
+        <td>The name of the company that is the ProductFootprint Data Owner, with value a non-empty [=String=].
+			<tr>
+				<td><dfn>companyIds</dfn> : [=CompanyIdSet=]
+				<td>Array
+				<td>M
+        <td>The non-empty set of Uniform Resource Names ([[!RFC8141|URN]]). Each value of this set is supposed to uniquely identify the ProductFootprint Data Owner. See [=CompanyIdSet=] for details.
+			<tr>
+				<td><dfn>productDescription</dfn> (mandatory, data type: [=String=])
+				<td>String
+				<td>M
+        <td>The free-form description of the product plus other information related to it such as production technology or packaging.
+			<tr>
+				<td><dfn>productIds</dfn> : [=ProductIdSet=]
+				<td>Array
+				<td>M
+        <td>The non-empty set of [=ProductIds=]. Each of the values in the set is supposed to uniquely identify the product. What constitutes a suitable product identifier depends on the product, the conventions, contracts, and agreements between the [=Data Owner=] and a [=Data Recipient=] and is out of the scope of this specification.
+			<tr>
+				<td><dfn>productCategoryCpc</dfn> : [=CpcCode=]
+				<td>String
+				<td>M
+        <td>A UN Product Classification Code (CPC) that the given product belongs to.
+			<tr>
+				<td><dfn>productNameCompany</dfn>
+				<td>String
+				<td>M
+        <td>The non-empty trade name of the product.
+			<tr>
+				<td><dfn>comment</dfn>
+				<td>String
+				<td>M
+        <td>
+          The additional information related to the product footprint.
+
+          Whereas the property <{ProductFootprint/productDescription}> contains product-level information, <{ProductFootprint/comment}> SHOULD be used for information and instructions related to the calculation of the footprint, or other information which informs the ability to interpret, to audit or to verify the Product Footprint.
+			<tr>
+				<td><dfn>pcf</dfn> : <{CarbonFootprint}>
+				<td>Object
+				<td>M
+        <td>The carbon footprint of the given product with value conforming to the data type <{CarbonFootprint}>.
+			<tr>
+				<td><dfn>extensions</dfn> : <{DataModelExtension}>[]
+				<td>Array
+				<td>O
+        <td>
+          If defined, 1 or more data model extensions associated with the ProductFootprint.
+
+          <{ProductFootprint/extensions}> MUST be encoded as a non-empty JSON Array of
+          <{DataModelExtension}> JSON objects. See <{DataModelExtension}> for details.
+	</table>
+	<figcaption>Properties of data type ProductFootprint</figcaption>
+
+</figure>
+
+Advisement: Subsequent revisions of this data model specification will update the value of <{ProductFootprint/specVersion}> according to the rules of [Semantic Versioning 2.0.0](https://semver.org/lang/de/).
+
+
+## Data Type: <dfn element>CarbonFootprint</dfn> ## {#dt-carbonfootprint}
+
+A CarbonFootprint represents the carbon footprint of a product and related data in accordance with the [=Pathfinder Framework=].
+
+### Scope of a CarbonFootprint ### {#dt-carbonfootprint-scope}
+
+Each CarbonFootprint is scoped by
+1. Time Period: the time period is defined by the properties <{CarbonFootprint/referencePeriodStart}> and <{CarbonFootprint/referencePeriodEnd}> (see [=Pathfinder Framework=] section 6.1.2.1)
+2. Geography: further set by the properties <{CarbonFootprint/geographyRegionOrSubregion}>, <{CarbonFootprint/geographyCountry}>, and <{CarbonFootprint/geographyCountrySubdivision}> (see [=Pathfinder Framework=] section 6.1.2.2)
+
+If a CarbonFootprint 
+1. Has geographical granularity `Global`, then the properties <{CarbonFootprint/geographyCountry}> and <{CarbonFootprint/geographyRegionOrSubregion}> and <{CarbonFootprint/geographyCountrySubdivision}> MUST be `undefined`;
+2. Has a regional or sub-regional geographical granularity, then the property <{CarbonFootprint/geographyRegionOrSubregion}> MUST be `defined` and the properties <{CarbonFootprint/geographyCountry}> and <{CarbonFootprint/geographyCountrySubdivision}> MUST be `undefined`;
+3. Has a country-specific geographical granularity, then property <{CarbonFootprint/geographyCountry}> MUST be `defined` AND the properties <{CarbonFootprint/geographyRegionOrSubregion}> and <{CarbonFootprint/geographyCountrySubdivision}> MUST be `undefined`;
+4. Has a country subdivision-specific geographical granularity, then property <{CarbonFootprint/geographyCountrySubdivision}> MUST be `defined` AND the properties <{CarbonFootprint/geographyRegionOrSubregion}> and <{CarbonFootprint/geographyCountry}> MUST be `undefined`.
+
+
+An overview of the relationship between the geographic scope and the definedness or undefinedness of properties is given in the following table:
+
+<figure id="pdf-geographic-scopes-table">
+	<table class="data">
+		<thead>
+			<tr>
+				<th>Geographical Granularity / Level of aggregation
+				<th>Property <{CarbonFootprint/geographyRegionOrSubregion}>
+				<th>Property <{CarbonFootprint/geographyCountry}>
+				<th>Property <{CarbonFootprint/geographyCountrySubdivision}>
+		<tbody>
+			<tr>
+				<td>Global
+				<td>`undefined`
+				<td>`undefined`
+				<td>`undefined`
+			<tr>
+				<td>Regional or Subregional
+				<td>`defined`
+				<td>`undefined`
+				<td>`undefined`
+			<tr>
+				<td>Country
+				<td>`undefined`
+				<td>`defined`
+				<td>`undefined`
+			<tr>
+				<td>Subdivision
+				<td>`undefined`
+				<td>`undefined`
+				<td>`defined`
+	</table>
+	<figcaption>Geographic scope and definedness of CarbonFootprint properties</figcaption>
+
+</figure>
+
+Issue: 
+  PACT Community feedback is required on whether additional optional scopes 
+	are needed, for instance asset-level / factory-level / production line-level
+	scopes, and how	to best integrate them into the data model.
+
+
+### Properties ### {#dt-carbonfootprint-properties}
+
+The properties of a CarbonFootprint are listed in the table below.
+
+Advisement: 
+	The properties marked with `O*` are OPTIONAL only for reporting periods 
+	before 2025, and for reporting periods including the beginning of calendar 
+	year 2025 or later, the properties marked with `O*` MUST be defined.
+
+<figure id="pf-carbonfootprint-properties-table" dfn-type="element-attr" dfn-for="CarbonFootprint">
+	<table class="data">
+		<thead>
+			<tr>
+				<th>Property
+				<th>Type
+				<th>Req
+				<th>Specification
+		<tbody>
+			<tr>
+				<td><dfn>declaredUnit</dfn> : {{DeclaredUnit}}
+				<td>String
+				<td>M
+				<td>The unit of analysis of the product. See Data Type {{DeclaredUnit}} for further information.
+			<tr>
+				<td><dfn>unitaryProductAmount</dfn> : [=Decimal=]
+				<td>String
+				<td>M
+				<td>The amount of <{CarbonFootprint/declaredUnit|Declared Units}> contained within the product to which the [[#dt-carbonfootprint|PCF]] is referring to. The value MUST be strictly greater than `0`.
+			<tr>
+				<td><dfn>pCfExcludingBiogenic</dfn> : [=Decimal=]
+				<td>String
+				<td>M
+				<td>The product carbon footprint of the product <i>excluding</i> biogenic emissions. The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg of CO2 equivalent per declared unit` (`kgCO2e / declaredUnit`), expressed as a [=decimal=] equal to or greater than zero.
+			<tr>
+				<td><dfn>pCfIncludingBiogenic</dfn> : [=Decimal=]
+				<td>String
+				<td>O*
+				<td>If present, the product carbon footprint of the product <i>including</i> biogenic emissions. The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg of CO2 equivalent per declared unit` (`kgCO2e / declaredUnit`), expressed as a [=decimal=].
+
+							Note: the value of this property can be less than `0` (zero).
+
+
+			<tr>
+				<td><dfn>fossilGhgEmissions</dfn> : [=Decimal=]
+				<td>String
+				<td>M
+				<td>The emissions from the combustion of fossil sources. The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg of CO2 equivalent per declared unit` (`kgCO2e / declaredUnit`), expressed as a [=decimal=] equal to or greater than zero.
+			<tr>
+				<td><dfn>fossilCarbonContent</dfn> : [=Decimal=]
+				<td>String
+				<td>M
+				<td>The fossil carbon amount embodied in the product. The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg of CO2 equivalent per declared unit` (`kgCO2e / declaredUnit`), expressed as a [=decimal=] equal to or greater than zero.
+			<tr>
+				<td><dfn>biogenicCarbonContent</dfn> : [=Decimal=]
+				<td>String
+				<td>M
+				<td>The biogenic carbon amount embodied in the product. The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg of CO2 equivalent per declared unit` (`kgCO2e / declaredUnit`), expressed as a [=decimal=] equal to or greater than zero.
+			<tr>
+				<td><dfn>dLucGhgEmissions</dfn> : [=Decimal=]
+				<td>String
+				<td>O*
+				<td>If present, emissions resulting from recent (i.e., previous 20 years) carbon stock loss due to land conversion directly on the area of land under consideration. The value of this property MUST include direct land use change (dLUC) where available, otherwise statistical land use change (sLUC) can be used.
+					The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg of CO2 equivalent per declared unit` (`kgCO2e / declaredUnit`), expressed as a [=decimal=] equal to or greater than zero.
+					See [=Pathfinder Framework=] (Appendix B) for details.
+			<tr>
+				<td><dfn>landManagementGhgEmissions</dfn> : [=Decimal=]
+				<td>String
+				<td>O*
+				<td>If present, GHG emissions and removals associated with land-management-related changes, including non-CO2 sources. 
+					The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg of CO2 equivalent per declared unit` (`kgCO2e / declaredUnit`), expressed as a [=decimal=] equal to or greater than zero.
+
+					Note: version 1 did not explictly include non-CO2 sources. This is now included in the definition.
+			<tr>
+				<td><dfn>otherBiogenicGhgEmissions</dfn> : [=Decimal=]
+				<td>String
+				<td>O*
+				<td>If present, all other biogenic GHG emissions associated with product manufacturing and transport that are not included in dLUC (<{CarbonFootprint/dLucGhgEmissions}>), iLUC (<{CarbonFootprint/iLucGhgEmissions}>), and land management (<{CarbonFootprint/landManagementGhgEmissions}>).
+					The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg of CO2 equivalent per declared unit` (`kgCO2e / declaredUnit`), expressed as a [=decimal=] equal to or greater than zero.
+
+					Note: version 1.0.0 incorrectly defined this is "all other GHG emissions"; i.e. missing the "biogenic" qualifier.
+			<tr>
+				<td><dfn>iLucGhgEmissions</dfn> : [=Decimal=]
+				<td>String
+				<td>O
+				<td>If present, emissions resulting from recent (i.e., previous 20 years) carbon stock loss due to land conversion on land not owned or controlled by the company or in its supply chain, induced by change in demand for products produced or sourced by the company.
+					The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg of CO2 equivalent per declared unit` (`kgCO2e / declaredUnit`), expressed as a [=decimal=] equal to or greater than zero.
+					See [=Pathfinder Framework=] (Appendix B) for details.
+			<tr>
+				<td><dfn>biogenicCarbonWithdrawal</dfn> : [=Decimal=]
+				<td>String
+				<td>O*
+				<td>If present, the Biogenic carbon content in the product converted to CO2e. The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg` expressed as a [=decimal=] equal to or greater than zero.
+			<tr>
+				<td><dfn>aircraftGhgEmissions</dfn> : [=Decimal=]
+				<td>String
+				<td>O
+				<td>If present, the GHG emissions resulting from aircraft engine usage for the transport of the product. The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg of CO2 equivalent per declared unit` (`kgCO2e / declaredUnit`), expressed as a [=decimal=] equal to or greater than zero.
+			<tr>
+				<td><dfn>characterizationFactors</dfn>
+				<td>String
+				<td>M
+				<td>
+				    The IPCC version of the GWP characterization factors used in the calculation of the PCF (see [=Pathfinder Framework=] Section 3.2.2). The value MUST be one of the following:
+
+					: `AR6`
+					:: for the Sixth Assessment Report of the Intergovernmental Panel on Climate Change (IPCC) 
+					: `AR5`
+					:: for the Fifth Assessment Report of the IPCC.
+
+					Advisement: the specification for `characterizationFactors` is expected to be further refined during the consultation phase.
+			<tr>
+				<td><dfn>crossSectoralStandardsUsed</dfn> : [=CrossSectoralStandardSet=]
+				<td>Array
+				<td>M
+				<td>The cross-sectoral standards applied for calculating or allocating [=GHG=] emissions
+			<tr>
+				<td><dfn>productOrSectorSpecificRules</dfn> : [=ProductOrSectorSpecificRuleSet=]
+				<td>Array
+				<td>O
+				<td>The product-specific or sector-specific rules applied for calculating or allocating GHG emissions. If no product or sector specific rules were followed, this set MUST be empty.
+			<tr>
+				<td><dfn>biogenicAccountingMethodology</dfn>
+				<td>String
+				<td>O*
+				<td>The standard followed to account for biogenic emissions and removals. If defined, the value MUST be one of the following:
+
+				  : PEF
+				  :: for the EU [Product Environmental Footprint Guide](https://ec.europa.eu/environment/archives/eussd/pdf/footprint/PEF%20methodology%20final%20draft.pdf)
+				  : ISO
+				  :: For the ISO 14067 standard
+				  : GHGP
+				  :: For the Greenhouse Gas Protocol (GHGP) Land sector and Removals Guidance
+				  : Quantis
+				  :: For the Quantis [Accounting for Natural Climate Solutions](https://quantis.com/report/accounting-for-natural-climate-solutions-guidance/) Guidance
+
+			<tr>
+				<td><dfn>boundaryProcessesDescription</dfn>
+				<td>String
+				<td>O
+				<td>If present, the processes attributable to each lifecycle stage. If no such description is available or otherwise provided, then this property MUST NOT be included.
+
+				Example text value:
+				<div class=example>`Electricity consumption included as an input in the production phase`</div>
+			<tr>
+				<td><dfn>referencePeriodStart</dfn> : [=DateTime=]
+				<td>String
+				<td>M
+				<td>The start of the time boundary for which the PCF value is considered to be representative. See the [=Pathfinder Framework=] section 6.1.2.1 for further details.
+			<tr>
+				<td><dfn>referencePeriodEnd</dfn> : [=DateTime=]
+				<td>String
+				<td>M
+				<td>The start of the time boundary for which the PCF value is considered to be representative. See the [=Pathfinder Framework=] section 6.1.2.1 for further details.
+			<tr>
+				<td><dfn>geographyCountrySubdivision</dfn>
+				<td>String
+				<td>
+				<td>If present, a ISO 3166-2 Subdivision Code. See [[#dt-carbonfootprint-scope]] for further details.
+
+					Example value for the State of New York in the United States of America:
+					<div class=example>`US-NY`</div>
+					Example value for the department Yonne in France
+					<div class=example>`FR-89`</div>
+			<tr>
+				<td><dfn>geographyCountry</dfn> : [=ISO3166CC=]
+				<td>String
+				<td>
+				<td>If present, the value MUST conform to data type [=ISO3166CC=]. See [[#dt-carbonfootprint-scope]] for further details.
+
+				Example value in case the geographic scope is France
+				<div class=example>`FR`</div>
+			<tr>
+				<td><dfn>geographyRegionOrSubregion</dfn> : {{RegionOrSubregion}}
+				<td>String
+				<td>
+				<td>If present, the value MUST conform to data type {{RegionOrSubregion}}. See [[#dt-carbonfootprint-scope]] for further details. Additionally, see the [=Pathfinder Framework=] Section 6.1.2.2.
+
+				Advisement: The set of region identifiers will likely change in future revisions. It is recommended to account for this when implementing the validation of this property.
+			<tr>
+				<td><dfn>secondaryEmissionFactorSources</dfn> : <{EmissionFactorDSSet}>
+				<td>Array
+				<td>O
+				<td>If secondary data was used to calculate the <{CarbonFootprint}>, then it MUST include the property <{CarbonFootprint/secondaryEmissionFactorSources}> with value the emission factors used for the <{CarbonFootprint}> calculation.
+
+				If no secondary data is used, this property MUST BE `undefined`.
+			<tr>
+				<td><dfn>exemptedEmissionsPercent</dfn>
+				<td>Number
+				<td>M
+				<td>The Percentage of emissions excluded from PCF, expressed as a decimal number between `0.0` and `5` including. See [=Pathfinder Framework=].
+			<tr>
+				<td><dfn>exemptedEmissionsDescription</dfn>
+				<td>String
+				<td>M
+				<td>Rationale behind exclusion of specific PCF emissions, CAN be the empty string if no emissions were excluded.
+			<tr>
+				<td><dfn>packagingEmissionsIncluded</dfn>
+				<td>Boolean
+				<td>M
+				<td>A boolean flag indicating whether packaging emissions are included in the PCF (<{CarbonFootprint/pCfExcludingBiogenic}>, <{CarbonFootprint/pCfIncludingBiogenic}>). 
+			<tr>
+				<td><dfn>packagingGhgEmissions</dfn> : [=Decimal=]
+				<td>String
+				<td>O
+				<td>
+					Emissions resulting from the packaging of the product.
+					If present, the value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg of CO2 equivalent per kilogram` (`kgCO2e / declared unit`), expressed as a [=decimal=] equal to or greater than zero.
+					The value MUST NOT be defined if <{CarbonFootprint/packagingEmissionsIncluded}> is `false`.
+			<tr>
+				<td><dfn>allocationRulesDescription</dfn>
+				<td>String
+				<td>O
+		        <td>If present, a description of any allocation rules applied and the rationale explaining how the selected approach aligns with [=Pathfinder Framework=] rules (see Section 3.3.1.4).
+			<tr>
+				<td><dfn>uncertaintyAssessmentDescription</dfn>
+				<td>String
+				<td>O
+		        <td>If present, the results, key drivers, and a short qualitative description of the uncertainty assessment.
+			<tr>
+				<td><dfn>primaryDataShare</dfn> : [=Percent=]
+				<td>Number
+				<td>O
+				<td>
+					The share of primary data in percent. See the [=Pathfinder Framework=] Section 4.2.2.
+
+					For reporting periods ending before 2025 and if this property is present, the property <{CarbonFootprint/dqi}> MUST NOT be defined.
+
+					For reporting periods including the beginning of year 2025 or after, this property MUST be defined.					
+			<tr>
+				<td><dfn>dqi</dfn> : <{DataQualityIndicators}>
+				<td>Object
+				<td>O*
+        <td>
+					If present, the Data Quality Indicators (dqi) in accordance with the [=Pathfinder Framework=].
+
+					See <{CarbonFootprint/primaryDataShare}> for further details.					
+			<tr>
+				<td><dfn>assurance</dfn> : <{Assurance}>
+				<td>Object
+				<td>O
+		        <td>If present, the Assurance information in accordance with the [=Pathfinder Framework=].				
+	</table>
+	<figcaption>Properties of data type CarbonFootprint</figcaption>
+
+</figure>
+
+
+## Data Type: <dfn element>DataQualityIndicators</dfn> ## {#dt-dataqualityindicators}
+
+Data type `DataQualityIndicators` contains the quantitative data quality indicators in conformance with [=Pathfinder Framework=] Section 4.2.3 and Appendix B.
+
+Each property is optional until the reporting period includes the beginning of calendar year 2025, or later, when all properties MUST be defined.
+
+The following properties are defined for data type <{DataQualityIndicators}>:
+
+<figure id="pf-dataqualityindicators-properties-table" dfn-type="element-attr" dfn-for="DataQualityIndicators">
+	<table class="data">
+		<thead>
+			<tr>
+				<th>Property
+				<th>Type
+				<th>Specification
+		<tbody>
+			<tr>
+				<td><dfn>coveragePercent</dfn> : [=Percent=]
+				<td>Number
+				<td>
+					Percentage of PCF included in the data quality assessment based on the `>5%` emissions threshold.
+			<tr>
+				<td><dfn>technologicalDQR</dfn>
+				<td>Number
+				<td>
+					Quantitative data quality rating (DQR) based on the data quality matrix (See [=Pathfinder Framework=] Table 5), 
+					scoring the technological representativeness of the sources used for PCF calculation based on 
+					weighted average of all inputs representing >5% of PCF emissions.
+
+					The value MUST be a [=decimal=] between `1` and `3` including.
+			<tr>
+				<td><dfn>temporalDQR</dfn>
+				<td>Number
+				<td>
+					Quantitative data quality rating (DQR) based on the data quality matrix (Table 5), 
+					scoring the temporal representativeness of the sources used for PCF calculation based on 
+					weighted average of all inputs representing >5% of PCF emissions.
+
+					The value MUST be a [=decimal=] between `1` and `3` including.
+			<tr>
+				<td><dfn>geographicalDQR</dfn>
+				<td>Number
+				<td>
+					Quantitative data quality rating (DQR) based on the data quality matrix (Table 5), 
+					scoring the geographical representativeness of the sources used for PCF calculation 
+					based on weighted average of all inputs representing >5% of PCF emissions.
+
+					The value MUST be a [=decimal=] between `1` and `3` including.
+			<tr>
+				<td><dfn>completenessDQR</dfn>
+				<td>Number
+				<td>
+					Quantitative data quality rating (DQR) based on the data quality matrix (Table 5), 
+					scoring the completeness of the data collected for PCF calculation based on 
+					weighted average of all inputs representing >5% of PCF emissions.
+
+					The value MUST be a [=decimal=] between `1` and `3` including.
+			<tr>
+				<td><dfn>reliabilityDQR</dfn>
+				<td>Number
+				<td>
+					Quantitative data quality rating (DQR) based on the data quality matrix (Table 5),
+					scoring the reliability of the data collected for PCF calculation based on
+					weighted average of all inputs representing >5% of PCF emissions.
+
+					The value MUST be a [=decimal=] between `1` and `3` including.
+		</table>
+	<figcaption>Properties of data type DataQualityIndicators</figcaption>
+</figure>
+
+
+<div class=example>
+	Example value for the case that 42% of the product's overall GHG emissions covered by the data quality assessment:
+	<pre highlight=json>
+	{
+		"coverageAfterExemption": 42.0,
+	}
+	</pre>
+</div>
+
+<div class=example>
+	Example value for the case that all DQIs are known but no coverage after exemption assessment performed:
+	<pre highlight=json>
+	{
+		"technologicalDQR": 2.0,
+		"temporalDQR": 2.0,
+		"geographicalDQR": 2.0,
+		"completenessDQR": 2.0,
+		"reliabilityDQR": 2.0
+	}
+	</pre>
+</div>
+
+
+## Data Type: <dfn element>Assurance</dfn> ## {#dt-assurance}
+
+Data type `Assurance` contains the assurance in conformance with [=Pathfinder Framework=] chapter 5 and appendix B.
+
+The following properties are defined for data type <{Assurance}>:
+
+<figure id="pf-assurance-properties-table" dfn-type="element-attr" dfn-for="Assurance">
+	<table class="data">
+		<thead>
+			<tr>
+				<th>Property
+				<th>Type
+				<th>Req
+				<th>Specification
+		<tbody>
+			<tr>
+				<td><dfn>coverage</dfn>
+				<td>String
+				<td>M
+				<td>
+					Level of granularity of the emissions data assured, with value equal to
+					- `corporate level` for corporate level
+					- `product line` for product line
+					- `PCF system` for PCF System
+					- `product level` for product level
+
+					This property MAY be undefined only if the kind of assurance was not performed.
+			<tr>
+				<td><dfn>level</dfn>
+				<td>String
+				<td>O
+				<td>
+					Level of assurance applicable to the PCF, with value equal to
+					- `limited` for limited assurance
+					- `reasonable` for reasonable assurance
+
+					This property MAY be undefined only if the kind of assurance was not performed.
+
+			<tr>
+				<td><dfn>boundary</dfn>
+				<td>String
+				<td>O
+				<td>Boundary of the assurance, with value equal to
+					- `Gate-to-Gate` for Gate-to-Gate
+					- `Cradle-to-Gate` for Cradle-to-Gate.
+
+					This property MAY be undefined only if the kind of assurance was not performed.
+			<tr>
+				<td><dfn>providerName</dfn>
+				<td>String
+				<td>O
+				<td>The non-empty name of the independent third party engaged to undertake the assurance.
+			<tr>
+				<td><dfn>completedAt</dfn> : [=DateTime=]
+				<td>String
+				<td>O
+				<td>The date at which the assurance was completed. See data type [=DateTime=] for details.
+			<tr>
+				<td><dfn>standardName</dfn>
+				<td>String
+				<td>O
+				<td>
+					Name of the standard against which the PCF was assured.
+			<tr>
+				<td><dfn>comments</dfn>
+				<td>String
+				<td>O
+				<td>
+					Any additional comments that will clarify the interpretation of the assurance.
+
+					This value of this property MAY be the empty string.
+		</table>
+	<figcaption>Properties of data type Assurance</figcaption>
+</figure>
+
+Issue:
+  PACT Community feedback required on the representation of assurance standards (<{Assurance/standardName}>), 
+		and whether this information can and/or should be represented in a more structured way.
+
+Note: The specification for data attribute `Assurance statement`
+  from Pathfinder Framework Version 2.0 Appendix B is expected to be added
+	during the consultation period.
+
+
+
+## Data Type: <dfn element>DataModelExtension</dfn> ## {#dt-datamodelextension}
+
+Each data model extension MUST be a valid JSON object conforming with the
+JSON Representation of Data Model Extensions 
+([§ 5. JSON Representation of a Data Model Extension](https://wbcsd.github.io/data-model-extensions/spec/#instantiation)).
+
+See [[!DATA-MODEL-EXTENSIONS]] for technical details and [[!EXTENSIONS-GUIDANCE]] for data model extension guidance.
+
+
+<div class=example>
+Example imaginary Data Model Extension for encoding shipment-related data, encoded in JSON:
+
+```json
+{
+  "specVersion": "2.0.0",
+  "dataSchema": "https://catalog.carbon-transparency.com/shipment/1.0.0/data-model.json",
+  "data": {
+    "shipmentId": "S1234567890",
+    "consignmentId": "Cabc.def-ghi",
+    "shipmentType": "PICKUP",
+    "weight": 10,
+    "transportChainElementId": "ABCDEFGHI"
+  }
+}
+```
+</div>
+
+
+
+## Data Type: <dfn enum>RegionOrSubregion</dfn> ## {#dt-regionorsubregion}
+
+The data type `RegionOrSubregion` MUST be encoded as a [=String=] with value equal to one of the following values:
+
+<dl dfn-type="enum-value" dfn-for="RegionOrSubregion">
+
+: <dfn>Africa</dfn>
+:: for the [=UN geographic region=] Africa
+
+: <dfn>Americas</dfn>
+:: for the [=UN geographic region=] Americas
+
+: <dfn>Asia</dfn>
+:: for the [=UN geographic region=] Asia
+
+: <dfn>Europe</dfn>
+:: for the [=UN geographic region=] Europe
+
+: <dfn>Oceania</dfn>
+:: for the [=UN geographic region=] Oceania
+
+: <dfn>Australia and New Zealand</dfn>
+:: for the [=UN geographic subregion=] Australia and New Zealand
+
+: <dfn>Central Asia</dfn>
+::  for the [=UN geographic subregion=] Central Asia
+
+: <dfn>Eastern Asia</dfn>
+:: for the [=UN geographic subregion=] Eastern Asia
+
+: <dfn>Eastern Europe</dfn>
+:: for the [=UN geographic subregion=] Eastern Europe
+
+: <dfn>Latin America and the Caribbean</dfn>
+:: for the [=UN geographic subregion=] Latin America and the Caribbean
+
+: <dfn>Melanesia</dfn>
+:: for the [=UN geographic subregion=] Melanesia
+
+: <dfn>Micronesia</dfn>
+:: for the [=UN geographic subregion=] Micronesia
+
+: <dfn>Northern Africa</dfn>
+:: for the [=UN geographic subregion=] Northern Africa
+
+: <dfn>Northern America</dfn>
+:: for the [=UN geographic subregion=] Northern America
+
+: <dfn>Northern Europe</dfn>
+::  for the [=UN geographic subregion=] Northern Europe
+
+: <dfn>Polynesia</dfn>
+:: for the [=UN geographic subregion=] Polynesia
+
+: <dfn>South-eastern Asia</dfn>
+:: for the [=UN geographic subregion=] South-eastern Asia
+
+: <dfn>Southern Asia</dfn>
+:: for the [=UN geographic subregion=] Southern Asia
+
+: <dfn>Southern Europe</dfn>
+:: for the [=UN geographic subregion=] Southern Europe
+
+: <dfn>Sub-Saharan Africa</dfn>
+:: for the [=UN geographic subregion=] Sub-Saharan Africa
+
+: <dfn>Western Asia</dfn>
+:: for the [=UN geographic subregion=] Western Asia
+
+: <dfn>Western Europe</dfn>
+:: for the [=UN geographic subregion=] Western Europe
+
+</dl>
+
+
+## Data Type: <dfn element>EmissionFactorDSSet</dfn> ## {#dt-emissionfactordataset}
+
+A set of <{EmissionFactorDS|Emission Factor Data Sources}> of size 1 or larger.
+
+### JSON Data Representation ### {#dt-emissionfactordataset-json}
+
+As an array of objects, with each object conforming to the JSON representation of <{EmissionFactorDS}>.
+
+
+## Data Type: <dfn element>EmissionFactorDS</dfn> ## {#dt-emissionfactords}
+
+An EmissionFactorDS references emission factor databases (see [=Pathfinder Framework=] Section 4.1.3.2).
+
+### Properties ### {#dt-emissionfactords-properties}
+
+<dl dfn-type="element-attr" dfn-for="EmissionFactorDS">
+
+: <dfn>name</dfn> (mandatory, data type: [=NonEmptyString=])
+:: The non-empty name of the emission factor database.
+
+: <dfn>version</dfn> (mandatory, data type: [=NonEmptyString=])
+:: The non-empty version of the emission factor database.
+
+</dl>
+
+<div class=example>
+Example encoding of a <{EmissionFactorDS}> in JSON:
+
+```json
+{
+	"name": "ecoinvent",
+	"version": "3.9.1"
+}
+```
+
+</div>
+
+
+### JSON Representation ### {#dt-emissionfactords-json}
+
+Each <{EmissionFactorDS}> MUST be encoded as a JSON object.
+
+
+
+## Data Type: <dfn enum>CrossSectoralStandard</dfn> ## {#dt-crosssectoralstandard}
+
+CrossSectoralStandard is the enumeration of accounting standards used for product carbon footprint calculation. Valid values are
+
+<dl dfn-type="enum-value" dfn-for="CrossSectoralStandard">
+
+: <dfn>GHG Protocol Product standard</dfn>
+:: for the GHG Protocol Product standard
+
+: <dfn>ISO Standard 14067</dfn>
+:: for ISO Standard 14067
+
+: <dfn>ISO Standard 14044</dfn>
+:: for ISO Standard 14044
+
+</dl>
+
+### JSON Representation ### {#dt-crosssectoralstandard-json}
+
+Each CrossSectoralStandard MUST be encoded as a JSON string.
+
+
+
+## Data Type: <dfn>CrossSectoralStandardSet</dfn> ## {#dt-crosssectoralstandardset}
+
+A set of {{CrossSectoralStandard}} values.
+
+### JSON Representation ### {#dt-crosssectoralstandardset-json}
+
+As an array of strings, with each string conforming to the JSON representation of {{CrossSectoralStandard}}.
+
+
+## Data Type: <dfn element>ProductOrSectorSpecificRule</dfn> ## {#dt-productorsectorspecificrule}
+
+A ProductOrSectorSpecificRule refers to a set of product or sector specific rules published by a specific operator and applied during product carbon footprint calculation.
+
+### Properties ### {#dt-productorsectorspecificrule-properties}
+
+<dl dfn-type="element-attr" dfn-for="ProductOrSectorSpecificRule">
+
+: <dfn>operator</dfn> (mandatory, data type: {{ProductOrSectorSpecificRuleOperator}})
+:: A ProductOrSectorSpecificRule MUST include the property `operator` with the value conforming to data type {{ProductOrSectorSpecificRuleOperator}}.
+
+: <dfn>ruleNames</dfn> (mandatory, data type: [=NonEmptyStringVector=])
+:: A ProductOrSectorSpecificRule MUST include the property `ruleNames` with value the non-empty set of rules applied from the specified <{ProductOrSectorSpecificRule/operator}>.
+
+: <dfn>otherOperatorName</dfn> (optional, data type: [=NonEmptyString=])
+:: 
+    If the value of property <{ProductOrSectorSpecificRule/operator}> is `Other`, a <{ProductOrSectorSpecificRule}> MUST include the property `otherOperatorName` with value the name of the operator. In this case, the operator declared MUST NOT be included in the definition of {{ProductOrSectorSpecificRuleOperator}}.
+    If the value of property operator is NOT Other, the property <{ProductOrSectorSpecificRule/otherOperatorName}> of a <{ProductOrSectorSpecificRule}> MUST be `undefined`.
+
+</dl>
+
+### JSON Representation ### {#dt-productorsectorspecificrule-json}
+
+Each <{ProductOrSectorSpecificRule}> MUST be encoded as a JSON object.
+
+
+
+## Data Type: <dfn>ProductOrSectorSpecificRuleSet</dfn> ## {#dt-productorsectorspecificruleset}
+
+A set of ProductOrSectorSpecificRule of size 1 or larger.
+
+### JSON Representation ### {#dt-productorsectorspecificruleset-json}
+
+Each [=ProductOrSectorSpecificRuleSet=] MUST be encoded as an array of JSON objects, with each object conforming to [[#dt-productorsectorspecificrule-json]].
+
+
+
+
+## Data Type: <dfn enum>ProductOrSectorSpecificRuleOperator</dfn> ## {#dt-productorsectorspecificruleoperator}
+
+A ProductOrSectorSpecificRuleOperator is the enumeration of Product Category Rule (PCR) operators. Valid values are:
+
+<dl dfn-type="enum-value" dfn-for="ProductOrSectorSpecificRuleOperator">
+
+: <dfn>PEF</dfn>
+:: for EU / <a href="https://ec.europa.eu/environment/archives/eussd/pdf/footprint/PEF%20methodology%20final%20draft.pdf">PEF</a> Methodology PCRs
+
+: <dfn>EPD International</dfn>
+:: for PCRs authored or published by [EPD International](https://www.environdec.com/)
+
+: <dfn>Other</dfn>
+:: for a PCR not published by the operators mentioned above
+
+</dl>
+
+### JSON Representation ### {#dt-productorsectorspecificruleoperator-json}
+
+Each value is encoded as a JSON String.
+
+
+
+## Data Type: <dfn>NonEmptyStringVector</dfn> ## {#dt-nonemptystringvector}
+
+A list of [=NonEmptyString=] of length 1 or greater.
+
+### JSON Representation ### {#dt-nonemptystringvector-json}
+
+Each NonEmptyStringVector MUST be encoded as an array of [=NonEmptyStrings=].
+
+
+## Data Type: <dfn>CpcCode</dfn> ## {#dt-cpccode}
+
+A CpCode represents a UN CPC Code version 2.1 value. 
+
+Example value of the CPC code for "wood in chips or particles":
+<div class="example">`31230`</div>
+
+### JSON Representation ### {#dt-cpccode-json}
+
+Each CpcCode MUST be encoded as a JSON String.
+
+
+## Data Type: <dfn enum>DeclaredUnit</dfn> ## {#dt-declaredunit}
+
+DeclaredUnit is the enumeration of accepted declared units with values
+
+<dl dfn-type="enum-value" dfn-for="DeclaredUnit">
+
+: <dfn>liter</dfn>
+:: for unit liter
+
+: <dfn>kilogram</dfn>
+:: for unit kilogram
+
+: <dfn>cubic meter</dfn>
+:: for cubic meter
+
+: <dfn>kilowatt hour</dfn>
+:: for kilowatt hour
+
+: <dfn>megajoule</dfn>
+:: for megajoule
+
+: <dfn>ton kilometer</dfn>
+:: for ton kilometer
+
+: <dfn>square meter</dfn>
+:: for square meter
+
+</dl>
+
+
+### JSON Representation ### #{#dt-declaredunit-json}
+
+The value of each {{DeclaredUnit}} MUST be encoded as a JSON String.
+
+
+## Data Type: <dfn>NonEmptyString</dfn> ## {#dt-nonemptystring}
+
+A String with 1 or more characters.
+
+### JSON Representation ### {#dt-nonemptystring-json}
+
+Each NonEmptyString MUST be encoded as a JSON String.
+
+
+
+## Data Type: <dfn>CompanyIdSet</dfn> ## {#dt-companyidset}
+
+A set of [=CompanyIds=] of length 1 or greater.
+
+
+
+## Data Type: <dfn>CompanyId</dfn> ## {#dt-companyid}
+
+Each CompanyId MUST be a [=URN=].
+
+### Custom Company Ids (Company Codes) ### {#dt-companyid-custom}
+
+If the [=data owner=] ([=SCA=]) wishes to use a custom company code assigned to it by 
+a [=data recipient=] as a [=CompanyId=] value, the [=data owner=] SHOULD use the following format: 
+
+```
+urn:pathfinder:company:customcode:buyer-assigned:$custom-company-code$
+```
+
+where `$custom-company-code$` stands for the custom company code assigned by the [=data recipient=].
+
+<div class=example>
+A data owner got assigned the custom vendor code `4321` by a buyer, the value of the CompanyId is then:
+
+`urn:pathfinder:company:customcode:buyer-assigned:4321`.
+</div>
+
+
+If the [=data owner=] ([=SCA=]) wishes to use its own custom company code known by  
+a [=data recipient=] as a [=CompanyId=] value, the [=data owner=] SHOULD use the following format: 
+
+```
+urn:pathfinder:company:customcode:vendor-assigned:$custom-company-code$
+``` 
+
+where `$custom-company-code$` stands for the custom company code set by the [=data recipient=].
+
+<div class=example>
+A data owner uses as custom vendor code `6789` which is known to a buyer, the value of the CompanyId is then:
+
+`urn:pathfinder:company:customcode:vendor-assigned:6789`.
+</div>
+
+
+
+
+## Data Type: <dfn>ProductIdSet</dfn> ## {#dt-productidset}
+
+A set of [=ProductIds=] of size 1 or larger.
+
+### JSON Representation ### {#dt-productidset-json}
+
+Each ProductIdSet MUST be encoded as an array of strings.
+
+
+
+## Data Type: <dfn>ProductId</dfn> ## {#dt-productid}
+
+Each ProductId MUST be a [=URN=].
+
+### Custom Product Ids (Product Codes) ### {#dt-productid-custom}
+
+If the [=data owner=] ([=SCA=]) wishes to use a custom product code assigned to it by 
+a [=data recipient=] as a [=ProductId=] value, the [=data owner=] SHOULD use the following format:
+
+```
+urn:pathfinder:product:customcode:buyer-assigned:$CUSTOM-PRODUCT-CODE$
+```
+
+where `$CUSTOM-PRODUCT-CODE$` stands for the custom product code assigned by the [=data recipient=].
+
+<div class=example>
+A data owner got assigned the custom product code `1234` for one of its products by a buyer, the value of the ProductId is then:
+
+`urn:pathfinder:product:customcode:buyer-assigned:1234`.
+</div>
+
+
+If the [=data owner=] ([=SCA=]) wishes to use its own custom product code known by  
+a [=data recipient=] as a `ProductId` value, the [=data owner=] SHOULD use the following format:
+
+```
+urn:pathfinder:product:customcode:vendor-assigned:$CUSTOM-PRODUCT-CODE$
+``` 
+
+where `$CUSTOM-PRODUCT-CODE$` stands for the custom product code set by the [=data recipient=].
+
+<div class=example>
+A data owner uses as custom product code `8765` which is known to a buyer, the value of the ProductId is then:
+
+`urn:pathfinder:product:customcode:vendor-assigned:8765`.
+</div>
+
+### ProductId based on CAS Registry Numbers ### {#dt-productid-cas}
+
+If the [=data owner=] ([=SCA=]) wishes to use a [CAS Registry Number](https://www.cas.org/cas-data/cas-registry)
+as a [=ProductId=] value, the [=data owner=] SHOULD use the following format: 
+
+```
+urn:pathfinder:product:id:cas:$CAS-REGISTRY-NUMBER$
+```
+
+where `$CAS-REGISTRY-NUMBER$` stands for a CAS Registry Number.
+
+<div class=example>
+Example ProductId encoding of ethanol with the CAS Registry Number `64-17-5`:   
+
+`urn:pathfinder:product:id:cas:64-17-5`
+</div>
+
+### ProductId based on IUPAC InChi Code ### {#dt-productid-inchicode}
+
+If the [=data owner=] ([=SCA=]) wishes to use a [IUPAC InChi Code](https://www.inchi-trust.org/) as a [=ProductId=] value, the [=data owner=] SHOULD use the following format: 
+
+```
+urn:pathfinder:product:id:iupac-inchi:$INCHI-CODE$
+```
+
+where `$INCHI-CODE$` stands for a IUPAC InChi Code.
+
+<div class=example>
+Example ProductId encoding of Aspirin with the IUPAC InChi Code 
+
+`1S/C9H8O4/c1-6(10)13-8-5-3-2-4-7(8)9(11)12/h2-5H,1H3,(H,11,12)`:   
+
+```
+urn:pathfinder:product:id:iupac-inchi:1S%2FC9H8O4%2Fc1-6%2810%2913-8-5-3-2-4-7%288%299%2811%2912%2Fh2-5H%2C1H3%2C%28H%2C11%2C12%29
+```
+
+</div>
+
+## Data Type: <dfn>URN</dfn> ## {#dt-urn}
+
+A String conforming to the [[!RFC8141|URN syntax]].
+
+### JSON Representation ### {#dt-urn-json}
+
+Each [=URN=] MUST be encoded as a JSON String.
+
+
+## Data Type: <dfn>String</dfn> ## {#dt-string}
+
+A regular UTF-8 String.
+
+### JSON Data Representation ### {#dt-string-json}
+
+Each [=String=] MUST be encoded as a JSON String.
+
+
+
+## Data Type: <dfn>Percent</dfn> ## {#dt-percent}
+
+A Decimal number in the range of and including `0` and `100`.
+
+Example values: 
+<div class=example>
+    - `100`
+    - `23.0`
+    - `7.183924`
+    - `0.0`
+</div>
+
+### JSON Representation ### {#dt-percent-json}
+
+Each Percent MUST be encoded in IEEE-754 [double-precision floating-point format](https://en.wikipedia.org/wiki/Double-precision_floating-point_format) as a JSON number.
+
+
+
+## Data Type: <dfn element>StrictlyPositiveDecimal</dfn> ## {#dt-strictlypositivedecimal}
+
+A positive, non-zero Decimal.
+
+Example values:
+<div class=example>
+    - 0.123
+    - 1000
+    - 42.102340
+</div>
+
+### JSON Representation ### {#dt-strictlypositivedecimal-json}
+
+See [[[#dt-decimal-json]]].
+
+
+
+## Data Type: <dfn>DateTime</dfn> ## {#dt-datetime}
+
+Each DateTime MUST be a date and time string conforming to ISO 8601. The timezone MUST be UTC.
+
+Example value for beginning of March, the year 2020, UTC: 
+<div class=example>
+  `2020-03-01T00:00:00Z`
+</div>
+
+
+### JSON Representation ### {#dt-datetime-json}
+
+Each [=DateTime=] MUST be encoded as a JSON String.
+
+
+
+## Data Type: <dfn>ISO3166CC</dfn> ## {#dt-iso3166cc}
+
+An ISO 3166-2 alpha-2 country code.
+
+Example value for tue alpha-2 country code of the United States:
+<div class=example>
+  `US`
+</div>
+
+### JSON Representation ### {#dt-iso3166cc-json}
+
+Each [=ISO3166CC=] MUST be encoded as a JSON String.
+
+
+## Data Type: <dfn>Decimal</dfn> ## {#dt-decimal}
+
+A dotted-decimal number. 
+
+Example values:
+<div class=example>
+    - `10`
+    - `42.12`
+    - `-182.84`
+</div>
+
+### JSON Representation ### {#dt-decimal-json}
+
+Each Decimal MUST be encoded as a JSON String.
+
+
+## Data Type: <dfn>PfId</dfn> ## {#dt-pfid}
+
+A PfId MUST be a UUID v4 as specified in [[!RFC4122]].
+
+
+### JSON Representation ### {#dt-pfid-json}
+
+Each PfId MUST be encoded as a JSON String.
+
+Example JSON string value: 
+
+<div class=example>
+```json
+"f4b1225a-bd44-4c8e-861d-079e4e1dfd69"
+```
+</div>
+
+
+# Product Footprint Lifecycle # {#lifecycle}
+
+
+## Introduction ## {#lifecycle-intro}
+
+<div class=note>Non-normative</div>
+
+
+A [[#dt-pf|Product Footprint]] can be updated, for instance to incorporate a change in upstream carbon emission factors or to correct errors.
+
+The purpose of this section is to clarify what constitutes an occasion for an update ([[#lifecycle-update]]) and to specify which kinds of changes ([[#lifecycle-rules]]) to a Product Footprint must be applied in such a case.
+
+
+## Definition of update ## {#lifecycle-update}
+
+A Product Footprint update SHOULD be limited to correct reported values.  
+A Product Footprint update SHOULD be done whenever the value of 1 or more properties of the Product Footprint changes which could directly or indirectly affect the Product Footprint calculation or interpretation by data recipients of the Product Footprint.
+
+A Product Footprint update MUST NOT occur to change the [[#dt-carbonfootprint-scope|reporting period]]. For this case, a data owner MUST create a Product Footprint with a new <{ProductFootprint/id|Product Footprint identifier}>.
+
+A Product Footprint update MUST NOT change the <{ProductFootprint/id|Product Footprint identifier}>.
+
+
+## Data life cycle rules ## {#lifecycle-rules}
+
+A Product Footprint CAN be updated by a data owner.
+
+A Product Footprint update MUST include 1 or more changes to a property, excluding changes to properties <{ProductFootprint/version}> and <{ProductFootprint/updated}>. A change to a property includes a transition to or from being `undefined`.
+
+Whenever a [=data owner=] or a [=host system=] updates a Product Footprint according to [[#lifecycle-update]], 
+
+1. it MUST set the value of property <{ProductFootprint/version}> to be by strictly greater than the value of the property <{ProductFootprint/version}> of all preceding footprints, and
+2. it SHOULD set the value of property <{ProductFootprint/updated}> to the timestamp of the update. The value SHOULD be strictly greater than the value of the property <{ProductFootprint/updated}> of all preceding Product Footprints.
+
+
+
+# HTTP REST API # {#api}
+
+## Introduction ## {#api-intro}
+
+<div class=note>Non-normative</div>
+
+This section defines an [[!rfc9112|HTTP]]-based API for the [=interoperable=] exchange of [[#dt-pf|Product Footprint]] data between [=host systems=].
+
+The scope of the HTTP API is minimal by design. Additional features will be added in future versions of this specification.
+
+
+
+
+## <dfn>Host System</dfn> ## {#api-host-system}
+
+A host system serves the needs of a single or multiple [=data owners=]. Additionally, a host system can also serve the needs of [=data recipients=] if it retrieves data from host systems by calling the HTTP REST API ([[#api]]).
+
+Interoperable data exchange between a data owner and a data recipient can be achieved by 
+
+1. the data owner offering <{ProductFootprint}> data through a host system that implements the [[#api|HTTP REST API]], and
+2. the data recipient making [[#api-auth|authenticated calls]] to retrieve ProductFootprint data; e.g. by calling the [=Action ListFootprints=].
+
+
+### Out of scope ### {#api-host-system-out-of-scope}
+
+<div class=note>Non-normative</div>
+
+This standard focuses on the necessary definitions to enable interoperable data exchange between data owners and data recipients. This is mediated through a host system which implements the HTTP REST API defined in this document. 
+
+Within the [=PACT=] Project, conforming host systems are called solutions.
+
+Solutions add further functionality on top of this standard in order to enable meaningful and interoperable data exchanges.
+
+The following section briefly describes some of the additional functionality which is beyond the scope of this document:
+
+<ol type="a">
+  <li>Footprint calculation according to the Pathfinder Framework</li>
+  <li>Authentication and access management: the act of deciding and setting which product footprint may be accessed by each data recipient</li>
+  <li>Credentials management: the overall functionality to generate access credentials for data recipients, to exchange these credentials with data recipients, to rotate or revoke such credentials, etc.</li>
+  <li>Logging: creation and storage of access logs and audit trails related to data exchange, authentication processes, etc.</li>
+</ol>
+
+
+## Authentication and Request Flows ## {#api-auth}
+
+[=Data recipients=] MUST first retrieve an [=access token=] through [=Action Authenticate=]. 
+This is implemented by
+1. the [=data recipient=] calling [=Action Authenticate=] of a [=host system=]
+2. the host system issuing an access token as specified in [[!rfc6749]] Section 4.4.3 and Section 5.1
+3. the [=data recipient=] calling one or more Actions of the host system
+    - using the value of `access_token` of the response of the [=Action Authenticate=] call as the value for a [[!rfc6750]] <dfn>Bearer token</dfn>
+    - presenting the Bearer token for subsequent call(s) to the host system in accordance with [[!rfc6750]] Section 2.1
+
+[=Access tokens=] SHOULD expire. In this case, data recipients MUST retrieve a new [=access token=] as described in this section.
+
+
+## Host system minimum requirements ## {#api-requirements}
+
+A [=host system=] MUST implement the following actions:
+1. [=Action Authenticate=]
+2. [=Action ListFootprints=]
+3. [=Action GetFootprint=]
+
+A [=host system=] SHOULD implement the following actions:
+1. [=Action Events=]
+
+A host system MUST offer its actions under https method only.
+
+A host system MUST offer all actions under the same [=Hostname=] and [=Subpath=] except for [=Action Authenticate=].
+
+A host system MAY offer the [=Action Authenticate=] under a dedicated [=AuthHostname=] and [=AuthSubpath=].
+
+<div class=example>
+  The host system's DNS domain name is `example.org` and the subpath is `/wbcsd` whereas the ID management system uses a `id.example.org` domain with an empty subpath. The URIs would then be:
+
+    - for [=Action Authenticate=]: [https://id.example.org/auth/token](https://id.example.org/auth/token)
+    - for [=Action ListFootprints=]: [https://example.org/wbcsd/2/footprints](https://example.org/wbcsd/2/footprints)
+    - etc.
+
+</div>
+
+
+## <dfn>Action Authenticate</dfn> ## {#api-action-auth}
+
+Request an access token using client credentials.
+
+Host systems MUST implement this action in conformance with [[!rfc6749]] Section 4.4 (OAuth2 Client Credentials). 
+
+Host systems MAY offer this action under a dedicated [=AuthHostname=] and [=AuthSubpath=].
+
+An <dfn>access token</dfn> is the value of `access_token` from a 200 (OK) entity-body derived from a successful call to this action. See [[!rfc6749]] Section 4.4.3 and Section 5.1 for further details.
+
+
+### Request Syntax (HTTP/1.1) ### {#api-action-auth-request}
+
+<pre highlight=http>
+POST <l>[=AuthSubpath=]</l>/auth/token HTTP/1.1
+host: <l>[=AuthHostname=]</l>
+accept: application/json
+content-type: application/x-www-form-urlencoded
+authorization: Basic <l>[=BasicAuth=]</l>
+content-length: <l>[=ContentLength=]</l>
+
+<l>[=AuthBody=]</l>
+</pre>
+
+With Request parameters:
+
+: <dfn>AuthSubpath</dfn>: 
+:: If a [=host system=] uses a relative subpath dedicated to the purpose of creating an [=access token=], then the requesting [=data recipient=] MUST prepend this subpath.
+
+: <dfn>AuthHostname</dfn>
+:: The requesting data recipient MUST use the domain name of the host system dedicated for the purpose of creating an authentication token.
+
+: <dfn>BasicAuth</dfn>
+:: See [[!rfc6749]] Section 4.4.2
+
+: <dfn>AuthBody</dfn>
+:: See [[!rfc6749]] Section 4.4
+
+: <dfn>ContentLength</dfn>
+:: The length of the Body. See [[!rfc9112]].
+
+### Response Syntax ### {#api-action-auth-response}
+
+<pre highlight=http>
+HTTP/1.1 <l>[=AuthStatusCode=]</l> OK
+content-type: application/json
+content-length: <l>[=ContentLength=]</l>
+
+<l>[=AuthResponseBody=]</l>
+</pre>
+
+With action-specific response parameters
+
+: <dfn>AuthStatusCode</dfn>
+:: A HTTP response code conforming to [[!rfc6749]] Section 4.4 and Section 5.
+
+: <dfn>AuthResponseBody</dfn>
+:: A JSON Object conforming to RFC 6749 Section 4.4. See [[#api-auth]] for further details
+
+
+## <dfn>Action ListFootprints</dfn> ## {#api-action-list}
+
+Lists [[#dt-pf|product footprints]] with optional filtering by properties <{ProductFootprint/created}> or <{ProductFootprint/updated}>. 
+
+[=Host systems=] SHOULD implement an access management system and only return the [[#dt-pf|product footprints]] for which the [=data owner=] granted access to the requesting [=data recipient=].
+
+### Pagination ### {#api-action-list-pagination}
+
+[=Host systems=] MUST implement pagination server-side such that
+
+1. The host system MAY return less ProductFootprints than requested through the [=Limit=] request parameter
+2. The host system MUST return a `Link` header if there are additional ProductFootprints ready to be retrieved, such that
+   1. The `Link` header conforms to [[!RFC8288]]
+   2. The value of the `rel` parameter is equal to `next`
+   3. the target IRI (RFC8288, section 3.1) of the `Link` header is absolute
+   4. The value of `host` of the target IRI is equal to the value of the `host` request header from the original `ListFootprints` HTTP request
+
+The target IRI from a pagination `link` header is called a <dfn>pagination link</dfn>.
+
+Upon a [=host system=] returning a [=pagination link=]
+
+1. a data recipient CAN call the pagination link more than once
+2. upon each call, the host system
+		1. MUST return the same set of Product Footprints upon successful authentication (i.e. a Bearer token authentication as defined in [[#api-auth]])
+		2. MUST NOT return more product footprints than requested in case [=Limit=] was defined by a [=data recipient=]
+		3. MUST return a `Link` header conforming with the previous description in case there are additional ProductFootprints available
+3. If a response contains a second pagination link and the data recipient upon calling the second pagination link, the previous pagination link MAY no longer work
+    - i.e. data recipients MUST NOT assume that previous pagination links continue to return results after advancing in the pagination process
+4. a pagination link MUST be valid for at least 180 seconds after creation
+5. a data recipient SHOULD retry calling the pagination link after the server returned an error
+   1. and SHOULD use a randomized exponential back-off strategy when retrying
+
+
+### Request Syntax (HTTP/1.1) ### {#api-action-list-request}
+
+<pre highlight=http>
+GET <l>[=Subpath=]</l>/2/footprints?<l>[=Filter=]&[=Limit=]</l> HTTP/1.1
+host: <l>[=Hostname=]</l>
+authorization: Bearer <l>[=BearerToken=]</l>
+</pre>
+
+with request parameters:
+
+: <dfn>Subpath</dfn>
+:: If a host system uses a relative subpath, then the requesting data recipient MUST prepend this subpath.
+
+: <dfn>Hostname</dfn>
+:: The requesting data recipient MUST use the domain name of the host system.
+
+: <dfn>BearerToken</dfn>
+:: see [=Bearer Token=] of section [[#api-auth]]
+
+: <dfn>Filter</dfn>
+:: 
+    `Filter` is an optional request parameter. If defined,     
+        1. the name of the HTTP request parameter MUST be `$filter`
+        2. the value of the HTTP request parameter MUST conform to the `$filter` syntax as defined by the [ODatav4 specification](https://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html).
+
+    Additionally, the `$filter` statement MUST only include the following operators and properties:
+        - Logical operators `eq`, `lt`, `le`, `gt`, `ge` on properties <{ProductFootprint/created}>, <{ProductFootprint/updated}>, <{ProductFootprint/productCategoryCpc}>, <{CarbonFootprint/geographyCountry}>, <{CarbonFootprint/referencePeriodStart}>, <{CarbonFootprint/referencePeriodEnd}>.
+        - Logical operator `and`.
+        - Lambda operator `any` on collection-valued properties <{ProductFootprint/companyIds}>, <{ProductFootprint/productIds}>. The expression argument of the operator MUST only include the `eq` operator.
+
+    Issue: Should additional geography related fields (e.g., <{CarbonFootprint/geographyCountrySubdivision}> and <{CarbonFootprint/geographyRegionOrSubregion}>) be allowed in `$filter`?
+
+    <div class=example>
+        Get footprints with CPC code "3342":
+
+        ```$filter=productCategoryCpc eq '3342'```
+
+        Get footprints scoped for country:
+
+        ```$filter=pcf/geographyCountry eq 'DE'```
+
+        Get footprints for 2023 reporting period:
+
+        ```$filter=(pcf/reportingPeriodStart ge '2023-01-01T00:00:00.000Z') and (pcf/reportingPeriodStart lt '2024-01-01T00:00:00.000Z') and (pcf/reportingPeriodEnd ge '2023-01-01T00:00:00.000Z') and (pcf/reportingPeriodEnd lt '2024-01-01T00:00:00.000Z')   ```
+
+        Get footprints for a specific product:
+
+        ```$filter=productIds/any(productId:(productId eq 'urn:...'))```
+    </div>
+	
+
+: <dfn>Limit</dfn>
+::
+    `Limit` is an optional request parameter. If defined,
+      1. the name of the HTTP request parameter MUST be `limit`
+      2. and the value MUST be a positive integer.
+
+
+### Response Syntax ### {#api-action-list-response}
+
+<pre highlight=http>
+HTTP/1.1 <l>[=ListStatusCode=]</l> <l>[=ListStatusText=]</l>
+content-type: application/json
+content-length: <l>[=ContentLength=]</l>
+
+<l>[=ListResponseBody=]</l>
+</pre>
+
+
+With response parameters
+
+: <dfn>ListStatusCode</dfn>
+:: 
+    If the host system returns a list of product footprints, the `HttpStatusCode` MUST be either 200 or 202:
+        - `HttpStatusCode` 200 indicates the returned list is the complete result of the given query.
+        - `HttpStatusCode` 202 indicates the returned list is an incomplete result of the given query. The host system MAY return this `HttpStatusCode` if it principally decides that it's able to obtain the remaining data in the future. This `HttpStatusCode` MUST NOT be returned if the request parameter `Filter` is not defined. The [=data recipient=] MAY continue to send the same request with exponential-backoff until it receives the complete result, indicated by `HttpStatusCode` 200.
+
+    If the host system responds with an [=error response=], the `HttpStatusCode` MUST match the HTTP Status Code of the respective [=error response code=].
+
+    If the host system does not return the list of [[#dt-pf|ProductFootprints]], it MUST return an error HTTP Status Code (4xx, 5xx).
+
+: <dfn>ListStatusText</dfn>
+:: 
+    The HTTP Status text conforming to the HTTP status code [=ListStatusCode=].
+
+: <dfn>ListResponseBody</dfn>
+:: 
+    If the host system accepts the [=access token=], the body MUST be a JSON object with property `data` with value the list of <{ProductFootprint|ProductFootprints}>.
+    The list MUST be encoded as a JSON array. If the list is empty, the host system MUST return an empty JSON array.
+
+    The host system MUST return the latest version of each footprint and MAY return previous versions. Among the footprints with identical <{ProductFootprint/id}> values,
+    the one with the maximum <{ProductFootprint/version}> value is called the latest version and the rest are called the previous versions.
+
+    If the request parameter `Filter` is defined, the specified expression SHOULD be evaluated for each ProductFootprint in the collection as described in [OData v4 specification](http://docs.oasis-open.org/odata/odata/v4.0/errata03/os/complete/part2-url-conventions/odata-v4.0-errata03-os-part2-url-conventions-complete.html#_Toc453752358), and only <{ProductFootprint|ProductFootprints}> where the expression evaluates to true SHOULD be included in the response. ProductFootprints for which the expression evaluates to false or which are not made available for the [=data recipient=] SHOULD be omitted from the list returned in the response.
+
+    If the host system does not accept the access token, the body MUST be an error response with code [=AccessDenied=].
+
+    If the host system does not accept the access token because it expired, the body SHOULD be an error response with code [=TokenExpired=].
+
+    In all other cases, for instance in case of a malformed value of the header authorization, the body SHOULD be an error response with code [=BadRequest=].
+
+
+## <dfn>Action GetFootprint</dfn> ## {#api-action-get}
+
+Retrieves [[#dt-pf|product footprints]].
+
+[=Host systems=] SHOULD implement an access management system and only return the product footprints for which the [=data owner=] granted access to the requesting [=data recipient=].
+
+
+### Request Syntax ### {#api-action-get-request}
+
+<pre highlight=http>
+GET <l>[=Subpath=]</l>/2/footprints/<l>[=GetPfId=]</l> HTTP/1.1
+Host: <l>[=Hostname=]</l>
+authorization: Bearer <l>[=BearerToken=]</l>
+</pre>
+
+with request-specific parameters:
+
+: <dfn>GetPfId</dfn>
+:: The value of property <{ProductFootprint/id}> of a product footprint a [=data recipient=] intends to retrieve.
+
+
+### Response Syntax ### {#api-action-get-response}
+
+<pre highlight=http>
+HTTP/1.1 <l>[=GetStatusCode=]</l> <l>[=GetStatusText=]</l>
+content-type: application/json
+content-length: <l>[=ContentLength=]</l>
+
+<l>[=GetResponseBody=]</l>
+</pre>
+
+With response parameters:
+
+: <dfn>GetStatusCode</dfn>
+::  
+    The HTTP Status Code of the response.
+
+    If the host system accepts the [=access token=], the HTTP Status Code MUST be 200.<br/>
+    If the host system responds with an [=error response=], the HTTP status code MUST match the HTTP Status Code of the respective [=error response code=].<br/>
+    If the host system does NOT return a product footprint, the host system MUST return an error HTTP Status Code (4xx, 5xx).
+
+: <dfn>GetStatusText</dfn>
+::
+    The HTTP Status text conforming to the HTTP status code [=GetStatusCode=].
+
+: <dfn>GetResponseBody</dfn>
+:: 
+    If the host system accepts the access token and allows the requesting data recipient to access the requested product footprint, the body MUST be a JSON object with property data. The value of property data MUST be the product footprint with footprint identifier [=GetPfId=]. 
+    
+    If there were changes to the requested product footprint with identifier [=GetPfId=], the host system SHOULD return the latest product footprint identified with identifier [=GetPfId=] and the maximum value of property version.
+
+    Note: If a host system implements the life cycle rules, then the “latest” version of the requested product footprint is the one with the maximum value of version with <{ProductFootprint/id}> equal to [=GetPfId=].
+
+    If the host system does not accept the access token, GetResponseBody MUST be an [=error response=] with code [=AccessDenied=]. 
+
+    If the host system does not accept the access token because it expired, GetResponseBody SHOULD be an error response with code [=TokenExpired=].
+
+    The host system MAY return an error response with code [=NoSuchFootprint=].
+
+    In all other cases, for instance in case of a malformed value of the header authorization, GetResponseBody SHOULD be an error response with code [=BadRequest=].
+
+
+## Action Events ## {#api-action-events}
+
+The <dfn>Action Events</dfn> enables the exchange of event data between [=data owners=] and [=data recipients=].
+
+The Action Events endpoint is specified for the following use cases:
+
+1. enabling a [=data owner=] to notify a [=data recipient=] on updates to 1 or more [[#dt-pf|Product Footprints]] (see [[#api-action-events-case-1]])
+2. enabling a [=data recipient=] to request [[#dt-pf|product footprints]] from a [=data owner=] by sending an event to the [=data owner's=] [=Action Events=] endpoint (see [[#api-action-events-case-2]]).
+
+A [=host system=] SHOULD only accept events after authentication (see [[#api-auth]]).
+
+The Action Events endpoint accepts CloudEvent events (see [[CE]]) encoded in "Structured Content Mode" (see [[CE-Structured-Content-Mode]].
+
+Support for Action Events is OPTIONAL. If a [=host system=] does NOT implement the [=Action Events=] endpoint, it SHOULD respond to authenticated Action Events calls with an [=error response=] with code [=NotImplemented=].
+
+
+### Request Syntax ### {#api-action-events-request}
+
+The general request syntax is:
+
+<pre highlight=http>
+POST <l>[=Subpath=]</l>/2/events HTTP/1.1
+host: <l>[=Hostname=]</l>
+authorization: Bearer <l>[=BearerToken=]</l>
+content-type: application/cloudevents+json; charset=UTF-8
+
+<l>[=EventBody=]</l>
+</pre>
+
+With request parameters:
+
+: <dfn>EventBody</dfn>
+::
+    The [=EventBody=] MUST be 
+		1. a CloudEvents event (see [[CE]]) 
+		2. encoded as a JSON object as defined in [[CE-JSON]] 
+		3. using "Structured Content Mode" (see [[CE-Structured-Content-Mode]]). 
+
+		Further details on the EventBody syntax and semantics are given in [[#api-action-events-case-1]] and [[#api-action-events-case-2]].
+
+
+### Response Syntax ### {#api-action-events-response}
+
+The [=host system=] upon accepting the event MUST respond with HTTP Status Code 200 and an empty body:
+
+<pre highlight=http>
+HTTP/1.1 200 OK
+content-length: 0
+</pre>
+
+The host system upon not accepting the event SHOULD respond with an [=error response=] (see [[#api-error-responses]]).
+
+### Notification of data recipients on Product Footprint updates ### {#api-action-events-case-1}
+
+A [=data owner=] CAN notify a [=data recipient=] about changes to 1 or more [[#dt-pf|product footprints]] by sending a [=PF Update Event=] to the [=data recipient's=] [=Action Events=] endpoint.
+
+A [=data recipient=] upon receiving such an [=PF Update Event=] CAN retrieve the [[#dt-pf|product footprints]] through the [=Action GetFootprint=].
+
+Accordingly, the [=data owner=] of the [=host system=] sending the event MUST make the referenced Product Footprints available ot the [=data recipient=] notified through the PF Update Event.
+
+The <dfn>PF Update Event</dfn> is defined as a JSON-encoded CloudEvent event with the following syntax:
+
+<pre highlight=json>
+{
+  "type": "org.wbcsd.pathfinder.ProductFootprint.Published.v1",
+  "specversion": "1.0",
+  "id": "<l>[=EventId=]</l>",
+  "source": "//<l>[=EventHostname=]</l>/<l>[=EventSubpath=]</l>",
+  "time": "2022-05-31T17:31:00Z",
+  "data": {
+    "pfIds": <l>[=PfIds=]</l>
+  }
+}
+</pre>
+
+with 
+
+: <dfn>EventId</dfn>
+:: 
+		A unique identifier for the event set by the [=host system=] sending the event. 
+		The [=EventId=] MUST be a string (see [[CE-JSON]]).
+: <dfn>PfIds</dfn>
+:: 
+		A list of [[#dt-pf|product footprint]] that have been updated. 
+		The [=PfIds=] MUST be the non-empty list of <{ProductFootprint/id}> values of the updated Product Footprints,
+		encoded as a JSON array.
+: <dfn>EventHostname</dfn>
+:: The [=Hostname=] of the [=host system=] sending the event.
+: <dfn>EventSubpath</dfn>
+:: The handler of the [=host system=] sending the event.
+
+
+### Asynchronous request and retrieval of Product Footprints ### {#api-action-events-case-2}
+
+A [=data recipient=] CAN request a [=data owner=] to send a [[#dt-pf|product footprint]] by sending a [=PF Request Event=] to the [=data owner's=] [=Action Events=] endpoint.
+
+A [=data owner=] upon receiving a [=PF Request Event=] can then decide how to process the request
+1. by sending a [=PF Response Event=] to the [=data recipient's=] [=Action Events=] endpoint 
+2. by sending a [=PF Response Error Event=] to the [=data recipient's=] [=Action Events=] endpoint to notify the [=data recipient=] that the request cannot be processed, or
+3. by not sending any event to the [=data recipient's=] [=Action Events=] endpoint.
+
+If a [=data owner=] accepted a [=PF Request Event=], the host system MUST send the response back to the [=host system=] referenced in `source` of the [=PF Request Event=].
+
+The host system of the [=data owner=] MUST validate the value of `source` before sending the response.
+
+If the host system of the original requestor (the data recipient) is not available or does not accept the response with a HTTP success code (2xx), 
+the [=data owner's=] host system SHOULD retry sending the response event using exponential backoff. 
+
+A host system SHOULD NOT retry sending a response event for more than 3 days.
+
+
+#### PF Request Event syntax #### {#api-action-events-case-2-request}
+
+The <dfn>PF Request Event</dfn> is defined as a CloudEvent event sent from a [=data recipient=] to a [=data owner=]. 
+The event contains a Product Footprint fragment to describe to the [=data owner=] the requested [[#dt-pf|product footprints]].
+
+The [=PF Request Event=] is defined as a JSON-encoded CloudEvent event with the following syntax:
+
+<pre highlight=json>
+{
+  "type": "org.wbcsd.pathfinder.ProductFootprintRequest.Created.v1",
+  "specversion": "1.0",
+  "id": "<l>[=EventId=]</l>",
+  "source": "//<l>[=EventHostname=]</l>/<l>[=EventSubpath=]</l>",
+  "time": "2022-05-31T17:31:00Z",
+  "data": {
+    "pf": <l>[=ProductFootprintFragment=]</l>,
+		"comment": <l>[=PFRequestComment=]</l>
+  }
+}
+
+</pre>
+
+with
+
+: <dfn>ProductFootprintFragment</dfn>
+:: A JSON object which references a subset of <{ProductFootprint}> properties, **including nested properties**.
+: <dfn>PFRequestComment</dfn>
+:: The OPTIONAL comment by the [=data recipient=] to the [=data owner=] about the request.
+     If defined, the [=PFRequestComment=] MUST be encoded as a JSON string.
+
+The property `data.comment` of a [=PF Request Event=] is OPTIONAL.
+
+#### PF Response Event syntax #### {#api-action-events-case-2-response}
+
+The <dfn>PF Response Event</dfn> is defined as a CloudEvent event sent from a [=data owner=] to a [=data recipient=] after having received a [=PF Request Event=] from a [=data recipient=] and upon successfully fulfilling the request.
+
+The [=PF Response Event=] is defined as a JSON-encoded CloudEvent event with the following syntax:
+
+<pre highlight=json>
+{
+  "type": "org.wbcsd.pathfinder.ProductFootprintRequest.Fulfilled.v1",
+  "specversion": "1.0",
+  "id": "<l>[=EventId=]</l>",
+  "source": "//<l>[=EventHostname=]</l>/<l>[=EventSubpath=]</l>",
+  "data": {
+    "requestEventId": "<l>[=ReqEventId=]</l>",
+    "pfs": <l>[=Pfs=]</l>
+  }
+}
+
+</pre>
+
+with 
+
+: <dfn>ReqEventId</dfn>
+:: 
+		The [=EventId=] of the [=PF Request Event=] that the [=PF Response Event=] is responding to.
+		The [=ReqEventId=] MUST be a string (see [[CE-JSON]]).
+: <dfn>Pfs</dfn>
+:: 
+		The list of [[#dt-pf|product footprints]] that have been requested with the [=PF Request Event=] and that are accessible to the [=data recipient=], encoded as an array of <{ProductFootprint}> in JSON.
+
+		Otherwise, the value of [=Pfs=] MUST be the empty JSON array.
+
+
+#### PF Response Error Event syntax #### {#api-action-events-case-2-response-error}
+
+The <dfn>PF Response Error Event</dfn> is defined as a CloudEvent event sent from a [=data owner=] to a [=data recipient=] after having received a [=PF Request Event=] from a [=data recipient=] and upon NOT successfully fulfilling the request.
+
+The [=PF Response Event=] is defined as a JSON-encoded CloudEvent event with the following syntax:
+
+<pre highlight=json>
+{
+  "type": "org.wbcsd.pathfinder.ProductFootprintRequest.Rejected.v1",
+  "specversion": "1.0",
+  "id": "<l>[=EventId=]</l>",
+  "source": "...",
+  "data": {
+    "requestEventId": "<l>[=ReqEventId=]</l>",
+    "error": <l>[=ReqErrorResponse=]</l>
+  }
+}
+
+</pre>
+
+with
+
+: <dfn>ReqErrorResponse</dfn>
+:: 
+		The error response that the [=data owner=] is sending to the [=data recipient=] to notify the [=data recipient=] that the request cannot be processed.
+
+		The value of [=ReqErrorResponse=] MUST be an [=error response=] (see [[#api-error-responses]]).
+
+## Error responses ## {#api-error-responses}
+
+<div class=example>
+ Situations when a [=host system=] returns an error response:
+  <ol type="i">
+    <li>a [=data recipient=] makes an unauthenticated request (see [[#api-auth]])</li>
+    <li>a [=data recipient=] makes a request with an expired access token (see [[#api-auth]])</li>
+    <li>a [=data recipient=] makes a request with an invalid access token (see [[#api-auth]])</li>
+    <li>a [=data recipient=] makes a request with an invalid request syntax or an invalid request parameter (see [[#api-action-list-request]] and [[#api-action-get-request]])</li>
+    <li>a [=host system=] runs into an error while processing the request, returning an [=InternalError=] error response</li>
+  </ol>
+</div>
+
+Whenever a [=host system=] returns an [=error response=], it MUST send a HTTP response such that
+  - the HTTP Status Code equals the `HTTP Status Code` defined for the respective [=error response code=] (see <a href="#api-errors-table">Error Codes Table</a>)
+  - with content type set to `application/json`, and 
+  - with response body the [=error response=]
+
+A <dfn>error response</dfn> is a JSON object with the following properties:
+    - `code`: a [=error response code=] encoded as a String
+    - `message`: a [=error message=] encoded as a String
+
+A <dfn>error response code</dfn> is a value from column `Error Response Code` from the table below.
+
+A <dfn>error message</dfn> is a human-readable error description. Example values are in column `Example Message` in the table below.
+
+<div class=example>
+Example [=AccessDenied=] [=error response=]:
+
+<pre class=include-code>
+path: examples/error-response-access-denied.json
+highlight: json
+</pre>
+</div>
+
+A [=host system=] MAY return [=error messages=] different from the table below, for instance localized values depending on a [=data recipient=].
+
+A [=host system=] SHOULD conform to [[!rfc6750]] Section 3 when returning a [=TokenExpired=] [=error response=].
+
+
+<figure id="api-errors-table">
+	<table class="data">
+		<thead>
+			<tr>
+				<th>`Error Response Code`
+				<th>`Example Message`
+				<th>`HTTP Status Code`
+		<tbody>
+			<tr>
+				<td><dfn>AccessDenied</dfn>
+				<td>Access denied
+				<td>403
+			<tr>
+				<td><dfn>BadRequest</dfn>
+				<td>Bad Request
+				<td>400
+			<tr>
+				<td><dfn>NoSuchFootprint</dfn>
+				<td>The specified footprint does not exist.
+				<td>404
+			<tr>
+				<td><dfn export>NotImplemented</dfn>
+				<td>The specified Action or header you provided implies functionality that is not implemented
+				<td>400
+			<tr>
+				<td><dfn>TokenExpired</dfn>
+				<td>The specified access token has expired
+				<td>401
+			<tr>
+				<td><dfn>InternalError</dfn>
+				<td>An internal or unexpected error has occurred
+				<td>500
+
+	</table>
+	<figcaption>Listing of error codes and their related error response codes.</figcaption>
+</figure>
+
+
+### Error processing by a data recipient ### {#api-error-responses-processing}
+
+A requesting [=data recipient=] MUST use the code property and potentially also the HTTP Status Code to differentiate between the different errors.
+
+
+
+## Examples ## {#api-examples}
+
+<div class=note>Non-normative</div>
+
+### Example Action ListFootprints request and response ### {#api-action-list-example}
+
+
+<div class="example">
+
+Example request:
+
+<pre highlight=http>
+GET /2/footprints?limit=10 HTTP/2
+host: api.pathfinder.sine.dev
+authorization: Bearer [BearerToken]
+</pre>
+
+Example response HTTP headers:
+<pre highlight=http>
+HTTP/1.1 200 OK
+date: Mon, 23 May 2022 19:33:16 GMT
+content-type: application/json
+content-length: 1831
+server: Pathfinder
+link: &lt;https://api.pathfinder.sine.dev/2/footprints?limit=10&offset=10&gt;; rel="next"
+</pre>
+
+Example response body: 
+<pre class=include-code>
+path: examples/list-footprint-response-v2.json
+highlight: json
+</pre>
+
+</div>
+
+### Example Error Response ### {#api-error-response-example}
+
+<div class=example>
+
+Example request:
+
+<pre highlight=http>
+GET /2/footprints HTTP/2
+host: api.pathfinder.sine.dev
+</pre>
+
+Example response headers:
+
+```http
+HTTP/1.1 403 Forbidden
+date: Mon, 23 May 2022 19:33:16 GMT
+content-type: application/json
+content-length: 44
+server: Pathfinder
+```
+Example response body:
+<pre class=include-code>
+path: examples/error-response-access-denied.json
+highlight: json
+</pre>
+
+</div>
+
+
+# Appendix A: License # {#license}
+
+<pre class=include>
+path: LICENSE.md
+</pre>
+
+
+
+# Appendix B: Changelog # {#changelog}
+
+## Version 2.0.0 ## {#changelog-2.0.0}
+
+### Summary ### {#changelog-2.0.0-summary}
+
+The following major changes and concepts are added with this release:
+
+1. update to Pathfinder Framework Version 2.0, including data model changes which are not backwards-compatible, including
+		1. addition of data type <{DataQualityIndicators}> and <{Assurance}> to <{CarbonFootprint}>
+2. event-based communication between [=host systems=] ([[#api-action-events]])
+3. support for data model extensions ([[#dt-datamodelextension]])
+4. specification for life cycle management of a <{ProductFootprint}> ([[#lifecycle]])
+
+
+
+### Data Model Changes ### {#changelog-2.0.0-data-model}
+
+Overview of the changes to the data model:
+
+- changes to data type <{ProductFootprint}>:
+	- properties <{ProductFootprint/validityPeriodStart}> and <{ProductFootprint/validityPeriodEnd}>: added
+- addition of data type <{DataQualityIndicators}> to <{CarbonFootprint}> via property <{CarbonFootprint/dqi}>
+- addition of data type <{Assurance}> to <{CarbonFootprint}> via property <{CarbonFootprint/assurance}>
+-  changes to data type <{CarbonFootprint}>:
+	- property <{CarbonFootprint/characterizationFactors}>: added
+	- property <{CarbonFootprint/exemptedEmissionsPercent}>: added
+	- property <{CarbonFootprint/primaryDataShare}>: was mandatory is now optional
+	- property <{CarbonFootprint/pCfExcludingBiogenic}>: added
+	- property <{CarbonFootprint/pCfIncludingBiogenic}>: added
+	- property <{CarbonFootprint/fossilCarbonContent}>: added
+	- property <{CarbonFootprint/biogenicCarbonWithdrawal}>: added
+	- property <{CarbonFootprint/biogenicAccountingMethodology}>: added
+	- property <{CarbonFootprint/packagingEmissionsIncluded}>: added
+	- property <{CarbonFootprint/exemptedEmissionsDescription}>: added
+	- property <{CarbonFootprint/packagingGhgEmissions}: added
+	- property <{CarbonFootprint/uncertaintyAssessmentDescription}>: added
+	- property `reportingPeriodStart`: renamed to <{CarbonFootprint/referencePeriodStart}>
+	- property `reportingPeriodEnd`: renamed to <{CarbonFootprint/referencePeriodEnd}>
+	- property `emissionFactorSources`: renamed to <{CarbonFootprint/secondaryEmissionFactorSources}>
+	- property <{CarbonFootprint/aircraftGhgEmissions}>: added
+- changes to data type `BiogenicEmissions`:
+	- all properties moved to <{CarbonFootprint}> and the data type removed fully, plus
+	- property `landUseChangeGhgEmissions` substituted with properties <{CarbonFootprint/iLucGhgEmissions}> and <{CarbonFootprint/dLucGhgEmissions}>
+	- property `landUseEmissions` renamed to <{CarbonFootprint/landManagementGhgEmissions}>
+	- property `otherEmissions` renamed to <{CarbonFootprint/otherBiogenicGhgEmissions}>
+- data type [=CompanyId=]: added, including instructions on custom company codes
+- changes to data type [=ProductId=]: addition of instructions ([[#dt-productid-cas]], [[#dt-productid-inchicode]], [[#dt-productid-custom]])
+
+### API Changes ### {#changelog-2.0.0-api}
+
+- [=Action ListFootprints=]:
+    1. rename of [=filter=] HTTP query parameter `filter` to `$filter` 
+    2. introduce additional allowed `$filter` operators and properties:
+        - Additional operators: `eq`, `lt`, `le`, `gt`, `and`, `any`
+        - Additional properties: <{ProductFootprint/created}>, <{ProductFootprint/updated}>, <{ProductFootprint/productCategoryCpc}>, <{CarbonFootprint/geographyCountry}>, <{CarbonFootprint/referencePeriodStart}>, <{CarbonFootprint/referencePeriodEnd}>, <{ProductFootprint/companyIds}>, <{ProductFootprint/productIds}>.
+    3. Addition of alternative [=Action ListFootprints=] response `HttpStatusCode` 202, and pull-based request/response semantics
+    4. pagination is now mandatory. See [[#api-action-list-pagination]]
+
+- [=Action Events=]: section [[#api-action-events]] added
+
+## Version 1.0.1 ## {#changelog-1.0.1}
+
+The following changes have been applied for version 1.0.1
+
+1. Addition of data type {{RegionOrSubregion}}, cleaning up the definition of property <{CarbonFootprint/geographyRegionOrSubregion}>
+2. Fix to the JSON representation specification in [[#dt-crosssectoralstandardset-json]]
+3. Change to the minimum size of the set [[#dt-productorsectorspecificruleset]] from `0` to `1`, aligning with the overall specification.
+4. Removal of unreferenced data type `Boolean` from the data model section
+5. Rewording, simplified wording of chapter [[#api-action-auth]]
+6. Addition of an authentication flow specification in chapter [[#api-auth]]
+7. Improved wording of request parameter `Filter` in section [[#api-action-list-request]]
+8. Improved wording in section [[#api-error-responses]], specifically
+    - addition of [=error response=] definition
+    - improved specification of the [=error response=] JSON representation
+    - consolidated specification of overall [=error response=] representation as a HTTP Response
+    - improvements to previous subsection "List of error codes", plus merging into overall section [[#api-error-responses]]
+    - addition of list of example situations when an [=error response=] is returned
+9. Addition of Section [[#api-error-response-example]]
+10. Addition of term [=interoperable=] to section [[#terminology]], plus linking to in respective sections
+11. Addition of Terms [=UN geographic region=] and [=UN geographic subregion=]
+12. Introduction of a new property table layout in section [[#dt-carbonfootprint]] and [[#dt-pf]]
+13. Removal of data types `PositiveDecimal`, `SpecVersionString`, `VersionInteger`
+
+
+<pre class=biblio>
+{
+  "CE": {
+    "authors": [],
+    "href": "https://github.com/cloudevents/spec",
+    "title": "Cloud Events Specification",
+    "status": "LS",
+    "publisher": "The Linux Foundation"
+  },
+  "CE-JSON": {
+    "authors": [],
+    "href": "https://github.com/cloudevents/spec/blob/v1.0.2/cloudevents/formats/json-format.md",
+    "title": "JSON Event Format for CloudEvents - Version 1.0.2",
+    "status": "LS",
+    "publisher": "The Linux Foundation"
+  },
+  "CE-Structured-Content-Mode": {
+    "authors": [],
+    "href": "https://github.com/cloudevents/spec/blob/v1.0.2/cloudevents/bindings/http-protocol-binding.md#32-structured-content-mode",
+    "title": "HTTP Protocol Binding for CloudEvents - Version 1.0.2",
+    "status": "LS",
+    "publisher": "The Linux Foundation"
+  },
+  "PATHFINDER-FRAMEWORK": {
+    "authors": [],
+    "href": "https://www.carbon-transparency.com/media/srhhloun/pathfinder-framework.pdf",
+    "title": "Pathfinder Framework: Guidance for the Accounting and Exchange of Product Life Cycle Emissions (Version 2.0)",
+    "status": "LS",
+    "publisher": "WBCSD"
+  },
+  "DATA-MODEL-EXTENSIONS": {
+    "authors": [],
+    "href": "https://wbcsd.github.io/data-model-extensions/spec/",
+    "title": "Technical Specification for Data Model Extensions",
+    "status": "LS",
+    "publisher": "WBCSD"
+  },
+  "EXTENSIONS-GUIDANCE": {
+    "authors": [],
+    "href": "https://wbcsd.github.io/data-exchange-protocol/v2/",
+    "title": "Guidance and Criteria Catalog for Pathfinder Data Model Extensions",
+    "status": "LS",
+    "publisher": "WBCSD"
+  }
+}
+</pre>
