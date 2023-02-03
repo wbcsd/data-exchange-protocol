@@ -202,6 +202,13 @@ A ProductFootprint has the following properties:
         <td>
             The version of the ProductFootprint data specification with value `2.0.0`.
 			<tr>
+				<td><dfn>precedingPfIds</dfn> : [=PfId=]
+				<td>Array of Strings
+				<td>O
+				<td>
+				    If defined, MUST be non-empty set of preceding product footprint identifiers without duplicates. 
+				    See [[#dt-pfid]] and [[#lifecycle-classification]] for details.
+			<tr>
 				<td><dfn>version</dfn>
 				<td>Number
 				<td>M
@@ -216,6 +223,30 @@ A ProductFootprint has the following properties:
 				<td>String
 				<td>O
         <td>A ProductFootprint SHOULD include the property `updated` with value the timestamp of the ProductFootprint update. A ProductFootprint MUST NOT include this property if an update has never been performed. The timestamp MUST be in UTC.
+			<tr>
+				<td><dfn>status</dfn>
+				<td>String
+				<td>M
+				<td>
+				  If defined, the value must be one of the following values:
+
+				  : Active
+				  :: The default status of a product footprint is `Active`. A product
+					     footprint with <{ProductFootprint/status}> `Active` can be used
+							 by a [=data recipients=], e.g. for product footprint calculations.
+
+				  : Deprecated
+				  :: The product footprint is deprecated and should not be used for e.g. product footprint calculations by [=data recipients=].
+
+				  See [[#lifecycle]] for details.
+			<tr>
+				<td><dfn>statusComment</dfn>
+				<td>String
+				<td>O
+				<td>
+				  If defined, the value should be a message explaining the reason for the current status.
+
+				  See [[#lifecycle]] for details.
 			<tr>
 				<td><dfn>validityPeriodStart</dfn> : [=DateTime=]
 				<td>String
@@ -1342,37 +1373,114 @@ Example JSON string value:
 
 # Product Footprint Lifecycle # {#lifecycle}
 
-
 ## Introduction ## {#lifecycle-intro}
 
-<div class=note>Non-normative</div>
+<div class=note>This section is non-normative</div>
+
+The contents of a <{ProductFootprint|Product Footprints}> can change over time. For instance when a [=data owner=] publishes an updated Product Footprint ("upstream Product Footprints") which goes into the calculation of another Product Footprint ("downstream Product Footprint").
+
+Even without upstream changes, a downstream Product Footprint can undergo changes in its own right, for instance when calculation errors are discovered and fixed, or when secondary emission databases are updated.
+
+This section defines how changes to Product Footprints shall be handled by [=data owners=] and communicated to [=data recipients=] through the <{ProductFootprint}> data model.
+
+For this, [=changes=] to ProductFootprint properties are defined and classified into [=minor change=] and [=major change=] ([[#lifecycle-classification]]). Depending on the change classification, 
+
+1. [=major changes=] must result in a new ProductFootprint ([[#lifecycle-major-changes]]) made available to its [=data recipients=],
+1. [=minor changes=] result in either version updates ([[#lifecycle-minor-changes]]) or new ProductFootprint creation ([[#lifecycle-major-changes]])
+
+In addition, if a Product Footprint is no longer valid, [=data owners=] can communicate this by applying a [=minor change=] through setting the <{ProductFootprint/status}> to `Deprecated`  
 
 
-A [[#dt-pf|Product Footprint]] can be updated, for instance to incorporate a change in upstream carbon emission factors or to correct errors.
+## Change Definition and Classification ## {#lifecycle-classification}
 
-The purpose of this section is to clarify what constitutes an occasion for an update ([[#lifecycle-update]]) and to specify which kinds of changes ([[#lifecycle-rules]]) to a Product Footprint must be applied in such a case.
+A <dfn>change</dfn> to a <{ProductFootprint}> is defined as a change to one or more properties of a <{ProductFootprint}>, including a change of 1 or more properties from being undefined or to no longer being defined.
+
+A <{ProductFootprint}> with <{ProductFootprint/status}> `Deprecated` MUST NOT be [=changed=].
+
+There are 2 classes of changes to a <{ProductFootprint}>:
+
+: <dfn>minor change</dfn>
+::
+    A [=minor change=] refers to a set of 1 or more [=changes=] to attributes to a <{ProductFootprint}>, including embedded data such as <{CarbonFootprint}>, etc.
+
+    [=minor changes=] to a <{ProductFootprint}> SHOULD BE limited to correct errors, to incorporate changes in upstream data sources, or to incorporate changes in secondary data sources.
+
+    A [=minor change=] is limited to the following <{CarbonFootprint}> properties:
+      1. <{CarbonFootprint/pCfExcludingBiogenic}>, <{CarbonFootprint/pCfIncludingBiogenic}>, 
+			   <{CarbonFootprint/fossilCarbonContent}>, <{CarbonFootprint/biogenicCarbonContent}>, 
+				 <{CarbonFootprint/dLucGhgEmissions}>, <{CarbonFootprint/landManagementGhgEmissions}>,
+				 <{CarbonFootprint/otherBiogenicGhgEmissions}>, <{CarbonFootprint/iLucGhgEmissions}>, 
+				 <{CarbonFootprint/biogenicCarbonWithdrawal}>, <{CarbonFootprint/aircraftGhgEmissions}>,
+				 <{CarbonFootprint/packagingEmissionsIncluded}>, <{CarbonFootprint/packagingGhgEmissions}>,
+				 <{CarbonFootprint/fossilGhgEmissions}>, 
+				 <{CarbonFootprint/biogenicCarbonContent}>, <{CarbonFootprint/primaryDataShare}>, 
+				 <{CarbonFootprint/secondaryEmissionFactorSources}>, <{CarbonFootprint/dqi}>, 
+				 <{CarbonFootprint/primaryDataShare}> as a result of a change resulting from upstream ProductFootprints or an update to secondary data sources
+      2. as a result of changes to the description properties 
+					<{CarbonFootprint/boundaryProcessesDescription}>, <{CarbonFootprint/allocationRulesDescription}>,
+				 <{CarbonFootprint/uncertaintyAssessmentDescription}>
+      4. After a change to the assurance statement <{CarbonFootprint/assurance}> from being `undefined` to being defined
+
+    A [=minor change=] MUST NOT change the <{ProductFootprint/id}> or the scope ([[#dt-carbonfootprint-scope]]) of the <{ProductFootprint}>.	
+
+: <dfn>major change</dfn>
+:: 
+    A [=major change=] refers to a set of 1 or more [=changes=] with 1 or more changes NOT conforming to the [=minor change=] definition.
+
+    Additionally, a [=data owner=] CAN decide to handle a [=minor change=] as a [=major change=] (see [[#lifecycle-major-changes]] for further details). 
+
+<div class=example>
+  Major change example: a [=data owner=] decides to publish Product Footprints with a sub-regional geographical granularity instead of a Product Footprint with scope `Global` ([[#dt-carbonfootprint-scope]]).
+
+  The [=host system=] of the data owner then performs the following logical steps:
+
+  1. deprecating the current Product Footprint ([[#lifecycle-minor-changes]]) by creating a new version with status set to `Deprecated`
+  2. creating 1 or more new Product Footprints for each new geographical granularity ([[#lifecycle-major-changes]]), 
+  3. finally, making the new Product Footprints available to its [=data recipients=]
+
+</div>
+
+<div class=example>
+  Minor change example: a [=data owner=] received an updated upstream Product Footprint which materially updates the <{CarbonFootprint/fossilGhgEmissions}> of one of its own Product Footprints.
+
+  The [=host system=] of the data owner then performs the following logical steps:
+
+  1. incorporating the <{CarbonFootprint/fossilGhgEmissions}> of the downstream Product Footprint into its Product Footprint
+  2. creating a new version of the Product Footprint with the updated <{CarbonFootprint/fossilGhgEmissions}> 
+       by following the specification from [[#lifecycle-minor-changes]] 
+  3. finally, making the new Product Footprints available to its [=data recipients=]
+
+</div>
 
 
-## Definition of update ## {#lifecycle-update}
+## ProductFootprint version creation from minor changes ## {#lifecycle-minor-changes}
 
-A Product Footprint update SHOULD be limited to correct reported values.  
-A Product Footprint update SHOULD be done whenever the value of 1 or more properties of the Product Footprint changes which could directly or indirectly affect the Product Footprint calculation or interpretation by data recipients of the Product Footprint.
+A [=minor change=] to a <{ProductFootprint}> MAY result in a new version of a <{ProductFootprint}>.
 
-A Product Footprint update MUST NOT occur to change the [[#dt-carbonfootprint-scope|reporting period]]. For this case, a data owner MUST create a Product Footprint with a new <{ProductFootprint/id|Product Footprint identifier}>.
+The [=data owner=] CAN represent a [=minor change=] to a <{ProductFootprint}> by creating 1 or more new <{ProductFootprint|ProductFootprints}> by following the specification from [[#lifecycle-major-changes]].
 
-A Product Footprint update MUST NOT change the <{ProductFootprint/id|Product Footprint identifier}>.
+A version update to a <{ProductFootprint}> MUST be represented in the <{ProductFootprint}> by
+1. incorporating the changes
+2. incrementing <{ProductFootprint/version}> by 1 (or more)
+3. setting <{ProductFootprint/updated}> to the time and date of the [=minor change=].
+		If defined, <{ProductFootprint/updated}> MUST be strictly greater than the previous value of <{ProductFootprint/updated}>.
+		Additionally, the value of <{ProductFootprint/updated}> MUST be strictly greater than the value of <{ProductFootprint/created}>.
 
 
-## Data life cycle rules ## {#lifecycle-rules}
+## New ProductFootprint creation from major changes ## {#lifecycle-major-changes}
 
-A Product Footprint CAN be updated by a data owner.
+A [=Major change=] to 1 or more <{ProductFootprint|preceding ProductFootprints}> MUST result in
 
-A Product Footprint update MUST include 1 or more changes to a property, excluding changes to properties <{ProductFootprint/version}> and <{ProductFootprint/updated}>. A change to a property includes a transition to or from being `undefined`.
+1. at least 1 new <{ProductFootprint}> being available to respective [=data recipients=]
+2. for each of the preceding ProductFootprints, a new version being available to respective [=data recipients=] by
+	 1. following [[#lifecycle-minor-changes]]
+	 2. setting <{ProductFootprint/status}> to `Deprecated`
 
-Whenever a [=data owner=] or a [=host system=] updates a Product Footprint according to [[#lifecycle-update]], 
-
-1. it MUST set the value of property <{ProductFootprint/version}> to be by strictly greater than the value of the property <{ProductFootprint/version}> of all preceding footprints, and
-2. it SHOULD set the value of property <{ProductFootprint/updated}> to the timestamp of the update. The value SHOULD be strictly greater than the value of the property <{ProductFootprint/updated}> of all preceding Product Footprints.
+For each new ProductFootprint, the [=data owner=] MUST
+1. make the necessary calculations for the new ProductFootprint
+2. assign the new ProductFootprint a unique <{ProductFootprint/id}>
+3. set <{ProductFootprint/updated}> to `undefined`
+4. set <{ProductFootprint/precedingPfIds}> to the set of <{ProductFootprint/id}> of the 1 or more preceding ProductFootprints
 
 
 
@@ -2077,7 +2185,15 @@ path: LICENSE.md
 
 # Appendix B: Changelog # {#changelog}
 
-## Version 2.0.0 ## {#changelog-2.0.0}
+## Consultation Draft Version 2.0.0 (Feb 6st, 2023) ## {#changelog-2.0.0-1}
+
+- specification updates related to life cycle management of a <{ProductFootprint}> ([[#lifecycle]])
+- changes to data type <{ProductFootprint}>:
+    - life cycle properties <{ProductFootprint/precedingPfIds}>, 
+		  <{ProductFootprint/status}> and <{ProductFootprint/statusComment}>: added
+
+
+## Consultation Draft Version 2.0.0 (Feb 1st, 2023) ## {#changelog-2.0.0}
 
 ### Summary ### {#changelog-2.0.0-summary}
 
@@ -2087,9 +2203,6 @@ The following major changes and concepts are added with this release:
 		1. addition of data type <{DataQualityIndicators}> and <{Assurance}> to <{CarbonFootprint}>
 2. event-based communication between [=host systems=] ([[#api-action-events]])
 3. support for data model extensions ([[#dt-datamodelextension]])
-4. specification for life cycle management of a <{ProductFootprint}> ([[#lifecycle]])
-
-
 
 ### Data Model Changes ### {#changelog-2.0.0-data-model}
 
@@ -2097,6 +2210,7 @@ Overview of the changes to the data model:
 
 - changes to data type <{ProductFootprint}>:
 	- properties <{ProductFootprint/validityPeriodStart}> and <{ProductFootprint/validityPeriodEnd}>: added
+	- life cycle properties <{ProductFootprint/status}> and <{ProductFootprint/statusComment}>: added
 - addition of data type <{DataQualityIndicators}> to <{CarbonFootprint}> via property <{CarbonFootprint/dqi}>
 - addition of data type <{Assurance}> to <{CarbonFootprint}> via property <{CarbonFootprint/assurance}>
 -  changes to data type <{CarbonFootprint}>:
