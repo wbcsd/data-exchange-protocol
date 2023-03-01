@@ -1,9 +1,10 @@
 <pre class='metadata'>
-Title: Technical Specifications for PCF Data Exchange (Version 2.0.0)
+Title: Technical Specifications for PCF Data Exchange (Version 2.0.1-20230301)
 Shortname: data-exchange-protocol
 Level: 1
 Status: LD
-URL: http://wbcsd.github.io/data-exchange-protocol/v2/
+ED: http://wbcsd.github.io/data-exchange-protocol/v2/
+TR: https://wbcsd.github.io/tr/2023/data-exchange-protocol-20230221/
 Mailing List: public-dev@pathfinder.sine.dev
 Editor: Martin Pompéry (SINE Foundation), https://sine.foundation, martin@sine.foundation
 Editor: Cecilia Valeri (WBCSD), https://www.wbcsd.org, valeri@wbcsd.org
@@ -19,6 +20,11 @@ This document contains the necessary technical foundation for the [=Pathfinder N
 The goal of this document is to enable the [=interoperable=] exchange of [=PCF|Product Carbon Footprints=] across [[#conformance|conforming]] [=host systems=].
 
 The methodological foundation of the specification is the Pathfinder Framework Version 2.0 ([[!PATHFINDER-FRAMEWORK]]).
+
+Advisement:
+  This specification document is a work in progress. It is not yet a "final" or otherwise published version.
+  The latest published version (2.0.0) can be accessed [here](https://wbcsd.github.io/tr/2023/data-exchange-protocol-20230221/).
+
 
 
 ## Status of This Document ## {#status}
@@ -202,7 +208,7 @@ A ProductFootprint has the following properties:
         <td>String
         <td>M
         <td>
-            The version of the ProductFootprint data specification with value `2.0.0`.
+            The version of the ProductFootprint data specification with value `2.0.1-20230301`.
 
             Advisement: Subsequent revisions will update this value according to [Semantic Versioning 2.0.0](https://semver.org/lang/de/).
       <tr>
@@ -285,7 +291,7 @@ A ProductFootprint has the following properties:
         <td>M
         <td>The non-empty set of Uniform Resource Names ([[!RFC8141|URN]]). Each value of this set is supposed to uniquely identify the ProductFootprint Data Owner. See [=CompanyIdSet=] for details.
       <tr>
-        <td><dfn>productDescription</dfn> (mandatory, data type: [=String=])
+        <td><dfn>productDescription</dfn>
         <td>String
         <td>M
         <td>The free-form description of the product plus other information related to it such as production technology or packaging.
@@ -524,8 +530,8 @@ Advisement:
       <tr>
         <td><dfn>boundaryProcessesDescription</dfn>
         <td>String
-        <td>O
-        <td>If present, the processes attributable to each lifecycle stage. If no such description is available or otherwise provided, then this property MUST NOT be included.
+        <td>M
+        <td>The processes attributable to each lifecycle stage.
 
         Example text value:
         <div class=example>`Electricity consumption included as an input in the production phase`</div>
@@ -605,7 +611,7 @@ Advisement:
       <tr>
         <td><dfn>primaryDataShare</dfn> : [=Percent=]
         <td>Number
-        <td>O
+        <td>O*
         <td>
           The share of primary data in percent. See the [=Pathfinder Framework=] Section 4.2.2.
 
@@ -706,6 +712,7 @@ The following properties are defined for data type <{DataQualityIndicators}>:
   Example value for the case that 42% of the product's overall GHG emissions covered by the data quality assessment:
   <pre highlight=json>
   {
+    "assurance": true,
     "coveragePercent": 42.0,
   }
   </pre>
@@ -741,9 +748,16 @@ The following properties are defined for data type <{Assurance}>:
         <th>Specification
     <tbody>
       <tr>
+        <td><dfn>assurance</dfn>
+        <td>Boolean
+        <td>M
+        <td>
+          A boolean flag indicating whether the <{CarbonFootprint}> has been 
+          assured in line with [=Pathfinder Framework=] requirements (section 5).
+      <tr>
         <td><dfn>coverage</dfn>
         <td>String
-        <td>M
+        <td>O
         <td>
           Level of granularity of the emissions data assured, with value equal to
           - `corporate level` for corporate level
@@ -815,7 +829,7 @@ Example imaginary Data Model Extension for encoding shipment-related data, encod
 
 ```json
 {
-  "specVersion": "2.0.0",
+  "specVersion": "2.0.1",
   "dataSchema": "https://catalog.carbon-transparency.com/shipment/1.0.0/data-model.json",
   "data": {
     "shipmentId": "S1234567890",
@@ -2168,6 +2182,26 @@ path: LICENSE.md
 
 
 # Appendix B: Changelog # {#changelog}
+
+
+## Version 2.0.1-20230301 (Mar 1, 2023) ## {#changelog-2.0.1-20230301}
+
+This version fixes 2 discrepancies between the Pathfinder Framework 
+Version 2 and the data model in this specification.
+
+1. property <{CarbonFootprint/boundaryProcessesDescription}>: was defined as
+    optional is now mandatory in accordance with Pathfinder Framework Version 2
+2. update to definition of property <{CarbonFootprint/primaryDataShare}>: 
+    it was marked as optional (`O`) and is now marked as `O*`. This update is 
+    accordance with the Pathfinder Framework and the field's previous (v2.0.0) semantics; 
+    i.e. *no* semantical update to the specification whatsoever
+3. formatting fix to the definition of property <{ProductFootprint/productDescription}>
+4. Updates to data type <{Assurance}>:
+    1. documentation fix to definition of property <{Assurance/coverage}>: 
+        was marked as mandatory (`M`) and is now marked as `O` in accordance with its definition and the Pathfinder Framework;     
+        i.e. *no* semantical update to the specification whatsoever
+    2. addition of property <{Assurance/assurance}> in accordance with the Pathfinder Framework
+
 
 ## Version 2.0.0 (Feb 20, 2023) ## {#changelog-2.0.0}
 
