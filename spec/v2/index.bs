@@ -1093,7 +1093,7 @@ DeclaredUnit is the enumeration of accepted declared units with values
 </dl>
 
 
-### JSON Representation ### #{#dt-declaredunit-json}
+### JSON Representation ### {#dt-declaredunit-json}
 
 The value of each {{DeclaredUnit}} MUST be encoded as a JSON String.
 
