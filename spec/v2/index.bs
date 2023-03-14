@@ -2189,12 +2189,15 @@ path: LICENSE.md
 This version fixes 2 discrepancies between the Pathfinder Framework 
 Version 2 and the data model in this specification.
 
-1. property <{CarbonFootprint/boundaryProcessesDescription}>: was defined as
-    optional is now mandatory in accordance with Pathfinder Framework Version 2
-2. update to definition of property <{CarbonFootprint/primaryDataShare}>: 
-    it was marked as optional (`O`) and is now marked as `O*`. This update is 
-    accordance with the Pathfinder Framework and the field's previous (v2.0.0) semantics; 
-    i.e. *no* semantical update to the specification whatsoever
+1. property <{CarbonFootprint/boundaryProcessesDescription}>: was incorrectly
+    defined as optional in v2.0.0, and this typo is now corrected such that
+    the property is correctly marked as mandatory in accordance with the
+    Pathfinder Framework Version 2
+2. update to definition of property <{CarbonFootprint/primaryDataShare}>:
+    it was marked as optional (`O`) and is now marked as `O*`. This update is
+    in accordance with the Pathfinder Framework and the field's previous
+    (v2.0.0) semantics; i.e. *no* semantical update to the specification
+    whatsoever
 3. formatting fix to the definition of property <{ProductFootprint/productDescription}>
 4. Updates to data type <{Assurance}>:
     1. documentation fix to definition of property <{Assurance/coverage}>: 
