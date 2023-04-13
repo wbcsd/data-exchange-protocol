@@ -1879,7 +1879,7 @@ A [=data owner=] CAN notify a [=data recipient=] about changes to 1 or more [[#d
 
 A [=data recipient=] upon receiving such an [=PF Update Event=] CAN retrieve the [[#dt-pf|product footprints]] through the [=Action GetFootprint=].
 
-Accordingly, the [=data owner=] of the [=host system=] sending the event MUST make the referenced Product Footprints available ot the [=data recipient=] notified through the PF Update Event.
+Accordingly, the [=data owner=] of the [=host system=] sending the event MUST make the referenced Product Footprints available to the [=data recipient=] notified through the PF Update Event.
 
 The <dfn>PF Update Event</dfn> is defined as a JSON-encoded CloudEvent event with the following syntax:
 
