@@ -789,7 +789,7 @@ The following properties are defined for data type <{Assurance}>:
       <tr>
         <td><dfn>providerName</dfn>
         <td>String
-        <td>M
+        <td>O
         <td>The non-empty name of the independent third party engaged to undertake the assurance.
       <tr>
         <td><dfn>completedAt</dfn> : [=DateTime=]
