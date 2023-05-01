@@ -796,12 +796,12 @@ The following properties are defined for data type <{Assurance}>:
 
           This property MAY be undefined or marked as “n/a” if no assurance has taken place.
       <tr>
-        <td><dfn>providerName</dfn>
+        <td><dfn>provider</dfn>
         <td>String
         <td>O
         <td>The name of the independent third party engaged to undertake the assurance.
       <tr>
-        <td><dfn>completedAt</dfn> : [=DateTime=]
+        <td><dfn>completionDate</dfn> : [=DateTime=]
         <td>String
         <td>O
         <td>The date at which the assurance was completed. See data type [=DateTime=] for details.
