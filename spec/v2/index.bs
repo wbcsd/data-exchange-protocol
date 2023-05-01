@@ -806,11 +806,20 @@ The following properties are defined for data type <{Assurance}>:
         <td>O
         <td>The date at which the assurance was completed. See data type [=DateTime=] for details.
       <tr>
-        <td><dfn>standardName</dfn>
+        <td><dfn>standard</dfn>
         <td>String
         <td>O
         <td>
-          Name of the standard against which the PCF was assured.
+          Standard(s) against which the PCF was assured.
+      <tr>
+        <td><dfn>statement</dfn>
+        <td>String
+        <td>O
+        <td>
+          A reference to the assurance statement that is used to prove
+          the assurance of the PCF. This can be a PDF attachment or a
+          digital signature. The technical specifications specify details on
+          company identification and digital signature verification.
       <tr>
         <td><dfn>comments</dfn>
         <td>String
