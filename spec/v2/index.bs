@@ -827,7 +827,7 @@ The following properties are defined for data type <{Assurance}>:
         <td>
           Any additional comments that will clarify the interpretation of the assurance.
 
-          This value of this property MAY be the empty string.
+          This value of this property MAY be an empty string.
     </table>
   <figcaption>Properties of data type Assurance</figcaption>
 </figure>
