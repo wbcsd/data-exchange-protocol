@@ -16,7 +16,7 @@ For this, we use an ADR-inspired process.
 
 To make a meaningful contribution:
 
-1. Create an ADR proposal in the [decisions/log](decisions/log/) with status `In Progress`
+1. Create an ADR proposal in the [decisions/log](decisions/log) with status `In Progress`
     1. If possible, already create the changes to the technical specification text as well (see above)
 2. Create a Pull Request with the ADR proposal and optionally the specification changes
 3. Once there is consensus on the ADR proposal, the ADR proposal is merged into the `main` branch
@@ -24,4 +24,4 @@ To make a meaningful contribution:
 
 ## History of decisions
 
-Accepted decisions are stored in the directory [decisions/log](decisions/log/) under branch `main`.
+Accepted decisions are stored in the directory [decisions/log](decisions/log) under branch `main`.
