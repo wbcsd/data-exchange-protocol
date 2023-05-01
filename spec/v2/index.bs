@@ -785,7 +785,6 @@ The following properties are defined for data type <{Assurance}>:
           - `reasonable` for reasonable assurance
 
           This property MAY be undefined or marked as “n/a” if no assurance has taken place.
-
       <tr>
         <td><dfn>boundary</dfn>
         <td>String
