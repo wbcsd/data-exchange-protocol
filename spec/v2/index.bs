@@ -736,6 +736,15 @@ The following properties are defined for data type <{DataQualityIndicators}>:
 
 Data type `Assurance` contains the assurance in conformance with [=Pathfinder Framework=] chapter 5 and appendix B.
 
+In instances where a property has the following instruction `This property MAY be undefined or marked as “n/a” if no
+assurance has taken place.`, the Pathfinder Framework dictates that:
+
+    While first-party quality controls and plausibility checks are encouraged, they do not suffice to fulfill the
+    assurance requirements of this guidance.
+
+As a result of this guidance, the `assurance` property cannot be marked as True, so these attributes are not required.
+
+
 The following properties are defined for data type <{Assurance}>:
 
 <figure id="pf-assurance-properties-table" dfn-type="element-attr" dfn-for="Assurance">
@@ -765,7 +774,7 @@ The following properties are defined for data type <{Assurance}>:
           - `PCF system` for PCF System
           - `product level` for product level
 
-          This property MAY be undefined only if the kind of assurance was not performed.
+          This property MAY be undefined or marked as “n/a” if no assurance has taken place.
       <tr>
         <td><dfn>level</dfn>
         <td>String
@@ -775,7 +784,7 @@ The following properties are defined for data type <{Assurance}>:
           - `limited` for limited assurance
           - `reasonable` for reasonable assurance
 
-          This property MAY be undefined only if the kind of assurance was not performed.
+          This property MAY be undefined or marked as “n/a” if no assurance has taken place.
 
       <tr>
         <td><dfn>boundary</dfn>
@@ -785,7 +794,7 @@ The following properties are defined for data type <{Assurance}>:
           - `Gate-to-Gate` for Gate-to-Gate
           - `Cradle-to-Gate` for Cradle-to-Gate.
 
-          This property MAY be undefined only if the kind of assurance was not performed.
+          This property MAY be undefined or marked as “n/a” if no assurance has taken place.
       <tr>
         <td><dfn>providerName</dfn>
         <td>String
