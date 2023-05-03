@@ -421,12 +421,12 @@ Advisement:
         <td>M
         <td>The amount of <{CarbonFootprint/declaredUnit|Declared Units}> contained within the product to which the [[#dt-carbonfootprint|PCF]] is referring to. The value MUST be strictly greater than `0`.
       <tr>
-        <td><dfn>pCfExcludingBiogenic</dfn> : [=Decimal=]
+        <td><dfn>pcfExcludingBiogenic</dfn> : [=Decimal=]
         <td>String
         <td>M
         <td>The product carbon footprint of the product <i>excluding</i> biogenic emissions. The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg of CO2 equivalent per declared unit` (`kgCO2e / declaredUnit`), expressed as a [=decimal=] equal to or greater than zero.
       <tr>
-        <td><dfn>pCfIncludingBiogenic</dfn> : [=Decimal=]
+        <td><dfn>pcfIncludingBiogenic</dfn> : [=Decimal=]
         <td>String
         <td>O*
         <td>If present, the product carbon footprint of the product <i>including</i> biogenic emissions. The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg of CO2 equivalent per declared unit` (`kgCO2e / declaredUnit`), expressed as a [=decimal=].
@@ -589,7 +589,7 @@ Advisement:
         <td><dfn>packagingEmissionsIncluded</dfn>
         <td>Boolean
         <td>M
-        <td>A boolean flag indicating whether packaging emissions are included in the PCF (<{CarbonFootprint/pCfExcludingBiogenic}>, <{CarbonFootprint/pCfIncludingBiogenic}>). 
+        <td>A boolean flag indicating whether packaging emissions are included in the PCF (<{CarbonFootprint/pcfExcludingBiogenic}>, <{CarbonFootprint/pcfIncludingBiogenic}>).
       <tr>
         <td><dfn>packagingGhgEmissions</dfn> : [=Decimal=]
         <td>String
@@ -1406,7 +1406,7 @@ There are 2 classes of changes to a <{ProductFootprint}>:
     [=minor changes=] to a <{ProductFootprint}> SHOULD BE limited to correct errors, to incorporate changes in upstream data sources, or to incorporate changes in secondary data sources.
 
     A [=minor change=] is limited to the following <{CarbonFootprint}> properties:
-      1. <{CarbonFootprint/pCfExcludingBiogenic}>, <{CarbonFootprint/pCfIncludingBiogenic}>, 
+      1. <{CarbonFootprint/pcfExcludingBiogenic}>, <{CarbonFootprint/pcfIncludingBiogenic}>,
          <{CarbonFootprint/fossilCarbonContent}>, <{CarbonFootprint/biogenicCarbonContent}>, 
          <{CarbonFootprint/dLucGhgEmissions}>, <{CarbonFootprint/landManagementGhgEmissions}>,
          <{CarbonFootprint/otherBiogenicGhgEmissions}>, <{CarbonFootprint/iLucGhgEmissions}>, 
@@ -2229,8 +2229,8 @@ Overview of the changes to the data model compared with the data model version 1
   - property <{CarbonFootprint/characterizationFactors}>: added
   - property <{CarbonFootprint/exemptedEmissionsPercent}>: added
   - property <{CarbonFootprint/primaryDataShare}>: was mandatory is now optional
-  - property <{CarbonFootprint/pCfExcludingBiogenic}>: added
-  - property <{CarbonFootprint/pCfIncludingBiogenic}>: added
+  - property <{CarbonFootprint/pcfExcludingBiogenic}>: added
+  - property <{CarbonFootprint/pcfIncludingBiogenic}>: added
   - property <{CarbonFootprint/fossilCarbonContent}>: added
   - property <{CarbonFootprint/biogenicCarbonWithdrawal}>: added
   - property <{CarbonFootprint/biogenicAccountingMethodology}>: added
