@@ -463,7 +463,7 @@ Advisement:
         <td>If present, GHG emissions and removals associated with land-management-related changes, including non-CO2 sources. 
           The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg of CO2 equivalent per declared unit` (`kgCO2e / declaredUnit`), expressed as a [=decimal=] equal to or greater than zero.
 
-          Note: version 1 did not explictly include non-CO2 sources. This is now included in the definition.
+          Note: version 1 did not explicitly include non-CO2 sources. This is now included in the definition.
       <tr>
         <td><dfn>otherBiogenicGhgEmissions</dfn> : [=Decimal=]
         <td>String
