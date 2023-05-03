@@ -584,7 +584,7 @@ Advisement:
         <td><dfn>exemptedEmissionsDescription</dfn>
         <td>String
         <td>M
-        <td>Rationale behind exclusion of specific PCF emissions, CAN be the empty string if no emissions were excluded.
+        <td>Rationale behind exclusion of specific PCF emissions, CAN be an empty string if no emissions were excluded.
       <tr>
         <td><dfn>packagingEmissionsIncluded</dfn>
         <td>Boolean
