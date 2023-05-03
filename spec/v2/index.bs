@@ -576,7 +576,7 @@ Advisement:
 
         If no secondary data is used, this property MUST BE `undefined`.
       <tr>
-        <td><dfn>exemptedEmissionsPercent</dfn>
+        <td><dfn>exemptedEmissionsPercent</dfn> : [=Percent=]
         <td>Number
         <td>M
         <td>The Percentage of emissions excluded from PCF, expressed as a decimal number between `0.0` and `5` including. See [=Pathfinder Framework=].
