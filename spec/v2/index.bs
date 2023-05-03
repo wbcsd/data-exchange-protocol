@@ -1662,7 +1662,7 @@ Upon a [=host system=] returning a [=pagination link=]
 ### Request Syntax (HTTP/1.1) ### {#api-action-list-request}
 
 <pre highlight=http>
-GET <l>[=Subpath=]</l>/2/footprints?<l>[=Filter=]&[=Limit=]</l> HTTP/1.1
+GET <l>[=Subpath=]</l>/2/footprints?<l>[=Filter=]</l>&<l>[=Limit=]</l> HTTP/1.1
 host: <l>[=Hostname=]</l>
 authorization: Bearer <l>[=BearerToken=]</l>
 </pre>
