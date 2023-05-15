@@ -527,6 +527,7 @@ Advisement:
           : Quantis
           :: For the Quantis [Accounting for Natural Climate Solutions](https://quantis.com/report/accounting-for-natural-climate-solutions-guidance/) Guidance
 
+          Advisement: The enumeration of standards above will be evolved in future revisions. Account for this when implementing the validation of this property.
       <tr>
         <td><dfn>boundaryProcessesDescription</dfn>
         <td>String
@@ -2186,12 +2187,13 @@ path: LICENSE.md
 
 ## Version 2.0.1-20230515 (May 15, 2023) ## {#changelog-2.0.1-20230515}
 
-This version fixes 1 definition incorrectness and includes 2 documentation improvements.
+This version fixes 1 definition incorrectness and includes 3 documentation improvements.
 
 1. property <{CarbonFootprint/biogenicCarbonContent}>: was incorrectly
     defined with unit `kg of CO2e / declaredUnit`. The unit is now defined as `kg / declaredUnit`
 2. property <{ProductFootprint/status}>: minor documentation improvements
 3. Action [=Action ListFootprints=]: minor documentation improvements
+4. property <{CarbonFootprint/biogenicAccountingMethodology}>: addition of an advisement
 
 
 ## Version 2.0.1-20230314 (Mar 14, 2023) ## {#changelog-2.0.1-20230314}
