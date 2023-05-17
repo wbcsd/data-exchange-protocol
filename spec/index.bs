@@ -1006,7 +1006,7 @@ This is implemented by
 ## Actions reference ## {#api-actions}
 
 A [=host system=] MUST implement each of the following actions. A host system MUST only accept requests using https, not
-http. The host system MUST not respond to requests made using other protocols (not even with a 400 Error or other http
+http. The host system MUST not respond to requests made using other protocols (not even with a 400 Error or any other http
 status codes).
 
 A host system MAY offer the endpoints under a relative subpath. A host system MUST offer the [=Action ListFootprints=] and [=Action GetFootprint=] under the same Hostname and Subpath.
