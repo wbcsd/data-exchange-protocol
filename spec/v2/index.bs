@@ -448,13 +448,13 @@ Advisement:
         <td><dfn>biogenicCarbonContent</dfn> : [=Decimal=]
         <td>String
         <td>M
-        <td>The biogenic carbon amount embodied in the product. The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg of CO2 equivalent per declared unit` (`kgCO2e / declaredUnit`), expressed as a [=decimal=] equal to or greater than zero.
+        <td>The biogenic carbon amount embodied in the product. The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg per declared unit` (`kg / declaredUnit`), expressed as a [=decimal=] equal to or greater than zero.
       <tr>
         <td><dfn>dLucGhgEmissions</dfn> : [=Decimal=]
         <td>String
         <td>O*
         <td>If present, emissions resulting from recent (i.e., previous 20 years) carbon stock loss due to land conversion directly on the area of land under consideration. The value of this property MUST include direct land use change (dLUC) where available, otherwise statistical land use change (sLUC) can be used.
-          The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg per declared unit` (`kg / declaredUnit`), expressed as a [=decimal=] equal to or greater than zero.
+          The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg of CO2 equivalent per declared unit` (`kgCO2e / declaredUnit`), expressed as a [=decimal=] equal to or greater than zero.
           See [=Pathfinder Framework=] (Appendix B) for details.
       <tr>
         <td><dfn>landManagementGhgEmissions</dfn> : [=Decimal=]
