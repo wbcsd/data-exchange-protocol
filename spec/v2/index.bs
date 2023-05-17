@@ -663,7 +663,7 @@ The following properties are defined for data type <{DataQualityIndicators}>:
         <td><dfn>technologicalDQR</dfn>
         <td>Number
         <td>
-          Quantitative data quality rating (DQR) based on the data quality matrix (See [=Pathfinder Framework=] Table 5), 
+          Quantitative data quality rating (DQR) based on the data quality matrix (See [=Pathfinder Framework=] Table 9),
           scoring the technological representativeness of the sources used for PCF calculation based on 
           weighted average of all inputs representing >5% of PCF emissions.
 
@@ -672,7 +672,7 @@ The following properties are defined for data type <{DataQualityIndicators}>:
         <td><dfn>temporalDQR</dfn>
         <td>Number
         <td>
-          Quantitative data quality rating (DQR) based on the data quality matrix (Table 5), 
+          Quantitative data quality rating (DQR) based on the data quality matrix (Table 9),
           scoring the temporal representativeness of the sources used for PCF calculation based on 
           weighted average of all inputs representing >5% of PCF emissions.
 
@@ -681,7 +681,7 @@ The following properties are defined for data type <{DataQualityIndicators}>:
         <td><dfn>geographicalDQR</dfn>
         <td>Number
         <td>
-          Quantitative data quality rating (DQR) based on the data quality matrix (Table 5), 
+          Quantitative data quality rating (DQR) based on the data quality matrix (Table 9),
           scoring the geographical representativeness of the sources used for PCF calculation 
           based on weighted average of all inputs representing >5% of PCF emissions.
 
@@ -690,7 +690,7 @@ The following properties are defined for data type <{DataQualityIndicators}>:
         <td><dfn>completenessDQR</dfn>
         <td>Number
         <td>
-          Quantitative data quality rating (DQR) based on the data quality matrix (Table 5), 
+          Quantitative data quality rating (DQR) based on the data quality matrix (Table 9),
           scoring the completeness of the data collected for PCF calculation based on 
           weighted average of all inputs representing >5% of PCF emissions.
 
@@ -699,7 +699,7 @@ The following properties are defined for data type <{DataQualityIndicators}>:
         <td><dfn>reliabilityDQR</dfn>
         <td>Number
         <td>
-          Quantitative data quality rating (DQR) based on the data quality matrix (Table 5),
+          Quantitative data quality rating (DQR) based on the data quality matrix (Table 9),
           scoring the reliability of the data collected for PCF calculation based on
           weighted average of all inputs representing >5% of PCF emissions.
 
@@ -2187,13 +2187,14 @@ path: LICENSE.md
 
 ## Version 2.0.1-20230517 (May 17, 2023) ## {#changelog-2.0.1-20230517}
 
-This version fixes 1 definition incorrectness and includes 3 documentation improvements.
+This version fixes 1 definition incorrectness and includes 4 documentation improvements.
 
 1. property <{CarbonFootprint/biogenicCarbonContent}>: was incorrectly
     defined with unit `kg of CO2e / declaredUnit`. The unit is now defined as `kg / declaredUnit`
 2. property <{ProductFootprint/status}>: minor documentation improvements
 3. Action [=Action ListFootprints=]: minor documentation improvements
 4. property <{CarbonFootprint/biogenicAccountingMethodology}>: addition of an advisement
+5. section [[#dt-dataqualityindicators]] is now referencing Table 9 of the Pathfinder Framework
 
 
 ## Version 2.0.1-20230314 (Mar 14, 2023) ## {#changelog-2.0.1-20230314}
