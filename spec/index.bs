@@ -5,7 +5,7 @@ Level: 1
 Status: LD
 URL: http://sine-fdn.github.io/cti-usecase-001/spec
 Mailing List: pact@wbcsd.org
-Editor: 
+Editor:
   Martin Pompéry, SINE Foundation https://sine.foundation/, martin@sine.foundation
   Cecilia Valeri, WBCSD https://www.wbcsd.org/, valeri@wbcsd.org
 Abstract: This document specifies a data model for GHG emission data at product level based on the Pathfinder Framework Version 1, and a protocol for interoperable exchange of GHG emission data at product level.
@@ -16,9 +16,9 @@ Boilerplate: omit copyright, omit conformance
 
 # Introduction # {#intro}
 
-This document is the first specification in the context of the [=Pathfinder Network=]. It contains technical specifications to enable the exchange of standardized greenhouse gas ([=GHG=]) data at product level across [=interoperable=] [=host system|technology solutions=] (i.e., the Use Case 001). 
+This document is the first specification in the context of the [=Pathfinder Network=]. It contains technical specifications to enable the exchange of standardized greenhouse gas ([=GHG=]) data at product level across [=interoperable=] [=host system|technology solutions=] (i.e., the Use Case 001).
 
-This Use Case 001 document specifies a [[#data-model|data model]] and an [[#api|HTTP REST API]] for the interoperable exchange of product footprint information with a special focus on [=PCF|product carbon footprints=] ([=PCF=]) between independent solutions. It further specifies rules for conformance of [=host systems=], the [[#data-model|digital representation of product footprints]] and related data data life cycle rules. 
+This Use Case 001 document specifies a [[#data-model|data model]] and an [[#api|HTTP REST API]] for the interoperable exchange of product footprint information with a special focus on [=PCF|product carbon footprints=] ([=PCF=]) between independent solutions. It further specifies rules for conformance of [=host systems=], the [[#data-model|digital representation of product footprints]] and related data data life cycle rules.
 
 The semantic foundation of the data model is the [=Pathfinder Framework|Pathfinder Framework Version 1=].
 
@@ -181,7 +181,7 @@ A ProductFootprint has the following properties:
 				<td>String
 				<td>M
         <td>
-            The version of the ProductFootprint data specification. 
+            The version of the ProductFootprint data specification.
             The value of `specVersion` MUST be `1.0.0`.
 
 			<tr>
@@ -261,10 +261,10 @@ A CarbonFootprint represents the carbon footprint of a product and related data 
 ### Scope of a CarbonFootprint ### {#dt-carbonfootprint-scope}
 
 Each CarbonFootprint is scoped by
-1. Time: the time is defined by property <{CarbonFootprint/reportingPeriodStart}> (including) and property <{CarbonFootprint/reportingPeriodEnd}> (excluding); see the [=Pathfinder Framework=] Section 7.2.1 
+1. Time: the time is defined by property <{CarbonFootprint/reportingPeriodStart}> (including) and property <{CarbonFootprint/reportingPeriodEnd}> (excluding); see the [=Pathfinder Framework=] Section 7.2.1
 2. Geography: further set by the properties <{CarbonFootprint/geographyRegionOrSubregion}>, <{CarbonFootprint/geographyCountry}>, and <{CarbonFootprint/geographyCountrySubdivision}>; see the [=Pathfinder Framework=] Section 7.2.2.
 
-If a CarbonFootprint 
+If a CarbonFootprint
 1. Has geographical granularity `Global`, then the properties <{CarbonFootprint/geographyCountry}> and <{CarbonFootprint/geographyRegionOrSubregion}> and <{CarbonFootprint/geographyCountrySubdivision}> MUST be `undefined`;
 2. Has a regional or sub-regional geographical granularity, then the property <{CarbonFootprint/geographyRegionOrSubregion}> MUST be `defined` and the properties <{CarbonFootprint/geographyCountry}> and <{CarbonFootprint/geographyCountrySubdivision}> MUST be `undefined`;
 3. Has a country-specific geographical granularity, then property <{CarbonFootprint/geographyCountry}> MUST be `defined` AND the properties <{CarbonFootprint/geographyRegionOrSubregion}> and <{CarbonFootprint/geographyCountrySubdivision}> MUST be `undefined`;
@@ -336,13 +336,13 @@ The properties of a CarbonFootprint:
 				<td>String
 				<td>M
         		<td>
-					The emissions from the combustion of fossil sources. The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg of CO2 equivalent per kilogram` (`kgCO2e / kg`). 
+					The emissions from the combustion of fossil sources. The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg of CO2 equivalent per kilogram` (`kgCO2e / kg`).
             		The value MUST be a [=decimal=] equal to or greater than zero.
 			<tr>
 				<td><dfn>biogenicEmissions</dfn> : <{BiogenicEmissions}>
 				<td>Object
 				<td>O
-        <td>If present, the value MUST be the biogenic emission factors conforming to data type <{BiogenicEmissions}>. 
+        <td>If present, the value MUST be the biogenic emission factors conforming to data type <{BiogenicEmissions}>.
 			<tr>
 				<td><dfn>biogenicCarbonContent</dfn> : [=Decimal=]
 				<td>String
@@ -392,8 +392,8 @@ The properties of a CarbonFootprint:
 				<td>Array
 				<td>O
         <td>
-            If secondary data was used to calculate the <{CarbonFootprint}>, then it MUST include the property <{CarbonFootprint/emissionFactorSources}> with value the emission factors used for the <{CarbonFootprint}> calculation. 
-            
+            If secondary data was used to calculate the <{CarbonFootprint}>, then it MUST include the property <{CarbonFootprint/emissionFactorSources}> with value the emission factors used for the <{CarbonFootprint}> calculation.
+
             See the Pathfinder Framework Section 6.2.
 
             If no secondary data is used, this property MUST BE `undefined`.
@@ -546,7 +546,7 @@ BiogenicEmissions contains biogenic emission values according to the GHG Protoco
 
 ### Properties ### {#dt-biogenicemissions-properties}
 
-Data type <{BiogenicEmissions}> has the following properties. 
+Data type <{BiogenicEmissions}> has the following properties.
 
 At least one property of a <{BiogenicEmissions}> MUST be present.
 
@@ -554,7 +554,7 @@ At least one property of a <{BiogenicEmissions}> MUST be present.
 	<table class="data">
 		<thead>
 			<tr>
-				<th>Property	
+				<th>Property
         <th>Specification
 		<tbody>
 			<tr>
@@ -563,7 +563,7 @@ At least one property of a <{BiogenicEmissions}> MUST be present.
 
 			<tr>
 				<td><dfn>landUseChangeEmissions</dfn>: [=Decimal=]
-        <td>If present, the land use change emissions (e.g. due to deforestation) as a decimal number equal to, greater or lower than zero. This value must include direct land use change (dLUC) where available, otherwise statistical land use change (sLUC) can be used. If available, including indirect land use change (iLUC) to remain optional. 
+        <td>If present, the land use change emissions (e.g. due to deforestation) as a decimal number equal to, greater or lower than zero. This value must include direct land use change (dLUC) where available, otherwise statistical land use change (sLUC) can be used. If available, including indirect land use change (iLUC) to remain optional.
 
 			<tr>
 				<td><dfn>otherEmissions</dfn> : [=Decimal=]
@@ -621,7 +621,7 @@ A ProductOrSectorSpecificRule refers to a set of product or sector specific rule
 :: A ProductOrSectorSpecificRule MUST include the property `ruleNames` with value the non-empty set of rules applied from the specified <{ProductOrSectorSpecificRule/operator}>.
 
 : <dfn>otherOperatorName</dfn> (optional, data type: [=NonEmptyString=])
-:: 
+::
     If the value of property <{ProductOrSectorSpecificRule/operator}> is `Other`, a <{ProductOrSectorSpecificRule}> MUST include the property `otherOperatorName` with value the name of the operator. In this case, the operator declared MUST NOT be included in the definition of {{ProductOrSectorSpecificRuleOperator}}.
     If the value of property operator is NOT Other, the property <{ProductOrSectorSpecificRule/otherOperatorName}> of a <{ProductOrSectorSpecificRule}> MUST be `undefined`.
 
@@ -678,7 +678,7 @@ Each NonEmptyStringVector MUST be encoded as an array of [=NonEmptyStrings=].
 
 ## Data Type: <dfn>CpcCode</dfn> ## {#dt-cpccode}
 
-A CpCode represents a UN CPC Code version 2.1 value. 
+A CpCode represents a UN CPC Code version 2.1 value.
 
 Example value of the CPC code for "wood in chips or particles":
 <div class="example">`31230`</div>
@@ -782,7 +782,7 @@ Each [=String=] MUST be encoded as a JSON String.
 
 A Decimal number in the range of and including `0` and `100`.
 
-Example values: 
+Example values:
 <div class=example>
     - `100`
     - `23.0`
@@ -817,7 +817,7 @@ See [[[#dt-decimal-json]]].
 
 Each DateTime MUST be a date and time string conforming to ISO 8601. The timezone MUST be UTC.
 
-Example value for beginning of March, the year 2020, UTC: 
+Example value for beginning of March, the year 2020, UTC:
 <div class=example>
   `2020-03-01T00:00:00Z`
 </div>
@@ -845,7 +845,7 @@ Each [=ISO3166CC=] MUST be encoded as a JSON String.
 
 ## Data Type: <dfn>Decimal</dfn> ## {#dt-decimal}
 
-A dotted-decimal number. 
+A dotted-decimal number.
 
 Example values:
 <div class=example>
@@ -868,7 +868,7 @@ A PfId MUST be a UUID v4 as specified in [[!RFC4122]].
 
 Each PfId MUST be encoded as a JSON String.
 
-Example JSON string value: 
+Example JSON string value:
 
 <div class=example>
 ```json
@@ -892,7 +892,7 @@ The purpose of this section is to clarify what constitutes an occasion for an up
 
 ## Definition of update ## {#lifecycle-update}
 
-A Product Footprint update SHOULD be limited to correct reported values.  
+A Product Footprint update SHOULD be limited to correct reported values.
 A Product Footprint update SHOULD be done whenever the value of 1 or more properties of the Product Footprint change which could directly or indirectly affect the Product Footprint calculation or interpretation by data recipients of the Product Footprint.
 
 A Product Footprint update MUST NOT occur to change the [[#dt-carbonfootprint-scope|reporting period]]. For this case, a data owner MUST create a Product Footprint with a new <{ProductFootprint/id|Product Footprint identifier}>.
@@ -906,7 +906,7 @@ A Product Footprint CAN be updated by a data owner.
 
 A Product Footprint update MUST include 1 or more changes to a property, excluding changes to properties <{ProductFootprint/version}> and <{ProductFootprint/updated}>. A change to a property includes a transition to or from being `undefined`.
 
-Whenever a [=data owner=] or a [=host system=] updates a Product Footprint according to [[#lifecycle-update]], 
+Whenever a [=data owner=] or a [=host system=] updates a Product Footprint according to [[#lifecycle-update]],
 
 1. it MUST set the value of property <{ProductFootprint/version}> to be by strictly greater than the value of the property <{ProductFootprint/version}> of all preceding footprints, and
 2. it SHOULD set the value of property <{ProductFootprint/updated}> to the timestamp of the update. The value SHOULD be strictly greater than the value of the property <{ProductFootprint/updated}> of all preceding Product Footprints.
@@ -937,7 +937,7 @@ Issue: reword this introduction
 
 A host system serves the needs of a single or multiple [=data owners=]. Additionally, a host system can also serve the needs of [=data recipients=] if it retrieves data from host systems by calling the Use Case 001 HTTP REST API ([[#api-actions]]).
 
-Interoperable data exchange between a data owner and a data recipient can be achieved by 
+Interoperable data exchange between a data owner and a data recipient can be achieved by
 
 1. the data owner offering <{ProductFootprint}> data through a host system that implements the [[#api|Use Case 001 HTTP REST API]], and
 2. the data recipient making [[#api-auth|authenticated calls]] to retrieve ProductFootprint data; e.g. by calling the [=Action ListFootprints=].
@@ -947,7 +947,7 @@ Interoperable data exchange between a data owner and a data recipient can be ach
 
 <div class=note>Non-normative</div>
 
-This standard focuses on the necessary definitions to enable interoperable data exchange between data owners and data recipients. This is mediated through a host system which implements the HTTP REST API defined in this document. 
+This standard focuses on the necessary definitions to enable interoperable data exchange between data owners and data recipients. This is mediated through a host system which implements the HTTP REST API defined in this document.
 
 Within the [=PACT=] Project, conforming host systems are called solutions.
 
@@ -965,21 +965,21 @@ The following section briefly describes some of the additional functionality whi
 
 ### Establishing data exchange flows between Host Systems ### {#api-data-exchange}
 
-Issue: add section on data exchange between host systems, detailling the information needed for establishing host system-to-host system data exchange, URL examples 
+Issue: add section on data exchange between host systems, detailling the information needed for establishing host system-to-host system data exchange, URL examples
 
 
 ### A note on data synchronization between Host Systems ### {#api-host-system-sync}
 
 <div class=note>Non-normative</div>
 
-The data flow specified in this document is directed. 
+The data flow specified in this document is directed.
 
 <div class=example>
   In a supplier-vendor relationship, the supplier is the [=data owner=] and the customer the [=data recipient=]. The data owner has the responsibility to run a [=host system=] (also called "solution") and the data recipient may then retrieve the data through the data owner's host system.
 </div>
 
 If a data owner has updated a product footprint, it is assumed that the product footprint is made available through the Use Case 001 HTTP REST API as soon as possible.<br/>
-Additionally, each product footprint returned from a host system has properties to disclose whether a product footprint was updated. These properties are: <{ProductFootprint/created}>, <{ProductFootprint/updated}>, <{ProductFootprint/version}>. 
+Additionally, each product footprint returned from a host system has properties to disclose whether a product footprint was updated. These properties are: <{ProductFootprint/created}>, <{ProductFootprint/updated}>, <{ProductFootprint/version}>.
 By comparing the value of these properties for a product footprint, identified by its <{ProductFootprint/id}>, solutions can determine whether a footprint has been updated.
 
 Note: in future versions, the functionality for data exchange between host systems and capabilities to synchronize data will be specified and developed further.
@@ -992,7 +992,7 @@ Issue: reword this section
 
 ## Authentication and Request Flows ## {#api-auth}
 
-[=Data recipients=] MUST first retrieve an [=access token=] through [=Action Authenticate=]. 
+[=Data recipients=] MUST first retrieve an [=access token=] through [=Action Authenticate=].
 This is implemented by
 1. the [=data recipient=] calling [=Action Authenticate=] of a [=host system=]
 2. the host system issuing an access token as specified in [[!rfc6749]] Section 4.4.3 and Section 5.1
@@ -1005,7 +1005,9 @@ This is implemented by
 
 ## Actions reference ## {#api-actions}
 
-A [=host system=] MUST implement each of the following actions. A host system MUST offer the actions under https method only.
+A [=host system=] MUST implement each of the following actions. A host system MUST only accept requests using https, not
+http. The host system MUST not respond to requests made using other protocols (not even with a 400 Error or any other http
+status codes).
 
 A host system MAY offer the endpoints under a relative subpath. A host system MUST offer the [=Action ListFootprints=] and [=Action GetFootprint=] under the same Hostname and Subpath.
 
@@ -1024,7 +1026,7 @@ A host system MAY offer the endpoints under a relative subpath. A host system MU
 
 Request an access token using client credentials.
 
-Host systems MUST implement this action in conformance with [[!rfc6749]] Section 4.4 (OAuth2 Client Credentials). 
+Host systems MUST implement this action in conformance with [[!rfc6749]] Section 4.4 (OAuth2 Client Credentials).
 
 Host systems MAY offer this action under a dedicated [=AuthHostname=] and [=AuthSubpath=].
 
@@ -1047,7 +1049,7 @@ content-type: application/x-www-form-urlencoded
 
 With Request parameters:
 
-: <dfn>AuthSubpath</dfn>: 
+: <dfn>AuthSubpath</dfn>:
 :: If a [=host system=] uses a relative subpath dedicated to the purpose of creating an [=access token=], then the requesting [=data recipient=] MUST prepend this subpath.
 
 : <dfn>AuthHostname</dfn>
@@ -1083,7 +1085,7 @@ With action-specific response parameters
 
 ### <dfn>Action ListFootprints</dfn> ### {#api-action-list}
 
-Lists [[#dt-pf|product footprints]] with optional filtering by properties <{ProductFootprint/created}> or <{ProductFootprint/updated}>. 
+Lists [[#dt-pf|product footprints]] with optional filtering by properties <{ProductFootprint/created}> or <{ProductFootprint/updated}>.
 
 [=Host systems=] SHOULD implement an access management system and only return the [[#dt-pf|product footprints]] for which the [=data owner=] granted access to the requesting [=data recipient=].
 
@@ -1107,12 +1109,12 @@ with request parameters:
 :: see [=Bearer Token=] of section [[#api-auth]]
 
 : <dfn>Filter</dfn>
-:: 
-    `filter` is an optional request parameter. If defined,     
+::
+    `filter` is an optional request parameter. If defined,
         - the name of the HTTP request parameter MUST be `filter`
         - the value of the HTTP request parameter MUST conform to the `$filter` syntax as defined by the [ODatav4 specification](https://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html).
 
-        Additionally, the `$filter` statement MUST reference property <{ProductFootprint/created}> or property <{ProductFootprint/updated}> only and MUST use the `eq` operator only.        
+        Additionally, the `$filter` statement MUST reference property <{ProductFootprint/created}> or property <{ProductFootprint/updated}> only and MUST use the `eq` operator only.
 
 #### Response Syntax #### {#api-action-list-response}
 
@@ -1128,7 +1130,7 @@ content-length: <l>[=ContentLength=]</l>
 With response parameters
 
 : <dfn>ListStatusCode</dfn>
-:: 
+::
     If the host system returns a list of product footprints, the `HttpStatusCode` MUST be 200.
 
     If the host system responds with an [=error response=], the `HttpStatusCode` MUST match the HTTP Status Code of the respective [=error response code=].
@@ -1136,22 +1138,22 @@ With response parameters
     If the host system does not return the list of [[#dt-pf|ProductFootprints]], it MUST return an error HTTP Status Code (4xx, 5xx).
 
 : <dfn>ListStatusText</dfn>
-:: 
+::
     The HTTP Status text conforming to the HTTP status code [=ListStatusCode=].
 
 : <dfn>ListResponseBody</dfn>
-:: 
+::
     If the host system accepts the [=access token=], the body MUST be a JSON object with property `data` with value the list of <{ProductFootprint|ProductFootprints}>.
     The list MUST be encoded as a JSON array. If the list is empty, the host system MUST return an empty JSON array.
 
-    Additionally, 
-      
+    Additionally,
+
       - if the request parameter Filter is defined against property updated, then only ProductFootprints with property updated defined and with a value equal to or greater than the timestamp given by the filter SHOULD be included in the Body; or
       - if the filter is against property created, then only ProductFootprints with a creation time equal to or greater than the timestamp given by the filter SHOULD be included in the Body.
 
         <div class=example>
           Example value of Filter:
-          
+
           ```$filter=updated ge 2020-03-01T00:00:00Z```
         </div>
 
@@ -1198,7 +1200,7 @@ content-length: <l>[=ContentLength=]</l>
 With response parameters:
 
 : <dfn>GetStatusCode</dfn>
-::  
+::
     The HTTP Status Code of the response.
 
     If the host system accepts the [=access token=], the HTTP Status Code MUST be 200.<br/>
@@ -1210,14 +1212,14 @@ With response parameters:
     The HTTP Status text conforming to the HTTP status code [=GetStatusCode=].
 
 : <dfn>GetResponseBody</dfn>
-:: 
-    If the host system accepts the access token and allows the requesting data recipient to access the requested product footprint, the body MUST be a JSON object with property data. The value of property data MUST be the product footprint with footprint identifier [=GetPfId=]. 
-    
+::
+    If the host system accepts the access token and allows the requesting data recipient to access the requested product footprint, the body MUST be a JSON object with property data. The value of property data MUST be the product footprint with footprint identifier [=GetPfId=].
+
     If there were changes to the requested product footprint with identifier [=GetPfId=], the host system SHOULD return the latest product footprint identified with identifier [=GetPfId=] and the maximum value of property version.
 
     Note: If a host system implements the life cycle rules, then the “latest” version of the requested product footprint is the one with the maximum value of version with <{ProductFootprint/id}> equal to [=GetPfId=].
 
-    If the host system does not accept the access token, GetResponseBody MUST be an [=error response=] with code [=AccessDenied=]. 
+    If the host system does not accept the access token, GetResponseBody MUST be an [=error response=] with code [=AccessDenied=].
 
     If the host system does not accept the access token because it expired, GetResponseBody SHOULD be an error response with code [=TokenExpired=].
 
@@ -1242,7 +1244,7 @@ With response parameters:
 
 Whenever a [=host system=] returns an [=error response=], it MUST send a HTTP response such that
   - the HTTP Status Code equals the `HTTP Status Code` defined for the respective [=error response code=] (see <a href="#api-errors-table">Error Codes Table</a>)
-  - with content type set to `application/json`, and 
+  - with content type set to `application/json`, and
   - with response body the [=error response=]
 
 A <dfn>error response</dfn> is a JSON object with the following properties:
@@ -1337,7 +1339,7 @@ content-length: 1831
 server: Pathfinder
 </pre>
 
-Example response body: 
+Example response body:
 <pre class=include-code>
 path: examples/list-footprints-response.json
 highlight: json
@@ -1381,4 +1383,3 @@ highlight: json
 <pre class=include>
 path: LICENSE.md
 </pre>
-

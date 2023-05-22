@@ -1,9 +1,9 @@
 <pre class='metadata'>
-Title: Technical Specifications for PCF Data Exchange (Version 2.0.1-20230314)
+Title: Technical Specifications for PCF Data Exchange (Version 2.0.1-20230522)
 Shortname: data-exchange-protocol
 Level: 1
 Status: LD
-ED: https://wbcsd.github.io/tr/2023/data-exchange-protocol-20230314/
+ED: https://wbcsd.github.io/tr/2023/data-exchange-protocol-20230522/
 TR: https://wbcsd.github.io/tr/2023/data-exchange-protocol-20230221/
 Mailing List: public-dev@pathfinder.sine.dev
 Editor: Martin Pompéry (SINE Foundation), https://sine.foundation, martin@sine.foundation
@@ -208,7 +208,7 @@ A ProductFootprint has the following properties:
         <td>String
         <td>M
         <td>
-            The version of the ProductFootprint data specification with value `2.0.1-20230314`.
+            The version of the ProductFootprint data specification with value `2.0.1-20230522`.
 
             Advisement: Subsequent revisions will update this value according to [Semantic Versioning 2.0.0](https://semver.org/lang/de/).
       <tr>
@@ -238,15 +238,15 @@ A ProductFootprint has the following properties:
         <td>String
         <td>M
         <td>
-          If defined, the value must be one of the following values:
+          Each ProductFootprint MUST include the property `status` with value one of the following values:
 
           : Active
           :: The default status of a product footprint is `Active`. A product
-               footprint with <{ProductFootprint/status}> `Active` can be used
+               footprint with <{ProductFootprint/status}> `Active` CAN be used
                by a [=data recipients=], e.g. for product footprint calculations.
 
           : Deprecated
-          :: The product footprint is deprecated and should not be used for e.g. product footprint calculations by [=data recipients=].
+          :: The product footprint is deprecated and SHOULD NOT be used for e.g. product footprint calculations by [=data recipients=].
 
           See [[#lifecycle]] for details.
       <tr>
@@ -448,7 +448,7 @@ Advisement:
         <td><dfn>biogenicCarbonContent</dfn> : [=Decimal=]
         <td>String
         <td>M
-        <td>The biogenic carbon amount embodied in the product. The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg of CO2 equivalent per declared unit` (`kgCO2e / declaredUnit`), expressed as a [=decimal=] equal to or greater than zero.
+        <td>The biogenic carbon amount embodied in the product. The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg per declared unit` (`kg / declaredUnit`), expressed as a [=decimal=] equal to or greater than zero.
       <tr>
         <td><dfn>dLucGhgEmissions</dfn> : [=Decimal=]
         <td>String
@@ -527,6 +527,7 @@ Advisement:
           : Quantis
           :: For the Quantis [Accounting for Natural Climate Solutions](https://quantis.com/report/accounting-for-natural-climate-solutions-guidance/) Guidance
 
+          Advisement: The enumeration of standards above will be evolved in future revisions. Account for this when implementing the validation of this property.
       <tr>
         <td><dfn>boundaryProcessesDescription</dfn>
         <td>String
@@ -662,7 +663,7 @@ The following properties are defined for data type <{DataQualityIndicators}>:
         <td><dfn>technologicalDQR</dfn>
         <td>Number
         <td>
-          Quantitative data quality rating (DQR) based on the data quality matrix (See [=Pathfinder Framework=] Table 5), 
+          Quantitative data quality rating (DQR) based on the data quality matrix (See [=Pathfinder Framework=] Table 9),
           scoring the technological representativeness of the sources used for PCF calculation based on 
           weighted average of all inputs representing >5% of PCF emissions.
 
@@ -671,7 +672,7 @@ The following properties are defined for data type <{DataQualityIndicators}>:
         <td><dfn>temporalDQR</dfn>
         <td>Number
         <td>
-          Quantitative data quality rating (DQR) based on the data quality matrix (Table 5), 
+          Quantitative data quality rating (DQR) based on the data quality matrix (Table 9),
           scoring the temporal representativeness of the sources used for PCF calculation based on 
           weighted average of all inputs representing >5% of PCF emissions.
 
@@ -680,7 +681,7 @@ The following properties are defined for data type <{DataQualityIndicators}>:
         <td><dfn>geographicalDQR</dfn>
         <td>Number
         <td>
-          Quantitative data quality rating (DQR) based on the data quality matrix (Table 5), 
+          Quantitative data quality rating (DQR) based on the data quality matrix (Table 9),
           scoring the geographical representativeness of the sources used for PCF calculation 
           based on weighted average of all inputs representing >5% of PCF emissions.
 
@@ -689,7 +690,7 @@ The following properties are defined for data type <{DataQualityIndicators}>:
         <td><dfn>completenessDQR</dfn>
         <td>Number
         <td>
-          Quantitative data quality rating (DQR) based on the data quality matrix (Table 5), 
+          Quantitative data quality rating (DQR) based on the data quality matrix (Table 9),
           scoring the completeness of the data collected for PCF calculation based on 
           weighted average of all inputs representing >5% of PCF emissions.
 
@@ -698,7 +699,7 @@ The following properties are defined for data type <{DataQualityIndicators}>:
         <td><dfn>reliabilityDQR</dfn>
         <td>Number
         <td>
-          Quantitative data quality rating (DQR) based on the data quality matrix (Table 5),
+          Quantitative data quality rating (DQR) based on the data quality matrix (Table 9),
           scoring the reliability of the data collected for PCF calculation based on
           weighted average of all inputs representing >5% of PCF emissions.
 
@@ -1628,7 +1629,7 @@ With action-specific response parameters
 
 ## <dfn>Action ListFootprints</dfn> ## {#api-action-list}
 
-Lists [[#dt-pf|product footprints]] with optional filtering by properties <{ProductFootprint/created}> or <{ProductFootprint/updated}>. 
+Lists [[#dt-pf|product footprints]] with OPTIONAL filtering by properties <{ProductFootprint/created}> or <{ProductFootprint/updated}>. 
 
 [=Host systems=] SHOULD implement an access management system and only return the [[#dt-pf|product footprints]] for which the [=data owner=] granted access to the requesting [=data recipient=].
 
@@ -1680,7 +1681,7 @@ with request parameters:
 
 : <dfn>Filter</dfn>
 :: 
-    `Filter` is an optional request parameter. If defined,     
+    `Filter` is an OPTIONAL request parameter. If defined,
         1. the name of the HTTP request parameter MUST be `$filter`
         2. the value of the HTTP request parameter MUST conform to the `$filter` syntax as defined by the [ODatav4 specification](https://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html).
 
@@ -1710,7 +1711,7 @@ with request parameters:
 
 : <dfn>Limit</dfn>
 ::
-    `Limit` is an optional request parameter. If defined,
+    `Limit` is an OPTIONAL request parameter. If defined,
       1. the name of the HTTP request parameter MUST be `limit`
       2. and the value MUST be a positive integer.
 
@@ -2184,7 +2185,19 @@ path: LICENSE.md
 # Appendix B: Changelog # {#changelog}
 
 
-## Version 2.0.1-20230314 (Mar 1, 2023) ## {#changelog-2.0.1-20230314}
+## Version 2.0.1-20230522 (May 22, 2023) ## {#changelog-2.0.1-20230522}
+
+This version fixes 1 definition incorrectness and includes 4 documentation improvements.
+
+1. property <{CarbonFootprint/biogenicCarbonContent}>: was incorrectly
+    defined with unit `kg of CO2e / declaredUnit`. The unit is now defined as `kg / declaredUnit`
+2. property <{ProductFootprint/status}>: minor documentation improvements
+3. Action [=Action ListFootprints=]: minor documentation improvements
+4. property <{CarbonFootprint/biogenicAccountingMethodology}>: addition of an advisement
+5. section [[#dt-dataqualityindicators]] is now referencing Table 9 of the Pathfinder Framework
+
+
+## Version 2.0.1-20230314 (Mar 14, 2023) ## {#changelog-2.0.1-20230314}
 
 This version fixes 2 discrepancies between the Pathfinder Framework 
 Version 2 and the data model in this specification.
