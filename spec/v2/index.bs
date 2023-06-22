@@ -1859,7 +1859,13 @@ A [=host system=] SHOULD only accept events after authentication (see [[#api-aut
 
 The Action Events endpoint accepts CloudEvent events (see [[!CE]]) encoded in "Structured Content Mode" (see [[!CE-Structured-Content-Mode]].
 
-Support for Action Events is OPTIONAL. If a [=host system=] does NOT implement the [=Action Events=] endpoint, it SHOULD respond to authenticated Action Events calls with an [=error response=] with code [=NotImplemented=].
+Support for Action Events is OPTIONAL. 
+
+If a [=host system=] does NOT implement the [=Action Events=] endpoint, 
+
+1. it SHOULD respond with a conforming [=error response=] and HTTP [=error response code=].
+1. it SHOULD respond to authenticated Action Events calls with an [=error response=] with code [=NotImplemented=].
+2. it MUST respond with an error HTTP Status Code (4xx, 5xx).
 
 
 ### Request Syntax ### {#api-action-events-request}
@@ -2220,6 +2226,7 @@ This version fixes 2 definition incorrectness
 In addition, this version:
 
 1. clarifies in [[#api-action-list]] the semantics of the [=Filter=] processing being OPTIONAL by introducing section [[#api-action-list-filtering]]
+2. clarifies that a [=host system=] must return HTTP error status codes if it does not implement the events endpoint (see [[#api-action-events]]) 
 
 
 ## Version 2.0.1-20230522 (May 22, 2023) ## {#changelog-2.0.1-20230522}
