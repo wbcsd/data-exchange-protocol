@@ -1629,7 +1629,7 @@ With action-specific response parameters
 
 ## <dfn>Action ListFootprints</dfn> ## {#api-action-list}
 
-Lists [[#dt-pf|product footprints]] with OPTIONAL filtering by properties <{ProductFootprint/created}> or <{ProductFootprint/updated}>. 
+Lists [[#dt-pf|product footprints]] with [[#api-action-list-pagination|pagination]] and OPTIONAL [=Filter|filtering=]. 
 
 [=Host systems=] SHOULD implement an access management system and only return the [[#dt-pf|product footprints]] for which the [=data owner=] granted access to the requesting [=data recipient=].
 
@@ -1694,15 +1694,21 @@ with request parameters:
         Get footprints with CPC code "3342":
 
         ```$filter=productCategoryCpc eq '3342'```
+    </div>
 
+    <div class=example>
         Get footprints scoped for country:
 
         ```$filter=pcf/geographyCountry eq 'DE'```
+    </div>
 
+    <div class=example id="example-filter-period">
         Get footprints for 2023 reporting period:
 
-        ```$filter=(pcf/reportingPeriodStart ge '2023-01-01T00:00:00.000Z') and (pcf/reportingPeriodStart lt '2024-01-01T00:00:00.000Z') and (pcf/reportingPeriodEnd ge '2023-01-01T00:00:00.000Z') and (pcf/reportingPeriodEnd lt '2024-01-01T00:00:00.000Z')   ```
+        ```$filter=(pcf/referencePeriodStart ge '2023-01-01T00:00:00.000Z') and (pcf/referencePeriodEnd lt '2024-01-01T00:00:00.000Z') ```
+    </div>
 
+    <div class=example>
         Get footprints for a specific product:
 
         ```$filter=productIds/any(productId:(productId eq 'urn:...'))```
@@ -2187,10 +2193,11 @@ path: LICENSE.md
 
 ## Version 2.0.1-20230623 (Jun 12, 2023) ## {#changelog-2.0.1-20230623}
 
-This version fixes 1 definition incorrectness
+This version fixes 2 definition incorrectness
 
 1. property <{CarbonFootprint/fossilCarbonContent}>: was incorrectly
     defined with unit `kg of CO2e / declaredUnit`. The unit is now defined as `kg / declaredUnit`
+2. fix to the `referencePeriod` <a href=#example-filter-period>Filter Example</a>
 
 ## Version 2.0.1-20230522 (May 22, 2023) ## {#changelog-2.0.1-20230522}
 
