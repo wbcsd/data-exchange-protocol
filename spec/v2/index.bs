@@ -2209,7 +2209,7 @@ path: LICENSE.md
 # Appendix B: Changelog # {#changelog}
 
 
-## Version 2.0.1-20230623 (Jun 12, 2023) ## {#changelog-2.0.1-20230623}
+## Version 2.0.1-20230623 (Jun 23, 2023) ## {#changelog-2.0.1-20230623}
 
 This version fixes 2 definition incorrectness
 
@@ -2217,9 +2217,9 @@ This version fixes 2 definition incorrectness
     defined with unit `kg of CO2e / declaredUnit`. The unit is now defined as `kg / declaredUnit`
 2. fix to the `referencePeriod` <a href=#example-filter-period>Filter Example</a>
 
-In addition, this version clarifies:
+In addition, this version:
 
-1. in [[#api-action-list]] the semantics of the [=Filter=] processing being OPTIONAL.
+1. clarifies in [[#api-action-list]] the semantics of the [=Filter=] processing being OPTIONAL by introducing section [[#api-action-list-filtering]]
 
 
 ## Version 2.0.1-20230522 (May 22, 2023) ## {#changelog-2.0.1-20230522}
