@@ -1,9 +1,9 @@
 <pre class='metadata'>
-Title: Technical Specifications for PCF Data Exchange (Version 2.0.1-20230522)
+Title: Technical Specifications for PCF Data Exchange (Version 2.0.1-20230623)
 Shortname: data-exchange-protocol
 Level: 1
 Status: LD
-ED: https://wbcsd.github.io/tr/2023/data-exchange-protocol-20230522/
+ED: https://wbcsd.github.io/tr/2023/data-exchange-protocol-20230623/
 TR: https://wbcsd.github.io/tr/2023/data-exchange-protocol-20230221/
 Mailing List: public-dev@pathfinder.sine.dev
 Editor: Martin Pompéry (SINE Foundation), https://sine.foundation, martin@sine.foundation
@@ -208,7 +208,7 @@ A ProductFootprint has the following properties:
         <td>String
         <td>M
         <td>
-            The version of the ProductFootprint data specification with value `2.0.1-20230522`.
+            The version of the ProductFootprint data specification with value `2.0.1-20230623`.
 
             Advisement: Subsequent revisions will update this value according to [Semantic Versioning 2.0.0](https://semver.org/lang/de/).
       <tr>
@@ -443,7 +443,7 @@ Advisement:
         <td><dfn>fossilCarbonContent</dfn> : [=Decimal=]
         <td>String
         <td>M
-        <td>The fossil carbon amount embodied in the product. The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg of CO2 equivalent per declared unit` (`kgCO2e / declaredUnit`), expressed as a [=decimal=] equal to or greater than zero.
+        <td>The fossil carbon amount embodied in the product. The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg per declared unit` (`kg / declaredUnit`), expressed as a [=decimal=] equal to or greater than zero.
       <tr>
         <td><dfn>biogenicCarbonContent</dfn> : [=Decimal=]
         <td>String
@@ -2184,6 +2184,13 @@ path: LICENSE.md
 
 # Appendix B: Changelog # {#changelog}
 
+
+## Version 2.0.1-20230623 (Jun 12, 2023) ## {#changelog-2.0.1-20230623}
+
+This version fixes 1 definition incorrectness
+
+1. property <{CarbonFootprint/fossilCarbonContent}>: was incorrectly
+    defined with unit `kg of CO2e / declaredUnit`. The unit is now defined as `kg / declaredUnit`
 
 ## Version 2.0.1-20230522 (May 22, 2023) ## {#changelog-2.0.1-20230522}
 
