@@ -1629,9 +1629,27 @@ With action-specific response parameters
 
 ## <dfn>Action ListFootprints</dfn> ## {#api-action-list}
 
-Lists [[#dt-pf|product footprints]] with [[#api-action-list-pagination|pagination]] and OPTIONAL [=Filter|filtering=]. 
+Lists [[#dt-pf|product footprints]] with [[#api-action-list-pagination|pagination]] and optional [[#api-action-list-filtering|filtering]].
 
 [=Host systems=] SHOULD implement an access management system and only return the [[#dt-pf|product footprints]] for which the [=data owner=] granted access to the requesting [=data recipient=].
+
+### Filtering ### {#api-action-list-filtering}
+
+Filtering CAN be requested by a [=data recipient=] by setting a conforming [=Filter=] request parameter.
+
+Note: The filter statement syntax is described at the [=Filter=] request parameter.
+
+Support for [=Filter|filtering=] by a [=host system=] is OPTIONAL such that
+
+1. if a [=host system=] does not implement Filtering, it MUST process the
+     request as if no [=Filter=] was provided
+2. If a [=host system=] implements Filtering, it CAN process the [=filter=]
+     statement on a best-effort basis:
+     1. it CAN ignore the filter statement or parts of the filter statement, or
+     2. it CAN refuse to process the specific filter statement if it does not support
+          the filter statement or parts of it. In this case, it MUST return
+          an [=error response=] with code [=NotImplemented=].
+
 
 ### Pagination ### {#api-action-list-pagination}
 
@@ -2198,6 +2216,11 @@ This version fixes 2 definition incorrectness
 1. property <{CarbonFootprint/fossilCarbonContent}>: was incorrectly
     defined with unit `kg of CO2e / declaredUnit`. The unit is now defined as `kg / declaredUnit`
 2. fix to the `referencePeriod` <a href=#example-filter-period>Filter Example</a>
+
+In addition, this version clarifies:
+
+1. in [[#api-action-list]] the semantics of the [=Filter=] processing being OPTIONAL.
+
 
 ## Version 2.0.1-20230522 (May 22, 2023) ## {#changelog-2.0.1-20230522}
 
