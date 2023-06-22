@@ -460,7 +460,7 @@ Advisement:
         <td>String
         <td>O*
         <td>If present, GHG emissions and removals associated with land-management-related changes, including non-CO2 sources. 
-          The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg of CO2 equivalent per declared unit` (`kgCO2e / declaredUnit`), expressed as a [=decimal=] equal to or greater than zero.
+          The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg of CO2 equivalent per declared unit` (`kgCO2e / declaredUnit`), expressed as a [=decimal=].
 
           Note: version 1 did not explictly include non-CO2 sources. This is now included in the definition.
       <tr>
@@ -482,7 +482,7 @@ Advisement:
         <td><dfn>biogenicCarbonWithdrawal</dfn> : [=Decimal=]
         <td>String
         <td>O*
-        <td>If present, the Biogenic carbon content in the product converted to CO2e. The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg` expressed as a [=decimal=] equal to or greater than zero.
+        <td>If present, the Biogenic carbon content in the product converted to CO2e. The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg` expressed as a [=decimal=].
       <tr>
         <td><dfn>aircraftGhgEmissions</dfn> : [=Decimal=]
         <td>String
@@ -2226,12 +2226,15 @@ path: LICENSE.md
 
 ## Version 2.0.1-20230623 (Jun 23, 2023) ## {#changelog-2.0.1-20230623}
 
-This version fixes 2 definition incorrectness
+This version fixes 5 definition incorrectness
 
 1. property <{CarbonFootprint/fossilCarbonContent}>: was incorrectly
     defined with unit `kg of CO2e / declaredUnit`. The unit is now defined as `kg / declaredUnit`
 2. fix to the `referencePeriod` <a href=#example-filter-period>Filter Example</a>
 3. fixed typo in the definition of <{CarbonFootprint/referencePeriodEnd}>
+4. fixed definition of <{CarbonFootprint/landManagementGhgEmissions}>: previously, it was incorrectly defined as a non-negative decimal
+5. fixed definition of <{CarbonFootprint/biogenicCarbonWithdrawal}>: previously, it was incorrectly defined as a non-negative decimal
+
 
 In addition, this version:
 
@@ -2239,7 +2242,7 @@ In addition, this version:
 2. clarifies that a [=host system=] must return HTTP error status codes if it does not implement the events endpoint (see [[#api-action-events]]) 
 3. clarified the [=PCF=] term definition
 4. fixed linking to semantic versioning document
-5. reworded properties <{CarbonFootprint/referencePeriodStart}> and <{CarbonFootprint/referencePeriodEnd}>
+5. reworded <{CarbonFootprint/referencePeriodStart}> and <{CarbonFootprint/referencePeriodEnd}>
 
 
 ## Version 2.0.1-20230522 (May 22, 2023) ## {#changelog-2.0.1-20230522}
