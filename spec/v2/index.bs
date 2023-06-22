@@ -110,7 +110,8 @@ The license can be found in [[#license]].
 :: An information network of and for supply chain actors to securely exchange environmental data with each other, with an initial focus on PCF data.
 
 : Product Carbon Footprint (<dfn>PCF</dfn>)
-:: The carbon (equivalent) emissions relating to a product. Products can be any kind of item exchanged between entities, including “pieces”, metric or volumetric quantities of a product, etc. The <{ProductFootprint}> data model is a digital representation of a PCF in accordance with the [=Pathfinder Framework=].
+:: The carbon (equivalent) emissions relating to a product. Products can be any kind of item exchanged between entities, including metric or volumetric quantities of a product. 
+     The <{ProductFootprint}> data model is a digital representation of a PCF in accordance with the [=Pathfinder Framework=].
 
 : Supply Chain Actor (<dfn>SCA</dfn>)
 :: An entity intending on exchanging PCF data with another entity using the technical means specified in this document.
@@ -210,7 +211,7 @@ A ProductFootprint has the following properties:
         <td>
             The version of the ProductFootprint data specification with value `2.0.1-20230623`.
 
-            Advisement: Subsequent revisions will update this value according to [Semantic Versioning 2.0.0](https://semver.org/lang/de/).
+            Advisement: Subsequent revisions will update this value according to [Semantic Versioning 2.0.0](https://semver.org/lang/en/).
       <tr>
         <td><dfn>precedingPfIds</dfn> : [=PfId=]
         <td>Array of Strings
@@ -264,9 +265,7 @@ A ProductFootprint has the following properties:
         <td>If defined, the start of the validity period of the ProductFootprint.
               The <dfn>validity period</dfn> is the time interval during which the ProductFootprint is declared as valid for use by a receiving [=data recipient=].
 
-              The validity period is defined by the properties <{ProductFootprint/validityPeriodStart}> (including) and <{ProductFootprint/validityPeriodEnd}> (excluding).
-
-              The validity period is optional.
+              The validity period is OPTIONAL defined by the properties <{ProductFootprint/validityPeriodStart}> (including) and <{ProductFootprint/validityPeriodEnd}> (excluding).
 
               If no validity period is specified, the ProductFootprint is valid for 3 years starting with <{CarbonFootprint/referencePeriodEnd}>.
 
@@ -540,12 +539,22 @@ Advisement:
         <td><dfn>referencePeriodStart</dfn> : [=DateTime=]
         <td>String
         <td>M
-        <td>The start of the time boundary for which the PCF value is considered to be representative. See the [=Pathfinder Framework=] section 6.1.2.1 for further details.
+        <td>The start (including) of the time boundary for which the PCF value 
+              is considered to be representative. Specifically, this start date
+              represents the earliest date from which activity data was collected
+              to include in the PCF calculation.
+
+              See the [=Pathfinder Framework=] section 6.1.2.1 for further details.
       <tr>
         <td><dfn>referencePeriodEnd</dfn> : [=DateTime=]
         <td>String
         <td>M
-        <td>The start of the time boundary for which the PCF value is considered to be representative. See the [=Pathfinder Framework=] section 6.1.2.1 for further details.
+        <td>The end (excluding) of the time boundary for which the PCF value is 
+              considered to be representative. Specifically, this end date 
+              represents the latest date from which activity data was collected
+              to include in the PCF calculation.
+
+              See the [=Pathfinder Framework=] section 6.1.2.1 for further details.
       <tr>
         <td><dfn>geographyCountrySubdivision</dfn>
         <td>String
@@ -2222,11 +2231,15 @@ This version fixes 2 definition incorrectness
 1. property <{CarbonFootprint/fossilCarbonContent}>: was incorrectly
     defined with unit `kg of CO2e / declaredUnit`. The unit is now defined as `kg / declaredUnit`
 2. fix to the `referencePeriod` <a href=#example-filter-period>Filter Example</a>
+3. fixed typo in the definition of <{CarbonFootprint/referencePeriodEnd}>
 
 In addition, this version:
 
 1. clarifies in [[#api-action-list]] the semantics of the [=Filter=] processing being OPTIONAL by introducing section [[#api-action-list-filtering]]
 2. clarifies that a [=host system=] must return HTTP error status codes if it does not implement the events endpoint (see [[#api-action-events]]) 
+3. clarified the [=PCF=] term definition
+4. fixed linking to semantic versioning document
+5. reworded properties <{CarbonFootprint/referencePeriodStart}> and <{CarbonFootprint/referencePeriodEnd}>
 
 
 ## Version 2.0.1-20230522 (May 22, 2023) ## {#changelog-2.0.1-20230522}
