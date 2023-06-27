@@ -1,9 +1,9 @@
 <pre class='metadata'>
-Title: Technical Specifications for PCF Data Exchange (Version 2.0.1-20230522)
+Title: Technical Specifications for PCF Data Exchange (Version 2.0.1-20230627)
 Shortname: data-exchange-protocol
 Level: 1
 Status: LD
-ED: https://wbcsd.github.io/tr/2023/data-exchange-protocol-20230522/
+ED: https://wbcsd.github.io/tr/2023/data-exchange-protocol-20230627/
 TR: https://wbcsd.github.io/tr/2023/data-exchange-protocol-20230221/
 Mailing List: public-dev@pathfinder.sine.dev
 Editor: Martin Pompéry (SINE Foundation), https://sine.foundation, martin@sine.foundation
@@ -110,7 +110,8 @@ The license can be found in [[#license]].
 :: An information network of and for supply chain actors to securely exchange environmental data with each other, with an initial focus on PCF data.
 
 : Product Carbon Footprint (<dfn>PCF</dfn>)
-:: The carbon (equivalent) emissions relating to a product. Products can be any kind of item exchanged between entities, including “pieces”, metric or volumetric quantities of a product, etc. The <{ProductFootprint}> data model is a digital representation of a PCF in accordance with the [=Pathfinder Framework=].
+:: The carbon (equivalent) emissions relating to a product. Products can be any kind of item exchanged between entities, including metric or volumetric quantities of a product. 
+     The <{ProductFootprint}> data model is a digital representation of a PCF in accordance with the [=Pathfinder Framework=].
 
 : Supply Chain Actor (<dfn>SCA</dfn>)
 :: An entity intending on exchanging PCF data with another entity using the technical means specified in this document.
@@ -208,9 +209,9 @@ A ProductFootprint has the following properties:
         <td>String
         <td>M
         <td>
-            The version of the ProductFootprint data specification with value `2.0.1-20230522`.
+            The version of the ProductFootprint data specification with value `2.0.1-20230627`.
 
-            Advisement: Subsequent revisions will update this value according to [Semantic Versioning 2.0.0](https://semver.org/lang/de/).
+            Advisement: Subsequent revisions will update this value according to [Semantic Versioning 2.0.0](https://semver.org/lang/en/).
       <tr>
         <td><dfn>precedingPfIds</dfn> : [=PfId=]
         <td>Array of Strings
@@ -264,9 +265,7 @@ A ProductFootprint has the following properties:
         <td>If defined, the start of the validity period of the ProductFootprint.
               The <dfn>validity period</dfn> is the time interval during which the ProductFootprint is declared as valid for use by a receiving [=data recipient=].
 
-              The validity period is defined by the properties <{ProductFootprint/validityPeriodStart}> (including) and <{ProductFootprint/validityPeriodEnd}> (excluding).
-
-              The validity period is optional.
+              The validity period is OPTIONAL defined by the properties <{ProductFootprint/validityPeriodStart}> (including) and <{ProductFootprint/validityPeriodEnd}> (excluding).
 
               If no validity period is specified, the ProductFootprint is valid for 3 years starting with <{CarbonFootprint/referencePeriodEnd}>.
 
@@ -443,7 +442,7 @@ Advisement:
         <td><dfn>fossilCarbonContent</dfn> : [=Decimal=]
         <td>String
         <td>M
-        <td>The fossil carbon amount embodied in the product. The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg of CO2 equivalent per declared unit` (`kgCO2e / declaredUnit`), expressed as a [=decimal=] equal to or greater than zero.
+        <td>The fossil carbon amount embodied in the product. The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg per declared unit` (`kg / declaredUnit`), expressed as a [=decimal=] equal to or greater than zero.
       <tr>
         <td><dfn>biogenicCarbonContent</dfn> : [=Decimal=]
         <td>String
@@ -461,7 +460,7 @@ Advisement:
         <td>String
         <td>O*
         <td>If present, GHG emissions and removals associated with land-management-related changes, including non-CO2 sources. 
-          The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg of CO2 equivalent per declared unit` (`kgCO2e / declaredUnit`), expressed as a [=decimal=] equal to or greater than zero.
+          The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg of CO2 equivalent per declared unit` (`kgCO2e / declaredUnit`), expressed as a [=decimal=].
 
           Note: version 1 did not explictly include non-CO2 sources. This is now included in the definition.
       <tr>
@@ -483,7 +482,7 @@ Advisement:
         <td><dfn>biogenicCarbonWithdrawal</dfn> : [=Decimal=]
         <td>String
         <td>O*
-        <td>If present, the Biogenic carbon content in the product converted to CO2e. The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg` expressed as a [=decimal=] equal to or greater than zero.
+        <td>If present, the Biogenic carbon content in the product converted to CO2e. The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg` expressed as a [=decimal=].
       <tr>
         <td><dfn>aircraftGhgEmissions</dfn> : [=Decimal=]
         <td>String
@@ -540,12 +539,22 @@ Advisement:
         <td><dfn>referencePeriodStart</dfn> : [=DateTime=]
         <td>String
         <td>M
-        <td>The start of the time boundary for which the PCF value is considered to be representative. See the [=Pathfinder Framework=] section 6.1.2.1 for further details.
+        <td>The start (including) of the time boundary for which the PCF value 
+              is considered to be representative. Specifically, this start date
+              represents the earliest date from which activity data was collected
+              to include in the PCF calculation.
+
+              See the [=Pathfinder Framework=] section 6.1.2.1 for further details.
       <tr>
         <td><dfn>referencePeriodEnd</dfn> : [=DateTime=]
         <td>String
         <td>M
-        <td>The start of the time boundary for which the PCF value is considered to be representative. See the [=Pathfinder Framework=] section 6.1.2.1 for further details.
+        <td>The end (excluding) of the time boundary for which the PCF value is 
+              considered to be representative. Specifically, this end date 
+              represents the latest date from which activity data was collected
+              to include in the PCF calculation.
+
+              See the [=Pathfinder Framework=] section 6.1.2.1 for further details.
       <tr>
         <td><dfn>geographyCountrySubdivision</dfn>
         <td>String
@@ -1629,9 +1638,27 @@ With action-specific response parameters
 
 ## <dfn>Action ListFootprints</dfn> ## {#api-action-list}
 
-Lists [[#dt-pf|product footprints]] with OPTIONAL filtering by properties <{ProductFootprint/created}> or <{ProductFootprint/updated}>. 
+Lists [[#dt-pf|product footprints]] with [[#api-action-list-pagination|pagination]] and optional [[#api-action-list-filtering|filtering]].
 
 [=Host systems=] SHOULD implement an access management system and only return the [[#dt-pf|product footprints]] for which the [=data owner=] granted access to the requesting [=data recipient=].
+
+### Filtering ### {#api-action-list-filtering}
+
+Filtering CAN be requested by a [=data recipient=] by setting a conforming [=Filter=] request parameter.
+
+Note: The filter statement syntax is described at the [=Filter=] request parameter.
+
+Support for [=Filter|filtering=] by a [=host system=] is OPTIONAL such that
+
+1. if a [=host system=] does not implement Filtering, it MUST process the
+     request as if no [=Filter=] was provided
+2. If a [=host system=] implements Filtering, it CAN process the [=filter=]
+     statement on a best-effort basis:
+     1. it CAN ignore the filter statement or parts of the filter statement, or
+     2. it CAN refuse to process the specific filter statement if it does not support
+          the filter statement or parts of it. In this case, it MUST return
+          an [=error response=] with code [=NotImplemented=].
+
 
 ### Pagination ### {#api-action-list-pagination}
 
@@ -1694,15 +1721,21 @@ with request parameters:
         Get footprints with CPC code "3342":
 
         ```$filter=productCategoryCpc eq '3342'```
+    </div>
 
+    <div class=example>
         Get footprints scoped for country:
 
         ```$filter=pcf/geographyCountry eq 'DE'```
+    </div>
 
+    <div class=example id="example-filter-period">
         Get footprints for 2023 reporting period:
 
-        ```$filter=(pcf/reportingPeriodStart ge '2023-01-01T00:00:00.000Z') and (pcf/reportingPeriodStart lt '2024-01-01T00:00:00.000Z') and (pcf/reportingPeriodEnd ge '2023-01-01T00:00:00.000Z') and (pcf/reportingPeriodEnd lt '2024-01-01T00:00:00.000Z')   ```
+        ```$filter=(pcf/referencePeriodStart ge '2023-01-01T00:00:00.000Z') and (pcf/referencePeriodEnd lt '2024-01-01T00:00:00.000Z') ```
+    </div>
 
+    <div class=example>
         Get footprints for a specific product:
 
         ```$filter=productIds/any(productId:(productId eq 'urn:...'))```
@@ -1835,7 +1868,13 @@ A [=host system=] SHOULD only accept events after authentication (see [[#api-aut
 
 The Action Events endpoint accepts CloudEvent events (see [[!CE]]) encoded in "Structured Content Mode" (see [[!CE-Structured-Content-Mode]].
 
-Support for Action Events is OPTIONAL. If a [=host system=] does NOT implement the [=Action Events=] endpoint, it SHOULD respond to authenticated Action Events calls with an [=error response=] with code [=NotImplemented=].
+Support for Action Events is OPTIONAL. 
+
+If a [=host system=] does NOT implement the [=Action Events=] endpoint, 
+
+1. it SHOULD respond with a conforming [=error response=] and HTTP [=error response code=].
+1. it SHOULD respond to authenticated Action Events calls with an [=error response=] with code [=NotImplemented=].
+2. it MUST respond with an error HTTP Status Code (4xx, 5xx).
 
 
 ### Request Syntax ### {#api-action-events-request}
@@ -2183,6 +2222,27 @@ path: LICENSE.md
 
 
 # Appendix B: Changelog # {#changelog}
+
+
+## Version 2.0.1-20230627 (Jun 27, 2023) ## {#changelog-2.0.1-20230627}
+
+This version fixes 5 definition incorrectness
+
+1. property <{CarbonFootprint/fossilCarbonContent}>: was incorrectly
+    defined with unit `kg of CO2e / declaredUnit`. The unit is now defined as `kg / declaredUnit`
+2. fix to the `referencePeriod` <a href=#example-filter-period>Filter Example</a>
+3. fixed typo in the definition of <{CarbonFootprint/referencePeriodEnd}>
+4. fixed definition of <{CarbonFootprint/landManagementGhgEmissions}>: previously, it was incorrectly defined as a non-negative decimal
+5. fixed definition of <{CarbonFootprint/biogenicCarbonWithdrawal}>: previously, it was incorrectly defined as a non-negative decimal
+
+
+In addition, this version:
+
+1. clarifies in [[#api-action-list]] the semantics of the [=Filter=] processing being OPTIONAL by introducing section [[#api-action-list-filtering]]
+2. clarifies that a [=host system=] must return HTTP error status codes if it does not implement the events endpoint (see [[#api-action-events]]) 
+3. clarified the [=PCF=] term definition
+4. fixed linking to semantic versioning document
+5. reworded <{CarbonFootprint/referencePeriodStart}> and <{CarbonFootprint/referencePeriodEnd}>
 
 
 ## Version 2.0.1-20230522 (May 22, 2023) ## {#changelog-2.0.1-20230522}
