@@ -442,12 +442,12 @@ Advisement:
         <td><dfn>fossilCarbonContent</dfn> : [=Decimal=]
         <td>String
         <td>M
-        <td>The fossil carbon content of the product (mass of carbon). The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg Carbon per declared unit` (`kg C / declaredUnit`), expressed as a [=decimal=] equal to or greater than zero.
+        <td>The fossil carbon content of the product (mass of carbon). The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg Carbon per declared unit` (`kgC / declaredUnit`), expressed as a [=decimal=] equal to or greater than zero.
       <tr>
         <td><dfn>biogenicCarbonContent</dfn> : [=Decimal=]
         <td>String
         <td>M
-        <td>The biogenic carbon content of the product (mass of carbon). The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg Carbon per declared unit` (`kg C / declaredUnit`), expressed as a [=decimal=] equal to or greater than zero.
+        <td>The biogenic carbon content of the product (mass of carbon). The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg Carbon per declared unit` (`kgC / declaredUnit`), expressed as a [=decimal=] equal to or greater than zero.
       <tr>
         <td><dfn>dLucGhgEmissions</dfn> : [=Decimal=]
         <td>String
@@ -2228,7 +2228,7 @@ path: LICENSE.md
 
 Summary of changes:
 
-1. clarify unit of properties <{CarbonFootprint/fossilCarbonContent}> and <{CarbonFootprint/biogenicCarbonContent}>: was declared as `kg / declaredUnit` and is now declared as `kg C / declaredUunit`
+1. clarify unit of properties <{CarbonFootprint/fossilCarbonContent}> and <{CarbonFootprint/biogenicCarbonContent}>: was declared as `kg / declaredUnit` and is now declared as `kgC / declaredUunit`
 
 
 ## Version 2.0.1-20230627 (Jun 27, 2023) ## {#changelog-2.0.1-20230627}
