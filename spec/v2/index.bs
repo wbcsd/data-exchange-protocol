@@ -1,9 +1,9 @@
 <pre class='metadata'>
-Title: Technical Specifications for PCF Data Exchange (Version 2.0.1-20230629)
+Title: Technical Specifications for PCF Data Exchange (Version 2.0.1-20230713)
 Shortname: data-exchange-protocol
 Level: 1
 Status: LD
-ED: https://wbcsd.github.io/tr/2023/data-exchange-protocol-20230629/
+ED: https://wbcsd.github.io/tr/2023/data-exchange-protocol-20230713/
 TR: https://wbcsd.github.io/tr/2023/data-exchange-protocol-20230221/
 Mailing List: public-dev@pathfinder.sine.dev
 Editor: Martin Pompéry (SINE Foundation), https://sine.foundation, martin@sine.foundation
@@ -209,7 +209,7 @@ A ProductFootprint has the following properties:
         <td>String
         <td>M
         <td>
-            The version of the ProductFootprint data specification with value `2.0.1-20230629`.
+            The version of the ProductFootprint data specification with value `2.0.1-20230713`.
 
             Advisement: Subsequent revisions will update this value according to [Semantic Versioning 2.0.0](https://semver.org/lang/en/).
       <tr>
@@ -423,21 +423,20 @@ Advisement:
         <td><dfn>pCfExcludingBiogenic</dfn> : [=Decimal=]
         <td>String
         <td>M
-        <td>The product carbon footprint of the product <i>excluding</i> biogenic emissions. The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg of CO2 equivalent per declared unit` (`kgCO2e / declaredUnit`), expressed as a [=decimal=] equal to or greater than zero.
+        <td>The product carbon footprint of the product <i>excluding</i> biogenic CO2 emissions. The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg of CO2 equivalent per declared unit` (`kgCO2e / declaredUnit`), expressed as a [=decimal=] equal to or greater than zero.
       <tr>
         <td><dfn>pCfIncludingBiogenic</dfn> : [=Decimal=]
         <td>String
         <td>O*
-        <td>If present, the product carbon footprint of the product <i>including</i> biogenic emissions. The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg of CO2 equivalent per declared unit` (`kgCO2e / declaredUnit`), expressed as a [=decimal=].
+        <td>If present, the product carbon footprint of the product <i>including all</i> biogenic emissions (CO2 and otherwise). The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg of CO2 equivalent per declared unit` (`kgCO2e / declaredUnit`), expressed as a [=decimal=].
 
               Note: the value of this property can be less than `0` (zero).
-
 
       <tr>
         <td><dfn>fossilGhgEmissions</dfn> : [=Decimal=]
         <td>String
         <td>M
-        <td>The emissions from the combustion of fossil sources. The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg of CO2 equivalent per declared unit` (`kgCO2e / declaredUnit`), expressed as a [=decimal=] equal to or greater than zero.
+        <td>The emissions from fossil sources as a result of fuel combustion, from fugitive emissions, and from process emissions. The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg of CO2 equivalent per declared unit` (`kgCO2e / declaredUnit`), expressed as a [=decimal=] equal to or greater than zero.            
       <tr>
         <td><dfn>fossilCarbonContent</dfn> : [=Decimal=]
         <td>String
@@ -482,7 +481,8 @@ Advisement:
         <td><dfn>biogenicCarbonWithdrawal</dfn> : [=Decimal=]
         <td>String
         <td>O*
-        <td>If present, the Biogenic carbon content in the product converted to CO2e. The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg` expressed as a [=decimal=].
+        <td>If present, the Biogenic Carbon contained in the product converted to kilogram of CO2e. The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kgCO2e / declaredUnit` expressed as a [=decimal=] equal to or <i>less than</i> zero.
+
       <tr>
         <td><dfn>aircraftGhgEmissions</dfn> : [=Decimal=]
         <td>String
@@ -2222,6 +2222,14 @@ path: LICENSE.md
 
 
 # Appendix B: Changelog # {#changelog}
+
+
+## Version 2.0.1-20230713 (Jul 13, 2023) ## {#changelog-2.0.1-20230713}
+
+Summary of changes:
+
+1. clarification to specification of property <{CarbonFootprint/fossilGhgEmissions}>, <{CarbonFootprint/pCfExcludingBiogenic}>, <{CarbonFootprint/pCfIncludingBiogenic}>, and <{CarbonFootprint/biogenicCarbonWithdrawal}>
+2. in addition, further clarfication on the bounds of the property <{CarbonFootprint/biogenicCarbonWithdrawal}> which must be equal to `0` or less than `0`
 
 
 ## Version 2.0.1-20230629 (Jun 29, 2023) ## {#changelog-2.0.1-20230629}
