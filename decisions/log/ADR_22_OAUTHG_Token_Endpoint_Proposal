@@ -1,1 +1,31 @@
-We have an Idea!
+# 22. Define OAUTH token URI endpoint for getting a token in a more flexible way allowing both "oauth" and "auth" 
+
+Date: 2023-09-15
+
+## Status
+
+OPEN
+
+## Context
+
+Old definition prevents OUTH2 conformant solutions compliant to RFC6749 like the SAP xsuaa to work along with PACT. 
+That prevented e.g. SDX from being compliant to WBCSD 1/2 in conformity check (amongst other solutions)
+
+## Proposal
+
+Endpoint configuration for "authentication prefix URI" must change from : "[some url]" and a fixed "auth/token" to 
+"[some url]" and a fixed "/token".
+e.g.
+
+old:
+https://my-authentication-endpoint/
+
+new:
+https://my-authentication-endpoint/oauth
+
+## Decision
+
+
+## Consequences
+
+1. old conformant recipients would need to adapt their configuration for this URI (if thats relevant at all)
