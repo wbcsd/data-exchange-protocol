@@ -12,13 +12,11 @@ The Tech. Specs. (both V1 and V2) specify the path/endpoint for the Action `Auth
     
 * reuse an exsting service that is implemented based on the standard (rfc-6749), but does not offer the capability to control the authentication path / token endpoint in full.
     
-For example, the following path `https://some-domain.com/oauth/token` adheres to the standard (rfc-6749) but is not conforming to the current Tech. Specs. (see 6.5.1). The same would apply to the path `https://some-domain.com/token`. 
-
-Any change to the specifications of the path/endpoint for the Action `Authenticate` could potentially impact or break backwards-compatibility.
+For example, the following path `https://some-domain.com/oauth/token` adheres to the standard (rfc-6749) but is not conforming to the current Tech. Specs. (see 6.5.1). The same would apply to the path `https://some-domain.com/token`.
 
 ## Summary
 
-We propose to alter the specified structure of the authentication path / token endpoint for the Action `Authenticate` in the Tech. Specs. The current structure:
+We propose to change the specified structure of the authentication path / token endpoint for the Action `Authenticate` in the Tech. Specs. The current structure:
 
 * POST `AuthSubPath/auth/token`
 
@@ -26,45 +24,30 @@ The proposed structure:
 
 * POST `AuthSubPath/token` / `AuthSubPath`
 
-This change aligns the Tech. Specs. to the referenced standard (rfc-6749) and does not impact the authentication flow beyond the path / endpoint. 
+This change aligns the Tech. Specs. to the standard (rfc-6749) and grants host systems more flexibility for implementing their authentication path / token endpoint. The proposed change does not impact the authentication flow beyond the path / endpoint. 
 
-* backwards 
+As the proposed change 'loosens' the current specification, backwards-compatibility is ensured. Any host system that is considered conformant under the current Tech. Specs. will also be conformant with the proposed change. Any path that adheres to the currently specified structure `AuthSubPath/auth/token` will logically also adhere to the proposed structure `AuthSubPath/token`.
 
-If successful, a data recipient authenticates through this endpoint instead of the “regular”`Authenticate` endpoint and its static path / URL.
+Nevertheless, it needs to be considered that recipient systems might need implement minor adjustments to support the proposed structure.
 
-Otherwise, the authentication flow remains the same and a data recipent attempts to retrieve its token through the regular `Authenticate` Action.
 
-This way, a backwards-compatible authentication flow is established. 
-
-By relying on `OpenId Connect` to discover this endpoint, all parties (Host system implementers, solutions providers, etc.) gain more flexibility in how to operate and to maintain their systems.
-
-## Example 1:
+## Example:
 
 A Host system has the following set up:
 
-1. The so-called `OpenID Connect Issuer`; i.e. URL used to construct the path to the OpenId Provider Configuration Document is set to`https://server.example.com/subpath`
-2. The token endpoint is available under `[https://idp.example.com/another-subpath/token`(i.e.](https://idp.example.com/another-subpath/token(i.e.) this path does ***not*** conform to Tech Specs V2)
+1. The Action `Authenticate` is available under `AuthSubPath/token`. For example, `https://some-domain.com/something/token` (this path does ***not*** conform to current Tech. Specs.)
 
-A Data recipient will then perform the following HTTP calls during the Authentication flow:
+A Data recipient will then:
 
-1. it will retrieve an OpenId Configuration document from the issuer from the following URL:  `[https://server.example.com/subpath/.well-knonw/openid-configuration](https://server.example.com/subpath)` 
-2. it then validates the document and looks up the `token_endpoint` URL entry (an example `openid-configuration` Document is given below
-3. it then requests an access token 
-4. and then uses this token to proceed and to calls to the other HTTP Actions (e.g. `ListFootprints`, `Events`, etc.)
+1. Call the Action `Authenticate` hosted under `AuthSubPath/token` to requests an access token.
+2. and then uses this token to proceed and to calls to the other HTTP Actions (e.g. `ListFootprints`, `Events`, etc.)
 
-### `openid-configuration` example request and response
+#### Request Syntax
 
 ```javascript
-GET /subpath/.well-known/openid-configuration
-Content-Type: application/json
+POST AuthSubpath/token
 
-{
-   "issuer":
-     "https://server.example.com/subpath",
-   "token_endpoint":
-     "https://idp.example.com/another-subpath/token",
-   [...]
-}
+AuthBody
 ```
 
 ## Decision
