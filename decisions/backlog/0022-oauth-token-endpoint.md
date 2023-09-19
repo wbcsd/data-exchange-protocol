@@ -42,25 +42,25 @@ A Data recipient will then:
 1. Call the Action `Authenticate` hosted under `AuthSubPath/token` to requests an access token.
 2. and then uses this token to proceed and to calls to the other HTTP Actions (e.g. `ListFootprints`, `Events`, etc.)
 
-#### Request Syntax
-
-```javascript
-POST AuthSubpath/token
-
-AuthBody
-```
-
 ## Decision
 
 ### Technical Specification
 
-1. With Version 2.1, a Host System SHOULD implement an `OpenId Connected-based Authentication Mechanism`
-2. This mechanism is based upon an `OpenId Provider Configuration Document` . A Host System SHOULD make the  `OpenId Provider Configuration Document` available conforming with **[OpenID Connect Discovery 1.0 incorporating errata set 1](https://openid.net/specs/openid-connect-discovery-1_0.html) Section 4** with `token_endpoint` defined
-3. The Authentication flow is updated as follows:
-    1. A Data recipient before Authenticating, MUST request the `OpenId Provider Configuration Document` from a Host System before making calls to the `Authenticate` action
-    2. If a conforming document is found, the Data Recipient SHOULD attempt to retrieve a Bearer token from the endpoint defined in the `token_endpoint` property of the `OpenId Provider Configuration Document` retrieved (the HTTP request by a Data Recipient is **equivalent** to the v2.0 Tech specs Authenticate action *except that URI CAN be different)*
-    3. If such a document is not found, the Data Recipient SHOULD fall back to  authentication flow of Tech Specs Version 2.0 (i.e.  the `AuthSubPath/auth/token`syntax)
-4. A Host System MAY return an appropriate error response to Data Recipients if they no longer support calls to 2.0-series `Action Authenticate` under the `/auth/token` syntax. In this case, they MUST support the `OpenId Connected-based Authentication Mechanism`
+The ADR results in only a minor change to the Technical Specifications. That is:
+
+#### 6.5.1. Request Syntax (HTTP/1.1)
+
+```javascript
+POST AuthSubpath/token HTTP/1.1
+host: AuthHostname
+accept: application/json
+content-type: application/x-www-form-urlencoded
+authorization: Basic BasicAuth
+content-length: ContentLength
+
+AuthBody
+
+```
 
 ## Consequences
 
