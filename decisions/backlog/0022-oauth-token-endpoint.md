@@ -14,7 +14,7 @@ The Tech. Specs. (both V1 and V2) specify the path/endpoint for the Action `Auth
     
 For example, the following path `https://some-domain.com/oauth/token` adheres to the standard (rfc-6749) but is not conforming to the current Tech. Specs. (see 6.5.1). The same would apply to the path `https://some-domain.com/token`. 
 
-Any change to the specifications of the path/endpoint for the Action `Authenticate` could potentially impact or break backwards-compatibility.
+//Any change to the specifications of the path/endpoint for the Action `Authenticate` could potentially impact or break backwards-compatibility.
 
 ## Summary
 
