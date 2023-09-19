@@ -10,15 +10,25 @@ In Progress
 
 The Tech. Specs. (both V1 and V2) specify the path/endpoint for the Action `Authenticate` to conform to the following structure: `AuthSubPath/auth/token`. This specification goes beyond what is suggested in the referenced standard 'The OAuth 2.0 Authorization Framework' (https://www.rfc-editor.org/rfc/rfc6749), which specifies the structure as: `AuthSubPath/token`. The more strict specification of the path creates conformance challenges for host systems that:
     
-* reuse an exsting service that is implemented based on the standard (rfc-6749), but does not offer the capability to control the authentication path in full.
+* reuse an exsting service that is implemented based on the standard (rfc-6749), but does not offer the capability to control the authentication path / token endpoint in full.
     
 For example, the following path `https://some-domain.com/oauth/token` adheres to the standard (rfc-6749) but is not conforming to the current Tech. Specs. (see 6.5.1). The same would apply to the path `https://some-domain.com/token`. 
 
-//Any change to the specifications of the path/endpoint for the Action `Authenticate` could potentially impact or break backwards-compatibility.
+Any change to the specifications of the path/endpoint for the Action `Authenticate` could potentially impact or break backwards-compatibility.
 
 ## Summary
 
-We propose to extend the Authentication flow for the V2 tech specs. This updated flow makes use of the OpenId Connect Discovery V1 spec (https://openid.net/specs/openid-connect-discovery-1_0.html) to dynamically discover a so-called `token` endpoint. 
+We propose to alter the specified structure of the authentication path / token endpoint for the Action `Authenticate` in the Tech. Specs. The current structure:
+
+* `AuthSubPath/auth/token`
+
+The proposed structure:
+
+* `AuthSubPath/token` / `AuthSubPath`
+
+This change aligns the Tech. Specs. to the referenced standard (rfc-6749) and does not impact the authentication flow beyond the path / endpoint. 
+
+* backwards 
 
 If successful, a data recipient authenticates through this endpoint instead of the “regular”`Authenticate` endpoint and its static path / URL.
 
