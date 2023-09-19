@@ -10,7 +10,7 @@ In Progress
 
 The Tech. Specs. specify the path/endpoint for the Action `Authenticate` to conform to the following structure: `AuthSubPath/auth/token`. This specification goes beyond what is suggested in the referenced standard 'The OAuth 2.0 Authorization Framework' (https://www.rfc-editor.org/rfc/rfc6749), which specifies: `AuthSubPath/token`. The more strict specification of the path creates conformance challenges for systems that:
     
-    * reuse an exsting service that is implemented based on the standard (rfc-6749), but does not offer the capability to control the authentication path in full.
+* reuse an exsting service that is implemented based on the standard (rfc-6749), but does not offer the capability to control the authentication path in full.
     
 For example, the following path `https://some-domain.com/oauth/token` adheres to the standard (rfc-6749) but is not conforming to the current Tech. Specs. [6.5.1|https://wbcsd.github.io/tr/2023/data-exchange-protocol-20230221/#api-action-auth-request]
 
