@@ -28,7 +28,7 @@ This change aligns the Tech. Specs. to the standard (rfc-6749) and grants host s
 
 As the proposed change 'loosens' the current specification, backwards-compatibility is ensured. Any host system that is considered conformant under the current Tech. Specs. will also be conformant with the proposed change. Any path that adheres to the currently specified structure `AuthSubPath/auth/token` will logically also adhere to the proposed structure `AuthSubPath/token`.
 
-Nevertheless, it needs to be considered that recipient systems might need implement minor adjustments to support the proposed structure.
+However, it needs to be considered that data recipient systems might need implement minor adjustments to support the proposed structure. Depending on the implementation, the structure that they append the `AuthSubPath` to needs to be changed from `/auth/token` to `/oauth/token`.
 
 
 ## Example:
@@ -46,7 +46,7 @@ A Data recipient will then:
 
 ### Technical Specification
 
-The ADR results in only a minor change to the Technical Specifications. That is:
+The ADR results a minor change to the Technical Specifications. That is:
 
 #### 6.5.1. Request Syntax (HTTP/1.1)
 
@@ -64,10 +64,6 @@ AuthBody
 
 ## Consequences
 
-1. As this ADR changes the overall functionality in a critical aspect (authentication flow),  the Tech Specs Version number must be updated from 2.0.x to 2.1.y.
-2. The OpenId Connect Discovery mechanism is tied to a domain name where the `.well-known/openid-configuration` file is hosted (the `OpenId Connect Issuer`)
-    1. For data security and data consistency reasons, any change to the domain name needs to be communicated and synchronized with data recipients in an appropriate fashion
-    2. Data owners need to understand that the URL used to construct the full URL to the `.well-known/openid-configuration` cannot be changed easily later on, and that they consider e.g. the usage of their own domain name or other strategies to maintain sovereignty over this aspect
-3. Solution Providers need to operate an OpenId Connect-conforming authentication implementation if they plan on supporting the `OpenId Connected-based Authentication Mechanism`
-    1. OpenId Connect goes beyond the mandatory technical requirements of the V1 an V2.0.x tech specs. 
-4. Data Recipients are strongly encouraged to update their implementation soon to support this ADR’s Authentication approach if they want to be fully interoperable with 2.1 series Host Systems.
+1. As this ADR does not change the overall functionality of the authentication flow,  the Tech Specs Version number can be updated from 2.0.x to 2.0.x+1.
+2. The Action Authenticate is hosted under a dedicated path. To ensure that data recipients are able to authenticate and retrieve a token, any change to the path needs to be communicated and synchronized with data recipients in an appropriate fashion.
+5. Data Recipients are strongly encouraged to update their implementation soon to support this ADR’s Authentication approach if they want to be fully interoperable with 2.1 series Host Systems.
