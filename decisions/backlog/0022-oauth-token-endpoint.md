@@ -8,21 +8,13 @@ In Progress
 
 ## Context
 
-The Tech. Specs. specify the path/endpoint for the Action `Authenticate` to conform to the following structure: `AuthSubPath/auth/token`. This specification goes beyond what is suggested in the referenced standard 'The OAuth 2.0 Authorization Framework' (https://www.rfc-editor.org/rfc/rfc6749), which specifies: `AuthSubPath/token`. The more strict specification of the path creates conformance challenges for systems that:
+The Tech. Specs. (both V1 and V2) specify the path/endpoint for the Action `Authenticate` to conform to the following structure: `AuthSubPath/auth/token`. This specification goes beyond what is suggested in the referenced standard 'The OAuth 2.0 Authorization Framework' (https://www.rfc-editor.org/rfc/rfc6749), which specifies the structure as: `AuthSubPath/token`. The more strict specification of the path creates conformance challenges for host systems that:
     
 * reuse an exsting service that is implemented based on the standard (rfc-6749), but does not offer the capability to control the authentication path in full.
     
-For example, the following path `https://some-domain.com/oauth/token` adheres to the standard (rfc-6749) but is not conforming to the current Tech. Specs. [6.5.1|https://wbcsd.github.io/tr/2023/data-exchange-protocol-20230221/#api-action-auth-request]
+For example, the following path `https://some-domain.com/oauth/token` adheres to the standard (rfc-6749) but is not conforming to the current Tech. Specs. (see 6.5.1). The same would apply to the path `https://some-domain.com/token`. 
 
-
-The
-PACT members mentioned challenges of conforming to the specifications of the authentication endpoint (Action `Authenticate` in Tech Specs)
-    1. one reason is that these systems are reusing existing services that offer limited configuration options and endpoints that cannot easily be modified or adapted
-    2. yet another reason is how the Tech Specs specify the path to the `Authenticate` action ; namely, it is hardcoded as follows: `AuthSubPath/auth/token` with `/auth/token` being fixed.
-    3. To exemplify why this specification is an issue: image the URL of an ********existing******** OAuth2 endpoint was `https://some-domain.com/oauth/token` or`https://some-domain.com/token` ; none such endpoints would be conforming to the current tech specs
-2. Additionally, the `Authenticate` Action is the same for V1 and V2 series
-
-3. Last, but not least: any update to the Action Authenticate’s path would break backwards-compatibility
+Any change to the specifications of the path/endpoint for the Action `Authenticate` could potentially impact or break backwards-compatibility.
 
 ## Summary
 
