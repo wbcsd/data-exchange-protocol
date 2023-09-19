@@ -20,11 +20,11 @@ Any change to the specifications of the path/endpoint for the Action `Authentica
 
 We propose to alter the specified structure of the authentication path / token endpoint for the Action `Authenticate` in the Tech. Specs. The current structure:
 
-* `AuthSubPath/auth/token`
+* POST `AuthSubPath/auth/token`
 
 The proposed structure:
 
-* `AuthSubPath/token` / `AuthSubPath`
+* POST `AuthSubPath/token` / `AuthSubPath`
 
 This change aligns the Tech. Specs. to the referenced standard (rfc-6749) and does not impact the authentication flow beyond the path / endpoint. 
 
