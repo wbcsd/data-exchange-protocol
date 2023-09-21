@@ -55,25 +55,29 @@ As shown, these requirements conflict when it comes to the structure of the body
 
 ## Summary
 
-In general, we propose to stick standards as much as possible. Hence, we propose to make the requirements under `Error Responses` (6.5/6.9) apply to 'actions' that are not covered by a standard. That is, all actions excluding the `Action Authenticate`. 
+In general, we propose to stick to standards as much as possible. Hence, we propose to adjust the specifications in the section `Error Responses` (6.5/6.9) in such a way that they do not conflict with a standard. In this specific case, that means that the specification for the error response can not apply to the `Action Authenticate`. 
 
-## Example 1:
-?
 
 ## Decision
 
 ### Technical Specification
 
-6.9. Error Responses
-*"Whenever a host system returns an error response for , it MUST send a HTTP response such that"
+**6.9. Error Responses**
 
+Whenever a host system returns an error response for any Action other than the `Action Authenticate`, it MUST send a HTTP response such that
+* the HTTP Status Code equals the HTTP Status Code defined for the respective error response code (see Error Codes Table)
+* with content type set to application/json, and
+* with response body the error response
+
+A error response is a JSON object with the following properties:
+* code: a error response code encoded as a String
+* message: a error message encoded as a String
+
+A error response code is a value from column Error Response Code from the table below.
+
+A error message is a human-readable error description. Example values are in column Example Message in the table below.
 
 ## Consequences
 
-1. As this ADR changes the overall functionality in a critical aspect (authentication flow),  the Tech Specs Version number must be updated from 2.0.x to 2.1.y.
-2. The OpenId Connect Discovery mechanism is tied to a domain name where the `.well-known/openid-configuration` file is hosted (the `OpenId Connect Issuer`)
-    1. For data security and data consistency reasons, any change to the domain name needs to be communicated and synchronized with data recipients in an appropriate fashion
-    2. Data owners need to understand that the URL used to construct the full URL to the `.well-known/openid-configuration` cannot be changed easily later on, and that they consider e.g. the usage of their own domain name or other strategies to maintain sovereignty over this aspect
-3. Solution Providers need to operate an OpenId Connect-conforming authentication implementation if they plan on supporting the `OpenId Connected-based Authentication Mechanism`
-    1. OpenId Connect goes beyond the mandatory technical requirements of the V1 and V2.0.x tech specs. 
-4. Data Recipients are strongly encouraged to update their implementation soon to support this ADR’s Authentication approach if they want to be fully interoperable with 2.1 series Host Systems.
+1. As this ADR is more a correction than a change,  the Tech Specs Version number can be updated from 2.0.x to 2.1.y.
+2. This correction results in having multiple structures for `error responses` which might be undesirable. 
