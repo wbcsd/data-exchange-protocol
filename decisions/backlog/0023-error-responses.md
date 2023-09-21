@@ -1,6 +1,6 @@
-# 23. Error Responses (Proposal #1)
+# 23. Action Authenticate: Error Responses (Proposal #1)
 
-Date: 2023-09-19
+Date: 2023-09-20
 
 ## Status
 
@@ -8,65 +8,65 @@ In Progress
 
 ## Context
 
-1. PACT members mentioned challenges in integrating the authentication endpoint (Action `Authenticate` in Tech Specs) with their **existing** authentication infrastructure
-    1. one reason is that these systems are operated in a special way under paths and endpoints that cannot easily be modified or adapted
-    2. yet another reason is how the Tech Specs specify the path to the `Authenticate` action; namely, it is hardcoded as follows: `AuthSubPath/auth/token` with `/auth/token` being fixed.
-    3. To exemplify why this specification is an issue: image the URL of an ********existing******** OAuth2 endpoint was `https://some-domain.com/oauth/token` or`https://some-domain.com/token` ; none such endpoints would be conforming to the current tech specs
-2. Additionally, the `Authenticate` Action is the same for V1 and V2 series
-3. Last, but not least: any update to the Action Authenticate’s path would break backwards-compatibility
+The Tech. Specs. builds on existing standards for the overal Authentication flow. For the Action `Authenticate` specically, the Tech. Specs. refer to the standard 'The OAuth 2.0 Authorization Framework' (https://www.rfc-editor.org/rfc/rfc6749). However, the requirement to implement the Action `Authenticate` based on this standard conflicts with the requirements in the Error Responses (V1: 6.5, V2: 6.9). As a result, it is theoretically impossible to implement a conformant solution. 
+
+#### Action Authenticate
+* **Tech. Specs. (both V1 and V2), Section 6.4.1/6.5:** *"Host systems MUST implement this action in conformance with [rfc6749] Section 4.4 (OAuth2 Client Credentials)."*
+* **RFC6749 (https://www.rfc-editor.org/rfc/rfc6749) Section 4.4:** *If the request failed client authentication or is invalid, the authorization server returns an error response as described in Section 5.2.*
+  * **Section 5.2:** *"The authorization server responds with an HTTP 400 (Bad Request) status code (unless specified otherwise) and includes the following parameters with the response:"*
+    *  "error (REQUIRED)"
+    *  "error_description (OPTIONAL)"
+    *  "error_uri (OPTIONAL)"
+
+For example:
+```javascript
+     HTTP/1.1 400 Bad Request
+     Content-Type: application/json;charset=UTF-8
+     Cache-Control: no-store
+     Pragma: no-cache
+
+     {
+       "error":"..."
+     }   
+```
+
+#### Error Responses
+* **Tech. Specs. (both V1 and V2), Section 6.5/6.9:**
+  * *"Whenever a host system returns an error response, it MUST send a HTTP response such that:"*
+    * *"with response body the error response"*
+  * *"A error response is a JSON object with the following properties:*
+    * *"code: a error response code encoded as a String"*
+    * *"message: a error message encoded as a String"*
+
+For example:
+```javascript
+     HTTP/1.1 400 Bad Request
+     Content-Type: application/json;charset=UTF-8
+     Cache-Control: no-store
+     Pragma: no-cache
+
+     {
+       "code":"...",
+       "message":"..."
+     }   
+```
+
+As shown, these requirements conflict when it comes to the structure of the body of the error response. Therefore, the Tech. Specs. need an update to eliminate this conflict.
 
 ## Summary
 
-We propose to extend the Authentication flow for the V2 tech specs. This updated flow makes use of the OpenId Connect Discovery V1 spec (https://openid.net/specs/openid-connect-discovery-1_0.html) to dynamically discover a so-called `token` endpoint. 
-
-If successful, a data recipient authenticates through this endpoint instead of the “regular”`Authenticate` endpoint and its static path / URL.
-
-Otherwise, the authentication flow remains the same and a data recipient attempts to retrieve its token through the regular `Authenticate` Action.
-
-This way, a backwards-compatible authentication flow is established. 
-
-By relying on `OpenId Connect` to discover this endpoint, all parties (Host system implementers, solutions providers, etc.) gain more flexibility in how to operate and to maintain their systems.
+In general, we propose to stick standards as much as possible. Hence, we propose to make the requirements under `Error Responses` (6.5/6.9) apply to 'actions' that are not covered by a standard. That is, all actions excluding the `Action Authenticate`. 
 
 ## Example 1:
-
-A Host system has the following setup:
-
-1. The so-called `OpenID Connect Issuer`; i.e. URL used to construct the path to the OpenId Provider Configuration Document is set to`https://server.example.com/subpath`
-2. The token endpoint is available under `[https://idp.example.com/another-subpath/token`(i.e.](https://idp.example.com/another-subpath/token(i.e.) this path does ***not*** conform to Tech Specs V2)
-
-A Data recipient will then perform the following HTTP calls during the Authentication flow:
-
-1. it will retrieve an OpenId Configuration document from the issuer from the following URL:  `[https://server.example.com/subpath/.well-knonw/openid-configuration](https://server.example.com/subpath)` 
-2. it then validates the document and looks up the `token_endpoint` URL entry (an example `openid-configuration` Document is given below
-3. it then requests an access token 
-4. and then uses this token to proceed and to calls to the other HTTP Actions (e.g. `ListFootprints`, `Events`, etc.)
-
-### `openid-configuration` example request and response
-
-```javascript
-GET /subpath/.well-known/openid-configuration
-Content-Type: application/json
-
-{
-   "issuer":
-     "https://server.example.com/subpath",
-   "token_endpoint":
-     "https://idp.example.com/another-subpath/token",
-   [...]
-}
-```
+?
 
 ## Decision
 
 ### Technical Specification
 
-1. With Version 2.1, a Host System SHOULD implement an `OpenId Connected-based Authentication Mechanism`
-2. This mechanism is based upon an `OpenId Provider Configuration Document`. A Host System SHOULD make the  `OpenId Provider Configuration Document` available conforming with **[OpenID Connect Discovery 1.0 incorporating errata set 1](https://openid.net/specs/openid-connect-discovery-1_0.html) Section 4** with `token_endpoint` defined
-3. The Authentication flow is updated as follows:
-    1. A Data recipient before Authenticating, MUST request the `OpenId Provider Configuration Document` from a Host System before making calls to the `Authenticate` action
-    2. If a conforming document is found, the Data Recipient SHOULD attempt to retrieve a Bearer token from the endpoint defined in the `token_endpoint` property of the `OpenId Provider Configuration Document` retrieved (the HTTP request by a Data Recipient is **equivalent** to the v2.0 Tech specs Authenticate action *except that URI CAN be different)*
-    3. If such a document is not found, the Data Recipient SHOULD fall back to  the authentication flow of Tech Specs Version 2.0 (i.e.  the `AuthSubPath/auth/token`syntax)
-4. A Host System MAY return an appropriate error response to Data Recipients if they no longer support calls to 2.0-series `Action Authenticate` under the `/auth/token` syntax. In this case, they MUST support the `OpenId Connected-based Authentication Mechanism`
+6.9. Error Responses
+*"Whenever a host system returns an error response for , it MUST send a HTTP response such that"
+
 
 ## Consequences
 
