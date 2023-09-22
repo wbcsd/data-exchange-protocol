@@ -65,5 +65,7 @@ AuthBody
 ## Consequences
 
 1. As this ADR does not change the overall functionality of the authentication flow,  the Tech Specs Version number can be updated from 2.0.x to 2.0.x+1.
-2. The Action Authenticate is hosted under a dedicated path. To ensure that data recipients are able to authenticate and retrieve a token, any change to the path needs to be communicated and synchronized with data recipients in an appropriate fashion.
-5. Data Recipients are strongly encouraged to update their implementation soon to support this ADR’s Authentication approach if they want to be fully interoperable with 2.1 series Host Systems.
+2. Host Systems do not need to make any updates to their (conformant) implementations.
+3. Data Recipients are strongly encouraged to - if needed - update their implementation and support this ADR’s Authentication approach to ensure full interoperability with Host Systems.
+4. Like before, the Action Authenticate is hosted under a dedicated path. To ensure that data recipients are able to authenticate and retrieve a token, any change to the path needs to be communicated and synchronized with data recipients in an appropriate fashion.
+
