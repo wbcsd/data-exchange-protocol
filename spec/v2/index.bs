@@ -2230,8 +2230,8 @@ path: LICENSE.md
 
 Summary of changes:
 
-1. a definition fix on the definedness for properties <{CarbonFootprint/primaryDataShare}> and <{CarbonFootprint/dqi}>: 
-    previously, they were defined in a mutual-exclusive fashion (either one must be defined but *NOT* both) while the Pathfinder Framework Version 2.0 defines them as follows (Section 4.2.1, Page 39):
+1. definition fixes to properties <{CarbonFootprint/primaryDataShare}> and <{CarbonFootprint/dqi}> to resolve a discrepancy with the latest version of the Pathfinder Framework:
+    previously, the 2 properties were defined in a mutually-exclusive fashion (either one must be defined but *NOT* both) whereas the Pathfinder Framework Version 2.0 defines them as follows (Section 4.2.1, Page 39):
     ```Initially, companies shall calculate and report, as part of PCF data exchange, on at least one of the following metrics: [...]```  
 
 
