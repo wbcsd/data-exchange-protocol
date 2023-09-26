@@ -621,7 +621,7 @@ Advisement:
       <tr>
         <td><dfn>primaryDataShare</dfn> : [=Percent=]
         <td>Number
-        <td>O
+        <td>O*
         <td>
           The share of primary data in percent. See the [=Pathfinder Framework=] Sections 4.2.1 and 4.2.2, Appendix B.
 
@@ -631,7 +631,7 @@ Advisement:
       <tr>
         <td><dfn>dqi</dfn> : <{DataQualityIndicators}>
         <td>Object
-        <td>O
+        <td>O*
         <td>
           If present, the Data Quality Indicators (dqi) in accordance with the [=Pathfinder Framework=] Sections 4.2.1 and 4.2.3, Appendix B.
 
