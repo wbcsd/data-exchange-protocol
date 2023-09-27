@@ -1096,25 +1096,25 @@ DeclaredUnit is the enumeration of accepted declared units with values
 <dl dfn-type="enum-value" dfn-for="DeclaredUnit">
 
 : <dfn>liter</dfn>
-:: for unit liter
+:: for special SI Unit `litre` (see [[!SI-Unit]] Table 8)
 
 : <dfn>kilogram</dfn>
-:: for unit kilogram
+:: for SI Base Unit `kilogram` (see [[!SI-Unit]])
 
 : <dfn>cubic meter</dfn>
-:: for cubic meter
+:: for cubic meter, the Derived Unit from SI Base Unit `metre`
 
 : <dfn>kilowatt hour</dfn>
-:: for kilowatt hour
+:: for kilowatt hour, the Derived Unit from special SI Unit `watt`
 
 : <dfn>megajoule</dfn>
-:: for megajoule
+:: for megajoule, the Derived Unit from special SI Unit `joule`
 
 : <dfn>ton kilometer</dfn>
-:: for ton kilometer
+:: for ton kilometer, the Derived Unit from SI Base Units `kilogram` and `metre`
 
 : <dfn>square meter</dfn>
-:: for square meter
+:: for square meter, the Derived Unit from SI Base Unit `metre`
 
 </dl>
 
@@ -2233,6 +2233,7 @@ Summary of changes:
 1. definition fixes to properties <{CarbonFootprint/primaryDataShare}> and <{CarbonFootprint/dqi}> to resolve a discrepancy with the latest version of the Pathfinder Framework:
     previously, the 2 properties were defined in a mutually-exclusive fashion (either one must be defined but *NOT* both) whereas the Pathfinder Framework Version 2.0 defines them as follows (Section 4.2.1, Page 39):
     ```Initially, companies shall calculate and report, as part of PCF data exchange, on at least one of the following metrics: [...]```  
+2. addition of references to SI Units to data type {{DeclaredUnit}}
 
 
 
@@ -2429,6 +2430,11 @@ The following changes have been applied for version 1.0.1
     "title": "Guidance and Criteria Catalog for Pathfinder Data Model Extensions",
     "status": "LS",
     "publisher": "WBCSD"
+  },
+  "SI-Unit": {
+    "authors": [ "Bureau International des Poids et Mesures" ],
+    "href": "https://www.bipm.org/documents/20126/41483022/SI-Brochure-9-EN.pdf/2d2b50bf-f2b4-9661-f402-5f9d66e4b507",
+    "title": "The International System of Units (SI) – 9th edition Version 2.01"
   }
 }
 </pre>
