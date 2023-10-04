@@ -8,7 +8,7 @@ In Progress
 
 ## Context
 
-The Tech. Specs. builds on existing standards for the overal Authentication flow. For the Action `Authenticate` specically, the Tech. Specs. refer to the standard 'The OAuth 2.0 Authorization Framework' (https://www.rfc-editor.org/rfc/rfc6749). However, the requirement to implement the Action `Authenticate` based on this standard conflicts with the requirements in the Error Responses (V1: 6.5, V2: 6.9). As a result, it is theoretically impossible to implement a conformant solution. 
+The Tech. Specs. builds on existing standards for the overall Authentication flow. For the Action `Authenticate` specifically, the Tech. Specs. refer to the standard 'The OAuth 2.0 Authorization Framework' (https://www.rfc-editor.org/rfc/rfc6749). However, the requirement to implement the Action `Authenticate` based on this standard conflicts with the requirements in the Error Responses (V1: 6.5, V2: 6.9). As a result, it is theoretically impossible to implement a conformant solution. 
 
 #### Action Authenticate
 * **Tech. Specs. (both V1 and V2), Section 6.4.1/6.5:** *"Host systems MUST implement this action in conformance with [rfc6749] Section 4.4 (OAuth2 Client Credentials)."*
@@ -55,7 +55,7 @@ As shown, these requirements conflict when it comes to the structure of the body
 
 ## Summary
 
-In general, we propose to stick to standards as much as possible. Hence, we propose to adjust the specifications in the section `Error Responses` (6.5/6.9) in such a way that they do not conflict with a standard. In this specific case, that means that the specification for the error response can not apply to the `Action Authenticate`. 
+In general, we propose to stick to standards as much as possible. Hence, we propose to adjust the specifications in the section `Error Responses` (6.5/6.9) so that they do not conflict with a standard. In this case, that means that the specification for the error response can not apply to the `Action Authenticate`. 
 
 
 ## Decision
@@ -79,5 +79,5 @@ A error message is a human-readable error description. Example values are in col
 
 ## Consequences
 
-1. As this ADR is more a correction than a change,  the Tech Specs Version number can be updated from 2.0.x to 2.1.y.
+1. As this ADR is more a correction than a change, the Tech Specs Version number can be updated from 2.0.x to 2.1.y.
 2. This correction results in having multiple structures for `error responses` which might be undesirable. 
