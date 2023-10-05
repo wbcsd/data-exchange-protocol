@@ -64,7 +64,7 @@ In general, we propose to stick to standards as much as possible. Hence, we prop
 
 **6.9. Error Responses**
 
-Whenever a host system returns an error response for any Action other than the `Action Authenticate`, it MUST send a HTTP response such that
+Whenever a host system returns an error response for any Action **other** than the `Action Authenticate`, it MUST send a HTTP response such that
 * the HTTP Status Code equals the HTTP Status Code defined for the respective error response code (see Error Codes Table)
 * with content type set to application/json, and
 * with response body the error response
