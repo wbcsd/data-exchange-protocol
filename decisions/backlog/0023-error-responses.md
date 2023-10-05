@@ -80,4 +80,4 @@ A error message is a human-readable error description. Example values are in col
 ## Consequences
 
 1. As this ADR is more a correction than a change, the Tech Specs Version number can be updated from 2.0.x to 2.1.y.
-2. This correction results in having multiple structures for `error responses` which might be undesirable. 
+2. This correction results in having multiple structures for `error responses`. 
