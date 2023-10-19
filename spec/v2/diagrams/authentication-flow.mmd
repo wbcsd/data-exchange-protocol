@@ -3,15 +3,16 @@ sequenceDiagram
     alt OK 200
         Host system-->>+Data recipient: OpenId Configuration JSON
         alt token_endpoint is defined
-            Data recipient->>Data recipient: endpoint = token_endpoint
+            Data recipient->>Data recipient: AuthEndpoint = token_endpoint
+            Note over Data recipient: token_endpoint might be <br>[AuthHostname]/[AuthSubpath]/auth/token
         else
-            Data recipient->>Data recipient: endpoint = [AuthHostname]/[AuthSubpath]/auth/token
+            Data recipient->>Data recipient: AuthEndpoint = [AuthHostname]/[AuthSubpath]/auth/token
         end
 
 
     else
         Host system-->>Data recipient: Error response
-        Data recipient->>Data recipient: endpoint = [AuthHostname]/[AuthSubpath]/auth/token
+        Data recipient->>Data recipient: AuthEndpoint = [AuthHostname]/[AuthSubpath]/auth/token
     end
-        Data recipient->>-Host system: POST endpoint
+        Data recipient->>-Host system: POST AuthEndpoint
         Host system-->>Data recipient: OK 200 : access token

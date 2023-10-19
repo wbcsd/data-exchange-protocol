@@ -1538,18 +1538,31 @@ The following section briefly describes some of the additional functionality whi
   <li>Logging: creation and storage of access logs and audit trails related to data exchange, authentication processes, etc.</li>
 </ol>
 
-
-
 ## Authentication and Request Flows ## {#api-auth}
 
-[=Data recipients=] MUST first retrieve an [=access token=] through [=Action Authenticate=]. This is
-implemented by
-1. The [=data recipient=] retrieving the `token_endpoint` from the `OpenId Provider Configuration
-   Document` of the [=host system=] (see [#api-action-auth])
-2. the [=data recipient=] calling [=Action Authenticate=] of a [=host system=]
-3. the host system issuing an access token as specified in [[!rfc6749]] Section 4.4.3 and Section
-   5.1
-4. the [=data recipient=] calling one or more Actions of the host system
+[=Data recipients=] MUST start by going through the <dfn>authentication flow</dfn>:
+
+1. Discover `token_endpoint`
+
+    [=Data recipients=] MUST try to access the [=OpenId Provider Configuration Document=] of the [=host system=] (see [[#api-action-auth-request]])
+
+    <ul>
+      <li> If an [=OpenId Provider Configuration Document=] is offered by the [=host system=] and the `token_endpoint` property is defined, the [=data recipient=] MUST use the value of `token_endpoint` as the [=AuthEndpoint=] in the next step;
+      <li> Otherwise, the [=data recipient=] MUST use [=AuthHostname=]`/`[=AuthSubpath=]`/auth/token` as the [=AuthEndpoint=] in the next step.
+    </ul>
+
+2. Retrieve [=access token=]
+
+    Using the [=AuthEndpoint=] from the previous step, the [=data recipient=] can call the [=Action Authenticate=] of the [=host system=] (see [[#api-action-auth-request]]).
+
+    The [=host system=] MUST issue an [=access token=] as specified in [[!rfc6749]] Section 4.4.3 and Section 5.1
+
+    <figure>
+      <img src="diagrams/authentication-flow.svg" />
+  	    <figcaption>Authentication flow.</figcaption>
+    </figure>
+
+Once the [=authentication flow=] is complete, the [=data recipient=] can call the other actions of the [=host system=]
     - using the value of `access_token` of the response of the [=Action Authenticate=] call as the
       value for a [[!rfc6750]] <dfn>Bearer token</dfn>
     - presenting the Bearer token for subsequent call(s) to the host system in accordance with
@@ -1568,21 +1581,20 @@ A [=host system=] MUST implement the following actions:
 A [=host system=] SHOULD implement the following actions:
 1. [=Action Events=]
 
-A host system MUST offer its actions under https method only.
+A [=host system=] MUST offer its actions under https method only.
 
-A host system MUST offer all actions under the same [=Hostname=] and [=Subpath=] except for [=Action Authenticate=].
+A [=host system=] SHOULD offer an [=OpenId Provider Configuration Document=].
 
-A host system SHOULD offer an `OpenId Provider Configuration Document` under the [=Hostname=] and
-[=Subpath=] used for all other actions, followed by `/.well-known/openid-configuration`.
+Except for the [=authentication flow=], a [=host system=] MUST offer all actions under the same [=Hostname=] and [=Subpath=].
 
-If a host system offers an `OpenId Provider Configuration Document`, they it MAY offer the [=Action Authenticate=] under a dedicated [=AuthHostname=] and [=AuthSubpath=].
+[=Host systems=] MAY offer the [=OpenId Provider Configuration Document=] and [=Action Authenticate=] under a dedicated [=AuthHostname=] and [=AuthSubpath=].
 
-Otherwise, [=Action Authenticate=] must be offered under the same [=Hostname=] as the other actions and the [=AuthsSubpath=] MUST be `[=Subpath=]/auth/token`.
+If a host system does not offer an [=OpenId Provider Configuration Document=], [=data recipients=] can assume that [=Action Authenticate=] is offered under [=AuthHostname=]`/`[=AuthSubpath=]`/auth/token`.
 
 <div class=example>
   The host system's DNS domain name is `example.org` and the subpath is `/wbcsd` whereas the ID management system uses a `id.example.org` domain with an empty subpath. The URIs would then be:
 
-    - for [=OpenId Provider Configuration Document=]: [https://example.org/wbcsd/.well-known/openid-configuration](https://example.org/wbcsd/.well-known/openid-configuration)
+    - for [=OpenId Provider Configuration Document=]: [https://id.example.org/.well-known/openid-configuration](https://example.org/wbcsd/.well-known/openid-configuration)
     - for [=Action Authenticate=]: [https://id.example.org/auth/token](https://id.example.org/auth/token)
     - for [=Action ListFootprints=]: [https://example.org/wbcsd/2/footprints](https://example.org/wbcsd/2/footprints)
     - etc.
@@ -1594,35 +1606,34 @@ Otherwise, [=Action Authenticate=] must be offered under the same [=Hostname=] a
 
 Request an access token using client credentials.
 
-Host systems MUST implement this action in conformance with [[!rfc6749]] Section 4.4 (OAuth2 Client
+[=Host systems=] MUST implement this action in conformance with [[!rfc6749]] Section 4.4 (OAuth2 Client
 Credentials).
 
-Host systems MAY offer this action under a dedicated [=AuthHostname=] and [=AuthSubpath=].
+[=Host systems=] MAY offer this action under a dedicated [=AuthHostname=] and [=AuthSubpath=].
 
-Host systems SHOULD implement this an `OpenId Connect-Based Mechanism`. For that effect,
-<ol>
-  <li> host systems MUST make the [=OpenId Provider Configuration Document=] under [=Hostname=]`/`[=Subpath=]`/.well-known/openid-configuration`; and
-  <li> the `token_endpoint` property MUST be defined in the [=OpenId Provider Configuration Document=].
-</ol>
+[=Host systems=] SHOULD offer an [=OpenId Provider Configuration Document=] under [=AuthHostname=]`/`[=AuthSubpath=]`/.well-known/openid-configuration`.
+
+The `token_endpoint` of that document SHOULD be defined. If defined, the value of this property MUST be the [=AuthEndpoint=] and therefore a complete URL (that MAY use [=AuthHostname=] and [=AuthSubpath=]).
 
 If no [=OpenId Provider Configuration Document=] is provided or the `token_endpoint` property is not
-defined, the host system MUST offer this action under the [=AuthSubPath=] `/[=Subpath=]/auth/token`.
+defined, the [=AuthEndpoint=] MUST be [=AuthHostname=]`/`[=AuthSubpath=]`/auth/token`.
+
+Note: when providing an [=OpenId Provider Configuration Document=], the [=AuthEndpoint=] can be any URL the [=host system=] wants, including [=AuthHostname=]`/`[=AuthSubpath=]`/auth/token`.
 
 An <dfn>access token</dfn> is the value of `access_token` from a 200 (OK) entity-body derived from a
 successful call to this action. See [[!rfc6749]] Section 4.4.3 and Section 5.1 for further details.
 
 ### Request Syntax (HTTP/1.1) ### {#api-action-auth-request}
 
-Step 1 - Request the `OpenId Provider Configuration Document`
+Step 1 - Request the [=OpenId Provider Configuration Document=]
 <pre highlight=http>
-GET <l>[=Subpath=]</l>/.well-known/openid-configuration HTTP/1.1
-host: <l>[=Hostname=]</l>
+GET <l>[=AuthSubpath=]</l>/.well-known/openid-configuration HTTP/1.1
+host: <l>[=AuthHostname=]</l>
 </pre>
 
 Step 2 - Request an access token
 <pre highlight=http>
-POST <l>[=AuthSubpath=]</l> HTTP/1.1
-host: <l>[=AuthHostname=]</l>
+POST <l>[=AuthEndpoint=]</l> HTTP/1.1
 accept: application/json
 content-type: application/x-www-form-urlencoded
 authorization: Basic <l>[=BasicAuth=]</l>
@@ -1633,14 +1644,15 @@ content-length: <l>[=ContentLength=]</l>
 
 With Request parameters:
 
+: <dfn>AuthEndpoint</dfn>
+:: The endpoint to request an [=access token=] (in accordance with [[!rfc6749]] Section 4.4.3). If an [=OpenId Provider Configuration Document=] if provided and the `token_endpoint` property defined, `AuthEndpoint` is the value of that property. Otherwise, `AuthEndpoint` defaults to [=AuthHostname=]`/`[=AuthSubpath=]`/auth/token`.
+
 : <dfn>AuthSubpath</dfn>:
-:: If a [=host system=] uses a relative subpath dedicated to the purpose
-of creating an [=access token=], then the requesting [=data recipient=] MUST use this subpath.
-Defaults to [=Subpath=]`/auth/token`.
+:: If a [=host system=] uses a relative subpath dedicated to serving an [=OpenId Provider Configuration Document=] and creating an [=access token=], then the requesting [=data recipient=] MUST use this subpath.
 
 : <dfn>AuthHostname</dfn>
 :: The requesting data recipient MUST use the domain name of the host
-system dedicated for the purpose of creating an authentication token.
+system dedicated to serving an [=OpenId Provider Configuration Document=] and creating an [=access token=].
 
 : <dfn>BasicAuth</dfn>
 :: See [[!rfc6749]] Section 4.4.2
