@@ -2168,7 +2168,7 @@ A [=host system=] MAY return [=error messages=] different from the table below, 
         <td>The specified access token has expired
         <td>401
       <tr>
-        <td><dfn>InternalError</dfn>
+        <td>InternalError
         <td>An internal or unexpected error has occurred
         <td>500
 
