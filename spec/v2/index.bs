@@ -1555,7 +1555,7 @@ If a [=host system=] requires a [=data recipient=] to first authenticate before 
 Note: The [=authentication flow=] is defined such that a Version 2.1 data recipient can authenticate against host versions irrespective of their support for OpenID-Connect.
 
 <figure>
-  <img src="diagrams/authentication-flow.svg" />
+  <img src="diagrams/authentication-flow.svg" >
   <figcaption>Authentication flow.</figcaption>
 </figure>
 
