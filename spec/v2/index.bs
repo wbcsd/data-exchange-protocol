@@ -1544,7 +1544,7 @@ The following section briefly describes some of the additional functionality whi
 
 ## Authentication Flow ## {#api-auth}
 
-If a [=host system=] requires a [=data recipient=] to first authentication before successfully calling an Action (such as [=Action ListFootprints=] or [=Action Events=]), the [=data recipient=] MUST perform the <dfn>authentication flow</dfn>:
+If a [=host system=] requires a [=data recipient=] to first authenticate before successfully calling an Action (such as [=Action ListFootprints=] or [=Action Events=]), the [=data recipient=] MUST perform the <dfn>authentication flow</dfn>:
 
 1. [=data recipient=] attempting to authenticate through OpenId Connect ([[!OPENID-CONNECT]]), by
     1. [=Data recipient=] retrieving and validating the [=OpenId Provider Configuration Document=] of the [=host system=] (see [[#api-action-auth-request]]), and then
@@ -1581,7 +1581,7 @@ A [=host system=] MUST offer all actions under the same [=Hostname=] and [=Subpa
 
 A [=host system=] CAN offer the [=OpenId Provider Configuration Document=] and [=Action Authenticate=] under [=AuthHostname=] and [=AuthSubpath=] which are different from [=Hostname=] and [=Subpath=].
 
-If a host system does not offer an [=OpenId Provider Configuration Document=], [=data recipients=] MUST assume use [=Action Authenticate=] is offered under [=AuthHostname=]`/`[=AuthSubpath=]`/auth/token` (see ).
+If a host system does not offer an [=OpenId Provider Configuration Document=], [=data recipients=] MUST assume that [=Action Authenticate=] is offered under [=AuthHostname=]`/`[=AuthSubpath=]`/auth/token` (see ).
 
 <div class=example>
   The host system's DNS domain name is `example.org` and the subpath is `/wbcsd` whereas the ID management system uses a `id.example.org` domain with an empty subpath. The URIs would then be:
@@ -1607,8 +1607,8 @@ Credentials).
 
 ### Request Syntax (HTTP/1.1) ### {#api-action-auth-request}
 
-For reasons of backwards-compatibility with [=data recipients=] implementing the Version 2.0 authentication flow only, 
-Host systems MUST offer this action under path [=AuthSubpath=]`/auth/token` and hostname [=AuthHostname=]. 
+For reasons of backwards-compatibility with [=data recipients=] implementing the Version 2.0 authentication flow only,
+Host systems MUST offer this action under path [=AuthSubpath=]`/auth/token` and hostname [=AuthHostname=].
 
 <pre highlight=http>
 POST <l>[=AuthSubpath=]/auth/token</l> HTTP/1.1
@@ -2480,6 +2480,6 @@ The following changes have been applied for version 1.0.1
     "authors": [ "Bureau International des Poids et Mesures" ],
     "href": "https://www.bipm.org/documents/20126/41483022/SI-Brochure-9-EN.pdf/2d2b50bf-f2b4-9661-f402-5f9d66e4b507",
     "title": "The International System of Units (SI) – 9th edition Version 2.01"
-  }  
+  }
 }
 </pre>
