@@ -1,18 +1,12 @@
 sequenceDiagram
-    Data recipient->>Host system: GET [AuthHostname]/[AuthSubpath]/.well-known/openid-configuration
-    alt OK 200
-        Host system-->>+Data recipient: OpenId Configuration JSON
-        alt token_endpoint is defined
-            Data recipient->>Data recipient: AuthEndpoint = token_endpoint
-            Note over Data recipient: token_endpoint might be <br>[AuthHostname]/[AuthSubpath]/auth/token
-        else
-            Data recipient->>Data recipient: AuthEndpoint = [AuthHostname]/[AuthSubpath]/auth/token
-        end
-
-
+    Data recipient->>+Host system: GET [AuthHostname]/[AuthSubpath]/.well-known/openid-configuration
+    alt OpenID Connect-enabled authentication workflow
+        Host system -->>-Data recipient: Host system returns valid OpenID Connect document
+        Note over Data recipient: Recipient uses token_endpoint<br/> as AuthEndpoint
     else
-        Host system-->>Data recipient: Error response
-        Data recipient->>Data recipient: AuthEndpoint = [AuthHostname]/[AuthSubpath]/auth/token
+        Host system-->>Data recipient: Any Error response or invalid OpenID Connect document
+        Note over Data recipient: Recipient uses regular AuthEndpoint:<br/>[AuthHostname]/[AuthSubpath]/auth/token
     end
-        Data recipient->>-Host system: POST AuthEndpoint
-        Host system-->>Data recipient: OK 200 : access token
+    Data recipient->>Host system: Authentication flow against AuthEndpoint
+    Host system-->>Data recipient: Response as specified in `Action Authenticate`
+    

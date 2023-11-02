@@ -1,9 +1,9 @@
 <pre class='metadata'>
-Title: Technical Specifications for PCF Data Exchange (Version 2.0.1-20230927)
+Title: Technical Specifications for PCF Data Exchange (Version 2.1.0-20231109)
 Shortname: data-exchange-protocol
 Level: 1
 Status: LD
-ED: https://wbcsd.github.io/tr/2023/data-exchange-protocol-20230927/
+ED: https://wbcsd.github.io/tr/2023/data-exchange-protocol-20231109/
 TR: https://wbcsd.github.io/tr/2023/data-exchange-protocol-20230221/
 Mailing List: public-dev@pathfinder.sine.dev
 Editor: Martin Pompéry (SINE Foundation), https://sine.foundation, martin@sine.foundation
@@ -97,6 +97,9 @@ The license can be found in [[#license]].
 
 : Greenhouse Gas (emissions) (<dfn>GHG</dfn>)
 :: Gaseous constituents of the atmosphere, both natural and anthropogenic, that absorb and emit radiation at specific wavelengths within the spectrum of infrared radiation emitted by the Earth’s surface, its atmosphere and clouds. GHGs include CDCO₂, Methane (CH4), Nitrous Oxide(N₂O), Hydrofluoro-Carbons (HFCs), Perfluorocarbons (PFCs) and Sulfur Hexafluoride (SF6).
+
+: <dfn>OpenId Provider Configuration Document</dfn>
+:: A `OpenId Provider Configuration Document` document provided in accordance with [[!OPENID-CONNECT]] Section 4
 
 : Partnership for Carbon Transparency (<dfn>PACT</dfn>)
 :: A WBCSD-led group of companies and organizations working together to develop a global and open network for the secure peer-to-peer exchange of accurate, primary and verified product emissions data. See [www.carbon-transparency.com](www.carbon-transparency.com) for more information.
@@ -209,7 +212,7 @@ A ProductFootprint has the following properties:
         <td>String
         <td>M
         <td>
-            The version of the ProductFootprint data specification with value `2.0.1-20230927`.
+            The version of the ProductFootprint data specification with value `2.1.0-20231109`.
 
             Advisement: Subsequent revisions will update this value according to [Semantic Versioning 2.0.0](https://semver.org/lang/en/).
       <tr>
@@ -1538,58 +1541,47 @@ The following section briefly describes some of the additional functionality whi
   <li>Logging: creation and storage of access logs and audit trails related to data exchange, authentication processes, etc.</li>
 </ol>
 
-## Authentication and Request Flows ## {#api-auth}
 
-[=Data recipients=] MUST start by going through the <dfn>authentication flow</dfn>:
+## Authentication Flow ## {#api-auth}
 
-1. Discover `token_endpoint`
+If a [=host system=] requires a [=data recipient=] to first authentication before successfully calling an Action (such as [=Action ListFootprints=] or [=Action Events=]), the [=data recipient=] MUST perform the <dfn>authentication flow</dfn>:
 
-    [=Data recipients=] MUST try to access the [=OpenId Provider Configuration Document=] of the [=host system=] (see [[#api-action-auth-request]])
+1. [=data recipient=] attempting to authenticate through OpenId Connect ([[!OPENID-CONNECT]]), by
+    1. [=Data recipient=] retrieving and validating the [=OpenId Provider Configuration Document=] of the [=host system=] (see [[#api-action-auth-request]]), and then
+    2. using as [=AuthEndpoint=] the value of the `token_endpoint` property of the [=OpenId Provider Configuration Document=]
+2. otherwise, [=data recipient=] using [=AuthHostname=]`/`[=AuthSubpath=]`/auth/token` as the [=AuthEndpoint=] in the next step.
+3. [=data recipient=] retrieving the [=access token=] from [=AuthEndpoint=]
 
-    <ul>
-      <li> If an [=OpenId Provider Configuration Document=] is offered by the [=host system=] and the `token_endpoint` property is defined, the [=data recipient=] MUST use the value of `token_endpoint` as the [=AuthEndpoint=] in the next step;
-      <li> Otherwise, the [=data recipient=] MUST use [=AuthHostname=]`/`[=AuthSubpath=]`/auth/token` as the [=AuthEndpoint=] in the next step.
-    </ul>
+Note: The [=authentication flow=] is defined such that a Version 2.1 data recipient can authenticate against host versions irrespective of their support for OpenID-Connect.
 
-2. Retrieve [=access token=]
+<figure>
+  <img src="diagrams/authentication-flow.svg" />
+  <figcaption>Authentication flow.</figcaption>
+</figure>
 
-    Using the [=AuthEndpoint=] from the previous step, the [=data recipient=] can call the [=Action Authenticate=] of the [=host system=] (see [[#api-action-auth-request]]).
-
-    The [=host system=] MUST issue an [=access token=] as specified in [[!rfc6749]] Section 4.4.3 and Section 5.1
-
-    <figure>
-      <img src="diagrams/authentication-flow.svg" />
-  	    <figcaption>Authentication flow.</figcaption>
-    </figure>
 
 Once the [=authentication flow=] is complete, the [=data recipient=] can call the other actions of the [=host system=]
-    - using the value of `access_token` of the response of the [=Action Authenticate=] call as the
-      value for a [[!rfc6750]] <dfn>Bearer token</dfn>
-    - presenting the Bearer token for subsequent call(s) to the host system in accordance with
-      [[!rfc6750]] Section 2.1
+  - using the value of `access_token` of the response of the [=Action Authenticate=] call as the
+    value for a [[!rfc6750]] <dfn>Bearer token</dfn>
+  - presenting the Bearer token for subsequent call(s) to the host system in accordance with
+    [[!rfc6750]] Section 2.1
 
 [=Access tokens=] SHOULD expire. In this case, data recipients MUST retrieve a new [=access token=]
 as described in this section.
 
 ## Host system minimum requirements ## {#api-requirements}
 
-A [=host system=] MUST implement the following actions:
-1. [=Action Authenticate=]
-2. [=Action ListFootprints=]
-3. [=Action GetFootprint=]
-
-A [=host system=] SHOULD implement the following actions:
-1. [=Action Events=]
+A [=host system=] MUST implement actions [=Action Authenticate=], [=Action ListFootprints=], [=Action GetFootprint=], and SHOULD implement [=Action Events=].
 
 A [=host system=] MUST offer its actions under https method only.
 
-A [=host system=] SHOULD offer an [=OpenId Provider Configuration Document=].
+A [=host system=] SHOULD offer an [=OpenId Provider Configuration Document=] as specified in [[!OPENID-CONNECT]].
 
-Except for the [=authentication flow=], a [=host system=] MUST offer all actions under the same [=Hostname=] and [=Subpath=].
+A [=host system=] MUST offer all actions under the same [=Hostname=] and [=Subpath=] except for the token endpoint ([=Action Authenticate=] and the endpoint returned from the [=OpenId Provider Configuration Document=]).
 
-[=Host systems=] MAY offer the [=OpenId Provider Configuration Document=] and [=Action Authenticate=] under a dedicated [=AuthHostname=] and [=AuthSubpath=].
+A [=host system=] CAN offer the [=OpenId Provider Configuration Document=] and [=Action Authenticate=] under [=AuthHostname=] and [=AuthSubpath=] which are different from [=Hostname=] and [=Subpath=].
 
-If a host system does not offer an [=OpenId Provider Configuration Document=], [=data recipients=] can assume that [=Action Authenticate=] is offered under [=AuthHostname=]`/`[=AuthSubpath=]`/auth/token`.
+If a host system does not offer an [=OpenId Provider Configuration Document=], [=data recipients=] MUST assume use [=Action Authenticate=] is offered under [=AuthHostname=]`/`[=AuthSubpath=]`/auth/token` (see ).
 
 <div class=example>
   The host system's DNS domain name is `example.org` and the subpath is `/wbcsd` whereas the ID management system uses a `id.example.org` domain with an empty subpath. The URIs would then be:
@@ -1611,27 +1603,26 @@ Credentials).
 
 [=Host systems=] MAY offer this action under a dedicated [=AuthHostname=] and [=AuthSubpath=].
 
-[=Host systems=] SHOULD offer an [=OpenId Provider Configuration Document=] under [=AuthHostname=]`/`[=AuthSubpath=]`/.well-known/openid-configuration`.
 
-The `token_endpoint` of that document SHOULD be defined. If defined, the value of this property MUST be the [=AuthEndpoint=] and therefore a complete URL (that MAY use [=AuthHostname=] and [=AuthSubpath=]).
-
-If no [=OpenId Provider Configuration Document=] is provided or the `token_endpoint` property is not
-defined, the [=AuthEndpoint=] MUST be [=AuthHostname=]`/`[=AuthSubpath=]`/auth/token`.
-
-Note: when providing an [=OpenId Provider Configuration Document=], the [=AuthEndpoint=] can be any URL the [=host system=] wants, including [=AuthHostname=]`/`[=AuthSubpath=]`/auth/token`.
-
-An <dfn>access token</dfn> is the value of `access_token` from a 200 (OK) entity-body derived from a
-successful call to this action. See [[!rfc6749]] Section 4.4.3 and Section 5.1 for further details.
 
 ### Request Syntax (HTTP/1.1) ### {#api-action-auth-request}
 
-Step 1 - Request the [=OpenId Provider Configuration Document=]
+For reasons of backwards-compatibility with [=data recipients=] implementing the Version 2.0 authentication flow only, 
+Host systems MUST offer this action under path [=AuthSubpath=]`/auth/token` and hostname [=AuthHostname=]. 
+
 <pre highlight=http>
-GET <l>[=AuthSubpath=]</l>/.well-known/openid-configuration HTTP/1.1
+POST <l>[=AuthSubpath=]/auth/token</l> HTTP/1.1
 host: <l>[=AuthHostname=]</l>
+accept: application/json
+content-type: application/x-www-form-urlencoded
+authorization: Basic <l>[=BasicAuth=]</l>
+content-length: <l>[=ContentLength=]</l>
+
+<l>[=AuthBody=]</l>
 </pre>
 
-Step 2 - Request an access token
+In addition, if a host system supports OpenId Connect, the host system CAN offer and implement this Action under a second URL, and set this URL as the value of `token_endpoint` of the [=OpenId Provider Configuration Document=].
+
 <pre highlight=http>
 POST <l>[=AuthEndpoint=]</l> HTTP/1.1
 accept: application/json
@@ -1645,26 +1636,23 @@ content-length: <l>[=ContentLength=]</l>
 With Request parameters:
 
 : <dfn>AuthEndpoint</dfn>
-:: The endpoint to request an [=access token=] (in accordance with [[!rfc6749]] Section 4.4.3). If an [=OpenId Provider Configuration Document=] if provided and the `token_endpoint` property defined, `AuthEndpoint` is the value of that property. Otherwise, `AuthEndpoint` defaults to [=AuthHostname=]`/`[=AuthSubpath=]`/auth/token`.
+:: The endpoint to request an [=access token=] after discovering the value by performing the [=authentication flow=].
 
 : <dfn>AuthSubpath</dfn>:
 :: If a [=host system=] uses a relative subpath dedicated to serving an [=OpenId Provider Configuration Document=] and creating an [=access token=], then the requesting [=data recipient=] MUST use this subpath.
 
 : <dfn>AuthHostname</dfn>
 :: The requesting data recipient MUST use the domain name of the host
-system dedicated to serving an [=OpenId Provider Configuration Document=] and creating an [=access token=].
+    system dedicated to serving an [=OpenId Provider Configuration Document=] and creating an [=access token=].
 
 : <dfn>BasicAuth</dfn>
 :: See [[!rfc6749]] Section 4.4.2
 
 : <dfn>AuthBody</dfn>
-:: See [[!rfc6749]] Section 4.4
+:: See [[!rfc6749]] Section 4.4. If successful, contains the <dfn>access token</dfn>.
 
 : <dfn>ContentLength</dfn>
 :: The length of the Body. See [[!rfc9112]].
-
-: <dfn>OpenId Provider Configuration Document</dfn>
-:: The `OpenId Provider Configuration Document` provided in accordance with [OpenID Connect Discovery 1.0 incorporating errata set 1 Section 4](https://openid.net/specs/openid-connect-discovery-1_0.html).
 
 
 ### Response Syntax ### {#api-action-auth-response}
@@ -2273,6 +2261,10 @@ path: LICENSE.md
 
 # Appendix B: Changelog # {#changelog}
 
+## Version 2.1.0-20231109 (Nov 11, 2023) ## {#changelog-2.1.0-20231109}
+
+Issue: write the changelog
+
 
 ## Version 2.0.1-20230927 (Sep 27, 2023) ## {#changelog-2.0.1-20230927}
 
@@ -2479,10 +2471,15 @@ The following changes have been applied for version 1.0.1
     "status": "LS",
     "publisher": "WBCSD"
   },
+  "OPENID-CONNECT": {
+    "authors": [],
+    "href": "https://openid.net/specs/openid-connect-discovery-1_0.html",
+    "title": "OpenID Connect Discovery 1.0 incorporating errata set 1"
+  },
   "SI-Unit": {
     "authors": [ "Bureau International des Poids et Mesures" ],
     "href": "https://www.bipm.org/documents/20126/41483022/SI-Brochure-9-EN.pdf/2d2b50bf-f2b4-9661-f402-5f9d66e4b507",
     "title": "The International System of Units (SI) – 9th edition Version 2.01"
-  }
+  }  
 }
 </pre>
