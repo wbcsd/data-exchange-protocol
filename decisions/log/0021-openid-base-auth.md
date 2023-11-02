@@ -17,13 +17,13 @@ Accepted
 
 ## Summary
 
-We propose to extend the Authentication flow for the V2 tech specs. This updated flow makes use of the OpenId Connect Discovery V1 spec (https://openid.net/specs/openid-connect-discovery-1_0.html) to dynamically discover a so-called `token` endpoint. 
+We propose to extend the Authentication flow for the V2 tech specs. This updated flow makes use of the OpenId Connect Discovery V1 spec (https://openid.net/specs/openid-connect-discovery-1_0.html) to dynamically discover a so-called `token` endpoint.
 
 If successful, a data recipient authenticates through this endpoint instead of the “regular”`Authenticate` endpoint and its static path / URL.
 
 Otherwise, the authentication flow remains the same and a data recipent attempts to retrieve its token through the regular `Authenticate` Action.
 
-This way, a backwards-compatible authentication flow is established. 
+This way, a backwards-compatible authentication flow is established.
 
 By relying on `OpenId Connect` to discover this endpoint, all parties (Host system implementers, solutions providers, etc.) gain more flexibility in how to operate and to maintain their systems.
 
@@ -36,9 +36,9 @@ A Host system has the following set up:
 
 A Data recipient will then perform the following HTTP calls during the Authentication flow:
 
-1. it will retrieve an OpenId Configuration document from the issuer from the following URL:  `[https://server.example.com/subpath/.well-knonw/openid-configuration](https://server.example.com/subpath)` 
+1. it will retrieve an OpenId Configuration document from the issuer from the following URL:  `[https://server.example.com/subpath/.well-knonw/openid-configuration](https://server.example.com/subpath)`
 2. it then validates the document and looks up the `token_endpoint` URL entry (an example `openid-configuration` Document is given below
-3. it then requests an access token 
+3. it then requests an access token
 4. and then uses this token to proceed and to calls to the other HTTP Actions (e.g. `ListFootprints`, `Events`, etc.)
 
 ### `openid-configuration` example request and response
@@ -75,5 +75,5 @@ Content-Type: application/json
     1. For data security and data consistency reasons, any change to the domain name needs to be communicated and synchronized with data recipients in an appropriate fashion
     2. Data owners need to understand that the URL used to construct the full URL to the `.well-known/openid-configuration` cannot be changed easily later on, and that they consider e.g. the usage of their own domain name or other strategies to maintain sovereignty over this aspect
 3. Solution Providers need to operate an OpenId Connect-conforming authentication implementation if they plan on supporting the `OpenId Connected-based Authentication Mechanism`
-    1. OpenId Connect goes beyond the mandatory technical requirements of the V1 an V2.0.x tech specs. 
+    1. OpenId Connect goes beyond the mandatory technical requirements of the V1 an V2.0.x tech specs.
 4. Data Recipients are strongly encouraged to update their implementation soon to support this ADR’s Authentication approach if they want to be fully interoperable with 2.1 series Host Systems.
