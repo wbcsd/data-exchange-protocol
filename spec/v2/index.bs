@@ -1649,7 +1649,7 @@ With Request parameters:
 :: See [[!rfc6749]] Section 4.4.2
 
 : <dfn>AuthBody</dfn>
-:: See [[!rfc6749]] Section 4.4. If successful, contains the <dfn>access token</dfn>.
+:: See [[!rfc6749]] Section 4.4.
 
 : <dfn>ContentLength</dfn>
 :: The length of the Body. See [[!rfc9112]].
@@ -2261,9 +2261,12 @@ path: LICENSE.md
 
 # Appendix B: Changelog # {#changelog}
 
-## Version 2.1.0-20231109 (Nov 11, 2023) ## {#changelog-2.1.0-20231109}
+## Version 2.1.0-20231109 (Nov 09, 2023) ## {#changelog-2.1.0-20231109}
 
-Issue: write the changelog
+This version introduces a minor change and a clarification:
+
+1. new [[#api-auth]]: [=AuthEndpoint=] is determined either through an [=OpenId Provider Configuration Document=] or falling back to [=AuthSubpath=]`/auth/token`
+2. clarifies that, in conformance with [[!rfc6749]] section 5.2, the error response of the [[#api-action-auth]] must be an object with the mandatory field `error` (and the optional field `error_description`)
 
 
 ## Version 2.0.1-20230927 (Sep 27, 2023) ## {#changelog-2.0.1-20230927}
