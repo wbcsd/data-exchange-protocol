@@ -1,9 +1,9 @@
 <pre class='metadata'>
-Title: Technical Specifications for PCF Data Exchange (Version 2.0.1-20230927)
+Title: Technical Specifications for PCF Data Exchange (Version 2.0.1-20231026)
 Shortname: data-exchange-protocol
 Level: 1
 Status: LD
-ED: https://wbcsd.github.io/tr/2023/data-exchange-protocol-20230927/
+ED: https://wbcsd.github.io/tr/2023/data-exchange-protocol-20231026/
 TR: https://wbcsd.github.io/tr/2023/data-exchange-protocol-20230221/
 Mailing List: public-dev@pathfinder.sine.dev
 Editor: Martin Pompéry (SINE Foundation), https://sine.foundation, martin@sine.foundation
@@ -209,7 +209,7 @@ A ProductFootprint has the following properties:
         <td>String
         <td>M
         <td>
-            The version of the ProductFootprint data specification with value `2.0.1-20230927`.
+            The version of the ProductFootprint data specification with value `2.0.1-20231026`.
 
             Advisement: Subsequent revisions will update this value according to [Semantic Versioning 2.0.0](https://semver.org/lang/en/).
       <tr>
@@ -1635,7 +1635,42 @@ With action-specific response parameters
 :: A HTTP response code conforming to [[!rfc6749]] Section 4.4 and Section 5.
 
 : <dfn>AuthResponseBody</dfn>
-:: A JSON Object conforming to RFC 6749 Section 4.4. See [[#api-auth]] for further details
+:: A JSON Object conforming to either RFC 6749 Section 4.4 in case of successful authentication, or RFC 6749 Section 5.2 otherwise. See [[#api-auth]] for further details
+
+
+#### Example Successful Response #### {#api-action-auth-response-success}
+
+Example [=AuthResponseBody=] for a successful authenticate call:
+
+<div class=example>
+<pre highlight=json>
+{
+  "access_token": "...",
+  "token_type": "bearer" 
+}
+</pre>
+</div>
+
+
+#### Example Error Response #### {#api-action-auth-response-no-success}
+
+Example HTTP call, for instance generated because username or password did not match:
+
+<div class=example>
+<pre highlight=http>
+HTTP/1.1 401 Unauthorized
+date: Mon, 23 Oct 2023 19:33:16 GMT
+content-type: application/json
+</pre>
+<pre highlight=json>
+{
+  "error": "invalid_client",
+  "error_description": "Authentication failed"
+}
+</pre>
+</div>
+
+For further details, for instance on the list of specified values of property `error`, consult [[!rfc6749]] Section 5.2.
 
 
 ## <dfn>Action ListFootprints</dfn> ## {#api-action-list}
@@ -2069,16 +2104,15 @@ with
 
 ## Error responses ## {#api-error-responses}
 
-<div class=example>
- Situations when a [=host system=] returns an error response:
-  <ol type="i">
-    <li>a [=data recipient=] makes an unauthenticated request (see [[#api-auth]])</li>
-    <li>a [=data recipient=] makes a request with an expired access token (see [[#api-auth]])</li>
-    <li>a [=data recipient=] makes a request with an invalid access token (see [[#api-auth]])</li>
-    <li>a [=data recipient=] makes a request with an invalid request syntax or an invalid request parameter (see [[#api-action-list-request]] and [[#api-action-get-request]])</li>
-    <li>a [=host system=] runs into an error while processing the request, returning an [=InternalError=] error response</li>
-  </ol>
-</div>
+The actions [=Action GetFootprint=], [=Action ListFootprints=], and 
+[=Action Events=] specify general error response handling. 
+
+This section specifies the shared HTTP error response handling across these actions.
+
+Error responses are specified in detail such that [=data recipients=] can understand
+the cause of the error, and so that potentially [=host systems=] can react on and resolve errors automatically.
+
+Note: [=Action Authenticate=] specifies its own error responses (see [[#api-action-auth-response]]).
 
 Whenever a [=host system=] returns an [=error response=], it MUST send a HTTP response such that
   - the HTTP Status Code equals the `HTTP Status Code` defined for the respective [=error response code=] (see <a href="#api-errors-table">Error Codes Table</a>)
@@ -2103,8 +2137,6 @@ highlight: json
 </div>
 
 A [=host system=] MAY return [=error messages=] different from the table below, for instance localized values depending on a [=data recipient=].
-
-A [=host system=] SHOULD conform to [[!rfc6750]] Section 3 when returning a [=TokenExpired=] [=error response=].
 
 
 <figure id="api-errors-table">
@@ -2136,7 +2168,7 @@ A [=host system=] SHOULD conform to [[!rfc6750]] Section 3 when returning a [=To
         <td>The specified access token has expired
         <td>401
       <tr>
-        <td><dfn>InternalError</dfn>
+        <td>InternalError
         <td>An internal or unexpected error has occurred
         <td>500
 
@@ -2224,6 +2256,12 @@ path: LICENSE.md
 
 
 # Appendix B: Changelog # {#changelog}
+
+## Version 2.0.1-20231026 (Oct 26, 2023) ## {#changelog-2.0.1-20231026}
+
+Summary of changes:
+
+1. clarification of the error responses of the [=Action Authenticate=] endpoint, plus addition of an example error response in line with [[!rfc6749]]
 
 
 ## Version 2.0.1-20230927 (Sep 27, 2023) ## {#changelog-2.0.1-20230927}
