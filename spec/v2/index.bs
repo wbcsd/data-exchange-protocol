@@ -2263,10 +2263,12 @@ path: LICENSE.md
 
 ## Version 2.1.0-20231109 (Nov 09, 2023) ## {#changelog-2.1.0-20231109}
 
-This version introduces a minor change and a clarification:
+This version introduces additional mandatory functionality:
 
-1. new [[#api-auth]]: [=AuthEndpoint=] is determined either through an [=OpenId Provider Configuration Document=] or falling back to [=AuthSubpath=]`/auth/token`
-2. clarifies that, in conformance with [[!rfc6749]] section 5.2, the error response of the [[#api-action-auth]] must be an object with the mandatory field `error` (and the optional field `error_description`)
+1. A new authentication flow ([[#api-auth]]) is specified which allows discovery
+    of the [=AuthEndpoint=] through an [=OpenId Provider Configuration Document=].
+    The flow is backwards-compatible with the 2.0.x-series of authentication flow
+    based on the [=AuthSubpath=]`/auth/token` syntax.
 
 
 ## Version 2.0.1-20230927 (Sep 27, 2023) ## {#changelog-2.0.1-20230927}
