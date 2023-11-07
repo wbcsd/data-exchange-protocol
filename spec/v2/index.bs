@@ -1649,7 +1649,7 @@ With Request parameters:
 :: See [[!rfc6749]] Section 4.4.2
 
 : <dfn>AuthBody</dfn>
-:: See [[!rfc6749]] Section 4.4.
+:: See [[!rfc6749]] Section 4.4. If successful, contains the <dfn>access token</dfn>.
 
 : <dfn>ContentLength</dfn>
 :: The length of the Body. See [[!rfc9112]].
