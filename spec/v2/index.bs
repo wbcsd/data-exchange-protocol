@@ -1544,13 +1544,13 @@ The following section briefly describes some of the additional functionality whi
 
 ## Authentication Flow ## {#api-auth}
 
-If a [=host system=] requires a [=data recipient=] to first authenticate before successfully calling an Action (such as [=Action ListFootprints=] or [=Action Events=]), the [=data recipient=] MUST perform the <dfn>authentication flow</dfn>:
+A [=host system=] requires a [=data recipient=] to first authenticate before successfully calling an Action (such as [=Action ListFootprints=] or [=Action Events=]). The [=data recipient=] MUST perform the <dfn>authentication flow</dfn>:
 
-1. [=data recipient=] attempting to authenticate through OpenId Connect ([[!OPENID-CONNECT]]), by
-    1. [=Data recipient=] retrieving and validating the [=OpenId Provider Configuration Document=] of the [=host system=] (see [[#api-action-auth-request]]), and then
+1. [=data recipient=] attempting to authenticate through OpenId Connect ([[!OPENID-CONNECT]]) [=AuthEndpoint=] discovery, by
+    1. [=Data recipient=] retrieving and validating the [=OpenId Provider Configuration Document=] of the [=host system=] (see [[!OPENID-CONNECT]]), and then
     2. using as [=AuthEndpoint=] the value of the `token_endpoint` property of the [=OpenId Provider Configuration Document=]
 2. otherwise, [=data recipient=] using [=AuthHostname=]`/`[=AuthSubpath=]`/auth/token` as the [=AuthEndpoint=] in the next step.
-3. [=data recipient=] retrieving the [=access token=] from [=AuthEndpoint=]
+3. [=data recipient=] retrieving the [=access token=] from [=AuthEndpoint=] (see [[#api-action-auth-request]]).
 
 Note: The [=authentication flow=] is defined such that a Version 2.1 data recipient can authenticate against host versions irrespective of their support for OpenID-Connect.
 
@@ -1581,7 +1581,7 @@ A [=host system=] MUST offer all actions under the same [=Hostname=] and [=Subpa
 
 A [=host system=] CAN offer the [=OpenId Provider Configuration Document=] and [=Action Authenticate=] under [=AuthHostname=] and [=AuthSubpath=] which are different from [=Hostname=] and [=Subpath=].
 
-If a host system does not offer an [=OpenId Provider Configuration Document=], [=data recipients=] MUST assume that [=Action Authenticate=] is offered under [=AuthHostname=]`/`[=AuthSubpath=]`/auth/token` (see ).
+If a host system does not offer an [=OpenId Provider Configuration Document=], [=data recipients=] MUST assume that [=Action Authenticate=] is offered under [=AuthHostname=]`/`[=AuthSubpath=]`/auth/token` (see [[#api-auth]]).
 
 <div class=example>
   The host system's DNS domain name is `example.org` and the subpath is `/wbcsd` whereas the ID management system uses a `id.example.org` domain with an empty subpath. The URIs would then be:
@@ -1649,7 +1649,7 @@ With Request parameters:
 :: See [[!rfc6749]] Section 4.4.2
 
 : <dfn>AuthBody</dfn>
-:: See [[!rfc6749]] Section 4.4. If successful, contains the <dfn>access token</dfn>.
+:: See [[!rfc6749]] Section 4.4
 
 : <dfn>ContentLength</dfn>
 :: The length of the Body. See [[!rfc9112]].
@@ -1671,7 +1671,7 @@ With action-specific response parameters
 :: A HTTP response code conforming to [[!rfc6749]] Section 4.4 and Section 5.
 
 : <dfn>AuthResponseBody</dfn>
-:: A JSON Object conforming to either RFC 6749 Section 4.4 in case of successful authentication, or RFC 6749 Section 5.2 otherwise. See [[#api-auth]] for further details
+:: A JSON Object conforming to either RFC 6749 Section 4.4 in case of successful authentication (containing an <dfn>access token</dfn>), or RFC 6749 Section 5.2 otherwise. See [[#api-auth]] for further details
 
 
 #### Example Successful Response #### {#api-action-auth-response-success}
