@@ -1546,7 +1546,7 @@ The following section briefly describes some of the additional functionality whi
 
 A [=host system=] requires a [=data recipient=] to first authenticate before successfully calling an Action (such as [=Action ListFootprints=] or [=Action Events=]). The [=data recipient=] MUST perform the <dfn>authentication flow</dfn>:
 
-1. [=data recipient=] attempting to authenticate through OpenId Connect ([[!OPENID-CONNECT]]) [=AuthEndpoint=] discovery, by
+1. [=data recipient=] attempting to authenticate through an [=AuthEndpoint=] retrieved via OpenId Connect ([[!OPENID-CONNECT]]), by
     1. [=Data recipient=] retrieving and validating the [=OpenId Provider Configuration Document=] of the [=host system=] (see [[!OPENID-CONNECT]]), and then
     2. using as [=AuthEndpoint=] the value of the `token_endpoint` property of the [=OpenId Provider Configuration Document=]
 2. otherwise, [=data recipient=] using [=AuthHostname=]`/`[=AuthSubpath=]`/auth/token` as the [=AuthEndpoint=] in the next step.
