@@ -1611,7 +1611,7 @@ For reasons of backwards-compatibility with [=data recipients=] implementing the
 Host systems MUST offer this action under path [=AuthSubpath=]`/auth/token` and hostname [=AuthHostname=].
 
 <pre highlight=http>
-POST <l>[=AuthSubpath=]/auth/token</l> HTTP/1.1
+POST <l>[=AuthSubpath=]</l>/auth/token HTTP/1.1
 host: <l>[=AuthHostname=]</l>
 accept: application/json
 content-type: application/x-www-form-urlencoded
