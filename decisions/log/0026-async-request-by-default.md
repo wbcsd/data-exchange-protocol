@@ -8,9 +8,16 @@ Proposed
 
 ## Context
 
-Current version of the specification[^1] favors synchronous communication over asynchronous communication. As, especially in the early stages of the network, most requests will target not yet existing PF values, the existing approach using synchronous `ListFootprints` calls will not work. In addition, requests cannot be prioritized by most relevant products, as calls are either based on PF ids (`GetFootprint` ) and not on the ids of the related products or even all PFs are requested in a whole (`ListFootprints`).
+The current version of the specification[^1] favors synchronous communication over asynchronous communication. As, especially in the early stages of the network, most requests will target not yet existing PF values, the existing approach using synchronous `ListFootprints` calls will not work. PCF data is often not available and is calculated after the request for a specific product arrives at the data provider (Supplier). 
 
-The specification[^1] already adresses this by supporting `PF Request Events and Responses`. But this feature is optional at the moment whereas synchronous communication mechanisms (as `ListFootprints`) is defined as mandatory. This complicates or even block integration of existing PCF exchange apps as those apps usually work in an asynchrounous way  and productId focused.
+Furthermore managing the access rights upfront for `ListFootprints` requests are complex for large enterprises with different Business Units and many products. Routing requests on specific products is easier than providing PCF data and managing access rights upfront. 
+
+The seconds synchronous request is `GetFootprint` which uses PF IDs to select the requested PCF. But _PF IDs_ are a detail which is usually unknown to the data requester (customer). Data requesters usually only know _Material Identifiers_ (e.g. catalog number, part number).
+Product specific requests would in addition enable data providers (suppliers) to prioritize the calculation of PCF when these are not available yet.
+
+The specification[^1] already adresses all this by supporting `PF Request Events and Responses`. But this feature is _optional_ at the moment whereas synchronous communication mechanisms (as `ListFootprints` or `GetFootprint`) are defined as _mandatory_. This complicates or even block integration of existing PCF exchange apps as those apps usually work in an asynchrounous and productId focused way.
+
+Other exchange networks like Catena-X also use this asynchronous/material approach. With the current specification the PACT API requires the user to handle two APIs with different logic. 
 
 ## Decision
 
@@ -164,8 +171,8 @@ The following changes to the tech spec Bikeshed file[^1] shall be made:
 
 ## Consequences
 
-Although synchronous requests are still supported, asynchronous communication will be promoted to be the favored way of PCF exchange. This enables app provider to get the data needed to calculate non existing PFs and provide those as soon as they are available. On the oother hand pf consumers do not have to ask for a not yet existing PF over and over again, but can be sure to get this PF delivered as soon as it is available.
+Although synchronous requests are still supported, asynchronous communication will be promoted to be the favored way of PCF exchange. This enables data provider to get the data needed to calculate non existing PFs and provide those as soon as they are available. On the other hand data consumers do not have to ask for a not yet existing PF over and over again, but can be sure to get this PF delivered as soon as it is available.
 
-Implementors will have to provide `Action Events` by default, whereas `ListFootprints` become optional. As the first change can be seen as compatible from a consumers view (breaking from an PF providers view), the second one is a breaking change for an API consumer.
+Implementors will have to provide `Action Events` by default, whereas `ListFootprints` become optional. As the first change can be seen as compatible from a consumers view (breaking from a providers point of view), the second one is a breaking change for an API consumer.
 
 [^1]: [spec/v2/index.bs](../../spec/v2/index.bs)
