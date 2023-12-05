@@ -1,6 +1,6 @@
 # 26. Switch to async request/response as mandatory (default) behaviour.
 
-Date: 2023-11-07
+Date: 2023-12-05 (updated)
 
 ## Status
 
@@ -24,25 +24,27 @@ Other exchange networks like Catena-X also use this asynchronous/material approa
 The following changes to the tech spec Bikeshed file[^1] shall be made:
 
 1. Change content of `Host System Minimum Requirements` section:
-   * Change `Action ListFootprints` from _mandatory_ to _optional_, i.e. move it from _MUST_ to _SHOULD_ paragraph. 
-   * Change `Action Events` from _optional_ to _mandatory_, i.e. move it from _SHOULD__ to _MUST_ paragraph. 
+   * Change `Action Events` from _optional_ to _mandatory_, i.e. move it from _SHOULD_ to _MUST_ paragraph. 
 
-2. Add an example of a `ProductFootprintFragment` querying a PF via productId to section `PF Request Event syntax`:
-  ```json
+2. Change content of section `Action ListFootprints/Response Syntax`
+    * Add the new HTTP status code 303 to the List of possible `ListStatusCodes`
+    * Add the following decription to this status code:
+        > _HttpStatusCode 303_ indicates that the queried PCF data is not yet available but can be requested using asynchronous `Action Events`, esp. `PF Request Event`. The event endpoint to be used is returned within the location header of the response. For more details see the corresponding section `Asynchronous request and retrieval of Product Footprints`.
 
+3. Add an example of a `ProductFootprintFragment` querying a PF via productId to section `PF Request Event syntax`:
+    ```json
      { 
-      "productIds": [
-        "urn:gtin:4712345060507"
-      ]
+        "productIds": [
+         "urn:gtin:4712345060507"
+        ]
      }
-
-  ```
-3. Add an example of an asynchrounous PF request / repsonse flow to the `Examples` section:
+    ```
+4. Add an example of an asynchrounous PF request / repsonse flow to the `Examples` section:
    
    Example PF Request Event
 
    HTTP request
-   ```
+   ```json
       POST Subpath/2/events HTTP/1.1
       host: Hostname
       authorization: Bearer BearerToken
@@ -69,7 +71,7 @@ The following changes to the tech spec Bikeshed file[^1] shall be made:
 
    Example PF Response Event
    HTTP request
-   ```
+   ```json
       POST Subpath/2/events HTTP/1.1
       host: Hostname
       authorization: Bearer BearerToken
@@ -171,8 +173,8 @@ The following changes to the tech spec Bikeshed file[^1] shall be made:
 
 ## Consequences
 
-Although synchronous requests are still supported, asynchronous communication will be promoted to be the favored way of PCF exchange. This enables data provider to get the data needed to calculate non existing PFs and provide those as soon as they are available. On the other hand data consumers do not have to ask for a not yet existing PF over and over again, but can be sure to get this PF delivered as soon as it is available.
+Although synchronous requests are still supported, asynchronous communication will be promoted to be an equivalent way of PCF exchange and the favoured one to aks for not yet existing PCF values of a specific product. The async approach enables data provider to get the data needed to calculate non existing PFs and provide those as soon as they are available. On the other hand data consumers do not have to ask for a not yet existing PF over and over again, but can be sure to get this PF delivered as soon as it is available.
 
-Implementors will have to provide `Action Events` by default, whereas `ListFootprints` become optional. As the first change can be seen as compatible from a consumers view (breaking from a providers point of view), the second one is a breaking change for an API consumer.
+Implementors will have to provide `Action Events` by default, whereas `ListFootprints` return status codes are extended. Both changes can be seen as compatible from a consumers view (although they may introduce new features from a providers point of view).
 
 [^1]: [spec/v2/index.bs](../../spec/v2/index.bs)
