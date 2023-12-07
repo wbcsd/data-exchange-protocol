@@ -1,0 +1,78 @@
+<pre class='metadata'>
+Title: Frequently Asked Questions for PACT Technical Specification Version Releases and Conformance Testing dependencies
+Shortname: tech-spec-versions-faq
+Level: 1
+Status: LD
+Mailing List: pact@wbcsd.org
+Editor:
+  Prasad Tilloo, SINE Foundation https://sine.foundation/, prasad@sine.foundation
+  Raimundo Henriques, SINE Foundation https://sine.foundation/, raimundo@sine.foundation
+Abstract: This document provides Frequently Asked Questions for PACT Technical Specification Version Releases on the corresponding updates incorporated in those Releases and Conformance Testing requirements
+Repository: wbcsd/data-exchange-protocol
+Markup Shorthands: markdown yes, idl yes, dfn yes
+Boilerplate: omit copyright, omit conformance
+
+</pre>
+
+# Frequently Asked Questions # {#faqs}
+
+## General ## {#faqs-general}
+#### Q: If an Organization hasn't implemented a Solution yet based on any PACT Technical Specification Version, with which Version should they start their implementation? #### #{faq-general-1}
+
+It is recommended that if an Organization hasn't implemented a Solution yet based on any PACT Technical Specification Version, they start with the <strong>latest stable Release</strong> of the PACT Technical Specification.
+
+<strong>Q: Which Version of the PACT Technical Specification Version should an Organization register for its Conformance Testing / Connectathon participation?</strong>
+
+It depends on the aim of the Organization for participating in a Conformance Testing / Connectathon cycle. If the Organzation's aim is to test its Solution for Conformance with a peer, then it should register with the Version of the PACT Technical Specification for which that peer has implemented its Solution. If the aim of the Organization is to provide a voluntary support for Conformance Testing another Organization's Solution, then they can register with the Version of the PACT Technical Specification for which it's testing peer is doing Conformance Testing (provided the Organization has a Solution implemented based on that particular PACT Technical Specification Version).
+
+## Version 2.1.0 ## {#faqs-2.1.0}
+<strong>Q: What are the changes / updates included in Version 2.1.0? </strong>
+
+As part of this minor version release we have introduced a new Authentication flow. This flow allows discovery of the `AuthEndpoint`
+through OpenId Connect via an [OpenId Provider Configuration Document](https://openid.net/specs/openid-connect-discovery-1_0.html).
+The flow is backwards-compatible with the 2.0.x-series of authentication flow based on the `AuthSubpath/auth/token` syntax.
+
+Please refer the [§ 6.3 Authentication Flow](https://wbcsd.github.io/tr/data-exchange-protocol/#api-auth) section in the Technical Specification for more details
+
+<strong>Q: Why was this new flow for Authentication introduced? </strong>
+
+PACT members faced challenges integrating the authentication endpoint [§ 6.5 Action Authenticate](https://wbcsd.github.io/tr/data-exchange-protocol/#api-action-auth)
+into existing authentication infrastructure.
+The hardcoded path in Tech Specs (`AuthSubPath/auth/token`) posed compatibility problems as it does not align with existing OAuth2 endpoint URI schemes.
+
+<strong>Q: Why OpenId Connect-based discovery? </strong>
+
+[OpenID Connect](https://openid.net/developers/how-connect-works/) is a well known and acceptable standard that provides an authentication layer built on top of the OAuth 2.0 protocol.
+
+By relying on OpenId Connect to discover the token endpoint, all parties (Host system implementers, solutions providers, etc.)
+gain more flexibility in how to operate and to maintain their systems. This flexibility is gained through its standardized endpoint, `.well-known/openid-configuration`, which allows Date Recipients to dynamically
+discover the `AuthEndpoint`, used to retrieve an access token. Host Systems will now be able to update their token endpoint with flexibility and interoperability,
+without impacting Data Recipients.
+
+<strong>Q: Are these updates backwards-compatible? </strong>
+Yes these are backwards-compatible updates to the Authentication flow. The way this backward compatibility is achieved is via the flexibility for a Data Recipient
+to retreive the token through the `AuthSubPath/auth/token` endpoint or via the token_endpoint url returned in the OpenId Provider Configuration Document.
+
+<strong>Q: If an Organization's Solution is PACT Conformant (to V 1.0.x or V 2.0.x), do they need to update it to incorporate the V 2.1.0 changes? </strong>
+
+This adoption to V 2.1.0 is highly recommended but not mandatory. 
+Data Recipients are strongly encouraged to update their implementation soon to support the V 2.1.0 updates for the Authentication flow if they want to be fully interoperable with V 2.1 series Host Systems.
+
+<strong>Q: If an Organization's Solution is PACT Conformant (to V 1.0.x or V 2.0.x), can they exchange PCF data with V 2.1.0 Host Systems? </strong>
+  
+Yes, since V 2.1.0 updates are backwards-compatible, V 1.0.x or V 2.0.x series Data Recipients Solutions can exchange PCF data with V 2.1.0 Host Systems
+
+<strong>Q: If an Organization's Solution is based on the V 1.0.x or V 2.0.x, can they conduct a Conformance Testing with V 2.1.0 Host Systems?  </strong>
+
+Yes, since V 2.1.0 updates are backwards-compatible, V 1.0.x or V 2.0.x series Data Recipients Solutions can conduct Conformance Testing with V 2.1.0 Host Systems for their V 1.0.x or V 2.0.x Conformance
+
+<strong>Q: If an Organization's Solution is PACT Conformant (to V 1.0.x or V 2.0.x), do they need to perform Conformance Testing again, if they do not update their Solution to incorporate the V 2.1.0 changes? </strong>
+
+No, if an Organization has not / is not going to update its Solution to incorporate the  V 2.1.0 changes, they do not need to perform Conformance Testing again. Their PACT Conformance status (to V 1.0.x or V 2.0.x) remains valid.
+
+<strong>Q: If an Organization's Solution is PACT Conformant (to V 1.0.x or V 2.0.x), do they need to perform Conformance Testing again, if they update their Solution to incorporate the V 2.1.0 changes? </strong>
+
+Yes, if the Organization has updated its Solution to incorporate the  V 2.1.0 changes, you need to perform Conformance Testing again to show the V 2.1.0 Conformance
+
+
+
