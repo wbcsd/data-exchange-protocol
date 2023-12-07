@@ -2,7 +2,7 @@
     "data": [
         {
             "id": "d9be4477-e351-45b3-acd9-e1da05e6f633",
-            "specVersion": "2.0.1-20230314",
+            "specVersion": "2.1.0",
             "precedingPfIds": [
                 "51131FB5-42A2-4267-A402-0ECFEFAD1619"
             ],
@@ -86,7 +86,8 @@
                     "providerName": "My Auditor",
                     "completedAt": "2022-12-08T14:47:32Z",
                     "standardName": "ISO ...",
-                    "comments": "This is a comment"
+                    "comments": "This is a comment",
+                    "assurance": false
                 }
             },
             "extensions": [

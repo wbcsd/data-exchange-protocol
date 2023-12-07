@@ -1,10 +1,10 @@
 <pre class='metadata'>
-Title: Technical Specifications for PCF Data Exchange (Version 2.1.0-20231109)
+Title: Technical Specifications for PCF Data Exchange (Version 2.1.0)
 Shortname: data-exchange-protocol
 Level: 1
 Status: LD
-ED: https://wbcsd.github.io/tr/2023/data-exchange-protocol-20231109/
-TR: https://wbcsd.github.io/tr/2023/data-exchange-protocol-20230221/
+ED: https://wbcsd.github.io/tr/2023/data-exchange-protocol-20231207/
+TR: https://wbcsd.github.io/tr/2023/data-exchange-protocol-20231207/
 Mailing List: public-dev@pathfinder.sine.dev
 Editor: Martin Pompéry (SINE Foundation), https://sine.foundation, martin@sine.foundation
 Editor: Cecilia Valeri (WBCSD), https://www.wbcsd.org, valeri@wbcsd.org
@@ -20,12 +20,6 @@ This document contains the necessary technical foundation for the [=Pathfinder N
 The goal of this document is to enable the [=interoperable=] exchange of [=PCF|Product Carbon Footprints=] across [[#conformance|conforming]] [=host systems=].
 
 The methodological foundation of the specification is the Pathfinder Framework Version 2.0 ([[!PATHFINDER-FRAMEWORK]]).
-
-Advisement:
-  This specification document is a work in progress. It is not yet a "final" or otherwise published version.
-  The latest published version (2.0.0) can be accessed [here](https://wbcsd.github.io/tr/2023/data-exchange-protocol-20230221/).
-
-
 
 ## Status of This Document ## {#status}
 
@@ -212,7 +206,7 @@ A ProductFootprint has the following properties:
         <td>String
         <td>M
         <td>
-            The version of the ProductFootprint data specification with value `2.1.0-20231109`.
+            The version of the ProductFootprint data specification with value `2.1.0`.
 
             Advisement: Subsequent revisions will update this value according to [Semantic Versioning 2.0.0](https://semver.org/lang/en/).
       <tr>
@@ -844,7 +838,7 @@ Example imaginary Data Model Extension for encoding shipment-related data, encod
 
 ```json
 {
-  "specVersion": "2.0.1",
+  "specVersion": "2.0.0",
   "dataSchema": "https://catalog.carbon-transparency.com/shipment/1.0.0/data-model.json",
   "data": {
     "shipmentId": "S1234567890",
@@ -2293,7 +2287,7 @@ path: LICENSE.md
 
 # Appendix B: Changelog # {#changelog}
 
-## Version 2.1.0-20231109 (Nov 09, 2023) ## {#changelog-2.1.0-20231109}
+## Version 2.1.0 (Dec 07, 2023) ## {#changelog-2.1.0}
 
 This version introduces additional mandatory functionality:
 
