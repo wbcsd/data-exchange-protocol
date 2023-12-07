@@ -35,7 +35,7 @@ jobs:
       - name: Install Biksehed
         run: pip3 install bikeshed && bikeshed update
       - name: Build specs
-        run: make -C spec publish && make -C spec/v2 publish
+        run: make -C spec publish && make -C spec/v2 publish && make -C spec/faq publish
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:

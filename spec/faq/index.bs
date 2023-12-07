@@ -17,7 +17,7 @@ Boilerplate: omit copyright, omit conformance
 # Frequently Asked Questions # {#faqs}
 
 ## General ## {#faqs-general}
-#### Q: If an Organization hasn't implemented a Solution yet based on any PACT Technical Specification Version, with which Version should they start their implementation? #### #{faq-general-1}
+<strong> Q: If an Organization hasn't implemented a Solution yet based on any PACT Technical Specification Version, with which Version should they start their implementation? </strong>
 
 It is recommended that if an Organization hasn't implemented a Solution yet based on any PACT Technical Specification Version, they start with the <strong>latest stable Release</strong> of the PACT Technical Specification.
 
@@ -55,11 +55,11 @@ to retreive the token through the `AuthSubPath/auth/token` endpoint or via the t
 
 <strong>Q: If an Organization's Solution is PACT Conformant (to V 1.0.x or V 2.0.x), do they need to update it to incorporate the V 2.1.0 changes? </strong>
 
-This adoption to V 2.1.0 is highly recommended but not mandatory. 
+This adoption to V 2.1.0 is highly recommended but not mandatory.
 Data Recipients are strongly encouraged to update their implementation soon to support the V 2.1.0 updates for the Authentication flow if they want to be fully interoperable with V 2.1 series Host Systems.
 
 <strong>Q: If an Organization's Solution is PACT Conformant (to V 1.0.x or V 2.0.x), can they exchange PCF data with V 2.1.0 Host Systems? </strong>
-  
+
 Yes, since V 2.1.0 updates are backwards-compatible, V 1.0.x or V 2.0.x series Data Recipients Solutions can exchange PCF data with V 2.1.0 Host Systems
 
 <strong>Q: If an Organization's Solution is based on the V 1.0.x or V 2.0.x, can they conduct a Conformance Testing with V 2.1.0 Host Systems?  </strong>
@@ -73,6 +73,3 @@ No, if an Organization has not / is not going to update its Solution to incorpor
 <strong>Q: If an Organization's Solution is PACT Conformant (to V 1.0.x or V 2.0.x), do they need to perform Conformance Testing again, if they update their Solution to incorporate the V 2.1.0 changes? </strong>
 
 Yes, if the Organization has updated its Solution to incorporate the  V 2.1.0 changes, you need to perform Conformance Testing again to show the V 2.1.0 Conformance
-
-
-
