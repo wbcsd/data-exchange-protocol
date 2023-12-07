@@ -1,7 +1,7 @@
 <pre class='metadata'>
 Title: Frequently Asked Questions for PACT Technical Specification Version Releases and Conformance Testing dependencies
 Shortname: tech-spec-versions-faq
-Level: 1
+Level: 2
 Status: LD
 Mailing List: pact@wbcsd.org
 Editor:
