@@ -3,9 +3,9 @@
 This repository contains technical specifications for the Pathfinder Network:
 
 1. [Technical Specifications for PCF Data Exchange (Version 1.0.1)](spec/index.bs)
-2. [Technical Specifications for PCF Data Exchange (Version 2.0.0)](spec/v2/index.bs)
+2. [Technical Specifications for PCF Data Exchange (Version 2.1.0)](spec/v2/index.bs)
 
-The technical specification Version 2.0.0 is the current focus of work.
+The technical specification Version 2.1.0 is the current focus of work.
 
 
 # On providing feedback and participating in the development of the technical specifications
