@@ -2,7 +2,7 @@
   "data": [
     {
       "id": "d9be4477-e351-45b3-acd9-e1da05e6f633",
-      "specVersion": "2.0.1-20230314",
+      "specVersion": "2.1.0",
       "version": 1,
       "created": "2022-05-22T21:47:32Z",
       "status": "Active",
@@ -59,7 +59,8 @@
           "providerName": "My Auditor",
           "completedAt": "2022-12-08T14:47:32Z",
           "standardName": "ISO ...",
-          "comments": "This is a comment"
+          "comments": "This is a comment",
+          "assurance": false
         }
       },
       "extensions": [
