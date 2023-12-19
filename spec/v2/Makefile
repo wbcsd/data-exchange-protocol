@@ -1,7 +1,6 @@
 DIAGRAMS := $(patsubst %.mmd,%.svg,$(wildcard diagrams/*.mmd))
 OUTDIR := ../upload/v2
 MMDC := mmdc
-FILES := $(shell ls)
 
 all: index.html
 
@@ -25,7 +24,5 @@ serve: $(DIAGRAMS)
 
 $(MMDC):
 	npm install -g @mermaid-js/mermaid-cli
-
-# $(DIAGRAMS): $(MMDC)
 
 .PHONY: publish clean serve

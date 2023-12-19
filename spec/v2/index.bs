@@ -1994,7 +1994,7 @@ The <dfn>PF Update Event</dfn> is defined as a JSON-encoded CloudEvent event wit
 <pre highlight=json>
 {
   "type": "org.wbcsd.pathfinder.ProductFootprint.Published.v1",
-  "specversion": "[VERSION]",
+  "specversion": "1.0",
   "id": "<l>[=EventId=]</l>",
   "source": "//<l>[=EventHostname=]</l>/<l>[=EventSubpath=]</l>",
   "time": "2022-05-31T17:31:00Z",
@@ -2050,7 +2050,7 @@ The [=PF Request Event=] is defined as a JSON-encoded CloudEvent event with the 
 <pre highlight=json>
 {
   "type": "org.wbcsd.pathfinder.ProductFootprintRequest.Created.v1",
-  "specversion": "[VERSION]",
+  "specversion": "1.0",
   "id": "<l>[=EventId=]</l>",
   "source": "//<l>[=EventHostname=]</l>/<l>[=EventSubpath=]</l>",
   "time": "2022-05-31T17:31:00Z",
@@ -2081,7 +2081,7 @@ The [=PF Response Event=] is defined as a JSON-encoded CloudEvent event with the
 <pre highlight=json>
 {
   "type": "org.wbcsd.pathfinder.ProductFootprintRequest.Fulfilled.v1",
-  "specversion": "[VERSION]",
+  "specversion": "1.0",
   "id": "<l>[=EventId=]</l>",
   "source": "//<l>[=EventHostname=]</l>/<l>[=EventSubpath=]</l>",
   "data": {
@@ -2114,7 +2114,7 @@ The [=PF Response Event=] is defined as a JSON-encoded CloudEvent event with the
 <pre highlight=json>
 {
   "type": "org.wbcsd.pathfinder.ProductFootprintRequest.Rejected.v1",
-  "specversion": "[VERSION]",
+  "specversion": "1.0",
   "id": "<l>[=EventId=]</l>",
   "source": "...",
   "data": {
@@ -2238,7 +2238,7 @@ date: Mon, 23 May 2022 19:33:16 GMT
 content-type: application/json
 content-length: 1831
 server: Pathfinder
-link: &lt;https://api.pathfinder.sine.dev/2/footprints?limit=10&amp;offset=10&gt;; rel="next"
+link: &lt;https://api.pathfinder.sine.dev/2/footprints?limit=10&offset=10&gt;; rel="next"
 </pre>
 
 Example response body:
