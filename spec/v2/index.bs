@@ -4,8 +4,6 @@ Text Macro: VERSION 2.2.1-20240513
 Shortname: data-exchange-protocol
 Level: 1
 Status: LD
-Previous Version: https://wbcsd.github.io/tr/2023/data-exchange-protocol-20231207/
-TR: https://wbcsd.github.io/tr/2024/data-exchange-protocol-20240410/
 Mailing List: public-dev@pathfinder.sine.dev
 Editor: Martin Pompéry (SINE Foundation), https://sine.foundation, martin@sine.foundation
 Editor: Cecilia Valeri (WBCSD), https://www.wbcsd.org, valeri@wbcsd.org
@@ -13,6 +11,7 @@ Abstract: This document specifies a data model for GHG emission data at product 
 Markup Shorthands: markdown yes, idl yes, dfn yes
 Boilerplate: omit copyright, omit conformance
 Local Boilerplate: header yes
+Local Boilerplate: computed-metadata yes
 Metadata Include: This version off
 </pre>
 
