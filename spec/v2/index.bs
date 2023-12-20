@@ -1550,7 +1550,7 @@ A [=host system=] requires a [=data recipient=] to first authenticate before suc
 Note: The [=authentication flow=] is defined such that a Version [VERSION] data recipient can authenticate against host versions irrespective of their support for OpenID-Connect.
 
 <figure>
-  <img src="diagrams/authentication-flow.svg" >
+  <img src="diagrams/authentication-flow.svg" height="100%" width="100%" >
   <figcaption>Authentication flow.</figcaption>
 </figure>
 
@@ -2238,7 +2238,7 @@ date: Mon, 23 May 2022 19:33:16 GMT
 content-type: application/json
 content-length: 1831
 server: Pathfinder
-link: &lt;https://api.pathfinder.sine.dev/2/footprints?limit=10&offset=10&gt;; rel="next"
+link: &lt;https://api.pathfinder.sine.dev/2/footprints?limit=10&amp;offset=10&gt;; rel="next"
 </pre>
 
 Example response body:
