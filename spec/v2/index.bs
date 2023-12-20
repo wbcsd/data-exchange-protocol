@@ -1,5 +1,5 @@
 <pre class='metadata'>
-Title: Technical Specifications for PCF Data Exchange (Version 2.1.0)
+Title: Technical Specifications for PCF Data Exchange
 Text Macro: VERSION 2.1.0
 Shortname: data-exchange-protocol
 Level: 1
@@ -12,6 +12,7 @@ Editor: Cecilia Valeri (WBCSD), https://www.wbcsd.org, valeri@wbcsd.org
 Abstract: This document specifies a data model for GHG emission data at product level based on the Pathfinder Framework Version 2, and a protocol for interoperable exchange of GHG emission data at product level.
 Markup Shorthands: markdown yes, idl yes, dfn yes
 Boilerplate: omit copyright, omit conformance
+Local Boilerplate: header yes
 </pre>
 
 # Introduction # {#intro}
