@@ -1,5 +1,6 @@
 <pre class='metadata'>
 Title: Technical Specifications for PCF Data Exchange (Version 2.1.0)
+Text Macro: VERSION 2.1.0
 Shortname: data-exchange-protocol
 Level: 1
 Status: LD
@@ -206,7 +207,7 @@ A ProductFootprint has the following properties:
         <td>String
         <td>M
         <td>
-            The version of the ProductFootprint data specification with value `2.1.0`.
+            The version of the ProductFootprint data specification with value <code>[VERSION]</code>.
 
             Advisement: Subsequent revisions will update this value according to [Semantic Versioning 2.0.0](https://semver.org/lang/en/).
       <tr>
@@ -836,9 +837,9 @@ See [[!DATA-MODEL-EXTENSIONS]] for technical details and [[!EXTENSIONS-GUIDANCE]
 <div class=example>
 Example imaginary Data Model Extension for encoding shipment-related data, encoded in JSON:
 
-```json
+<pre highlight=json>
 {
-  "specVersion": "2.0.0",
+  "specVersion": "[VERSION]",
   "dataSchema": "https://catalog.carbon-transparency.com/shipment/1.0.0/data-model.json",
   "data": {
     "shipmentId": "S1234567890",
@@ -848,7 +849,7 @@ Example imaginary Data Model Extension for encoding shipment-related data, encod
     "transportChainElementId": "ABCDEFGHI"
   }
 }
-```
+</pre>
 </div>
 
 
@@ -1546,7 +1547,7 @@ A [=host system=] requires a [=data recipient=] to first authenticate before suc
 2. otherwise, data recipient using [=AuthHostname=]`/`[=AuthSubpath=]`/auth/token` as the [=AuthEndpoint=] in the next step.
 3. data recipient retrieving the [=access token=] from [=AuthEndpoint=] (see [[#api-action-auth-request]]).
 
-Note: The [=authentication flow=] is defined such that a Version 2.1 data recipient can authenticate against host versions irrespective of their support for OpenID-Connect.
+Note: The [=authentication flow=] is defined such that a Version [VERSION] data recipient can authenticate against host versions irrespective of their support for OpenID-Connect.
 
 <figure>
   <img src="diagrams/authentication-flow.svg" >

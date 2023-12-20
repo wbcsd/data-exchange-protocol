@@ -1,12 +1,12 @@
 DIAGRAMS := $(patsubst %.mmd,%.svg,$(wildcard diagrams/*.mmd))
 OUTDIR := ../upload/v2
-MMDC := ./node_modules/.bin/mmdc
+MMDC := mmdc
 
 all: index.html
 
 clean:
 	rm -f docs/index.html docs/diagrams/*.svg index.html $(DIAGRAMS)
-	rm -rf node_modules
+	rm -rf node_modules/
 
 publish: index.html
 	mkdir -p $(OUTDIR)/diagrams
@@ -23,6 +23,6 @@ serve: $(DIAGRAMS)
 	bikeshed serve index.bs
 
 $(MMDC):
-	npm install @mermaid-js/mermaid-cli
+	npm install -g @mermaid-js/mermaid-cli
 
 .PHONY: publish clean serve
