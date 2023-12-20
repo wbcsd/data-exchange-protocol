@@ -2238,7 +2238,7 @@ date: Mon, 23 May 2022 19:33:16 GMT
 content-type: application/json
 content-length: 1831
 server: Pathfinder
-link: &lt;https://api.pathfinder.sine.dev/2/footprints?limit=10&offset=10&gt;; rel="next"
+link: &lt;https://api.pathfinder.sine.dev/2/footprints?limit=10&amp;offset=10&gt;; rel="next"
 </pre>
 
 Example response body:
