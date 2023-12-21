@@ -2181,7 +2181,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
  <body class="h-entry">
 <div class="head">
   <p data-fill-with="logo"></p>
-  <h1 id="title" class="p-name no-ref">[TITLE] ([VERSION])</h1>
+  <h1 id="title" class="p-name no-ref">[TITLE] (Version [VERSION])</h1>
   <h2 id="subtitle" class="no-num no-toc no-ref">[LONGSTATUS],
     <span class="dt-updated"><span class="value-title" title="[CDATE]">[DATE]</span>
   </h2>
