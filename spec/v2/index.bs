@@ -1,6 +1,6 @@
 <pre class='metadata'>
 Title: Technical Specifications for PCF Data Exchange
-Text Macro: VERSION 2.1.0
+Text Macro: VERSION 2.1.1-wip
 Shortname: data-exchange-protocol
 Level: 1
 Status: LD
