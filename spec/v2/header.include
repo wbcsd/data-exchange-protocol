@@ -5,7 +5,9 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <title>[TITLE] ([VERSION])</title>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
-  <script defer data-domain="wbcsd.github.io/data-exchange-protocol/v2" src="https://plausible.io/js/script.js"></script>
+
+	<script defer data-domain="wbcsd.github.io" src="https://plausible.io/js/script.js"></script>
+
 <style data-fill-with="stylesheet">/******************************************************************************
  *                   Style sheet for the W3C specifications                   *
  *
