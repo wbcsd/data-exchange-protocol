@@ -13,6 +13,7 @@ Abstract: This document specifies a data model for GHG emission data at product 
 Markup Shorthands: markdown yes, idl yes, dfn yes
 Boilerplate: omit copyright, omit conformance
 Local Boilerplate: header yes
+Metadata Include: This version off
 </pre>
 
 # Introduction # {#intro}
