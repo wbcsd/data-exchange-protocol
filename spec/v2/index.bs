@@ -1551,7 +1551,7 @@ A [=host system=] requires a [=data recipient=] to first authenticate before suc
 Note: The [=authentication flow=] is defined such that a Version [VERSION] data recipient can authenticate against host versions irrespective of their support for OpenID-Connect.
 
 <figure>
-  <img src="diagrams/authentication-flow.svg" >
+  <img height="250" src="diagrams/authentication-flow.svg" >
   <figcaption>Authentication flow.</figcaption>
 </figure>
 
