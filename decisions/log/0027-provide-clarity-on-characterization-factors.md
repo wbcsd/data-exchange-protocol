@@ -30,15 +30,15 @@ preference for having the possibility of including more than one characterizatio
     to:
     > **Deprecated**
     >
-    > The IPCC version of the GWP characterization factors used **for the largest relative share of the PCF** in **ist** calculation (see [=Pathfinder Framework=]   Section 3.2.2). The value MUST be one of the following: [...]
+    > The IPCC version of the GWP characterization factors used **in the calculation of the largest relative share of the PCF** (see [=Pathfinder Framework=]   Section 3.2.2). The value MUST be one of the following: [...]
     >
     > [...]
     >
-    > **Note: This property is deprecated and only kept to ensure backwards-compatibility. It does not replace the (also mandatory) property `characterizationFactorsList`.**
+    > **Advisement: This property is deprecated and only kept to ensure backwards-compatibility. It does not replace the (also mandatory) property `characterizationFactorsList`.**
 
     (Please refer to the proposed changes to the technical specification for a more detailed and complete diff.)
 
-2. Add the new mandatory property `characterizationFactorsList` with the new data type `CharacterizationFactorsSet`, defined as a non-empty `Object`, such that:
+2. Add the new mandatory property `characterizationFactorsList` with the new data type `CharacterizationFactorsList`, defined as a non-empty `Object`, such that:
    1. it has two **Optional** properties `ar5` and `ar6`, both of which have `Percent` values;
    2. the sum total of the values cannot exceed 100.
    3. the key of the highest value must match the value of the `characterizationFactors` property (where `ar5` corresponds to `"AR5"` and `ar6` to `"AR6"`). If both values are equal, any of them can be used as the value of `characterizationFactors`.
