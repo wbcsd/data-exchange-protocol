@@ -493,9 +493,9 @@ Advisement:
         <td>String
         <td>M
         <td>
-            **Deprecated**
+          **Deprecated**
 
-            The IPCC version of the GWP characterization factors used in the calculation of the largest relative share of the PCF (see [=Pathfinder Framework=] Section 3.2.2). The value MUST be one of the following:
+          The IPCC version of the GWP characterization factors used in the calculation of the largest relative share of the PCF (see [=Pathfinder Framework=] Section 3.2.2). The value MUST be one of the following:
 
           : `AR6`
           :: for the Sixth Assessment Report of the Intergovernmental Panel on Climate Change (IPCC)
@@ -504,12 +504,10 @@ Advisement:
 
           Advisement: This property is deprecated and only kept to ensure backwards-compatibility. It does not replace the (also mandatory) property [=cjaracterizationFactorsList=].
       <tr>
-        <td><dfn>characterizationFactorsList</dfn>  : <{CharacterizationFactorsList}>
+        <td><dfn>characterizationFactorsSources</dfn>  : <{CharacterizationFactorsSourcesSet}>
         <td>Object
         <td>M
-        <td>The non-empty list of characterization factors used in the calculation of the PCF (see [=Pathfinder Framework=] Section 3.2.2) including the percentages of the PCF that correspond to each characterization factor. See <{CharacterizationFactorsList}> for details.
-
-        Advisement: The set of characterization factor identifiers will likely change in future revisions. It is recommended to account for this when implementing the validation of this property.
+        <td>The non-empty set of [=CharacterizationFactorsSource=] used in the calculation of the PCF (see [=Pathfinder Framework=] Section 3.2.2).
       <tr>
         <td><dfn>crossSectoralStandardsUsed</dfn> : [=CrossSectoralStandardSet=]
         <td>Array
@@ -1391,30 +1389,45 @@ Example JSON string value:
 ```
 </div>
 
-## Data Type: <dfn>CharacterizationFactors</dfn> ## {#dt-characterizationfactors}
+## Data Type: <df element>CharacterizationFactorsSourcesSet</dfn> ## {#dt-characterizationfactorssourcesset}
 
-The IPCC version of the GWP characterization factors used in the calculation of the PCF (see [=Pathfinder Framework=] Section 3.2.2).
+A set of <{CharacterizationFactorsSource|Characterization Factors Sources}> of size 1 or larger.
 
-Valid values are:
-: `ar6`
-:: for the Sixth Assessment Report of the Intergovernmental Panel on Climate Change (IPCC)
-: `ar6`
-:: for the Fifth Assessment Report of the IPCC.
+### JSON Representation ### {#dt-characterizationfactorssourcesset-json}
 
-### JSON Representation ### {#dt-characterizationfactors-json}
+As an array of objects, with each object conforming to the JSON representation of <{CharacterizationFactorsSource}>.
 
-Each CharacterizationFactors MUST be encoded as a JSON string.
+## Data Type: <dfn element>CharacterizationFactorsSource</dfn> ## {#dt-characterizationfactorssource}
 
-## Data Type: CharacterizationFactorsList ## {#dt-characterizationfactorslist}
+A `CharacterizationFactorsSource` references a source of the characterization factors used in the calculation of the <{CarbonFootprint}> (see [=Pathfinder Framework=] Section 3.2.2).
 
-A CharacterizationFactorsList represents the weighted list of [=CharacterizationFactors=] used for the calculation of the PCF. A CharacterizationFactorsList MUST contain at least one entry. A CharacterizationFactorsList has CharacterizationFactors as keys and percentages as values. The sum total of the values of a CharacterizationFactorsList MUST NOT exceed 100.
+### Properties ### {#dt-characterizationfactorssource-properties}
 
-### Properties
+<dl dfn-type="element-attr" dfn-for="CharacterizationFactorsSource">
 
-: ar5 (optional, data type: [=Percent=])
-:: The percentage of the [=CharacterizationFactors=] of the Fifth Assessment Report of the IPCC used for the calculation of the PCF.
-: ar6 (optional, data type: [=Percent=])
-:: The percentage of the [=CharacterizationFactors=] of the Sixth Assessment Report of the IPCC used for the calculation of the PCF.
+: <dfn>name</dfn> (mandatory, data type: [=NonEmptyString=])
+:: The non-empty name of the characterization factors source. Presently, the value SHOULD be `"IPCC Assessment Report"`.
+
+: <dfn>version</dfn> (mandatory, data type: [=NonEmptyString=])
+:: The non-empty version of the characterization factors source. Presently, the value SHOULD be either `"5"` or `"6"` (referring to AR5 and AR6, respectively).
+
+</dl>
+
+<div class=example>
+Example encoding of a <{EmissionFactorDS}> in JSON:
+
+```json
+{
+  "name": "IPCC Assessment Report",
+  "version": "6"
+}
+```
+</div>
+
+
+### JSON Representation ### {#dt-emissionfactords-json}
+
+Each <{CharacterizationFactorsSource}> MUST be encoded as a JSON object.
 
 # Product Footprint Lifecycle # {#lifecycle}
 
@@ -2273,7 +2286,7 @@ date: Mon, 23 May 2022 19:33:16 GMT
 content-type: application/json
 content-length: 1831
 server: Pathfinder
-link: &lt;https://api.pathfinder.sine.dev/2/footprints?limit=10&amp;offset=10&gt;; rel="next"
+link: &lt;https://api.pathfinder.sine.dev/2/footprints?limit=10&offset=10&gt;; rel="next"
 </pre>
 
 Example response body:
