@@ -505,7 +505,7 @@ Advisement:
           Advisement: This property is deprecated and only kept to ensure backwards-compatibility. It will be removed on version 3 of these Technical Specifications. It does not replace the (also mandatory) property [=characterizationFactorsSources=].
       <tr>
         <td><dfn>characterizationFactorsSources</dfn>  : <{CharacterizationFactorsSourcesSet}>
-        <td>Object
+        <td>Array
         <td>M
         <td>The non-empty set of [=CharacterizationFactorsSource=] used in the calculation of the PCF (see [=Pathfinder Framework=] Section 3.2.2).
       <tr>
