@@ -502,7 +502,7 @@ Advisement:
           : `AR5`
           :: for the Fifth Assessment Report of the IPCC.
 
-          Advisement: This property is deprecated and only kept to ensure backwards-compatibility. It does not replace the (also mandatory) property [=cjaracterizationFactorsList=].
+          Advisement: This property is deprecated and only kept to ensure backwards-compatibility. It will be removed on version 3 of these Technical Specifications. It does not replace the (also mandatory) property [=characterizationFactorsSources=].
       <tr>
         <td><dfn>characterizationFactorsSources</dfn>  : <{CharacterizationFactorsSourcesSet}>
         <td>Object
