@@ -1,6 +1,6 @@
 # 28. Provide Clarity on Characterization Factors (AR5 and AR6)
 
-Date: [YYYY-MM-DD]
+Date: 2024-01-16
 
 ## Status
 
@@ -52,3 +52,4 @@ It is forward-looking as future adaptations will hardly break backwards-compatib
 
 1. This ADR introduces a minor change: since the `characterizationFactors` property is maintained, it is backwards compatible.
 2. Accordingly, the Technical Specifications version number must be updated from 2.1.x to 2.2.0.
+3. Host systems need to validate the new property `characterizationFactorsSources` depending on the value of ProductFootprint's property `specsVersion`
