@@ -502,12 +502,12 @@ Advisement:
           : `AR5`
           :: for the Fifth Assessment Report of the IPCC.
 
-          Advisement: This property is deprecated and only kept to ensure backwards-compatibility. It will be removed on version 3 of these Technical Specifications. It does not replace the (also mandatory) property [=characterizationFactorsSources=].
+          Advisement: This property is deprecated and only kept to ensure backwards-compatibility. It will be removed on version 3 of these Technical Specifications. It does not replace the (also mandatory) property <{CarbonFootprint/characterizationFactorsSources}>.
       <tr>
-        <td><dfn>characterizationFactorsSources</dfn>  : <{CharacterizationFactorsSourcesSet}>
+        <td><dfn>characterizationFactorsSources</dfn>  : [=CharacterizationFactorsSourcesSet=]
         <td>Array
         <td>M
-        <td>The non-empty set of [=CharacterizationFactorsSource=] used in the calculation of the PCF (see [=Pathfinder Framework=] Section 3.2.2).
+        <td>The set of characterization factors used in the calculation of the PCF (see [=Pathfinder Framework=] Section 3.2.2). The value MUST be a [=CharacterizationFactorsSourcesSet=].
       <tr>
         <td><dfn>crossSectoralStandardsUsed</dfn> : [=CrossSectoralStandardSet=]
         <td>Array
@@ -1389,9 +1389,9 @@ Example JSON string value:
 ```
 </div>
 
-## Data Type: <df element>CharacterizationFactorsSourcesSet</dfn> ## {#dt-characterizationfactorssourcesset}
+## Data Type: <dfn>CharacterizationFactorsSourcesSet</dfn> ## {#dt-characterizationfactorssourcesset}
 
-A set of <{CharacterizationFactorsSource|Characterization Factors Sources}> of size 1 or larger.
+A set of 1 or more <{CharacterizationFactorsSource|Characterization Factors Sources}>.
 
 ### JSON Representation ### {#dt-characterizationfactorssourcesset-json}
 
@@ -1414,7 +1414,7 @@ A `CharacterizationFactorsSource` references a source of the characterization fa
 </dl>
 
 <div class=example>
-Example encoding of a <{EmissionFactorDS}> in JSON:
+Example encoding of a <{CharacterizationFactorsSource}> in JSON:
 
 ```json
 {
@@ -1425,7 +1425,7 @@ Example encoding of a <{EmissionFactorDS}> in JSON:
 </div>
 
 
-### JSON Representation ### {#dt-emissionfactords-json}
+### JSON Representation ### {#dt-characterizationfactorssource-json}
 
 Each <{CharacterizationFactorsSource}> MUST be encoded as a JSON object.
 
