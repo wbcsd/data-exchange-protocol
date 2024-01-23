@@ -1404,13 +1404,14 @@ A `CharacterizationFactorsSource` references a source of the characterization fa
 ### Properties ### {#dt-characterizationfactorssource-properties}
 
 <dl dfn-type="element-attr" dfn-for="CharacterizationFactorsSource">
+: <dfn>name</dfn> (mandatory, data type: [=NonEmptyString=]) :: The non-empty name of the
+characterization factors source. Presently, the value SHOULD be `"IPCC Assessment Report"`,
+referring to the characterization factors (100-year GWP, including carbon feedbacks) derived from
+the IPCC Assessment Report publication.
 
-: <dfn>name</dfn> (mandatory, data type: [=NonEmptyString=])
-:: The non-empty name of the characterization factors source. Presently, the value SHOULD be `"IPCC Assessment Report"`.
-
-: <dfn>version</dfn> (mandatory, data type: [=NonEmptyString=])
-:: The non-empty version of the characterization factors source. Presently, the value SHOULD be either `"5"` or `"6"` (referring to AR5 and AR6, respectively).
-
+: <dfn>version</dfn> (mandatory, data type: [=NonEmptyString=]) :: The non-empty version of the
+characterization factors source. Presently, the value SHOULD be either `"5"` or `"6"`, referring to
+the 5th (AR5) and 6th (AR6) IPCC Assessment Reports, respectively.
 </dl>
 
 <div class=example>
