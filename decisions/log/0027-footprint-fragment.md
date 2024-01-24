@@ -40,6 +40,9 @@ The following lists of mandatory and optional properties are proposed:
 * **mandatory**: productIds, ...
 * **optional**: specVersion, companyIds, extensions, ...
 
+Additionally, the $filter statement MUST only include the following operators:
+* Logical eq for 'productIds' ...
+
 
 ## Consequences
 
