@@ -31,7 +31,7 @@ In general, we propose to refine the definition of the 'ProductFootprintFragment
   * **optional**: explicitly defining properties that MAY be included as a part of the fragment
   * **forbidden**: implicitly excluding properties as a part of the fragment by not including them as a mandatory or optional properties
 * which operators are allowed to specify the desired values of these properties:
-  * for example, {eq}
+  * for example, eq, lt, le, gt, ge as supported for filtering in ***Action ListFootprints***
 
 ## Decision
 
