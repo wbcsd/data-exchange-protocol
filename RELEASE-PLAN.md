@@ -10,11 +10,11 @@ In addition, the tables below disclose deprecation of releases and subsequent su
 ## Definitions
 
 <dl>
-<dt>**Draft Release**</dt>
-<dd>A release, starting a period of feedback collection from the community</dd>
-<dt>**Deprecation**</dt>
+<dt>Draft Release</dt>
+<dd>The release of draft document, starting a period of feedback collection from the community</dd>
+<dt>Deprecation</dt>
 <dd>Companies are no longer encouraged to use the release (e.g. to compute and subsequently publish PCFs based on it)</dd>
-<dt>**Sunset**</dt>
+<dt>Sunset</dt>
 <dd>The release is no longer supported. Companies are discouraged to use the release (e.g. to compute and to subsequently publish PCFs based on it)</dd>
 </dl>
 
