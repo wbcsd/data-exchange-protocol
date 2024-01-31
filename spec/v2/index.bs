@@ -502,12 +502,14 @@ Advisement:
           : `AR5`
           :: for the Fifth Assessment Report of the IPCC.
 
-          Advisement: This property is deprecated and only kept to ensure backwards-compatibility. It will be removed on version 3 of these Technical Specifications. It does not replace the (also mandatory) property <{CarbonFootprint/characterizationFactorsSources}>.
+          Advisement: This property is deprecated and only kept to ensure backwards-compatibility. It will be removed in version 3 of these Technical Specifications. It does not replace the (also mandatory) property <{CarbonFootprint/characterizationFactorsSources}>.
       <tr>
         <td><dfn>characterizationFactorsSources</dfn>  : [=CharacterizationFactorsSourcesSet=]
         <td>Array
         <td>M
         <td>The characterization factors from one or more IPCC Assessment Reports used in the calculation of the PCF (see [=Pathfinder Framework=] Section 3.2.2). The value MUST be a [=CharacterizationFactorsSourcesSet=].
+
+          Advisement: Per the Framework, the latest available characterization factor version shall be used. In the event this is not possible, include the set of all characterization factors used.
       <tr>
         <td><dfn>crossSectoralStandardsUsed</dfn> : [=CrossSectoralStandardSet=]
         <td>Array
@@ -1405,14 +1407,14 @@ A `CharacterizationFactorsSource` references a source of the characterization fa
 
 <dl dfn-type="element-attr" dfn-for="CharacterizationFactorsSource">
 : <dfn>name</dfn> (mandatory, data type: [=NonEmptyString=]) :: The non-empty name of the
-characterization factors source. Presently, the value SHOULD be `"IPCC Assessment Report"`,
-referring to the characterization factors (100-year GWP, including carbon feedbacks) derived from
-the IPCC Assessment Report publication.
+    characterization factors source. Presently, the value SHOULD be `"IPCC Assessment Report"`,
+    referring to the characterization factors (100-year GWP, including carbon feedbacks) derived from
+    the IPCC Assessment Report publication.
 
 : <dfn>version</dfn> (mandatory, data type: [=NonEmptyString=]) :: The non-empty version of the
-characterization factors source. Presently, the value SHOULD be either `"5"` or `"6"`, referring to
-the 5th (AR5) and 6th (AR6) IPCC Assessment Reports, respectively.
-</dl>
+    characterization factors source. Presently, the value SHOULD be either `"5"` or `"6"`, referring to
+    the 5th (AR5) and 6th (AR6) IPCC Assessment Reports, respectively.
+    </dl>
 
 <div class=example>
 Example encoding of a <{CharacterizationFactorsSource}> in JSON:
@@ -2287,7 +2289,7 @@ date: Mon, 23 May 2022 19:33:16 GMT
 content-type: application/json
 content-length: 1831
 server: Pathfinder
-link: &lt;https://api.pathfinder.sine.dev/2/footprints?limit=10&offset=10&gt;; rel="next"
+link: &lt;https://api.pathfinder.sine.dev/2/footprints?limit=10&amp;offset=10&gt;; rel="next"
 </pre>
 
 Example response body:
