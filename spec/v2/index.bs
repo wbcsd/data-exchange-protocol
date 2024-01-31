@@ -495,7 +495,7 @@ Advisement:
         <td>
           **Deprecated**
 
-          The IPCC version of the GWP characterization factors used in the calculation of the largest relative share of the PCF (see [=Pathfinder Framework=] Section 3.2.2). The value MUST be one of the following:
+          The IPCC version of the GWP characterization factors used in the calculation of the PCF (see [=Pathfinder Framework=] Section 3.2.2). In case several characterization factors are used, indicate the earliest version used in your calculations, disregarding supplier provided PCFs. The value MUST be one of the following:
 
           : `AR6`
           :: for the Sixth Assessment Report of the Intergovernmental Panel on Climate Change (IPCC)
