@@ -14,7 +14,7 @@ Architecture decisions and changes to the technical specification are submitted 
 
 ### Submitting an ADR
 
-- Fork and Clone the repo to your local
+- Fork and Clone the repo to your local machine
 - Create a new branch (name as you prefer but recommend to use your GitHub handle + "-" + adr name e.g. <githubhandle>-adr-0016)
 - Create a Markdown file for the ADR under the [decisions/log](decisions/log/) folder in your local branch (based on the proposed format)
     -  If possible, submit respective changes (based on your ADR proposal) already to the technical specification text as well (see above)
