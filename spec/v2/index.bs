@@ -507,7 +507,7 @@ Advisement:
         <td><dfn>characterizationFactorsSources</dfn>  : [=CharacterizationFactorsSourcesSet=]
         <td>Array
         <td>M
-        <td>The set of characterization factors used in the calculation of the PCF (see [=Pathfinder Framework=] Section 3.2.2). The value MUST be a [=CharacterizationFactorsSourcesSet=].
+        <td>The characterization factors from one or more IPCC Assessment Reports used in the calculation of the PCF (see [=Pathfinder Framework=] Section 3.2.2). The value MUST be a [=CharacterizationFactorsSourcesSet=].
       <tr>
         <td><dfn>crossSectoralStandardsUsed</dfn> : [=CrossSectoralStandardSet=]
         <td>Array
