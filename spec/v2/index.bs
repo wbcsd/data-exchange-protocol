@@ -807,7 +807,7 @@ The following properties are defined for data type <{Assurance}>:
         <td>M
         <td>The non-empty name of the independent third party engaged to undertake the assurance.
 
-        Advisement: This property will become Optional on version 3 of these Technical Specifications.
+        Advisement: This property is planned to be OPTIONAL in version 3 of these Technical Specifications.
       <tr>
         <td><dfn>completedAt</dfn> : [=DateTime=]
         <td>String
