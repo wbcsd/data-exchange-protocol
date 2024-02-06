@@ -17,7 +17,7 @@ Metadata Include: This version off
 </pre>
 
 Advisement: This document is a work in progress and should not be used for Conformance Testing. Please refer to the [latest
-stable version of the Technical Specifications](https://wbcsd.github.io/tr/data-exchange-protocol/) for that end. All feedback is welcomed.
+stable version of the Technical Specifications]([LATEST]) for that end. All feedback is welcomed.
 
 # Introduction # {#intro}
 
