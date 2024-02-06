@@ -16,6 +16,9 @@ Local Boilerplate: header yes
 Metadata Include: This version off
 </pre>
 
+Advisement: This document is a work in progress and should not be used for Conformance Testing. Please refer to the [latest
+stable version of the Technical Specifications](https://wbcsd.github.io/tr/data-exchange-protocol/) for that end. All feedback is welcomed.
+
 # Introduction # {#intro}
 
 This document contains the necessary technical foundation for the [=Pathfinder Network=], an open and global network for emission data exchange.
@@ -803,6 +806,8 @@ The following properties are defined for data type <{Assurance}>:
         <td>String
         <td>M
         <td>The non-empty name of the independent third party engaged to undertake the assurance.
+
+        Advisement: This property will become Optional on version 3 of these Technical Specifications.
       <tr>
         <td><dfn>completedAt</dfn> : [=DateTime=]
         <td>String
