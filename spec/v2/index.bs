@@ -493,7 +493,8 @@ Advisement:
         <td>String
         <td>M
         <td>
-          **Deprecated**
+
+          Advisement: This property is DEPRECATED and only kept to ensure backwards-compatibility. It will be removed in version 3 of these Technical Specifications. It does not replace the (also mandatory) property <{CarbonFootprint/characterizationFactorsSources}>.
 
           The IPCC version of the GWP characterization factors used in the calculation of the PCF (see [=Pathfinder Framework=] Section 3.2.2). In case several characterization factors are used, indicate the earliest version used in your calculations, disregarding supplier provided PCFs. The value MUST be one of the following:
 
@@ -501,13 +502,11 @@ Advisement:
           :: for the Sixth Assessment Report of the Intergovernmental Panel on Climate Change (IPCC)
           : `AR5`
           :: for the Fifth Assessment Report of the IPCC.
-
-          Advisement: This property is deprecated and only kept to ensure backwards-compatibility. It will be removed in version 3 of these Technical Specifications. It does not replace the (also mandatory) property <{CarbonFootprint/characterizationFactorsSources}>.
       <tr>
-        <td><dfn>characterizationFactorsSources</dfn>  : [=CharacterizationFactorsSourcesSet=]
+        <td><dfn>characterizationFactorsSources</dfn>  : [=CharacterizationFactorsSources=]
         <td>Array
         <td>M
-        <td>The characterization factors from one or more IPCC Assessment Reports used in the calculation of the PCF (see [=Pathfinder Framework=] Section 3.2.2). The value MUST be a [=CharacterizationFactorsSourcesSet=].
+        <td>The characterization factors from one or more IPCC Assessment Reports used in the calculation of the PCF (see [=Pathfinder Framework=] Section 3.2.2). The value MUST be a non-empty set of [=CharacterizationFactorsSources=].
 
           Advisement: Per the Framework, the latest available characterization factor version shall be used. In the event this is not possible, include the set of all characterization factors used.
       <tr>
@@ -1390,14 +1389,6 @@ Example JSON string value:
 "f4b1225a-bd44-4c8e-861d-079e4e1dfd69"
 ```
 </div>
-
-## Data Type: <dfn>CharacterizationFactorsSourcesSet</dfn> ## {#dt-characterizationfactorssourcesset}
-
-A set of 1 or more <{CharacterizationFactorsSource|Characterization Factors Sources}>.
-
-### JSON Representation ### {#dt-characterizationfactorssourcesset-json}
-
-As an array of objects, with each object conforming to the JSON representation of <{CharacterizationFactorsSource}>.
 
 ## Data Type: <dfn element>CharacterizationFactorsSource</dfn> ## {#dt-characterizationfactorssource}
 
