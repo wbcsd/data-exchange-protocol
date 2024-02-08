@@ -16,8 +16,8 @@ Local Boilerplate: header yes
 Metadata Include: This version off
 </pre>
 
-Advisement: This document is a work in progress and should not be used for Conformance Testing. Please refer to the [latest
-stable version of the Technical Specifications]([LATEST]) for that end. All feedback is welcomed.
+Advisement: This document is a work in progress and should not be used for conformance testing. Please refer to the [latest
+stable version of the Technical Specifications]([LATEST]) for conformance testing. All feedback is welcome.
 
 # Introduction # {#intro}
 
@@ -807,7 +807,7 @@ The following properties are defined for data type <{Assurance}>:
         <td>M
         <td>The non-empty name of the independent third party engaged to undertake the assurance.
 
-        Advisement: This property is planned to be OPTIONAL in version 3 of these Technical Specifications.
+        Advisement: Given this property was incorrectly and unintentionally published in V2 of the Technical Specifications as Mandatory, it will be reverted to Optional in version 3 of the Technical Specifications.
       <tr>
         <td><dfn>completedAt</dfn> : [=DateTime=]
         <td>String
