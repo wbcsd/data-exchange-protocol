@@ -16,6 +16,9 @@ Local Boilerplate: header yes
 Metadata Include: This version off
 </pre>
 
+Advisement: This document is a work in progress and should not be used for conformance testing. Please refer to the [latest
+stable version of the Technical Specifications]([LATEST]) for conformance testing. All feedback is welcome.
+
 # Introduction # {#intro}
 
 This document contains the necessary technical foundation for the [=Pathfinder Network=], an open and global network for emission data exchange.
@@ -803,6 +806,8 @@ The following properties are defined for data type <{Assurance}>:
         <td>String
         <td>M
         <td>The non-empty name of the independent third party engaged to undertake the assurance.
+
+        Advisement: Given this property was incorrectly and unintentionally published in V2 of the Technical Specifications as Mandatory, it will be reverted to Optional in version 3 of the Technical Specifications.
       <tr>
         <td><dfn>completedAt</dfn> : [=DateTime=]
         <td>String
