@@ -503,10 +503,10 @@ Advisement:
           : `AR5`
           :: for the Fifth Assessment Report of the IPCC.
       <tr>
-        <td><dfn>characterizationFactorsSources</dfn>  : [=CharacterizationFactorsSources=]
+        <td><dfn>characterizationFactorsSources</dfn>  : <{CharacterizationFactorsSource}>[]
         <td>Array
         <td>M
-        <td>The characterization factors from one or more IPCC Assessment Reports used in the calculation of the PCF (see [=Pathfinder Framework=] Section 3.2.2). The value MUST be a non-empty set of [=CharacterizationFactorsSources=].
+        <td>The characterization factors from one or more IPCC Assessment Reports used in the calculation of the PCF (see [=Pathfinder Framework=] Section 3.2.2). The value MUST be a non-empty set of <{CharacterizationFactorsSource}>.
 
           Advisement: Per the Framework, the latest available characterization factor version shall be used. In the event this is not possible, include the set of all characterization factors used.
       <tr>
@@ -1397,12 +1397,14 @@ A `CharacterizationFactorsSource` references a source of the characterization fa
 ### Properties ### {#dt-characterizationfactorssource-properties}
 
 <dl dfn-type="element-attr" dfn-for="CharacterizationFactorsSource">
-: <dfn>name</dfn> (mandatory, data type: [=NonEmptyString=]) :: The non-empty name of the
+: <dfn>name</dfn> (mandatory, data type: [=NonEmptyString=])
+:: The non-empty name of the
     characterization factors source. Presently, the value SHOULD be `"IPCC Assessment Report"`,
     referring to the characterization factors (100-year GWP, including carbon feedbacks) derived from
     the IPCC Assessment Report publication.
 
-: <dfn>version</dfn> (mandatory, data type: [=NonEmptyString=]) :: The non-empty version of the
+: <dfn>version</dfn> (mandatory, data type: [=NonEmptyString=])
+:: The non-empty version of the
     characterization factors source. Presently, the value SHOULD be either `"5"` or `"6"`, referring to
     the 5th (AR5) and 6th (AR6) IPCC Assessment Reports, respectively.
     </dl>
