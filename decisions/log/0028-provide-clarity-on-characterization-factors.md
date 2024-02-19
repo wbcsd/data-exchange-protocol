@@ -16,8 +16,7 @@ It's data type is `String` and the value MUST be one of the following (see [4.2.
   - for the Fifth Assessment Report of the IPCC
 
 However, some PCFs might be calculated with inputs that use both AR5 and AR6 as these can come from
-different sources (i.e., different actors in the supply chain). Since the IPCC will keep publishing
-reports, this problem tends to get worse in the future.
+different sources (i.e., different actors in the supply chain). Since the IPCC will keep publishing reports (at an expected cadence of at least 5 years between reports), this problem tends to get worse in the future.
 
 In the context of the Methodology Working Group, PACT members have expressed a very strong
 preference for having the possibility of including more than one characterization factor per PCF.
@@ -46,7 +45,7 @@ This proposal aims at providing a forward-looking change on characterization fac
 
 Backwards-compatibility is preserved by keeping the `characterizationFactors` property (despite its becoming deprecated).
 
-It is forward-looking as future adaptations will hardly break backwards-compatibility. If a more fine-grained account of characterization factors use is ever desired, it can be included through optional properties of `CharacterizationFactorsSource`. If ever other sources become relevant (e.g., for specific industries) this too can be acommodated without the need for a breaking change.
+It is forward-looking because future adaptations are unlikely to break backwards-compatibility. If a more fine-grained account of characterization factors use is ever desired, it can be included through optional properties of `CharacterizationFactorsSource`. If ever other sources become relevant (e.g., for specific industries) this too can be acommodated without the need for a breaking change.
 
 ## Consequences
 
