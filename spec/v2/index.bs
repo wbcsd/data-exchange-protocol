@@ -1986,7 +1986,9 @@ HTTP/1.1 200 OK
 content-length: 0
 </pre>
 
-The host system upon not accepting the event SHOULD respond with an [=error response=] (see [[#api-error-responses]]).
+If the host system accepts the event but cannot process it due to unavailability of the PF data for the [=ProductFootprintFragment=] in the request, it SHOULD return an [=error response=] (see [[#api-error-responses]]) with the [=error response code=]: 404 and appropriate [=error message=] indicating the unavailability of the PF data for the requested [=ProductFootprintFragment=] value.
+
+The host system upon <strong>not</strong> accepting the event SHOULD respond with an [=error response=] (see [[#api-error-responses]]).
 
 ### Notification of data recipients on Product Footprint updates ### {#api-action-events-case-1}
 
@@ -2072,7 +2074,16 @@ The [=PF Request Event=] is defined as a JSON-encoded CloudEvent event with the 
 with
 
 : <dfn>ProductFootprintFragment</dfn>
-:: A JSON object which references a subset of <{ProductFootprint}> properties, **including nested properties**.
+:: A JSON object which references a subset of <{ProductFootprint}> properties, **including nested properties**. It is RECOMMENDED to include at least the [=ProductIds=] in the PF Request Event request body.
+    <div class=example>
+    Example `ProductFootprintFragment` for querying a PF via <strong>productId</strong> in the PF Request Event request body
+    ```json
+      {
+        "productIds": [
+            "urn:gtin:4712345060507"
+        ]
+      }
+    ```
 : <dfn>PFRequestComment</dfn>
 :: The OPTIONAL comment by the [=data recipient=] to the [=data owner=] about the request.
      If defined, the [=PFRequestComment=] MUST be encoded as a JSON string.
