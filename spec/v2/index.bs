@@ -502,13 +502,19 @@ Advisement:
           :: for the Sixth Assessment Report of the Intergovernmental Panel on Climate Change (IPCC)
           : `AR5`
           :: for the Fifth Assessment Report of the IPCC.
-      <tr>
-        <td><dfn>characterizationFactorsSources</dfn>  : <{CharacterizationFactorsSource}>[]
-        <td>Array
+     <tr>
+        <td><dfn>ipccCharacterizationFactorsSources</dfn>
+        <td>Array of Strings
         <td>M
-        <td>The characterization factors from one or more IPCC Assessment Reports used in the calculation of the PCF (see [=Pathfinder Framework=] Section 3.2.2). The value MUST be a non-empty set of <{CharacterizationFactorsSource}>.
+        <td>The characterization factors from one or more IPCC Assessment Reports used in the calculation of the PCF (see [=Pathfinder Framework=] Section 3.2.2).
+              It MUST be a non-empty set of strings with the format `AR$VERSION$`, where `$VERSION$` stands for the
+              IPCC report version number and MUST be an integer.
 
-          Advisement: Per the Framework, the latest available characterization factor version shall be used. In the event this is not possible, include the set of all characterization factors used.
+          Example values:
+          <div class=example>["AR6"]</div>
+          <div class=example>["AR5", "AR6"]</div>
+
+          Advisement: Per the Framework, the latest available characterization factor version shall be used, i.e., `["AR6"]`. In the event this is not possible, include the set of all characterization factors used.
       <tr>
         <td><dfn>crossSectoralStandardsUsed</dfn> : [=CrossSectoralStandardSet=]
         <td>Array
@@ -1389,41 +1395,6 @@ Example JSON string value:
 "f4b1225a-bd44-4c8e-861d-079e4e1dfd69"
 ```
 </div>
-
-## Data Type: <dfn element>CharacterizationFactorsSource</dfn> ## {#dt-characterizationfactorssource}
-
-A `CharacterizationFactorsSource` references a source of the characterization factors used in the calculation of the <{CarbonFootprint}> (see [=Pathfinder Framework=] Section 3.2.2).
-
-### Properties ### {#dt-characterizationfactorssource-properties}
-
-<dl dfn-type="element-attr" dfn-for="CharacterizationFactorsSource">
-: <dfn>name</dfn> (mandatory, data type: [=NonEmptyString=])
-:: The non-empty name of the
-    characterization factors source. Presently, the value SHOULD be `"IPCC Assessment Report"`,
-    referring to the characterization factors (100-year GWP, including carbon feedbacks) derived from
-    the IPCC Assessment Report publication.
-
-: <dfn>version</dfn> (mandatory, data type: [=NonEmptyString=])
-:: The non-empty version of the
-    characterization factors source. Presently, the value SHOULD be either `"5"` or `"6"`, referring to
-    the 5th (AR5) and 6th (AR6) IPCC Assessment Reports, respectively.
-    </dl>
-
-<div class=example>
-Example encoding of a <{CharacterizationFactorsSource}> in JSON:
-
-```json
-{
-  "name": "IPCC Assessment Report",
-  "version": "6"
-}
-```
-</div>
-
-
-### JSON Representation ### {#dt-characterizationfactorssource-json}
-
-Each <{CharacterizationFactorsSource}> MUST be encoded as a JSON object.
 
 # Product Footprint Lifecycle # {#lifecycle}
 

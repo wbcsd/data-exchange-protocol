@@ -37,7 +37,7 @@ preference for having the possibility of including more than one characterizatio
 
     (Please refer to the proposed changes to the technical specification for a more detailed and complete diff.)
 
-2. Add the new mandatory property `characterizationFactorsSources` with the new data type `CharacterizationFactorsSources`, defined as a non-empty `Array` of `CharacterizationFactorsSource`. The new data type `CharacterizationFactorsSource` is defined as an `Object` with the mandatory fields `"name"` and `"version"`, both of which are non-empty `Strings`. The value of the `"name"` field SHOULD be `"IPCC Assessment Report"` and the version SHOULD be either `"5"` or `"6"`.
+2. Add the new mandatory property `ipccCharacterizationFactorsSources` defined as a non-empty `Array` of `Strings` with the format `AR$VERSION$`, where `$VERSION$` stands for the IPCC report version number and MUST be an integer.
 
 ### Rationale
 
@@ -51,4 +51,4 @@ It is forward-looking because future adaptations are unlikely to break backwards
 
 1. This ADR introduces a minor change: since the `characterizationFactors` property is maintained, it is backwards compatible.
 2. Accordingly, the Technical Specifications version number must be updated from 2.1.x to 2.2.0.
-3. Host systems need to validate the new property `characterizationFactorsSources` depending on the value of ProductFootprint's property `specsVersion`
+3. Host systems need to validate the new property `ipccCharacterizationFactorsSources` depending on the value of ProductFootprint's property `specsVersion`
