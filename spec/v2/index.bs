@@ -2254,6 +2254,13 @@ path: examples/list-footprints-response.json
 highlight: json
 </pre>
 
+Example response empty body:
+<pre highlight=json>
+{
+  "data": []
+}
+</pre>
+
 </div>
 
 ### Example Error Response ### {#api-error-response-example}
@@ -2284,6 +2291,34 @@ highlight: json
 
 </div>
 
+### Example Action GetFootprint request and response ### {#api-action-get-example}
+
+<div class="example">
+
+Example request:
+
+<pre highlight=http>
+GET /2/footprint/<l>[=GetPfId=]</l> HTTP/2
+host: api.pathfinder.sine.dev
+authorization: Bearer [BearerToken]
+</pre>
+
+Example response HTTP headers:
+<pre highlight=http>
+HTTP/1.1 200 OK
+date: Mon, 23 May 2022 19:33:16 GMT
+content-type: application/json
+content-length: 1831
+server: Pathfinder
+</pre>
+
+Example response body:
+<pre class=include-code>
+path: examples/list-footprint-response.json
+highlight: json
+</pre>
+
+</div>
 
 # Appendix A: License # {#license}
 
