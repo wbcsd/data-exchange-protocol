@@ -2298,7 +2298,7 @@ highlight: json
 Example request:
 
 <pre highlight=http>
-GET /2/footprint/<l>[=GetPfId=]</l> HTTP/2
+GET /2/footprint/d9be4477-e351-45b3-acd9-e1da05e6f633 HTTP/2
 host: api.pathfinder.sine.dev
 authorization: Bearer [BearerToken]
 </pre>
