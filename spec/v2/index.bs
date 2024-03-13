@@ -1586,7 +1586,7 @@ as described in this section.
 
 ## Host system minimum requirements ## {#api-requirements}
 
-A [=host system=] MUST implement actions [=Action Authenticate=], [=Action ListFootprints=], [=Action GetFootprint=], and SHOULD implement [=Action Events=].
+A [=host system=] MUST implement actions [=Action Authenticate=], [=Action ListFootprints=], [=Action GetFootprint=], and [=Action Events=].
 
 A [=host system=] MUST offer its actions under https method only.
 
@@ -1956,7 +1956,7 @@ A [=host system=] SHOULD only accept events after authentication (see [[#api-aut
 
 The Action Events endpoint accepts CloudEvent events (see [[!CE]]) encoded in "Structured Content Mode" (see [[!CE-Structured-Content-Mode]].
 
-Support for Action Events is OPTIONAL.
+Support for Action Events is MANDATORY.
 
 If a [=host system=] does NOT implement the [=Action Events=] endpoint,
 
@@ -2086,6 +2086,16 @@ with
 
 : <dfn>ProductFootprintFragment</dfn>
 :: A JSON object which references a subset of <{ProductFootprint}> properties, **including nested properties**.
+    <div class=example>
+    Example `ProductFootprintFragment` for querying a PF via <strong>productId</strong> in the PF Request Event request body
+    ```json
+      {
+        "productIds": [
+            "urn:gtin:4712345060507"
+        ]
+      }
+    ```
+
 : <dfn>PFRequestComment</dfn>
 :: The OPTIONAL comment by the [=data recipient=] to the [=data owner=] about the request.
      If defined, the [=PFRequestComment=] MUST be encoded as a JSON string.
@@ -2297,6 +2307,148 @@ highlight: json
 
 </div>
 
+### Example PF Request and Response Events  ### {#api-action-events-example}
+
+<strong>Example PF Request Event:</strong>
+<div class="example">
+<pre highlight=http>
+POST Subpath/2/events HTTP/1.1
+host: api.pathfinder.sine.dev
+authorization: Bearer [BearerToken]
+content-type: application/cloudevents+json; charset=UTF-8
+</pre>
+
+Example PF Request Event body
+```json
+  {
+    "type": "org.wbcsd.pathfinder.ProductFootprintRequest.Created.v1",
+    "specversion": "1.0",
+    "id": "848dcf00-2c18-400d-bcb8-11e45bbf7ebd",
+    "source": "//RequesterEventHostname/EventSubpath",
+    "time": "2023-11-06T16:23:00Z",
+    "data": {
+        "pf": {
+            "productIds": [
+                "urn:gtin:4712345060507"
+            ]
+        },
+        "comment": "Please provide current PCF value."
+    }
+  }
+```
+Example PF Request Event response headers
+  ```http
+    HTTP/1.1 200 OK
+    content-length: 0
+  ```
+</div>
+<strong>Example PF Response Event:</strong>
+<div class="example">
+<pre highlight=http>
+POST Subpath/2/events HTTP/1.1
+host: api.pathfinder.sine.dev
+authorization: Bearer [BearerToken]
+content-type: application/cloudevents+json; charset=UTF-8
+</pre>
+
+Example PF Response Event request body
+```json
+{
+    "type": "org.wbcsd.pathfinder.ProductFootprintRequest.Fulfilled.v1",
+    "specversion": "1.0",
+    "id": "5afe8fbf-0ea9-477c-a1df-2d3c95f7eec0",
+    "source": "//ProviderEventHostname/EventSubpath",
+    "time": "2023-11-08T13:26:00Z",
+    "data": {
+        "requestEventId": "848dcf00-2c18-400d-bcb8-11e45bbf7ebd",
+        "pfs": [
+            {
+                "id": "d9be4477-e351-45b3-acd9-e1da05e6f633",
+                "specVersion": "2.0.1-20230314",
+                "version": 1,
+                "created": "2022-05-22T21:47:32Z",
+                "status": "Active",
+                "companyName": "My Corp",
+                "companyIds": [
+                    "urn:uuid:51131FB5-42A2-4267-A402-0ECFEFAD1619",
+                    "urn:epc:id:sgln:4063973.00000.8"
+                ],
+                "productDescription": "Cote'd Or Ethanol",
+                "productIds": [
+                    "urn:gtin:4712345060507"
+                ],
+                "productCategoryCpc": "3342",
+                "productNameCompany": "Green Ethanol",
+                "comment": "",
+                "pcf": {
+                    "declaredUnit": "liter",
+                    "unitaryProductAmount": "12.0",
+                    "pCfExcludingBiogenic": "0.0",
+                    "fossilGhgEmissions": "0.123",
+                    "fossilCarbonContent": "0.0",
+                    "biogenicCarbonContent": "0.0",
+                    "landManagementGhgEmissions": "0.01",
+                    "characterizationFactors": "AR5",
+                    "crossSectoralStandardsUsed": [
+                        "GHG Protocol Product standard"
+                    ],
+                    "productOrSectorSpecificRules": [
+                        {
+                            "operator": "EPD International",
+                            "ruleNames": [
+                                "ABC 2021"
+                            ]
+                        }
+                    ],
+                    "boundaryProcessesDescription": "End-of-life included",
+                    "referencePeriodStart": "2021-01-01T00:00:00Z",
+                    "referencePeriodEnd": "2022-01-01T00:00:00Z",
+                    "geographyCountry": "FR",
+                    "secondaryEmissionFactorSources": [
+                        {
+                            "name": "Ecoinvent",
+                            "version": "1.2.3"
+                        }
+                    ],
+                    "exemptedEmissionsPercent": 3.1,
+                    "exemptedEmissionsDescription": "",
+                    "packagingEmissionsIncluded": false,
+                    "primaryDataShare": 56.12,
+                    "assurance": {
+                        "coverage": "product line",
+                        "level": "reasonable",
+                        "boundary": "Cradle-to-Gate",
+                        "providerName": "My Auditor",
+                        "completedAt": "2022-12-08T14:47:32Z",
+                        "standardName": "ISO ...",
+                        "comments": "This is a comment"
+                    }
+                },
+                "extensions": [
+                    {
+                        "specVersion": "2.0.0",
+                        "dataSchema": "https://catalog.carbon-transparency.com/shipment/1.0.0/data-model.json",
+                        "data": {
+                            "shipmentId": "S1234567890",
+                            "consignmentId": "Cabc.def-ghi",
+                            "shipmentType": "PICKUP",
+                            "weight": 10,
+                            "transportChainElementId": "ABCDEFGHI"
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+}
+```
+Example Response Event response headers
+  ```http
+    HTTP/1.1 200 OK
+    content-length: 0
+  ```
+</div>
+
 
 # Appendix A: License # {#license}
 
@@ -2314,6 +2466,9 @@ Summary of changes:
 
 1. deprecation of the <{CarbonFootprint/characterizationFactors}> property
 2. addition of a new <{CarbonFootprint/ipccCharacterizationFactorsSources}> property
+3. updates to Action [=Action Events=] implementation requirement - changed from OPTIONAL to MANDATORY
+4. addition of an Example for a ProductFootprintFragment indicating a query for a PCF via productId
+5. addition of Examples of a PCF request and repsonse Action Event flow
 
 ## Version 2.1.0 (Dec 07, 2023) ## {#changelog-2.1.0}
 
