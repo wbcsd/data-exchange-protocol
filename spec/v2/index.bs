@@ -1,6 +1,6 @@
 <pre class='metadata'>
 Title: Technical Specifications for PCF Data Exchange
-Text Macro: VERSION 2.1.1-wip
+Text Macro: VERSION 2.2.0-20240312
 Shortname: data-exchange-protocol
 Level: 1
 Status: LD
@@ -496,14 +496,28 @@ Advisement:
         <td>String
         <td>M
         <td>
-            The IPCC version of the GWP characterization factors used in the calculation of the PCF (see [=Pathfinder Framework=] Section 3.2.2). The value MUST be one of the following:
+
+          Advisement: This property is DEPRECATED and only kept to ensure backwards-compatibility. It will be removed in version 3 of these Technical Specifications. It does not replace the (also mandatory) property <{CarbonFootprint/ipccCharacterizationFactorsSources}>.
+
+          The IPCC version of the GWP characterization factors used in the calculation of the PCF (see [=Pathfinder Framework=] Section 3.2.2). In case several characterization factors are used, indicate the earliest version used in your calculations, disregarding supplier provided PCFs. The value MUST be one of the following:
 
           : `AR6`
           :: for the Sixth Assessment Report of the Intergovernmental Panel on Climate Change (IPCC)
           : `AR5`
           :: for the Fifth Assessment Report of the IPCC.
+     <tr>
+        <td><dfn>ipccCharacterizationFactorsSources</dfn>
+        <td>Array of Strings
+        <td>M
+        <td>The characterization factors from one or more IPCC Assessment Reports used in the calculation of the PCF (see [=Pathfinder Framework=] Section 3.2.2).
+              It MUST be a non-empty set of strings with the format `AR$VERSION$`, where `$VERSION$` stands for the
+              IPCC report version number and MUST be an integer.
 
-          Advisement: The set of characterization factor identifiers will likely change in future revisions. It is recommended to account for this when implementing the validation of this property.
+          Example values:
+          <div class=example>["AR6"]</div>
+          <div class=example>["AR5", "AR6"]</div>
+
+          Advisement: Per the Framework, the latest available characterization factor version shall be used, i.e., `["AR6"]`. In the event this is not possible, include the set of all characterization factors used.
       <tr>
         <td><dfn>crossSectoralStandardsUsed</dfn> : [=CrossSectoralStandardSet=]
         <td>Array
@@ -1386,7 +1400,6 @@ Example JSON string value:
 "f4b1225a-bd44-4c8e-861d-079e4e1dfd69"
 ```
 </div>
-
 
 # Product Footprint Lifecycle # {#lifecycle}
 
@@ -2294,6 +2307,13 @@ path: LICENSE.md
 
 
 # Appendix B: Changelog # {#changelog}
+
+## Version 2.2.0-20240312 (Mar 12, 2024) ## {#changelog-2.2.0-20240312}
+
+Summary of changes:
+
+1. deprecation of the <{CarbonFootprint/characterizationFactors}> property
+2. addition of a new <{CarbonFootprint/ipccCharacterizationFactorsSources}> property
 
 ## Version 2.1.0 (Dec 07, 2023) ## {#changelog-2.1.0}
 
