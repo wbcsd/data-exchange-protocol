@@ -8,7 +8,7 @@ Proposed
 
 ## Context
 
-The PACT Technical Specifications v2.0 have 28 mandatory fields. Feedback was raised by the PACT Community that some fields should be reconsidered whether they should be mandatory. The five fields below were ultimately determined to be in-scope for this decision. Other mandatory attributes to be considered to be made optional can be considered in a separate ADR.
+Feedback was raised by the PACT Community that some mandatory fields should be reconsidered whether they should be mandatory. The five fields below were ultimately determined to be in-scope for this decision. Other mandatory attributes to be considered to be made optional can be considered in a separate ADR.
 
 * ```productDescription```
 * ```boundaryProcessDescription```
