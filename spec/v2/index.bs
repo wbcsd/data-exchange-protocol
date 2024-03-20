@@ -1709,7 +1709,7 @@ Example HTTP call, for instance generated because username or password did not m
 
 <div class=example>
 <pre highlight=http>
-HTTP/1.1 401 Unauthorized
+HTTP/1.1 400 Bad Request
 date: Mon, 23 Oct 2023 19:33:16 GMT
 content-type: application/json
 </pre>
