@@ -1986,8 +1986,6 @@ HTTP/1.1 200 OK
 content-length: 0
 </pre>
 
-If the host system accepts the event but cannot process it due to unavailability of the PF data for the [=ProductFootprintFragment=] in the request, it SHOULD return an [=error response=] (see [[#api-error-responses]]) with the [=error response code=]: 404 and appropriate [=error message=] indicating the unavailability of the PF data for the requested [=ProductFootprintFragment=] value.
-
 The host system upon <strong>not</strong> accepting the event SHOULD respond with an [=error response=] (see [[#api-error-responses]]).
 
 ### Notification of data recipients on Product Footprint updates ### {#api-action-events-case-1}
@@ -2048,11 +2046,17 @@ the [=data owner's=] host system SHOULD retry sending the response event using e
 
 A host system SHOULD NOT retry sending a response event for more than 3 days.
 
-
 #### PF Request Event syntax #### {#api-action-events-case-2-request}
 
-The <dfn>PF Request Event</dfn> is defined as a CloudEvent event sent from a [=data recipient=] to a [=data owner=].
-The event contains a Product Footprint fragment to describe to the [=data owner=] the requested [[#dt-pf|product footprints]].
+The <dfn>PF Request Event</dfn> MUST be a CloudEvent event sent from a [=data recipient=] to a [=data owner=]
+containing a [=ProductFootprintFragment|Product Footprint fragment=] that references a single
+product. The data recipient CAN add additional properties to a fragment to further limit which PCF
+is requested, such as to select PCFs with specific scope(s) ([[#dt-carbonfootprint-scope]]).
+
+Note: this specification does not yet specify the processing requirements of a host system upon
+receiving such an event. This means the host system can e.g. ignore 1 or more properties, it might
+not accept specific patterns of requests (for instance it might support querying by reporting period
+but not by geography), etc.
 
 The [=PF Request Event=] is defined as a JSON-encoded CloudEvent event with the following syntax:
 
@@ -2074,7 +2078,7 @@ The [=PF Request Event=] is defined as a JSON-encoded CloudEvent event with the 
 with
 
 : <dfn>ProductFootprintFragment</dfn>
-:: A JSON object which references a subset of <{ProductFootprint}> properties, **including nested properties**. It is RECOMMENDED to include at least the [=ProductIds=] in the PF Request Event request body.
+:: A JSON object with a subset of <{ProductFootprint}> properties, **including nested properties**. It is RECOMMENDED to include at least the [=ProductIds=] in the PF Request Event request body.
     <div class=example>
     Example `ProductFootprintFragment` for querying a PF via <strong>productId</strong> in the PF Request Event request body
     ```json
