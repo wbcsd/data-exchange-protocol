@@ -106,7 +106,7 @@ The following changes to the tech spec Bikeshed file[^1] shall be made:
                     "pcf": {
                         "declaredUnit": "liter",
                         "unitaryProductAmount": "12.0",
-                        "pCfExcludingBiogenic": "0.0",
+                        "pCfExcludingBiogenic": "0.123",
                         "fossilGhgEmissions": "0.123",
                         "fossilCarbonContent": "0.0",
                         "biogenicCarbonContent": "0.0",
