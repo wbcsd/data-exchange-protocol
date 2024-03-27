@@ -2583,7 +2583,6 @@ Summary of changes:
     [=ProductFootprintFragment=] should refer to one single productm
 3. addition of a recommendation to include [=ProductIds=] in the PF Request Event request body
 4. fixed the incorrect the value of `pCfExcludingBiogenic` in all relevant examples
-
 5. addition of advisements to properties <{ProductFootprint/productCategoryCpc}>,
     <{ProductFootprint/comment}>, <{CarbonFootprint/boundaryProcessesDescription}>, and
     <{CarbonFootprint/exemptedEmissionsDescription}> stating that they will become OPTIONAL in
