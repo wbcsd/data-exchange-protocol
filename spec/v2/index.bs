@@ -1,6 +1,6 @@
 <pre class='metadata'>
 Title: Technical Specifications for PCF Data Exchange
-Text Macro: VERSION 2.2.0-20240320
+Text Macro: VERSION 2.2.0-20240327
 Shortname: data-exchange-protocol
 Level: 1
 Status: LD
@@ -2558,6 +2558,15 @@ path: LICENSE.md
 
 
 # Appendix B: Changelog # {#changelog}
+
+## Version 2.2.0-20240327 (Mar 27, 2024) ## {#changelog-2.2.0-20240327}
+
+Summary of changes:
+
+1. addition of the new [[#business-cases]] chapter
+2. clarification of [=PF Request Event=] syntax, including the instruction that the
+    [=ProductFootprintFragment=] should refer to one single productm
+3. addition of a recommendation to include [=ProductIds=] in the PF Request Event request body
 
 ## Version 2.2.0-20240320 (Mar 20, 2024) ## {#changelog-2.2.0-20240320}
 
