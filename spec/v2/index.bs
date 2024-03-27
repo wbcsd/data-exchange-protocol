@@ -2798,7 +2798,7 @@ The following changes have been applied for version 1.0.1
   },
   "EXTENSIONS-GUIDANCE": {
     "authors": [],
-    "href": "https://wbcsd.github.io/data-exchange-protocol/v2/",
+    "href": "https://wbcsd.github.io/data-model-extensions/guidance/",
     "title": "Guidance and Criteria Catalog for Pathfinder Data Model Extensions",
     "status": "LS",
     "publisher": "WBCSD"
