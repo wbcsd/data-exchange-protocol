@@ -28,7 +28,7 @@
             "pcf": {
                 "declaredUnit": "liter",
                 "unitaryProductAmount": "12.0",
-                "pCfExcludingBiogenic": "0.0",
+                "pCfExcludingBiogenic": "0.123",
                 "pCfIncludingBiogenic": "0.0",
                 "fossilGhgEmissions": "0.123",
                 "fossilCarbonContent": "1.721",
