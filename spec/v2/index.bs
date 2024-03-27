@@ -1,6 +1,6 @@
 <pre class='metadata'>
 Title: Technical Specifications for PCF Data Exchange
-Text Macro: VERSION 2.2.0-20240320
+Text Macro: VERSION 2.2.0-20240327
 Shortname: data-exchange-protocol
 Level: 1
 Status: LD
@@ -138,7 +138,64 @@ A conforming [=host system=] is any algorithm realized as software and/or hardwa
 
 A conforming requesting [=data recipient=] is any algorithm realized as software and/or hardware that complies with the relevant normative statements in [[#api]].
 
+# Guidance and Business Cases # {#business-cases}
 
+## Asynchronous Event Processing ## {#business-cases-async-events}
+
+### The General Principles of Event Processing ### {#business-cases-async-events-principles}
+
+1. A host system should strive to accept an event unless for the following reasons
+    1. event processing is not support by the host system
+    2. the syntax in the event is not supported (e.g. when the event failed “syntax checks” of the request host system)
+2. Whenever a host system's `Event` endpoint returns an error response, no follow up response event (or error event) will be sent back to the original requester
+3. The requested host system will attempt to always send a response event to the requesting host
+    system, **but the requesting host system should not rely on this behavior and retry after an
+    appropriate amount of time by sending another new request event.**
+
+### Business Case 1: Requesting Product Footprints ### {#business-cases-async-events-1}
+
+#### Context and Assumptions #### {#business-cases-async-events-1-context}
+
+- This business case is triggered by a data recipient if they wish to access a Product Footprint **they could not yet access through the `ListFootprints` API**.
+- The data recipient and data owner have a mutually agreed upon way to identify products.
+
+#### Workflow #### {#business-cases-async-events-1-workflow}
+
+1. The data recipient sends a `ProductFootprintFragment`  to the `Events Endpoint` of the data owner. The data recipient should always include 1 or more product ids in property `productIds`. The data recipient should limit each fragment to exactly 1 specific product (e.g. a specific type of apple instead of all apples that somebody is offering)
+    1. If the recipient is requesting a specific reporting period, it should include the reporting period accordingly (example …)
+    2. if the recipient is requesting a specific geography, it should include …
+    3. if the recipient has another need that is not covered above, the data recipient should <…>
+        1. Note: it is possible that this request will not be commonly understood by the data owner's host system
+
+#### Cases #### {#business-cases-async-events-1-cases}
+
+- Case 0: The solution does not support this kind of processing
+    - either because the event processing does not exit at all, or the product footprint fragment as it is submitted by the data recipient is not supported by the requested host system
+    - The `events` endpoint responds with HTTP error code `400` and with a body with error code `NotImplemented`
+- Case 1: A PCF does not exist (yet) or a partially matching PCF exists
+    - accept the event (HTTP Code 200 returned by the events endpoint)
+    - In case of a partial match, the data owner needs to decide whether to calculate the PCF(s) or not.
+        - Note: the decision making and decision making protocol for this case is up to the discretion of each data owner
+    - In case the data owner decided or needs to calculate the PCF and the calculation succeeded,
+        - the host system makes the newly calculated footprints also available to the data recipient through `ListFootprints`
+        - the host system of the data owner sends back the 1 or more product footprints in a single event to the data requester
+    - in case the data owner decided to not make additional PCFs available
+        - the host system responds listing the (partially) matching PCFs
+    - if the product cannot be found or otherwise identified through the product footprint fragment
+        - the host system of the data owner responds with a PF Response Error Event with code `NoSuchFootprint`
+    - If the PCF calculation failed for other reasons
+        - the host system SHOULD send **`PF Response Error Event`** with error code `InternalError`
+- Case 2: The PCF(s) exists
+    - the host system accepts the event (Code 200)
+    - If the data recipient does not have access to the PCF yet
+        - the data owner decides on making the PCF available or not
+        - if the data owner made the matching PCF(s) available, their host system returns the PCFs to the data recipient
+        - otherwise, the host system of the data owner responds with a error event with error code `AccessDenied`
+    - if the data recipient has access to the PCF(s)
+        - the data owner responds by sending
+- Default / Backup Case:
+    - the host systems accepts the event (Code 200)
+    - the host system sends back a `PF Response Error Event` with code `BadRequest`
 
 
 # Data Model # {#data-model}
@@ -1999,7 +2056,7 @@ HTTP/1.1 200 OK
 content-length: 0
 </pre>
 
-The host system upon not accepting the event SHOULD respond with an [=error response=] (see [[#api-error-responses]]).
+The host system upon <strong>not</strong> accepting the event SHOULD respond with an [=error response=] (see [[#api-error-responses]]).
 
 ### Notification of data recipients on Product Footprint updates ### {#api-action-events-case-1}
 
@@ -2062,8 +2119,15 @@ A host system SHOULD NOT retry sending a response event for more than 3 days.
 
 #### PF Request Event syntax #### {#api-action-events-case-2-request}
 
-The <dfn>PF Request Event</dfn> is defined as a CloudEvent event sent from a [=data recipient=] to a [=data owner=].
-The event contains a Product Footprint fragment to describe to the [=data owner=] the requested [[#dt-pf|product footprints]].
+The <dfn>PF Request Event</dfn> MUST be a CloudEvent event sent from a [=data recipient=] to a [=data owner=]
+containing a [=ProductFootprintFragment|Product Footprint fragment=] that references a single
+product. The data recipient CAN add additional properties to a fragment to further limit which PCF
+is requested, such as to select PCFs with specific scope(s) ([[#dt-carbonfootprint-scope]]).
+
+Note: this specification does not yet specify the processing requirements of a host system upon
+receiving such an event. This means the host system can e.g. ignore 1 or more properties, it might
+not accept specific patterns of requests (for instance it might support querying by reporting period
+but not by geography), etc.
 
 The [=PF Request Event=] is defined as a JSON-encoded CloudEvent event with the following syntax:
 
@@ -2085,7 +2149,7 @@ The [=PF Request Event=] is defined as a JSON-encoded CloudEvent event with the 
 with
 
 : <dfn>ProductFootprintFragment</dfn>
-:: A JSON object which references a subset of <{ProductFootprint}> properties, **including nested properties**.
+:: A JSON object with a subset of <{ProductFootprint}> properties, **including nested properties**. It is RECOMMENDED to include at least the [=ProductIds=] in the PF Request Event request body.
     <div class=example>
     Example `ProductFootprintFragment` for querying a PF via <strong>productId</strong> in the PF Request Event request body
     ```json
@@ -2095,7 +2159,6 @@ with
         ]
       }
     ```
-
 : <dfn>PFRequestComment</dfn>
 :: The OPTIONAL comment by the [=data recipient=] to the [=data owner=] about the request.
      If defined, the [=PFRequestComment=] MUST be encoded as a JSON string.
@@ -2496,6 +2559,15 @@ path: LICENSE.md
 
 # Appendix B: Changelog # {#changelog}
 
+## Version 2.2.0-20240327 (Mar 27, 2024) ## {#changelog-2.2.0-20240327}
+
+Summary of changes:
+
+1. addition of the new [[#business-cases]] chapter
+2. clarification of [=PF Request Event=] syntax, including the instruction that the
+    [=ProductFootprintFragment=] should refer to one single productm
+3. addition of a recommendation to include [=ProductIds=] in the PF Request Event request body
+
 ## Version 2.2.0-20240320 (Mar 20, 2024) ## {#changelog-2.2.0-20240320}
 
 Summary of changes:
@@ -2726,7 +2798,7 @@ The following changes have been applied for version 1.0.1
   },
   "EXTENSIONS-GUIDANCE": {
     "authors": [],
-    "href": "https://wbcsd.github.io/data-exchange-protocol/v2/",
+    "href": "https://wbcsd.github.io/data-model-extensions/guidance/",
     "title": "Guidance and Criteria Catalog for Pathfinder Data Model Extensions",
     "status": "LS",
     "publisher": "WBCSD"
