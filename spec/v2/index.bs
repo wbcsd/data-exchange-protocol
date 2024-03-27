@@ -363,7 +363,11 @@ A ProductFootprint has the following properties:
         <td><dfn>productCategoryCpc</dfn> : [=CpcCode=]
         <td>String
         <td>M
-        <td>A UN Product Classification Code (CPC) that the given product belongs to.
+        <td>
+
+          Advisement: This property will become OPTIONAL in version 3 of the Technical Specifications.
+
+          A UN Product Classification Code (CPC) that the given product belongs to.
       <tr>
         <td><dfn>productNameCompany</dfn>
         <td>String
@@ -374,6 +378,9 @@ A ProductFootprint has the following properties:
         <td>String
         <td>M
         <td>
+
+          Advisement: This property will become OPTIONAL in version 3 of the Technical Specifications.
+
           The additional information related to the product footprint.
 
           Whereas the property <{ProductFootprint/productDescription}> contains product-level information, <{ProductFootprint/comment}> SHOULD be used for information and instructions related to the calculation of the footprint, or other information which informs the ability to interpret, to audit or to verify the Product Footprint.
@@ -605,10 +612,14 @@ Advisement:
         <td><dfn>boundaryProcessesDescription</dfn>
         <td>String
         <td>M
-        <td>The processes attributable to each lifecycle stage.
+        <td>
 
-        Example text value:
-        <div class=example>`Electricity consumption included as an input in the production phase`</div>
+          Advisement: This property will become OPTIONAL in version 3 of the Technical Specifications.
+
+          The processes attributable to each lifecycle stage.
+
+          Example text value:
+          <div class=example>`Electricity consumption included as an input in the production phase`</div>
       <tr>
         <td><dfn>referencePeriodStart</dfn> : [=DateTime=]
         <td>String
@@ -668,7 +679,11 @@ Advisement:
         <td><dfn>exemptedEmissionsDescription</dfn>
         <td>String
         <td>M
-        <td>Rationale behind exclusion of specific PCF emissions, CAN be the empty string if no emissions were excluded.
+        <td>
+
+          Advisement: This property will become OPTIONAL in version 3 of the Technical Specifications.
+
+          Rationale behind exclusion of specific PCF emissions, CAN be the empty string if no emissions were excluded.
       <tr>
         <td><dfn>packagingEmissionsIncluded</dfn>
         <td>Boolean
@@ -2568,6 +2583,11 @@ Summary of changes:
     [=ProductFootprintFragment=] should refer to one single productm
 3. addition of a recommendation to include [=ProductIds=] in the PF Request Event request body
 4. fixed the incorrect the value of `pCfExcludingBiogenic` in all relevant examples
+
+5. addition of advisements to properties <{ProductFootprint/productCategoryCpc}>,
+    <{ProductFootprint/comment}>, <{CarbonFootprint/boundaryProcessesDescription}>, and
+    <{CarbonFootprint/exemptedEmissionsDescription}> stating that they will become OPTIONAL in
+    version 3
 
 ## Version 2.2.0-20240320 (Mar 20, 2024) ## {#changelog-2.2.0-20240320}
 
