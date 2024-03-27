@@ -2567,6 +2567,7 @@ Summary of changes:
 2. clarification of [=PF Request Event=] syntax, including the instruction that the
     [=ProductFootprintFragment=] should refer to one single productm
 3. addition of a recommendation to include [=ProductIds=] in the PF Request Event request body
+4. fixed the incorrect the value of `pCfExcludingBiogenic` in all relevant examples
 
 ## Version 2.2.0-20240320 (Mar 20, 2024) ## {#changelog-2.2.0-20240320}
 
