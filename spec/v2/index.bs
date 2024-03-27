@@ -365,9 +365,9 @@ A ProductFootprint has the following properties:
         <td>M
         <td>
 
-        Advisement: This property will become OPTIONAL in version 3 of the Technical Specifications.
+          Advisement: This property will become OPTIONAL in version 3 of the Technical Specifications.
 
-        A UN Product Classification Code (CPC) that the given product belongs to.
+          A UN Product Classification Code (CPC) that the given product belongs to.
       <tr>
         <td><dfn>productNameCompany</dfn>
         <td>String
@@ -614,12 +614,12 @@ Advisement:
         <td>M
         <td>
 
-        Advisement: This property will become OPTIONAL in version 3 of the Technical Specifications.
+          Advisement: This property will become OPTIONAL in version 3 of the Technical Specifications.
 
-        The processes attributable to each lifecycle stage.
+          The processes attributable to each lifecycle stage.
 
-        Example text value:
-        <div class=example>`Electricity consumption included as an input in the production phase`</div>
+          Example text value:
+          <div class=example>`Electricity consumption included as an input in the production phase`</div>
       <tr>
         <td><dfn>referencePeriodStart</dfn> : [=DateTime=]
         <td>String
@@ -681,9 +681,9 @@ Advisement:
         <td>M
         <td>
 
-        Advisement: This property will become OPTIONAL in version 3 of the Technical Specifications.
+          Advisement: This property will become OPTIONAL in version 3 of the Technical Specifications.
 
-        Rationale behind exclusion of specific PCF emissions, CAN be the empty string if no emissions were excluded.
+          Rationale behind exclusion of specific PCF emissions, CAN be the empty string if no emissions were excluded.
       <tr>
         <td><dfn>packagingEmissionsIncluded</dfn>
         <td>Boolean
@@ -2582,6 +2582,11 @@ Summary of changes:
 2. clarification of [=PF Request Event=] syntax, including the instruction that the
     [=ProductFootprintFragment=] should refer to one single productm
 3. addition of a recommendation to include [=ProductIds=] in the PF Request Event request body
+
+5. addition of advisements to properties <{ProductFootprint/productCategoryCpc}>,
+    <{ProductFootprint/comment}>, <{CarbonFootprint/boundaryProcessesDescription}>, and
+    <{CarbonFootprint/exemptedEmissionsDescription}> stating that they will become OPTIONAL in
+    version 3
 
 ## Version 2.2.0-20240320 (Mar 20, 2024) ## {#changelog-2.2.0-20240320}
 
