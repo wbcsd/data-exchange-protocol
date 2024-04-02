@@ -32,7 +32,8 @@ A brief rationale for the following proposal is summarized below. Detailed ratio
 * It was decided to create a sub-working-group to form consensus, jointly between Technology and Methodology WGs
 * Initiatives (TfS, Catena-X, and Green x Digital) endorse changing all 5 attributes to optional
 * The sub-working-group met March 7, 2024 and formed consensus all 5 attributes should become optional
-* The final decision is pending approval by both the Technology WG and Methodolgy WG
+* The Technology WG met March 13 and formed consensus approving all 5 attributes to become optional, adopting the proposal from the sub-working-group
+* The Methodolgy WG met March 28 and formed consensus approving 4 of the 5 attributes to become optional; objections were raised that ```productDescription``` should not become optional as this field is still necessary to be used to uniquely identify products and by making this optional it will become even more challenging to uniquely identify the product to which the PCF refers. The objection is now being raised in writing from the members and a final decision will be reached in Q2. Meanwhile, advisements have been added to the v2.2 Tech Specs release for the 4 attributes which have reached consensus to become optional.
 
 ## Consequences
 
