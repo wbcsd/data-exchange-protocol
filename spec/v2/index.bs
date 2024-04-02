@@ -143,13 +143,13 @@ A conforming requesting [=data recipient=] is any algorithm realized as software
 
 Note: This chapter is non-normative.
 
-Due to the complexity and nature of global supply chains, achieving transparency in carbon emissions at the product level is a challenging task. 
-As the [[!PATHFINDER-FRAMEWORK|Pathfinder Framework Version 2.0]] provides the methodological foundations for calculating product carbon footprints (PCFs), 
+Due to the complexity and nature of global supply chains, achieving transparency in carbon emissions at the product level is a challenging task.
+As the [[!PATHFINDER-FRAMEWORK|Pathfinder Framework Version 2.0]] provides the methodological foundations for calculating product carbon footprints (PCFs),
 this specification focuses on enabling transparency through a peer-to-peer PCF data exchange by specifying necessary aspects for achieving interoperability, such as the [[#data-model|data model]] and [[#api|API]].
 
-However, these two aspects can be combined in various ways to achieve different business objectives. 
+However, these two aspects can be combined in various ways to achieve different business objectives.
 
-This chapter serves as a guidance to the technical specifications in general by providing examples for inter-company business cases related to the exchange of [=PCFs=]. 
+This chapter serves as a guidance to the technical specifications in general by providing examples for inter-company business cases related to the exchange of [=PCFs=].
 The different business cases are explained in a structured way, with business objectives presented through the lenses of interoperable data exchange processes enabled by the
 different aspects of this specification.
 
@@ -543,16 +543,12 @@ Advisement:
         <td>O*
         <td>If present, GHG emissions and removals associated with land-management-related changes, including non-CO2 sources.
           The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg of CO2 equivalent per declared unit` (`kgCO2e / declaredUnit`), expressed as a [=decimal=].
-
-          Note: version 1 did not explictly include non-CO2 sources. This is now included in the definition.
       <tr>
         <td><dfn>otherBiogenicGhgEmissions</dfn> : [=Decimal=]
         <td>String
         <td>O*
         <td>If present, all other biogenic GHG emissions associated with product manufacturing and transport that are not included in dLUC (<{CarbonFootprint/dLucGhgEmissions}>), iLUC (<{CarbonFootprint/iLucGhgEmissions}>), and land management (<{CarbonFootprint/landManagementGhgEmissions}>).
           The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg of CO2 equivalent per declared unit` (`kgCO2e / declaredUnit`), expressed as a [=decimal=] equal to or greater than zero.
-
-          Note: version 1.0.0 incorrectly defined this is "all other GHG emissions"; i.e. missing the "biogenic" qualifier.
       <tr>
         <td><dfn>iLucGhgEmissions</dfn> : [=Decimal=]
         <td>String
