@@ -1,6 +1,6 @@
 <pre class='metadata'>
 Title: Technical Specifications for PCF Data Exchange
-Text Macro: VERSION 2.2.0-20240327
+Text Macro: VERSION 2.2.0-20240402
 Shortname: data-exchange-protocol
 Level: 1
 Status: LD
@@ -2618,7 +2618,7 @@ Summary of changes:
 1. removal of notes referring to the transition from v1 to v2
 2. fixed the incomplete `assurance` example and moved it to the appropriate section
 3. addition of missing examples in the [[#business-cases-async-events-1-workflow]] section
-
+4. addition of advisement to <{CarbonFootprint/exemptedEmissionsPercent}> stating that the upper boundary will be removed in version 3
 
 ## Version 2.2.0-20240327 (Mar 27, 2024) ## {#changelog-2.2.0-20240327}
 
