@@ -33,7 +33,7 @@ The definition of `exemptedEmissionsPercent` is updated from
 
 to
 
-> The percentage of emissions EXCLUDED from the cradle-to-gate PCF in total. The percentage MUST be expressed as a decimal number, and SHOULD comply with the Pathfinder Framework (a maximum of 5% of the cradle to gate PCF emissions may be excluded) as well as any relevant sector-specific guidelines referring to exemption rules/cut-off criteria.
+> Percentage of emissions EXCLUDED from the cradle to gate PCF in total. The percentage MUST be expressed as a decimal number, and SHOULD comply with the Pathfinder Framework (a maximum of 5% of the cradle-to-gate PCF emissions may be excluded) as well as any relevant sector specific guidelines referring to exemption rules/cut-off criteria.
 
 The necessary update to the tech specs will be reflected in the **next major release** (see below).
 
