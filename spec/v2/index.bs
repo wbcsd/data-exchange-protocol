@@ -178,9 +178,30 @@ For now, this chapter focuses on asynchronous event processing. It will be expan
 #### Workflow #### {#business-cases-async-events-1-workflow}
 
 1. The data recipient sends a `ProductFootprintFragment`  to the `Events Endpoint` of the data owner. The data recipient should always include 1 or more product ids in property `productIds`. The data recipient should limit each fragment to exactly 1 specific product (e.g. a specific type of apple instead of all apples that somebody is offering)
-    1. If the recipient is requesting a specific reporting period, it should include the reporting period accordingly (example …)
-    2. if the recipient is requesting a specific geography, it should include …
-    3. if the recipient has another need that is not covered above, the data recipient should <…>
+    1. If the recipient is requesting a specific reporting period, it should include the reporting period accordingly
+        <div class="example">
+          ```json
+          {
+            "productIds": ["urn:pathfinder:company:customcode:buyer-assigned:4321"],
+            "referencePeriodStart": "2023-01-01T00:00:00Z",
+            "referencePeriodEnd": "2023-12-31T23:59:59Z"
+          }
+          ```
+        </div>
+    2. if the recipient is requesting a specific geography, it should include include the geographic scope accordingly
+        <div class="example">
+          ```json
+          {
+            "productIds": ["urn:pathfinder:company:customcode:buyer-assigned:4321"],
+            "geographicScope": {
+              "geographyCountry": "FR"
+            },
+          }
+          ```
+        </div>
+    3. if the recipient has another need that is not covered above, the data recipient should
+        express it as clearly as possible to the best of their ability and following the syntactic
+        rules of the data model.
         1. Note: it is possible that this request will not be commonly understood by the data owner's host system
 
 #### Cases #### {#business-cases-async-events-1-cases}
