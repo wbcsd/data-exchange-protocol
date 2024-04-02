@@ -707,7 +707,11 @@ Advisement:
         <td><dfn>exemptedEmissionsPercent</dfn>
         <td>Number
         <td>M
-        <td>The Percentage of emissions excluded from PCF, expressed as a decimal number between `0.0` and `5` including. See [=Pathfinder Framework=].
+        <td>
+
+            Advisement: The upper boundary of this property (currently `5`) will be removed in version 3 of the Technical Specifications.
+
+            The Percentage of emissions excluded from PCF, expressed as a decimal number between `0.0` and `5` including. See [=Pathfinder Framework=].
       <tr>
         <td><dfn>exemptedEmissionsDescription</dfn>
         <td>String
@@ -2606,6 +2610,15 @@ path: LICENSE.md
 
 
 # Appendix B: Changelog # {#changelog}
+
+## Version 2.2.0-20240402 (Apr 02, 2024) ## {#changelog-2.2.0-20240402}
+
+Summary of changes:
+
+1. removal of notes referring to the transition from v1 to v2
+2. fixed the incomplete `assurance` example and moved it to the appropriate section
+3. addition of missing examples in the [[#business-cases-async-events-1-workflow]] section
+
 
 ## Version 2.2.0-20240327 (Mar 27, 2024) ## {#changelog-2.2.0-20240327}
 
