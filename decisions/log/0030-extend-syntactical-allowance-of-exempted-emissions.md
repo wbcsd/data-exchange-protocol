@@ -1,4 +1,4 @@
-# 2. Extending the syntactic allowance of exempt emissions
+# 30. Extending the syntactic allowance of exempt emissions
 
 Date: 2024-03-12
 
@@ -8,13 +8,13 @@ Proposed
 
 ## Context
 
-Pathfinder Framework 2.0 limits exempt emissions to 5%.
+Pathfinder Framework 2.0 limits exempted emissions to 5%.
 
 This is reflected in the Tech Specs accordingly, so the property
 [`exemptedEmissionsPercent`](https://wbcsd.github.io/tr/2023/data-exchange-protocol-20231207/#element-attrdef-carbonfootprint-exemptedemissionspercent) is defined as a percentage between `0` and `5`.
 
 However, feedback has been provided to the Methodology Working Group stating that
-that this limit is too restrictive:
+this limit is too restrictive:
 
 1. PCFs cannot be shared if the exempt emissions exceed 5% - e.g. if they are 5.1% and all other requirements are met.
 2. Companies may be incentivized to report an untrue value in order to meet the synthetic requirements of being 5% or less.
