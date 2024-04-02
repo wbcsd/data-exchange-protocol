@@ -820,17 +820,6 @@ The following properties are defined for data type <{DataQualityIndicators}>:
   <figcaption>Properties of data type DataQualityIndicators</figcaption>
 </figure>
 
-
-<div class=example>
-  Example value for the case that 42% of the product's overall GHG emissions covered by the data quality assessment:
-  <pre highlight=json>
-  {
-    "assurance": true,
-    "coveragePercent": 42.0,
-  }
-  </pre>
-</div>
-
 <div class=example>
   Example value for the case that all DQIs are known but no coverage after exemption assessment performed:
   <pre highlight=json>
@@ -928,6 +917,17 @@ The following properties are defined for data type <{Assurance}>:
     </table>
   <figcaption>Properties of data type Assurance</figcaption>
 </figure>
+
+<div class=example>
+  Example value for the case that 42% of the product's overall GHG emissions covered by the data quality assessment:
+  <pre highlight=json>
+  {
+    "providerName": "",
+    "assurance": true,
+    "coveragePercent": 42.0,
+  }
+  </pre>
+</div>
 
 
 ## Data Type: <dfn element>DataModelExtension</dfn> ## {#dt-datamodelextension}
