@@ -1983,7 +1983,9 @@ With response parameters
 
     If the request parameter `Filter` is defined, the specified expression SHOULD be evaluated for each ProductFootprint in the collection as described in [OData v4 specification](http://docs.oasis-open.org/odata/odata/v4.0/errata03/os/complete/part2-url-conventions/odata-v4.0-errata03-os-part2-url-conventions-complete.html#_Toc453752358), and only <{ProductFootprint|ProductFootprints}> where the expression evaluates to true SHOULD be included in the response. ProductFootprints for which the expression evaluates to false or which are not made available for the [=data recipient=] SHOULD be omitted from the list returned in the response.
 
-    If the host system does not accept the access token, the body MUST be an error response with code [=AccessDenied=].
+    If the access token is valid, but the client does not have the necessary permissions to access the requested <{ProductFootprint|ProductFootprints}>, the host system MUST return an error response with code [=AccessDenied=].
+
+    If the host system does not accept the access token because it is invalid, the host system SHOULD return an error response with code [=AccessDenied=].
 
     If the host system does not accept the access token because it expired, the body SHOULD be an error response with code [=TokenExpired=].
 
@@ -2043,9 +2045,11 @@ With response parameters:
 
     Note: If a host system implements the life cycle rules, then the “latest” version of the requested product footprint is the one with the maximum value of version with <{ProductFootprint/id}> equal to [=GetPfId=].
 
-    If the host system does not accept the access token, GetResponseBody MUST be an [=error response=] with code [=AccessDenied=].
+    If the access token is valid, but the client does not have the necessary permissions to access the requested <{ProductFootprint}>, the host system MUST return an error response with code [=AccessDenied=].
 
-    If the host system does not accept the access token because it expired, GetResponseBody SHOULD be an error response with code [=TokenExpired=].
+    If the host system does not accept the access token because it is invalid, the host system SHOULD return an error response with code [=AccessDenied=].
+
+    If the host system does not accept the access token because it expired, the host system SHOULD return an error response with code [=TokenExpired=].
 
     The host system MAY return an error response with code [=NoSuchFootprint=].
 
@@ -2619,6 +2623,7 @@ Summary of changes:
 2. fixed the incomplete `assurance` example and moved it to the appropriate section
 3. addition of missing examples in the [[#business-cases-async-events-1-workflow]] section
 4. addition of advisement to <{CarbonFootprint/exemptedEmissionsPercent}> stating that the upper boundary will be removed in version 3
+5. clarification of how to handle error codes in [=ListResponseBody=] and [=GetResponseBody=]
 
 ## Version 2.2.0-20240327 (Mar 27, 2024) ## {#changelog-2.2.0-20240327}
 
