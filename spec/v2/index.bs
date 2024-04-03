@@ -184,7 +184,7 @@ For now, this chapter focuses on asynchronous event processing. It will be expan
           {
             "productIds": ["urn:pathfinder:company:customcode:buyer-assigned:4321"],
             "referencePeriodStart": "2023-01-01T00:00:00Z",
-            "referencePeriodEnd": "2023-12-31T23:59:59Z"
+            "referencePeriodEnd": "2024-01-01T00:00:00Z"
           }
           ```
         </div>
