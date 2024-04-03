@@ -1990,11 +1990,9 @@ With response parameters
 
     If the access token is valid, but the client does not have the necessary permissions to access the requested <{ProductFootprint|ProductFootprints}>, the host system MUST return an error response with code [=AccessDenied=].
 
-    If the host system does not accept the access token because it is invalid, the host system SHOULD return an error response with code [=AccessDenied=].
-
     If the host system does not accept the access token because it expired, the body SHOULD be an error response with code [=TokenExpired=].
 
-    In all other cases, for instance in case of a malformed value of the header authorization, the body SHOULD be an error response with code [=BadRequest=].
+    In all other cases, the body SHOULD be an error response with code [=BadRequest=].
 
 
 ## <dfn>Action GetFootprint</dfn> ## {#api-action-get}
@@ -2052,13 +2050,11 @@ With response parameters:
 
     If the access token is valid, but the client does not have the necessary permissions to access the requested <{ProductFootprint}>, the host system MUST return an error response with code [=AccessDenied=].
 
-    If the host system does not accept the access token because it is invalid, the host system SHOULD return an error response with code [=AccessDenied=].
-
     If the host system does not accept the access token because it expired, the host system SHOULD return an error response with code [=TokenExpired=].
 
     The host system MAY return an error response with code [=NoSuchFootprint=].
 
-    In all other cases, for instance in case of a malformed value of the header authorization, GetResponseBody SHOULD be an error response with code [=BadRequest=].
+    In all other cases, the body SHOULD be an error response with code [=BadRequest=].
 
 
 ## Action Events ## {#api-action-events}
