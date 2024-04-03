@@ -1,6 +1,6 @@
 <pre class='metadata'>
 Title: Technical Specifications for PCF Data Exchange
-Text Macro: VERSION 2.2.0-20240327
+Text Macro: VERSION 2.2.0-20240402
 Shortname: data-exchange-protocol
 Level: 1
 Status: LD
@@ -143,13 +143,13 @@ A conforming requesting [=data recipient=] is any algorithm realized as software
 
 Note: This chapter is non-normative.
 
-Due to the complexity and nature of global supply chains, achieving transparency in carbon emissions at the product level is a challenging task. 
-As the [[!PATHFINDER-FRAMEWORK|Pathfinder Framework Version 2.0]] provides the methodological foundations for calculating product carbon footprints (PCFs), 
+Due to the complexity and nature of global supply chains, achieving transparency in carbon emissions at the product level is a challenging task.
+As the [[!PATHFINDER-FRAMEWORK|Pathfinder Framework Version 2.0]] provides the methodological foundations for calculating product carbon footprints (PCFs),
 this specification focuses on enabling transparency through a peer-to-peer PCF data exchange by specifying necessary aspects for achieving interoperability, such as the [[#data-model|data model]] and [[#api|API]].
 
-However, these two aspects can be combined in various ways to achieve different business objectives. 
+However, these two aspects can be combined in various ways to achieve different business objectives.
 
-This chapter serves as a guidance to the technical specifications in general by providing examples for inter-company business cases related to the exchange of [=PCFs=]. 
+This chapter serves as a guidance to the technical specifications in general by providing examples for inter-company business cases related to the exchange of [=PCFs=].
 The different business cases are explained in a structured way, with business objectives presented through the lenses of interoperable data exchange processes enabled by the
 different aspects of this specification.
 
@@ -172,46 +172,68 @@ For now, this chapter focuses on asynchronous event processing. It will be expan
 
 #### Context and Assumptions #### {#business-cases-async-events-1-context}
 
-- This business case is triggered by a data recipient if they wish to access a Product Footprint **they could not yet access through the `ListFootprints` API**.
+- This business case is triggered by a data recipient if they wish to access a Product Footprint <strong>they could not yet access through the `ListFootprints` API</strong>.
 - The data recipient and data owner have a mutually agreed upon way to identify products.
 
 #### Workflow #### {#business-cases-async-events-1-workflow}
 
 1. The data recipient sends a `ProductFootprintFragment`  to the `Events Endpoint` of the data owner. The data recipient should always include 1 or more product ids in property `productIds`. The data recipient should limit each fragment to exactly 1 specific product (e.g. a specific type of apple instead of all apples that somebody is offering)
-    1. If the recipient is requesting a specific reporting period, it should include the reporting period accordingly (example …)
-    2. if the recipient is requesting a specific geography, it should include …
-    3. if the recipient has another need that is not covered above, the data recipient should <…>
+    1. If the recipient is requesting a specific reporting period, it should include the reporting
+        period accordingly
+        <div class="example">
+          ```json
+          {
+            "productIds": ["urn:pathfinder:company:customcode:buyer-assigned:4321"],
+            "referencePeriodStart": "2023-01-01T00:00:00Z",
+            "referencePeriodEnd": "2024-01-01T00:00:00Z"
+          }
+          ```
+        </div>
+    2. If the recipient is requesting a specific geography, it should include the geographic scope accordingly
+        <div class="example">
+          ```json
+          {
+            "productIds": ["urn:pathfinder:company:customcode:buyer-assigned:4321"],
+            "geographicScope": {
+              "geographyCountry": "FR"
+            },
+          }
+          ```
+        </div>
+    3. If the recipient has another need that is not covered above, the data recipient should
+        express it as clearly as possible to the best of their ability and following the syntactic
+        rules of the data model
         1. Note: it is possible that this request will not be commonly understood by the data owner's host system
 
 #### Cases #### {#business-cases-async-events-1-cases}
 
 - Case 0: The solution does not support this kind of processing
-    - either because the event processing does not exit at all, or the product footprint fragment as it is submitted by the data recipient is not supported by the requested host system
+    - Either because the event processing does not exit at all, or the product footprint fragment as it is submitted by the data recipient is not supported by the requested host system
     - The `events` endpoint responds with HTTP error code `400` and with a body with error code `NotImplemented`
 - Case 1: A PCF does not exist (yet) or a partially matching PCF exists
-    - accept the event (HTTP Code 200 returned by the events endpoint)
+    - Accept the event (HTTP Code 200 returned by the events endpoint)
     - In case of a partial match, the data owner needs to decide whether to calculate the PCF(s) or not.
         - Note: the decision making and decision making protocol for this case is up to the discretion of each data owner
     - In case the data owner decided or needs to calculate the PCF and the calculation succeeded,
         - the host system makes the newly calculated footprints also available to the data recipient through `ListFootprints`
         - the host system of the data owner sends back the 1 or more product footprints in a single event to the data requester
-    - in case the data owner decided to not make additional PCFs available
+    - In case the data owner decided to not make additional PCFs available
         - the host system responds listing the (partially) matching PCFs
-    - if the product cannot be found or otherwise identified through the product footprint fragment
+    - If the product cannot be found or otherwise identified through the product footprint fragment
         - the host system of the data owner responds with a PF Response Error Event with code `NoSuchFootprint`
     - If the PCF calculation failed for other reasons
         - the host system SHOULD send **`PF Response Error Event`** with error code `InternalError`
 - Case 2: The PCF(s) exists
-    - the host system accepts the event (Code 200)
+    - The host system accepts the event (Code 200)
     - If the data recipient does not have access to the PCF yet
         - the data owner decides on making the PCF available or not
         - if the data owner made the matching PCF(s) available, their host system returns the PCFs to the data recipient
         - otherwise, the host system of the data owner responds with a error event with error code `AccessDenied`
-    - if the data recipient has access to the PCF(s)
+    - If the data recipient has access to the PCF(s)
         - the data owner responds by sending
 - Default / Backup Case:
-    - the host systems accepts the event (Code 200)
-    - the host system sends back a `PF Response Error Event` with code `BadRequest`
+    - The host systems accepts the event (Code 200)
+    - The host system sends back a `PF Response Error Event` with code `BadRequest`
 
 
 # Data Model # {#data-model}
@@ -543,16 +565,12 @@ Advisement:
         <td>O*
         <td>If present, GHG emissions and removals associated with land-management-related changes, including non-CO2 sources.
           The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg of CO2 equivalent per declared unit` (`kgCO2e / declaredUnit`), expressed as a [=decimal=].
-
-          Note: version 1 did not explictly include non-CO2 sources. This is now included in the definition.
       <tr>
         <td><dfn>otherBiogenicGhgEmissions</dfn> : [=Decimal=]
         <td>String
         <td>O*
         <td>If present, all other biogenic GHG emissions associated with product manufacturing and transport that are not included in dLUC (<{CarbonFootprint/dLucGhgEmissions}>), iLUC (<{CarbonFootprint/iLucGhgEmissions}>), and land management (<{CarbonFootprint/landManagementGhgEmissions}>).
           The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg of CO2 equivalent per declared unit` (`kgCO2e / declaredUnit`), expressed as a [=decimal=] equal to or greater than zero.
-
-          Note: version 1.0.0 incorrectly defined this is "all other GHG emissions"; i.e. missing the "biogenic" qualifier.
       <tr>
         <td><dfn>iLucGhgEmissions</dfn> : [=Decimal=]
         <td>String
@@ -690,7 +708,11 @@ Advisement:
         <td><dfn>exemptedEmissionsPercent</dfn>
         <td>Number
         <td>M
-        <td>The Percentage of emissions excluded from PCF, expressed as a decimal number between `0.0` and `5` including. See [=Pathfinder Framework=].
+        <td>
+
+            Advisement: The upper boundary of this property (currently `5`) will be removed in version 3 of the Technical Specifications.
+
+            The Percentage of emissions excluded from PCF, expressed as a decimal number between `0.0` and `5` including. See [=Pathfinder Framework=].
       <tr>
         <td><dfn>exemptedEmissionsDescription</dfn>
         <td>String
@@ -824,17 +846,6 @@ The following properties are defined for data type <{DataQualityIndicators}>:
   <figcaption>Properties of data type DataQualityIndicators</figcaption>
 </figure>
 
-
-<div class=example>
-  Example value for the case that 42% of the product's overall GHG emissions covered by the data quality assessment:
-  <pre highlight=json>
-  {
-    "assurance": true,
-    "coveragePercent": 42.0,
-  }
-  </pre>
-</div>
-
 <div class=example>
   Example value for the case that all DQIs are known but no coverage after exemption assessment performed:
   <pre highlight=json>
@@ -932,6 +943,21 @@ The following properties are defined for data type <{Assurance}>:
     </table>
   <figcaption>Properties of data type Assurance</figcaption>
 </figure>
+
+<div class=example>
+  Example value for the case that 42% of the product's overall GHG emissions covered by the data quality assessment:
+  <pre highlight=json>
+  {
+    "assurance": true,
+    "coverage": "PCF system",
+    "level": "limited"
+    "boundary": "Cradle-to-Gate"
+    "providerName": "My Auditor",
+    "completedAt": "2022-12-08T14:47:32Z"
+    "standardName": "ISO 14044"
+  }
+  </pre>
+</div>
 
 
 ## Data Type: <dfn element>DataModelExtension</dfn> ## {#dt-datamodelextension}
@@ -1962,7 +1988,9 @@ With response parameters
 
     If the request parameter `Filter` is defined, the specified expression SHOULD be evaluated for each ProductFootprint in the collection as described in [OData v4 specification](http://docs.oasis-open.org/odata/odata/v4.0/errata03/os/complete/part2-url-conventions/odata-v4.0-errata03-os-part2-url-conventions-complete.html#_Toc453752358), and only <{ProductFootprint|ProductFootprints}> where the expression evaluates to true SHOULD be included in the response. ProductFootprints for which the expression evaluates to false or which are not made available for the [=data recipient=] SHOULD be omitted from the list returned in the response.
 
-    If the host system does not accept the access token, the body MUST be an error response with code [=AccessDenied=].
+    If the access token is valid, but the client does not have the necessary permissions to access the requested <{ProductFootprint|ProductFootprints}>, the host system MUST return an error response with code [=AccessDenied=].
+
+    If the host system does not accept the access token because it is invalid, the host system SHOULD return an error response with code [=AccessDenied=].
 
     If the host system does not accept the access token because it expired, the body SHOULD be an error response with code [=TokenExpired=].
 
@@ -2022,9 +2050,11 @@ With response parameters:
 
     Note: If a host system implements the life cycle rules, then the “latest” version of the requested product footprint is the one with the maximum value of version with <{ProductFootprint/id}> equal to [=GetPfId=].
 
-    If the host system does not accept the access token, GetResponseBody MUST be an [=error response=] with code [=AccessDenied=].
+    If the access token is valid, but the client does not have the necessary permissions to access the requested <{ProductFootprint}>, the host system MUST return an error response with code [=AccessDenied=].
 
-    If the host system does not accept the access token because it expired, GetResponseBody SHOULD be an error response with code [=TokenExpired=].
+    If the host system does not accept the access token because it is invalid, the host system SHOULD return an error response with code [=AccessDenied=].
+
+    If the host system does not accept the access token because it expired, the host system SHOULD return an error response with code [=TokenExpired=].
 
     The host system MAY return an error response with code [=NoSuchFootprint=].
 
@@ -2589,6 +2619,16 @@ path: LICENSE.md
 
 
 # Appendix B: Changelog # {#changelog}
+
+## Version 2.2.0-20240402 (Apr 02, 2024) ## {#changelog-2.2.0-20240402}
+
+Summary of changes:
+
+1. removal of notes referring to the transition from v1 to v2
+2. fixed the incomplete `assurance` example and moved it to the appropriate section
+3. addition of missing examples in the [[#business-cases-async-events-1-workflow]] section
+4. addition of advisement to <{CarbonFootprint/exemptedEmissionsPercent}> stating that the upper boundary will be removed in version 3
+5. clarification of how to handle error codes in [=ListResponseBody=] and [=GetResponseBody=]
 
 ## Version 2.2.0-20240327 (Mar 27, 2024) ## {#changelog-2.2.0-20240327}
 
