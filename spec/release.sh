@@ -2,7 +2,8 @@
 
 cd spec/v2
 pip3 install bikeshed && bikeshed update
-RELEASE=TRUE make
+mv header.include_release header.include
+make
 mkdir -p ../release/diagrams
 
 for i in diagrams/*.svg; do
