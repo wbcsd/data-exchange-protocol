@@ -1,6 +1,6 @@
 <pre class='metadata'>
 Title: Technical Specifications for PCF Data Exchange
-Text Macro: VERSION 2.2.0-20240402
+Text Macro: VERSION 2.2.0
 Shortname: data-exchange-protocol
 Level: 1
 Status: LD
@@ -15,9 +15,6 @@ Boilerplate: omit copyright, omit conformance
 Local Boilerplate: header yes
 Metadata Include: This version off
 </pre>
-
-Advisement: This document is a work in progress and should not be used for conformance testing. Please refer to the [latest
-stable version of the Technical Specifications]([LATEST]) for conformance testing. All feedback is welcome.
 
 # Introduction # {#intro}
 
@@ -2615,6 +2612,10 @@ path: LICENSE.md
 
 
 # Appendix B: Changelog # {#changelog}
+
+## Version 2.2.0 (Apr 10, 2024) ## {#changelog-2.2.0}
+
+Release.
 
 ## Version 2.2.0-20240402 (Apr 02, 2024) ## {#changelog-2.2.0-20240402}
 
