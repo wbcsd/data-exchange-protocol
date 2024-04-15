@@ -16,9 +16,6 @@ Local Boilerplate: header yes
 Metadata Include: This version off
 </pre>
 
-Advisement: This document is a work in progress and should not be used for conformance testing. Please refer to the [latest
-stable version of the Technical Specifications]([LATEST]) for conformance testing. All feedback is welcome.
-
 # Introduction # {#intro}
 
 This document contains the necessary technical foundation for the [=Pathfinder Network=], an open and global network for emission data exchange.
