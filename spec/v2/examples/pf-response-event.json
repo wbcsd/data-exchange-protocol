@@ -1,0 +1,109 @@
+{
+  "type": "org.wbcsd.pathfinder.ProductFootprintRequest.Fulfilled.v1",
+  "specversion": "1.0",
+  "id": "5afe8fbf-0ea9-477c-a1df-2d3c95f7eec0",
+  "source": "//ProviderEventHostname/EventSubpath",
+  "time": "2023-11-08T13:26:00Z",
+  "data": {
+    "requestEventId": "848dcf00-2c18-400d-bcb8-11e45bbf7ebd",
+    "pfs": [
+      {
+        "id": "91715e5e-fd0b-4d1c-8fab-76290c46e6ed",
+        "specVersion": "2.0.0",
+        "precedingPfIds": [
+          "d6985fe5-e569-5695-d47d-526dad7525d5",
+          "d6985fe5-e569-5695-d47d-526dad7525d6"
+        ],
+        "version": 1,
+        "created": "2022-03-01T09:32:20Z",
+        "status": "Active",
+        "validityPeriodStart": "2022-03-01T09:32:20Z",
+        "validityPeriodEnd": "2024-12-31T00:00:00Z",
+        "companyName": "My Corp",
+        "companyIds": [
+          "urn:uuid:69585GB6-56T9-6958-E526-6FDGZJHU1326",
+          "urn:epc:id:sgln:562958.00000.4"
+        ],
+        "productDescription": "Bio-Ethanol 98%, corn feedstock (bulk - no packaging)",
+        "productIds": ["urn:gtin:5695872369587"],
+        "productCategoryCpc": "6398",
+        "productNameCompany": "Green Ethanol",
+        "comment": "",
+        "pcf": {
+          "declaredUnit": "liter",
+          "unitaryProductAmount": "1",
+          "pCfExcludingBiogenic": "1.63",
+          "pCfIncludingBiogenic": "1.85",
+          "fossilGhgEmissions": "1.5",
+          "fossilCarbonContent": "0",
+          "biogenicCarbonContent": "0.41",
+          "dLucGhgEmissions": "0.8",
+          "landManagementGhgEmissions": "0.6",
+          "otherBiogenicGhgEmissions": "0.4",
+          "iLucGhgEmissions": "0",
+          "biogenicCarbonWithdrawal": "-1.5",
+          "aircraftGhgEmissions": "0.2",
+          "characterizationFactors": "AR6",
+          "ipccCharacterizationFactorsSources": ["AR6"],
+          "crossSectoralStandardsUsed": [
+            "GHG Protocol Product standard",
+            "ISO Standard 14067"
+          ],
+          "productOrSectorSpecificRules": [
+            {
+              "operator": "Other",
+              "ruleNames": [
+                "The Product Carbon Footprint Guideline for the Chemical Industry, v.2.0"
+              ],
+              "otherOperatorName": "Tfs"
+            }
+          ],
+          "biogenicAccountingMethodology": "GHPG",
+          "boundaryProcessesDescription": "1) Material acquisition and preprocessing, including growth of corn 2) Production: fuel consumption, electricity consumption, water consumption, process-generated direct emissions 3) Distribution and storage: transportation of the finished product from manufacturing site to storage site",
+          "referencePeriodStart": "2021-01-01T00:00:00Z",
+          "referencePeriodEnd": "2021-12-31T00:00:00Z",
+          "geographicScope": {
+            "geographyRegionOrSubregion": "Western Europe"
+          },
+          "secondaryEmissionFactorSources": [
+            {
+              "name": "Ecoinvent",
+              "version": "3.1"
+            }
+          ],
+          "exemptedEmissionsPercent": 0,
+          "exemptedEmissionsDescription": "",
+          "packagingEmissionsIncluded": false,
+          "allocationRulesDescription": "Using mass allocation following the product specific rule as per PACT Framework decision-making tree",
+          "uncertaintyAssessmentDescription": "A model of corn production is involved in predicting emissions from the production of the corn feedstock. Emissions of N2O due to application of nitrogen fertilizers are based on a linear modeling of interactions of the fertilizer with the soil and plant systems. As these interactions are more complicated than the model assumes, there is uncertainty regarding the emissions resulting from this model",
+          "primaryDataShare": 12.9,
+          "dqi": {
+            "coveragePercent": 78,
+            "technologicalDQR": "1.6",
+            "temporalDQR": "2.6",
+            "geographicalDQR": "1.8",
+            "completenessDQR": "1.7",
+            "reliabilityDQR": "2.1"
+          },
+          "assurance": {
+            "assurance": false,
+            "providerName": ""
+          }
+        },
+        "extensions": [
+          {
+            "specVersion": "2.0.0",
+            "dataSchema": "https://catalog.carbon-transparency.com/shipment/1.0.0/data-model.json",
+            "data": {
+              "shipmentId": "S1234567890",
+              "consignmentId": "Cabc.def-ghi",
+              "shipmentType": "PICKUP",
+              "weight": 10,
+              "transportChainElementId": "ABCDEFGHI"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}
