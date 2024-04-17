@@ -2,10 +2,6 @@
   "data": {
     "id": "91715e5e-fd0b-4d1c-8fab-76290c46e6ed",
     "specVersion": "2.0.0",
-    "precedingPfIds": [
-      "d6985fe5-e569-5695-d47d-526dad7525d5",
-      "d6985fe5-e569-5695-d47d-526dad7525d6"
-    ],
     "version": 1,
     "created": "2022-03-01T09:32:20Z",
     "status": "Active",
@@ -53,7 +49,7 @@
       "biogenicAccountingMethodology": "GHPG",
       "boundaryProcessesDescription": "1) Material acquisition and preprocessing, including growth of corn 2) Production: fuel consumption, electricity consumption, water consumption, process-generated direct emissions 3) Distribution and storage: transportation of the finished product from manufacturing site to storage site",
       "referencePeriodStart": "2021-01-01T00:00:00Z",
-      "referencePeriodEnd": "2021-12-31T00:00:00Z",
+      "referencePeriodEnd": "2022-01-01T00:00:00Z",
       "geographicScope": {
         "geographyRegionOrSubregion": "Western Europe"
       },
