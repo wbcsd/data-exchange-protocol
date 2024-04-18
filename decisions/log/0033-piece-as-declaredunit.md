@@ -15,7 +15,7 @@ Feedback has been raised to consider adding piece as a declared unit, but also r
 Feedback motivating the addition of `piece` as declaredUnit:
 
 - For some industries (especially automotive and electronics), PCFs are calculated and compared by unit of product (aka “piece”), not by physical unit
-- Our current standard requires PCFs to be entered and stored by physical units. Although one could argue that the current standard can also accommodates PCFs calculated by unit to be stored as PCFs calculated by physical unit, we received feedback from users this conversion causes confusion and results in a likely misinterpretation of the PCF data being entered and shared
+- Our current standard requires PCFs to be entered and stored by physical units. Although one could argue that the current standard can also accommodate PCFs calculated by unit to be stored as PCFs calculated by physical unit, we received feedback from users this conversion causes confusion and results in a likely misinterpretation of the PCF data being entered and shared
 - In some industries, the physical unit of the product (i.e. mass) is either not known, not systematically maintained in ERP systems, or not identical among products (specifically in the electronics sector, mass may vary slightly among products), and therefore is not the best unit of measure to calculate a comparable PCF
 
 If `piece` is added as a declaredUnit, feedback motivating the need to also ensure the physical unit of the product is shared:
