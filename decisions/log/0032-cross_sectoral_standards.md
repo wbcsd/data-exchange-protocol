@@ -1,10 +1,14 @@
-# 32. Extend Cross Sectoral Standars list to be more comprehensive and extensible
+# 32. Extend Cross Sectoral Standards list to be more comprehensive and extensible
 
 Date: 2024-04-17
 
 ## Status
 
 Proposed
+* Feedback originally raised by industry initiatives (CX, TfS) in summer 2023
+* PACT is now working witih industry initiatives to align on the "complete set" of permitted cross sectoral standards
+* Per discussions with TfS and CX, they are aligned to the proposals listed and have a (slight) preference for Proposal 1 (i.e. extensible list and exclusion of "other" option)
+* Goal is to reach alignment with initiatives on proposal and raise to Tech WG May 15
 
 ## Context
 
