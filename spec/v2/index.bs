@@ -628,7 +628,7 @@ Advisement:
         <td>M
         <td>The cross-sectoral standards applied for calculating or allocating [=GHG=] emissions.
 
-          It MUST be a non-empty set of strings with the following possible values:
+          It MUST be a non-empty array and MUST contain only the following values without duplicates:
 
           : ISO14067
           :: for the ISO 14067 standard
@@ -644,12 +644,14 @@ Advisement:
           :: for the Greehouse Gas Protocol (GHGP) Product standard
           : PAS 2050
           :: for the Publicly Available Specification (PAS) 2050
-          : ISO1404-44
+          : ISO14040-44
           :: for the ISO 14044-44 standard
           : PEF
           :: for the EU [Product Environmental Footprint Guide](https://ec.europa.eu/environment/archives/eussd/pdf/footprint/PEF%20methodology%20final%20draft.pdf)
 
-          Advisement: The enumeration of standards above will be evolved in future revisions. Account for this when implementing the validation of this property.
+        Advisement:
+            The enumeration of standards above CAN evolve in future revisions.
+            A [=host system=] MUST accept ProductFootprints from later revisions with <{CarbonFootprint/crossSectoralStandards}> containing values that are not defined in this specification.
       <tr>
         <td><dfn>productOrSectorSpecificRules</dfn> : [=ProductOrSectorSpecificRuleSet=]
         <td>Array
