@@ -1,17 +1,20 @@
 <pre class='metadata'>
-Title: Technical Specifications for PCF Data Exchange (Version 1.0.1)
+Title: Technical Specifications for PCF Data Exchange
+Text Macro: VERSION 1.0.1
 Shortname: data-exchange-protocol
 Level: 1
 Status: LD
-URL: http://sine-fdn.github.io/cti-usecase-001/spec
+TR: https://wbcsd.github.io/tr/2023/data-exchange-protocol-20230201/
 Mailing List: pact@wbcsd.org
 Editor:
   Martin Pompéry, SINE Foundation https://sine.foundation/, martin@sine.foundation
   Cecilia Valeri, WBCSD https://www.wbcsd.org/, valeri@wbcsd.org
 Abstract: This document specifies a data model for GHG emission data at product level based on the Pathfinder Framework Version 1, and a protocol for interoperable exchange of GHG emission data at product level.
-Repository: sine-fdn/cti-usecase-001
+Repository: wbcsd/data-exchange-protocol
 Markup Shorthands: markdown yes, idl yes, dfn yes
 Boilerplate: omit copyright, omit conformance
+Local Boilerplate: header yes
+Metadata Include: This version off
 </pre>
 
 # Introduction # {#intro}
@@ -24,7 +27,7 @@ The semantic foundation of the data model is the [=Pathfinder Framework|Pathfind
 
 Developer resources can be found at the [Use Case 001 repository](https://github.com/wbcsd/cti-usecase-001).
 
-Note: Version 2 of this specification is work in progress and can be accessed [here](v2/).
+Note: Version 2 of this specification can be accessed [here](v2/).
 
 ## Scope ## {#scope}
 
