@@ -1,6 +1,6 @@
 <pre class='metadata'>
 Title: Technical Specifications for PCF Data Exchange
-Text Macro: VERSION 2.2.0
+Text Macro: VERSION 2.2.1-20240430
 Shortname: data-exchange-protocol
 Level: 1
 Status: LD
@@ -585,7 +585,7 @@ Advisement:
         <td><dfn>aircraftGhgEmissions</dfn> : [=Decimal=]
         <td>String
         <td>O
-        <td>If present, the GHG emissions resulting from aircraft engine usage for the transport of the product. The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg of CO2 equivalent per declared unit` (`kgCO2e / declaredUnit`), expressed as a [=decimal=] equal to or greater than zero.
+        <td>If present, the GHG emissions resulting from aircraft engine usage for the transport of the product, excluding radiative forcing. The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg of CO2 equivalent per declared unit` (`kgCO2e / declaredUnit`), expressed as a [=decimal=] equal to or greater than zero.
       <tr>
         <td><dfn>characterizationFactors</dfn>
         <td>String
@@ -2527,6 +2527,13 @@ path: LICENSE.md
 
 
 # Appendix B: Changelog # {#changelog}
+
+## Version 2.2.1 (Apr 30, 2024) ## {#changelog-2.2.1-20240430}
+
+Summary of changes:
+
+1. Clarification of <{CarbonFootprint/aircraftGhgEmissions}> definition to make it explicit that
+    radiative forcing is excluded.
 
 ## Version 2.2.0 (Apr 10, 2024) ## {#changelog-2.2.0}
 
