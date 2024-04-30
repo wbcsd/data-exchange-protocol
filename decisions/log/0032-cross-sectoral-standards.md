@@ -44,9 +44,9 @@ We have also considered the possibility of disclosing a cross sectoral standard 
         <td><dfn>crossSectoralStandards</dfn>
         <td>Array of Strings
         <td>M
-        <td>The cross-sectoral standards applied for    calculating or allocating [=GHG=] emissions.
+        <td>The cross-sectoral standards applied for calculating or allocating [=GHG=] emissions.
 
-        It MUST be a non-empty set of strings with  the following possible values:
+        It MUST be a non-empty array and MUST contain only the following values without duplicates:
 
         : ISO14067
         :: for the ISO 14067 standard
@@ -59,15 +59,16 @@ We have also considered the possibility of disclosing a cross sectoral standard 
         : PACT Framework v2.1
         :: for version 2.1 of the PACFramework
         : GHGP Product
-        :: for the Greehouse Gas Protoco(GHGP)  Product standard
+        :: for the Greehouse Gas Protocol (GHGP) Product standard
         : PAS 2050
-        :: for the Publicly AvailablSpecification   (PAS) 2050
-        : ISO1404-44
+        :: for the Publicly AvailablSpecification (PAS) 2050
+        : ISO14040-44
         :: for the ISO 14044-44 standard
         : PEF
         :: for the EU [Product Environmental Footprint Guide](https://ec.europa.eu/environment/archives/eussd/pdf/footprint/PEF%20methodology%20final%20draft.pdf)
 
-        Advisement: The enumeration of standards above will be evolved in future revisions. Account for this when implementing the validation of this property.
+        Advisement: 
+            The enumeration of standards above CAN evolve in future revisions. A host system MUST accept ProductFootprints from later revisions with `crossSectoralStandards` containing values that are not defined in this specification.
     ```
 
 ## Decision
