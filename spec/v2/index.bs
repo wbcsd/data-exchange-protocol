@@ -534,6 +534,15 @@ Advisement:
         <td>M
         <td>The amount of <{CarbonFootprint/declaredUnit|Declared Units}> contained within the product to which the [[#dt-carbonfootprint|PCF]] is referring to. The value MUST be strictly greater than `0`.
       <tr>
+        <td><dfn>productMassPerDeclaredUnit</dfn> : [=Decimal=]
+        <td>string
+        <td>M
+        <td>The mass (in kg) of the product per the provided <{CarbonFootprint/declaredUnit|declared unit}>, excluding packaging.
+          For example, if the declared unit is `piece`, this attribute MUST be populated with the mass of one piece (aka unit) of product.
+          If the declared unit is `liter`, this attribute MUST be populated with the mass of 1 liter of product (i.e. the density of the product).
+          If the declared unit is `kilogram`, this attribute MUST by definition be populated with `1`.
+          If the product mass is not relevant (i.e. PCF is for an energy (kWh, MJ), logistics (ton.km) or service product), this attribute MUST be populated with `0`.
+      <tr>
         <td><dfn>pCfExcludingBiogenic</dfn> : [=Decimal=]
         <td>String
         <td>M
@@ -1289,6 +1298,9 @@ DeclaredUnit is the enumeration of accepted declared units with values
 
 : <dfn>square meter</dfn>
 :: for square meter, the Derived Unit from SI Base Unit `metre`
+
+: <dfn>piece</dfn>
+:: For a piece, a unit of product
 
 </dl>
 

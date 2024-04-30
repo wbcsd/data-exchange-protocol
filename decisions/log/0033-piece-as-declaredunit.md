@@ -8,7 +8,6 @@ Proposed
 
 * PACT Methodology Working group is aligned to the proposal, per discussions November 2023
 * Three sector initiatives (Catena-X, TfS, and Green x Digital) raised feedback requesting the addition of `piece` as declaredUnit. Through discussions with these initiatives, we have arrived at this proposal; we are now working with these initaitives to receive final review and approval before taking the proposal to the PACT Tech Working group May 15.
-* Proposal is pending corresponding revisions to PACT Tech Specs (v3) which will be linked to this ADR when ready.
 
 ## Context
 
@@ -19,7 +18,7 @@ Feedback has been raised to consider adding piece as a declared unit, but also r
 Feedback motivating the addition of `piece` as declaredUnit:
 
 - For some industries (especially automotive and electronics), PCFs are calculated and compared by unit of product (aka “piece”), not by physical unit
-- Our current standard requires PCFs to be entered and stored by physical units. Although one could argue that the current standard can also accommodate PCFs calculated by unit to be stored as PCFs calculated by physical unit, we received feedback from users this conversion causes confusion and results in a likely misinterpretation of the PCF data being entered and shared. Further, as PCF exchange is going through a transition period from "spreadsheets" to "solutions", the PACT data model is increasingly exposed to end-users, potentially in the form of questionnaires, hence the need and value of such data attributes to be displayed in an understandable and easy-to-enter and understand way to end-users. In short, humans and not just machines must understand and use the data model.
+- Our current standard requires PCFs to be entered and stored by physical units. Although one could argue that the current standard can also accommodate PCFs calculated by unit to be stored as PCFs calculated by physical unit, we received feedback from users that this conversion causes confusion and results in a likely misinterpretation of the PCF data being entered and shared. Further, as PCF exchange is going through a transition period from "spreadsheets" to "solutions", the PACT data model is increasingly exposed to end-users, potentially in the form of questionnaires, hence the need and value of such data attributes to be displayed in an understandable and easy-to-enter and understand way to end-users. In short, humans and not just machines must understand and use the data model.
 - In some industries, the physical unit of the product (i.e. mass) is either not known, not systematically maintained in ERP systems, or not identical among products (specifically in the electronics sector, mass may vary slightly among products), and therefore is not the best unit of measure to calculate a comparable PCF
 
 If `piece` is added as a declaredUnit, however, there is still a need to know the physical unit of the product. This was understood based on feedback from the PACT Methodology Working Group which discussed this topic in detail in Fall 2023:
@@ -38,7 +37,26 @@ Based on discussions with initiatives (GBA, TfS, Catena-X) and PACT Working Grou
 Several examples using the above proposal can be seen here: https://wbcsd.sharepoint.com/:x:/s/ClimateEnergy/EfT4Uj_q1JxJgWTdh71lW5YBthfw2fG2CUHX0MTrjfRrNQ?e=PjdoTI
 
 ## Technical Specification
-To be populated
+
+Addition to the possible values of `DeclaredUnit`:
+```
+: <dfn>piece</dfn>
+:: For a piece, a unit of product
+```
+
+Addition of new property `productMassPerDeclaredUnit` to `CarbonFootprint`:
+```
+<tr>
+    <td><dfn>productMassPerDeclaredUnit</dfn> : [=Decimal=]
+    <td>string
+    <td>M
+    <td>The mass (in kg) of the product per the provided <      {CarbonFootprint/declaredUnit|declared unit}>, excluding packaging.
+    For example, if the declared unit is `piece`, this attribute MUST be populated with the mass of one piece (aka unit) of product.
+    If the declared unit is `liter`, this attribute MUST be populated with the mass of 1 liter of product (i.e. the density of the product).
+    If the declared unit is `kilogram`, this attribute MUST by definition be populated with `1`.
+    If the product mass is not relevant (i.e. PCF is for an energy (kWh, MJ), logistics (ton.km) or service product), this attribute MUST be populated with `0`.
+```
+
 
 ## Consequences
 
