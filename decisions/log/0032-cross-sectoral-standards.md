@@ -23,22 +23,52 @@ Three main concerns have been raised with the current specification of this fiel
 [For full details see here](https://flat-dollar-c04.notion.site/Extend-the-Cross-Sectoral-Standards-List-to-be-more-comprehensive-and-extensible-ddf602f360e14168b2a300d71a38f672)
 
 ## Proposal
-To address the above challenges, we propose two options for evaluation by the community and especially with our strategic initiatives
+To address the above challenges, we propose the following for evaluation by the community and especially with our strategic initiatives:
 
-Proposal 1:
-* A new attribute which includes a set of options. These options would include (exact list pending final alignment with community): `ISO 14067; ISO14083; PACT Framework v1; PACT Framework v2; PACT Framework v2.1; GHG Protocol Product; PAS 2050; ISO 14040-44; PEF`
-* The set of recommended options may be extended without requiring a new version of the specifications (neither minor nor major)
+* A new attribute which includes a set of options. These options would include (exact list pending final alignment with community): `ISO 14067; ISO14083; PACT Framework v1; PACT Framework v2; PACT Framework v2.1; GHGP Product; PAS 2050; ISO14040-44; PEF`
+* The set of options may be evolved without breaking backwards compatibility
 
-Proposal 2:
-* All aspects of Proposal 1, and in addition:
-* Additional cross sectoral standards may also be disclosed by the user which are not listed within the recommended options
+We have also considered the possibility of disclosing a cross sectoral standard not contained in the set of options explicitly covered by the Technical Specifications. We concluded that this possibility was suboptimal, for the following reasons:
+* It would afford more complexity to the Technical Specifications, requiring a structured data type similar to [`ProductOrSectorSpecificRule`](https://wbcsd.github.io/data-exchange-protocol/v2/#dt-productorsectorspecificrule)
+* There would be no clear guidance for data recipients who received a `ProductFootprint` with an unexpected cross sectoral standard
+* There are no straightforward advantages in this possibility that supersede the disadvantages of accommodating it
 
-
-Proposal 1 may be more advantageous if the community wishes to enforce higher degrees of standardization and not permit the use and/or sharing of additional cross sectoral standards not listed; Proposal 2 is more advantageous to support flexibility of exchange and disclosure of all standards used
 
 ## Detailed Technical Proposal
 
-To be updated
+1. Addition of deprecation warnings to the attribute `crossSectoralStandardsUsed`, as well as to the data types `CrossSectoralStandard` and `CrossSectoralStandardSet`.
+2. Addition of new property `crossSectoralStandards` defined as follows:
+
+    ```
+    <tr>
+        <td><dfn>crossSectoralStandards</dfn>
+        <td>Array of Strings
+        <td>M
+        <td>The cross-sectoral standards applied for    calculating or allocating [=GHG=] emissions.
+
+        It MUST be a non-empty set of strings with  the following possible values:
+
+        : ISO14067
+        :: for the ISO 14067 standard
+        : ISO14083
+        :: for the ISO 14083 standard
+        : PACT Framework v1
+        :: for version 1 of the PACT Framework
+        : PACT Framework v2
+        :: for version 2 of the PACT Framework
+        : PACT Framework v2.1
+        :: for version 2.1 of the PACFramework
+        : GHGP Product
+        :: for the Greehouse Gas Protoco(GHGP)  Product standard
+        : PAS 2050
+        :: for the Publicly AvailablSpecification   (PAS) 2050
+        : ISO1404-44
+        :: for the ISO 14044-44 standard
+        : PEF
+        :: for the EU [Product Environmental Footprint Guide](https://ec.europa.eu/environment/archives/eussd/pdf/footprint/PEF%20methodology%20final%20draft.pdf)
+
+        Advisement: The enumeration of standards above will be evolved in future revisions. Account for this when implementing the validation of this property.
+    ```
 
 ## Decision
 
@@ -49,5 +79,5 @@ Pending alignment with initiatives
 * Technical Specifications must be updated accordingly
 
 Based on current assumptions:
-* The existing attribute `CrossSectoralStandard` will be deprecated in v2.3 and removed from the spec in v3
+* The existing attribute `crossSectoralStandardsUsed` will be deprecated in v2.3 and removed from the spec in v3
 * A new attribute, meeting the business needs of this ADR will be introduced in v2.3
