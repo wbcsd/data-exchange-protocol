@@ -50,7 +50,7 @@ Addition of new property `productMassPerDeclaredUnit` to `CarbonFootprint`:
     <td><dfn>productMassPerDeclaredUnit</dfn> : [=Decimal=]
     <td>string
     <td>M
-    <td>The mass (in kg) of the product per the provided <      {CarbonFootprint/declaredUnit|declared unit}>, excluding packaging.
+    <td>The mass (in kg) of the product per the provided <{CarbonFootprint/declaredUnit|declared unit}>, excluding packaging.
     For example, if the declared unit is `piece`, this attribute MUST be populated with the mass of one piece (aka unit) of product.
     If the declared unit is `liter`, this attribute MUST be populated with the mass of 1 liter of product (i.e. the density of the product).
     If the declared unit is `kilogram`, this attribute MUST by definition be populated with `1`.
