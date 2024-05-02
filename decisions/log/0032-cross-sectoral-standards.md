@@ -5,9 +5,10 @@ Date: 2024-04-17
 ## Status
 
 Proposed
-* Feedback originally raised by industry initiatives (CX, TfS) in summer 2023
+* Feedback originally raised by industry initiatives (CX, TfS) in Summer 2023
 * PACT is now working witih industry initiatives to align on the "complete set" of permitted cross sectoral standards
-* Per discussions with TfS and CX, they are aligned to the proposals listed and have a (slight) preference for Proposal 1 (i.e. extensible list and exclusion of "other" option)
+* Per discussions with TfS and CX, initiatives are aligned to the proposal listed and have a (slight) preference for Proposal 1 (i.e. extensible list and exclusion of "other" option)
+* Per discussions with SINE, addition of "other" as an option significantly increases complexity of specification with doubtable value, therefore we are proceeding with proposal of extensible list without the option of "other"
 * Goal is to reach alignment with initiatives on proposal and raise to Tech WG May 15
 
 ## Context
@@ -49,21 +50,21 @@ We have also considered the possibility of disclosing a cross sectoral standard 
         It MUST be a non-empty array and MUST contain only the following values without duplicates:
 
         : ISO14067
-        :: for the ISO 14067 standard
+        :: for the ISO 14067 Standard
         : ISO14083
-        :: for the ISO 14083 standard
+        :: for the ISO 14083 Standard
         : PACT Framework v1
         :: for version 1 of the PACT Framework
         : PACT Framework v2
         :: for version 2 of the PACT Framework
         : PACT Framework v2.1
-        :: for version 2.1 of the PACFramework
+        :: for version 2.1 of the PACT Framework
         : GHGP Product
-        :: for the Greehouse Gas Protocol (GHGP) Product standard
+        :: for the Greehouse Gas Protocol (GHGP) Product Standard
         : PAS 2050
-        :: for the Publicly AvailablSpecification (PAS) 2050
+        :: for the Publicly Available Specification (PAS) 2050
         : ISO14040-44
-        :: for the ISO 14044-44 standard
+        :: for the ISO 14044-44 Standard
         : PEF
         :: for the EU [Product Environmental Footprint Guide](https://ec.europa.eu/environment/archives/eussd/pdf/footprint/PEF%20methodology%20final%20draft.pdf)
 
