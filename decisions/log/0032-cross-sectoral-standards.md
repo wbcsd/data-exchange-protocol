@@ -10,6 +10,7 @@ Proposed
 * Per discussions with TfS and CX, initiatives are aligned to the proposal listed and have a (slight) preference for Proposal 1 (i.e. extensible list and exclusion of "other" option)
 * Per discussions with SINE, addition of "other" as an option significantly increases complexity of specification with doubtable value, therefore we are proceeding with proposal of extensible list without the option of "other"
 * Goal is to reach alignment with initiatives on proposal and raise to Tech WG May 15
+* May 3, 2024: Updated proposal to remove PAS 2050 (Publicly Available Specification (PAS) 2050), which per initiative alignment PAS is outdated and and not maintained, apparently it is mostly in the UK (with Carbon Trust). So in principal it could be added but not recommended
 
 ## Context
 
@@ -26,7 +27,7 @@ Three main concerns have been raised with the current specification of this fiel
 ## Proposal
 To address the above challenges, we propose the following for evaluation by the community and especially with our strategic initiatives:
 
-* A new attribute which includes a set of options. These options would include (exact list pending final alignment with community): `ISO 14067; ISO14083; PACT Framework v1; PACT Framework v2; PACT Framework v2.1; GHGP Product; PAS 2050; ISO14040-44; PEF`
+* A new attribute which includes a set of options. These options would include (exact list pending final alignment with community): `ISO 14067; ISO14083; PACT Framework v1; PACT Framework v2; PACT Framework v2.1; GHGP Product; ISO14040-44; PEF`
 * The set of options may be evolved without breaking backwards compatibility
 
 We have also considered the possibility of disclosing a cross sectoral standard not contained in the set of options explicitly covered by the Technical Specifications. We concluded that this possibility was suboptimal, for the following reasons:
@@ -61,8 +62,6 @@ We have also considered the possibility of disclosing a cross sectoral standard 
         :: for version 2.1 of the PACT Framework
         : GHGP Product
         :: for the Greehouse Gas Protocol (GHGP) Product Standard
-        : PAS 2050
-        :: for the Publicly Available Specification (PAS) 2050
         : ISO14040-44
         :: for the ISO 14044-44 Standard
         : PEF
