@@ -18,6 +18,10 @@ Metadata Include: This version off
 
 # Introduction # {#intro}
 
+Advisement: This document is a work in progress and should not be used for conformance testing. 
+  Please refer to the [latest stable version of the Technical Specifications]([LATEST]) for conformance testing. 
+  All feedback is welcome.
+
 This document contains the necessary technical foundation for the [=Pathfinder Network=], an open and global network for emission data exchange.
 
 The goal of this document is to enable the [=interoperable=] exchange of [=PCF|Product Carbon Footprints=] across [[#conformance|conforming]] [=host systems=].
