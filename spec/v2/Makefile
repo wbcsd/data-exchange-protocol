@@ -13,13 +13,8 @@ publish: index.html
 	cp $(DIAGRAMS) $(OUTDIR)/diagrams/
 	cp $< $(OUTDIR)
 
-ifdef RELEASE
 index.html: index.bs $(DIAGRAMS)
 	bikeshed --md-status=iso/PAS spec $< $@
-else
-index.html: index.bs $(DIAGRAMS)
-	bikeshed spec $< $@
-endif
 
 %.svg: %.mmd $(MMDC)
 	$(MMDC) -i $< -o $@
