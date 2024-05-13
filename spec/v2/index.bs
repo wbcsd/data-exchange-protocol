@@ -657,7 +657,7 @@ Advisement:
           : PAS 2050
           :: for the Publicly Available Specification (PAS) 2050
           : ISO14040-44
-          :: for the ISO 14044-44 standard
+          :: for the ISO 14040-44 standard
           : PEF
           :: for the EU [Product Environmental Footprint Guide](https://ec.europa.eu/environment/archives/eussd/pdf/footprint/PEF%20methodology%20final%20draft.pdf)
 
