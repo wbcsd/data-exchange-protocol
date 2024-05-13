@@ -63,11 +63,11 @@ We have also considered the possibility of disclosing a cross sectoral standard 
         : GHGP Product
         :: for the Greehouse Gas Protocol (GHGP) Product Standard
         : ISO14040-44
-        :: for the ISO 14044-44 Standard
+        :: for the ISO 14040-44 Standard
         : PEF
         :: for the EU [Product Environmental Footprint Guide](https://ec.europa.eu/environment/archives/eussd/pdf/footprint/PEF%20methodology%20final%20draft.pdf)
 
-        Advisement: 
+        Advisement:
             The enumeration of standards above CAN evolve in future revisions. A host system MUST accept ProductFootprints from later revisions with `crossSectoralStandards` containing values that are not defined in this specification.
     ```
 
