@@ -1,6 +1,6 @@
 <pre class='metadata'>
 Title: Technical Specifications for PCF Data Exchange
-Text Macro: VERSION 2.2.0
+Text Macro: VERSION 2.2.1-20240507
 Shortname: data-exchange-protocol
 Level: 1
 Status: LD
@@ -17,6 +17,10 @@ Metadata Include: This version off
 </pre>
 
 # Introduction # {#intro}
+
+Advisement: This document is a work in progress and should not be used for conformance testing. 
+  Please refer to the [latest stable version of the Technical Specifications]([LATEST]) for conformance testing. 
+  All feedback is welcome.
 
 This document contains the necessary technical foundation for the [=Pathfinder Network=], an open and global network for emission data exchange.
 
@@ -811,7 +815,7 @@ The following properties are defined for data type <{DataQualityIndicators}>:
           scoring the temporal representativeness of the sources used for PCF calculation based on
           weighted average of all inputs representing >5% of PCF emissions.
 
-          The value MUST be a [=decimal=] between `1` and `3` including.
+          The value MUST be between `1` and `3` inclusive.
       <tr>
         <td><dfn>geographicalDQR</dfn>
         <td>Number
@@ -820,7 +824,7 @@ The following properties are defined for data type <{DataQualityIndicators}>:
           scoring the geographical representativeness of the sources used for PCF calculation
           based on weighted average of all inputs representing >5% of PCF emissions.
 
-          The value MUST be a [=decimal=] between `1` and `3` including.
+          The value MUST be between `1` and `3` inclusive.
       <tr>
         <td><dfn>completenessDQR</dfn>
         <td>Number
@@ -829,7 +833,7 @@ The following properties are defined for data type <{DataQualityIndicators}>:
           scoring the completeness of the data collected for PCF calculation based on
           weighted average of all inputs representing >5% of PCF emissions.
 
-          The value MUST be a [=decimal=] between `1` and `3` including.
+          The value MUST be between `1` and `3` inclusive.
       <tr>
         <td><dfn>reliabilityDQR</dfn>
         <td>Number
@@ -838,7 +842,7 @@ The following properties are defined for data type <{DataQualityIndicators}>:
           scoring the reliability of the data collected for PCF calculation based on
           weighted average of all inputs representing >5% of PCF emissions.
 
-          The value MUST be a [=decimal=] between `1` and `3` including.
+          The value MUST be between `1` and `3` inclusive.
     </table>
   <figcaption>Properties of data type DataQualityIndicators</figcaption>
 </figure>
@@ -2524,9 +2528,13 @@ highlight: json
 path: LICENSE.md
 </pre>
 
-
-
 # Appendix B: Changelog # {#changelog}
+
+## Version 2.2.1 (May 7, 2024) ## {#changelog-2.2.1-20240507}
+
+Summary of changes:
+1. fixed <{CarbonFootprint/dqi}> value types in all examples
+2. clarification of <{DataQualityIndicators}> by removing misleading link to [=decimal=]
 
 ## Version 2.2.0 (Apr 10, 2024) ## {#changelog-2.2.0}
 

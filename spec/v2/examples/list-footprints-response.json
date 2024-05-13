@@ -68,11 +68,11 @@
         "primaryDataShare": 12.9,
         "dqi": {
           "coveragePercent": 78,
-          "technologicalDQR": "1.6",
-          "temporalDQR": "2.6",
-          "geographicalDQR": "1.8",
-          "completenessDQR": "1.7",
-          "reliabilityDQR": "2.1"
+          "technologicalDQR": 1.6,
+          "temporalDQR": 2.6,
+          "geographicalDQR": 1.8,
+          "completenessDQR": 1.7,
+          "reliabilityDQR": 2.1
         },
         "assurance": {
           "assurance": false,
