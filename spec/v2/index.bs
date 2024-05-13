@@ -1,6 +1,6 @@
 <pre class='metadata'>
 Title: Technical Specifications for PCF Data Exchange
-Text Macro: VERSION 2.2.1-20240507
+Text Macro: VERSION 2.2.1-20240513
 Shortname: data-exchange-protocol
 Level: 1
 Status: LD
@@ -18,8 +18,8 @@ Metadata Include: This version off
 
 # Introduction # {#intro}
 
-Advisement: This document is a work in progress and should not be used for conformance testing. 
-  Please refer to the [latest stable version of the Technical Specifications]([LATEST]) for conformance testing. 
+Advisement: This document is a work in progress and should not be used for conformance testing.
+  Please refer to the [latest stable version of the Technical Specifications]([LATEST]) for conformance testing.
   All feedback is welcome.
 
 This document contains the necessary technical foundation for the [=Pathfinder Network=], an open and global network for emission data exchange.
@@ -195,9 +195,7 @@ For now, this chapter focuses on asynchronous event processing. It will be expan
           ```json
           {
             "productIds": ["urn:pathfinder:company:customcode:buyer-assigned:4321"],
-            "geographicScope": {
-              "geographyCountry": "FR"
-            },
+            "geographyCountry": "FR"
           }
           ```
         </div>
@@ -2529,6 +2527,13 @@ path: LICENSE.md
 </pre>
 
 # Appendix B: Changelog # {#changelog}
+
+## Version 2.2.1 (May 13, 2024) ## {#changelog-2.2.1-20240513}
+
+Summary of changes:
+1. fixed [[#api-action-list-example]], [[#api-action-events-example]],
+    [[#api-action-get-example]], and [[#business-cases-async-events-1-workflow]] by removing spurious
+    `geographicScope` object
 
 ## Version 2.2.1 (May 7, 2024) ## {#changelog-2.2.1-20240507}
 
