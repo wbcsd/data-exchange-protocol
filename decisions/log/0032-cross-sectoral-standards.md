@@ -66,7 +66,7 @@ We have also considered the possibility of disclosing a cross sectoral standard 
         : PACT Framework v1
         :: for version 1 of the PACT Framework
         : PAS2050
-        : for the Publicly Available Specification (PAS) 2050, "Specification for the assessment of the life cycle greenhouse gas emissions of goods and services"
+        :: for the Publicly Available Specification (PAS) 2050, "Specification for the assessment of the life cycle greenhouse gas emissions of goods and services"
 
         Advisement:
             The enumeration of standards above CAN evolve in future revisions. A host system MUST accept ProductFootprints from later revisions with `crossSectoralStandards` containing values that are not defined in this specification.
