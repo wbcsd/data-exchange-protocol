@@ -657,11 +657,11 @@ Advisement:
         :: for version 2 of the PACT Framework
         : PACT Framework v2.1
         :: for version 2.1 of the PACT Framework
-        Not recommended but permitted*:
+        Not recommended but permitted:
         : PACT Framework v1
         :: for version 1 of the PACT Framework
         : PAS2050
-        : for the Publicly Available Specification (PAS) 2050, "Specification for the assessment of the life cycle greenhouse gas emissions of goods and services"
+        :: for the Publicly Available Specification (PAS) 2050, "Specification for the assessment of the life cycle greenhouse gas emissions of goods and services"
         Advisement:
             The enumeration of standards above CAN evolve in future revisions. A host system MUST accept ProductFootprints from later revisions with `crossSectoralStandards` containing values that are not defined in this specification.
             The set of standards listed include some standards which PACT does not recommend given they have become deprecated and/or outdated. However, with the goal of enabling transparency, PACT Technical Specifications nevertheless includes these as options.
