@@ -642,28 +642,29 @@ Advisement:
 
           It MUST be a non-empty array and MUST contain only the following values without duplicates:
 
-          : ISO14067
-          :: for the ISO 14067 standard
-          : ISO14083
-          :: for the ISO 14083 standard
-          : PACT Framework v1
-          :: for version 1 of the PACT Framework
-          : PACT Framework v2
-          :: for version 2 of the PACT Framework
-          : PACT Framework v2.1
-          :: for version 2.1 of the PACT Framework
-          : GHGP Product
-          :: for the Greehouse Gas Protocol (GHGP) Product standard
-          : PAS 2050
-          :: for the Publicly Available Specification (PAS) 2050
-          : ISO14040-44
-          :: for the ISO 14040-44 standard
-          : PEF
-          :: for the EU [Product Environmental Footprint Guide](https://ec.europa.eu/environment/archives/eussd/pdf/footprint/PEF%20methodology%20final%20draft.pdf)
-
+          Recommended:
+        : ISO14067
+        :: for the ISO 14067 Standard, "Greenhouse gases — Carbon footprint of products — Requirements and guidelines for quantification"
+        : ISO14083
+        :: for the ISO 14083 Standard, "Greenhouse gases — Quantification and reporting of greenhouse gas emissions arising from transport chain operations"
+        : ISO14040-44
+        :: for the ISO 14040-44 Standard, "Environmental management — Life cycle assessment — Principles and framework"
+        : GHGP Product
+        :: for the Greehouse Gas Protocol (GHGP) Product Standard
+        : PEF
+        :: for the EU Product Environmental Footprint Guide
+        : PACT Framework v2
+        :: for version 2 of the PACT Framework
+        : PACT Framework v2.1
+        :: for version 2.1 of the PACT Framework
+        Not recommended but permitted*:
+        : PACT Framework v1
+        :: for version 1 of the PACT Framework
+        : PAS2050
+        : for the Publicly Available Specification (PAS) 2050, "Specification for the assessment of the life cycle greenhouse gas emissions of goods and services"
         Advisement:
-            The enumeration of standards above CAN evolve in future revisions.
-            A [=host system=] MUST accept ProductFootprints from later revisions with <{CarbonFootprint/crossSectoralStandards}> containing values that are not defined in this specification.
+            The enumeration of standards above CAN evolve in future revisions. A host system MUST accept ProductFootprints from later revisions with `crossSectoralStandards` containing values that are not defined in this specification.
+            The set of standards listed include some standards which PACT does not recommend given they have become deprecated and/or outdated. However, with the goal of enabling transparency, PACT Technical Specifications nevertheless includes these as options.
       <tr>
         <td><dfn>productOrSectorSpecificRules</dfn> : [=ProductOrSectorSpecificRuleSet=]
         <td>Array
