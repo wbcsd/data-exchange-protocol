@@ -34,7 +34,7 @@ Based on discussions with initiatives (GBA, TfS, Catena-X) and PACT Working Grou
     - Attribute must be populated for which mass is a relevant unit to represent the product (i.e. mass is not relevant for PCFs calculated for energy products or service carbon footprints; mass is relevant for all physical products with mass)
     - Attribute Description: “Mass (in kg) of the product per the provided declared unit, excluding packaging. For example, if declared unit is piece, this attribute must be populated with the mass of one piece (aka unit) of product. If the declared unit is liter, this attribute must be populated with the mass of 1 liter of product (i.e. the density of the product). If the declared unit is kilogram, productMassPerDeclaredUnit must by definition be 1. If the product mass is not relevant (i.e. PCF is for an energy (kWh, MJ), logistics (ton.km) or service product), attribute must be 0."
 
-Several examples using the above proposal can be seen here: https://wbcsd.sharepoint.com/:x:/s/ClimateEnergy/EfT4Uj_q1JxJgWTdh71lW5YBthfw2fG2CUHX0MTrjfRrNQ?e=PjdoTI
+Several examples using the above proposal can be seen here: https://wbcsd.sharepoint.com/:x:/s/ClimateEnergy/EfT4Uj_q1JxJgWTdh71lW5YBnKFvL5-Gyrqdg_N11P8eRA?e=lNAuWq
 
 ## Technical Specification
 
@@ -61,4 +61,4 @@ Addition of new property `productMassPerDeclaredUnit` to `CarbonFootprint`:
 ## Consequences
 
 - The proposal would require backwards breaking changes, so would only be releasable in v3 of the technical specifications
-- The proposal would resolve one interoperability blocker with Catena-X, which mandates piece as a declaredUnit
+- As of May 2024, TfS, Catena-X, and Green x Digital all endorse this proposal; further, the proposal would resolve one interoperability blocker with Catena-X, which mandates piece as a declaredUnit
