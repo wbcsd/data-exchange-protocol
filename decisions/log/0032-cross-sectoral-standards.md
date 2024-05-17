@@ -28,7 +28,7 @@ To address the above challenges, we (jointly with Catena-X, TfS, and Green x Dig
 * The set of options may be evolved without breaking backwards compatibility
 
 We have also considered the possibility of disclosing a cross sectoral standard not contained in the set of options explicitly covered by the Technical Specifications. We concluded that this possibility was suboptimal, for the following reasons:
-* It would afford more complexity to the Technical Specifications, requiring a structured data type similar to [`ProductOrSectorSpecificRule`](https://wbcsd.github.io/data-exchange-protocol/v2/#dt-productorsectorspecificrule)
+* It would introduce more complexity to the Technical Specifications, requiring a structured data type similar to [`ProductOrSectorSpecificRule`](https://wbcsd.github.io/data-exchange-protocol/v2/#dt-productorsectorspecificrule)
 * There would be no clear guidance for data recipients who received a `ProductFootprint` with an unexpected cross sectoral standard
 * There are no straightforward advantages in this possibility that supersede the disadvantages of accommodating it
 
