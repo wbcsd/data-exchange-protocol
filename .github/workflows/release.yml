@@ -16,9 +16,7 @@ jobs:
         run: sh ./spec/release.sh
       - name: Get date
         id: date
-        uses: Kaven-Universe/github-action-current-date-time@v1
-        with:
-          format: "YYYY_MM_DD HH_mm_ss_SSS"
+        run: echo "::set-output name=year::$(date +'%Y')" && echo "::set-output name=date::$(date +'%Y%m%d')"
       - name: Push release to tr/${{steps.date.outputs.year}}
         uses: cpina/github-action-push-to-another-repository@main
         env:
@@ -28,11 +26,11 @@ jobs:
           destination-github-username: "wbcsd"
           destination-repository-name: "tr"
           user-email:
-          target-directory: ./${{steps.date.outputs.year}}/data-exchange-protocol-${{steps.date.outputs.year}}${{steps.date.outputs.month}}${{steps.date.outputs.day}}
-          target-branch: release-v${{inputs.version}}-${{steps.date.outputs.year}}${{steps.date.outputs.month}}${{steps.date.outputs.day}}
+          target-directory: ./${{steps.date.outputs.year}}/data-exchange-protocol-${{steps.date.outputs.date}}
+          target-branch: release-v${{inputs.version}}-${{steps.date.outputs.date}}
           create-target-branch-if-needed: true
           commit-message: "Release v${{inputs.version}}"
-      - name: Push release to tr/data-exchange-protocol
+      - name: Push release to wbcsd/tr
         uses: cpina/github-action-push-to-another-repository@main
         env:
           SSH_DEPLOY_KEY: ${{ secrets.SSH_DEPLOY_KEY }}
@@ -42,6 +40,6 @@ jobs:
           destination-repository-name: "tr"
           user-email:
           target-directory: ./data-exchange-protocol
-          target-branch: release-v${{inputs.version}}-${{steps.date.outputs.year}}${{steps.date.outputs.month}}${{steps.date.outputs.day}}
+          target-branch: release-v${{inputs.version}}-${{steps.date.outputs.date}}
           create-target-branch-if-needed: true
           commit-message: "Release v${{inputs.version}}"
