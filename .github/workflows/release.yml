@@ -43,3 +43,13 @@ jobs:
           target-branch: release-v${{inputs.version}}-${{steps.date.outputs.date}}
           create-target-branch-if-needed: true
           commit-message: "Release v${{inputs.version}}"
+      - name: Create Pull Request
+        env:
+          SSH_DEPLOY_KEY: ${{ secrets.SSH_DEPLOY_KEY }}
+        run: |
+          gh api \
+          --method POST \
+          -H "Accept: application/vnd.github+json" \
+          -H "X-GitHub-Api-Version: 2022-11-28" \
+          /repos/wbcsd/tr/actions/workflows/release.yml/dispatches \
+          -f "ref=open-pr" -f "inputs[version]=${{inputs.version}}"
