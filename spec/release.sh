@@ -8,20 +8,20 @@ rm index.html
 
 
 
-if [ "$DRAFT" = "true" ] || [ "$DRAFT" = "1" ] || [ "$DRAFT" = "yes" ] || [ "$DRAFT" = "y" ]; then
+if [ "$DRAFT" = "true" ]; then
     RELEASE_STATUS="RELEASE Consultation Draft"
 else
     RELEASE_STATUS="RELEASE Stable Release"
 fi
 make STATUS="$RELEASE_STATUS"
 
-mkdir -p ../../release/diagrams
+mkdir -p ../release/diagrams
 
 for i in diagrams/*.svg; do
-    cp $i ../../release/diagrams/
+    cp $i ../release/diagrams/
 done
 
-cp index.html ../../release/
+cp index.html ../release/
 
 mv header.include header.include_release
 mv header.include_temp header.include
