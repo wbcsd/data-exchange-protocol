@@ -36,7 +36,7 @@ On your browser, navigate to the [`wbcsd/tr`](https://github.com/wbcsd/tr) repos
 
 At the top of the page, you shall see a yellow box and a green button to open a Pull Request, like the following:
 
-<img width="920" alt="Screenshot 2024-05-21 at 19 20 01" src="https://github.com/wbcsd/data-exchange-protocol/assets/100690574/a3f6ee8e-d156-43df-b72d-fd961b3ebd50">
+<img width="920" alt="Screenshot 2024-05-21 at 19 20 01" src="https://github.com/wbcsd/data-exchange-protocol/assets/100690574/8cb3a8fb-8a9a-41ee-8c4a-52d0d0798987">
 
 > Note that the branch name will include the date. This is intended and it does not mean that your version number is wrong. Note also that this screenshot is just an example.
 
