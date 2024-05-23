@@ -12,7 +12,7 @@
 # 3. derives the HTML file locally as usual
 # 4. clones the TR repository and pushes a release there
 
-TR_REPO_URL="git@github.com:sine-fdn/tr"
+TR_REPO_URL="git@github.com:wbcsd/tr"
 
 
 if [ -z "$1" ]; then
@@ -57,9 +57,7 @@ cp -r upload/v2/ ../tr/${YEAR}/data-exchange-protocol-${RELEASE_DATE}
 ## commit the release and push it back to GH
 cd ../tr
 git fetch origin main
-git remote prune origin
-git checkout -b release-${RELEASE_DATE} origin/main
+git checkout -B release-${RELEASE_DATE} origin/main
 git add .
 git commit -m "Release data-exchange-protocol ${RELEASE_DATE}"
 git push origin release-${RELEASE_DATE}
-git checkout origin/main
