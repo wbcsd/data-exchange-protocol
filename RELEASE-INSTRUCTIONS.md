@@ -27,7 +27,7 @@ sh release.sh <Consultation Draft|Release>
 
 On your browser, navigate to the [`wbcsd/tr`](https://github.com/wbcsd/tr) repository.
 
-At the top of the page, you shall see a yellow box and a green button to open a Pull Request, like the following:
+At the top of the page, you shall see a yellow box and a green button to open a Pull Request.
 
 Click the green button "Compare & pull request". On the new page, scroll down and click the green button "Create pull request."
 
