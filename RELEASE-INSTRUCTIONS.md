@@ -29,6 +29,8 @@ On your browser, navigate to the [`wbcsd/tr`](https://github.com/wbcsd/tr) repos
 
 At the top of the page, you shall see a yellow box and a green button to open a Pull Request, like the following:
 
+<img width="910" alt="Screenshot 2024-05-23 at 13 01 51" src="https://github.com/sine-fdn/data-exchange-protocol/assets/100690574/5975a684-f282-4b11-ba12-42aca41e749c">
+
 Click the green button "Compare & pull request". On the new page, scroll down and click the green button "Create pull request."
 
 <img width="935" alt="Screenshot 2024-05-21 at 19 20 30" src="https://github.com/wbcsd/data-exchange-protocol/assets/100690574/86fdbfba-2d88-4e3d-9036-6c2460e347d8">
