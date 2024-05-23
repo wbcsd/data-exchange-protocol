@@ -1,11 +1,9 @@
 #!/bin/sh
 
-#
 # This creates a new "release" of the tech specs.
 # It requires 1 argument which is the status of this new release, which should be either
 # - Consultation Draft
 # - Release             [exact name to be checked]
-#
 #
 # The script does the following
 #
@@ -13,7 +11,6 @@
 # 2. it creates a new computed-metadata.include file
 # 3. derives the HTML file locally as usual
 # 4. clones the TR repository and pushes a release there
-#
 
 TR_REPO_URL="git@github.com:sine-fdn/tr"
 
@@ -34,7 +31,6 @@ YEAR=$(date +%Y)
 
 
 ## create a new computed-metadata.include file
-
 cat <<EOF > computed-metadata.include
 {
   "Previous Version": ${PREV_VERSION},
@@ -45,7 +41,7 @@ EOF
 
 echo "computed-metadata.include file successfully updated"
 
-## now let's create the release...
+## create the release
 make publish clean
 
 popd
@@ -58,11 +54,12 @@ rm -rf ../tr/data-exchange-protocol
 cp -r upload/v2/ ../tr/data-exchange-protocol
 cp -r upload/v2/ ../tr/${YEAR}/data-exchange-protocol-${RELEASE_DATE}
 
-
 ## commit the release and push it back to GH
 cd ../tr
 git fetch origin main
+git remote prune origin
 git checkout -b release-${RELEASE_DATE} origin/main
 git add .
 git commit -m "Release data-exchange-protocol ${RELEASE_DATE}"
 git push origin release-${RELEASE_DATE}
+git checkout origin/main

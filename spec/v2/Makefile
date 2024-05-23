@@ -26,6 +26,6 @@ $(MMDC):
 	npm install -g @mermaid-js/mermaid-cli
 
 pull-metadata:
-		curl -o computed-metadata.include https://raw.githubusercontent.com/wbcsd/tr/main/data-exchange-protocol/computed-metadata.include
+	curl -o computed-metadata.include https://raw.githubusercontent.com/wbcsd/tr/main/data-exchange-protocol/computed-metadata.include
 
 .PHONY: publish clean serve pull-metadata
