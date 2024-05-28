@@ -57,7 +57,7 @@ cp -r upload/v2/ ../tr/${YEAR}/data-exchange-protocol-${RELEASE_DATE}
 ## commit the release and push it back to GH
 cd ../tr
 git fetch origin main
-git checkout -B release-${RELEASE_DATE} origin/main
+git checkout -f -B release-${RELEASE_DATE} origin/main
 git add .
 git commit -m "Release data-exchange-protocol ${RELEASE_DATE}"
 git push origin release-${RELEASE_DATE}
