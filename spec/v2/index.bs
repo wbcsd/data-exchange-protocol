@@ -2791,7 +2791,7 @@ The following changes have been applied for version 1.0.1
   },
   "PATHFINDER-FRAMEWORK": {
     "authors": [],
-    "href": "https://www.carbon-transparency.com/media/srhhloun/pathfinder-framework.pdf",
+    "href": "https://wbcsd.github.io/tr/2023/framework-20232601/framework.pdf",
     "title": "Pathfinder Framework: Guidance for the Accounting and Exchange of Product Life Cycle Emissions (Version 2.0)",
     "status": "LS",
     "publisher": "WBCSD"
