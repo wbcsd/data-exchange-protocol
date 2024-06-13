@@ -21,7 +21,7 @@ We propose to extend the Authentication flow for the V2 tech specs. This updated
 
 If successful, a data recipient authenticates through this endpoint instead of the “regular”`Authenticate` endpoint and its static path / URL.
 
-Otherwise, the authentication flow remains the same and a data recipent attempts to retrieve its token through the regular `Authenticate` Action.
+Otherwise, the authentication flow remains the same and a data recipient attempts to retrieve its token through the regular `Authenticate` Action.
 
 This way, a backwards-compatible authentication flow is established.
 
