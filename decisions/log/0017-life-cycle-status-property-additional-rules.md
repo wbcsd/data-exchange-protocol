@@ -12,7 +12,7 @@ Context of this ADR Is the technical specification V1.0.0[^1]. It is lacking det
 
 1. Acceptable changes to an existing ProductFootprint that constitute a new version of the ProductFootprint
 2. Changes that require a new ProductFootprint to be created while the previous is being deprecated.
-3. Communication of the status of an existing ProductFootprint if it is invalid / redacted or superseeded by other ProductFootprint(s)
+3. Communication of the status of an existing ProductFootprint if it is invalid / redacted or superseded by other ProductFootprint(s)
 
 ## Decision
 
