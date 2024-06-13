@@ -2,7 +2,7 @@
 
 Follow the instructions below to trigger a release of the Technical Specifications.
 
-> To trigger a release, you need to have sufficient permissions on the `wbcsd` GitHub organization, as well as on this (`wbcsd/data-exchange-protocol`) repositiory and in the target repository [`wbcsd/tr`](https://github.com/wbcsd/tr).
+> To trigger a release, you need to have sufficient permissions on the `wbcsd` GitHub organization, as well as on this (`wbcsd/data-exchange-protocol`) repository and in the target repository [`wbcsd/tr`](https://github.com/wbcsd/tr).
 
 > You also need to have the GitHub CLI tool locally installed and be logged in to GitHub from your local terminal. See https://cli.github.com/ for further information.
 
