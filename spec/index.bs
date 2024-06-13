@@ -968,7 +968,7 @@ The following section briefly describes some of the additional functionality whi
 
 ### Establishing data exchange flows between Host Systems ### {#api-data-exchange}
 
-Issue: add section on data exchange between host systems, detailling the information needed for establishing host system-to-host system data exchange, URL examples
+Issue: add section on data exchange between host systems, detailing the information needed for establishing host system-to-host system data exchange, URL examples
 
 
 ### A note on data synchronization between Host Systems ### {#api-host-system-sync}
@@ -1001,7 +1001,7 @@ This is implemented by
 2. the host system issuing an access token as specified in [[!rfc6749]] Section 4.4.3 and Section 5.1
 3. the [=data recipient=] calling one or more Actions of the host system
     - using the value of `access_token` of the response of the [=Action Authenticate=] call as the value for a [[!rfc6750]] <dfn>Bearer token</dfn>
-    - presenting the Bearer token for subsequent call(s) to the host system in accordancew ith [[!rfc6750]] Section 2.1
+    - presenting the Bearer token for subsequent call(s) to the host system in accordance with [[!rfc6750]] Section 2.1
 
 [=Access tokens=] SHOULD expire. In this case, data recipients MUST retrieve a new [=access token=] as described in this section.
 
@@ -1256,7 +1256,7 @@ A <dfn>error response</dfn> is a JSON object with the following properties:
 
 A <dfn>error response code</dfn> is a value from column `Error Response Code` from the table below.
 
-A <dfn>error message</dfn> is a human-readible error description. Example values are in column `Example Message` in the table below.
+A <dfn>error message</dfn> is a human-readable error description. Example values are in column `Example Message` in the table below.
 
 <div class=example>
 Example [=AccessDenied=] [=error response=]:
