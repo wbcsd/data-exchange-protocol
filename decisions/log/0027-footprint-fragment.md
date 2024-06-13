@@ -15,7 +15,7 @@ The "Asynchronous request and retrieval of Product Footprints" (section 6.8.4) a
 The 'request' event includes a so called 'ProductFootprintFragment' that is defined as:
 * *"A JSON object which references a subset of ProductFootprint properties, including nested properties."*
 
-The 'ProductFootprintFragment' is intended to enable the data recipient (sending the request) to specify what it is looking for (which data) and share that with the data owner (receiving the request). However, the current definition of the 'ProductFootprintFragment' is very open and that might negatively addect the chances on an successful exchange.
+The 'ProductFootprintFragment' is intended to enable the data recipient (sending the request) to specify what it is looking for (which data) and share that with the data owner (receiving the request). However, the current definition of the 'ProductFootprintFragment' is very open and that might negatively effect the chances of a successful exchange.
 * For example, one could - theoretically - make a request for PFs with ["fossilGhgEmission": "1.9"].
 
 It is questionable whether data owners are able and willing to process such a wide variety of scenarios. Hence, the definition needs to be refined to properly support the use case of requesting and retrieving footprints in an asynchronous manner. In short, the 'ProductFootprintFragment' should be refined in such a way that:
