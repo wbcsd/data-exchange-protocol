@@ -2589,7 +2589,7 @@ Summary of changes:
 2. addition of a new <{CarbonFootprint/ipccCharacterizationFactorsSources}> property
 3. updates to Action [=Action Events=] implementation requirement - changed from OPTIONAL to MANDATORY
 4. addition of an Example for a ProductFootprintFragment indicating a query for a PCF via productId
-5. addition of Examples of a PCF request and repsonse Action Event flow
+5. addition of Examples of a PCF request and response Action Event flow
 
 ## Version 2.1.0 (Dec 07, 2023) ## {#changelog-2.1.0}
 
@@ -2621,7 +2621,7 @@ Summary of changes:
 Summary of changes:
 
 1. clarification to specification of property <{CarbonFootprint/fossilGhgEmissions}>, <{CarbonFootprint/pCfExcludingBiogenic}>, <{CarbonFootprint/pCfIncludingBiogenic}>, and <{CarbonFootprint/biogenicCarbonWithdrawal}>
-2. in addition, further clarfication on the bounds of the property <{CarbonFootprint/biogenicCarbonWithdrawal}> which must be equal to `0` or less than `0`
+2. in addition, further clarification on the bounds of the property <{CarbonFootprint/biogenicCarbonWithdrawal}> which must be equal to `0` or less than `0`
 
 
 ## Version 2.0.1-20230629 (Jun 29, 2023) ## {#changelog-2.0.1-20230629}
