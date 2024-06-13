@@ -23,7 +23,7 @@ It is recommended that if an Organization hasn't implemented a Solution yet base
 
 <strong>Q: Which Version of the PACT Technical Specification Version should an Organization register for its Conformance Testing / Connectathon participation?</strong>
 
-It depends on the aim of the Organization for participating in a Conformance Testing / Connectathon cycle. If the Organzation's aim is to test its Solution for Conformance with a peer, then it should register with the Version of the PACT Technical Specification for which that peer has implemented its Solution. If the aim of the Organization is to provide a voluntary support for Conformance Testing another Organization's Solution, then they can register with the Version of the PACT Technical Specification for which it's testing peer is doing Conformance Testing (provided the Organization has a Solution implemented based on that particular PACT Technical Specification Version).
+It depends on the aim of the Organization for participating in a Conformance Testing / Connectathon cycle. If the Organization's aim is to test its Solution for Conformance with a peer, then it should register with the Version of the PACT Technical Specification for which that peer has implemented its Solution. If the aim of the Organization is to provide a voluntary support for Conformance Testing another Organization's Solution, then they can register with the Version of the PACT Technical Specification for which it's testing peer is doing Conformance Testing (provided the Organization has a Solution implemented based on that particular PACT Technical Specification Version).
 
 ## Version 2.1.0 ## {#faqs-2.1.0}
 <strong>Q: What are the changes / updates included in Version 2.1.0? </strong>
@@ -51,7 +51,7 @@ without impacting Data Recipients.
 
 <strong>Q: Are these updates backwards-compatible? </strong>
 Yes these are backwards-compatible updates to the Authentication flow. The way this backward compatibility is achieved is via the flexibility for a Data Recipient
-to retreive the token through the `AuthSubPath/auth/token` endpoint or via the token_endpoint url returned in the OpenId Provider Configuration Document.
+to retrieve the token through the `AuthSubPath/auth/token` endpoint or via the token_endpoint url returned in the OpenId Provider Configuration Document.
 
 <strong>Q: If an Organization's Solution is PACT Conformant (to V 1.0.x or V 2.0.x), do they need to update it to incorporate the V 2.1.0 changes? </strong>
 
