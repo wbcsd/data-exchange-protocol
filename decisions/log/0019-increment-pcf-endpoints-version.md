@@ -7,7 +7,7 @@ In Progress
 
 ## Context
 
-In order to accomodate the changes to Use Case 001 Tech Spec v1 to v2, there is a need to increment the prefix of the PCF HTTP Endpoints to /2 (from /0)
+In order to accommodate the changes to Use Case 001 Tech Spec v1 to v2, there is a need to increment the prefix of the PCF HTTP Endpoints to /2 (from /0)
 
 
 ## Decision
