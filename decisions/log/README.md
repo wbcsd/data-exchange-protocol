@@ -16,7 +16,7 @@ This folder and underlying principles is adr-inspired.
 * [11. Capitalization of "specVersion" field](0011-specversion-capitalization.md)
 * [12. Request response Patterns](0012-request-response-patterns.md)
 * [13. Use of Bikeshed for technical specifications](0013-use-bikeshed.md)
-* [14. Event-based communication between Host Systmes (Push based)](0014-request-response-patterns.md)
+* [14. Event-based communication between Host Systems (Push based)](0014-request-response-patterns.md)
 * [15. Pagination (Pull) for handling high Data Volume](0015-pagination.md)
 * [16. Additional support for vendor and product codes (nee Company and Product Ids)](0016-product-ids.md)
 * [17. Life Cycle status property and additional Life Cycle rules](0017-life-cycle-status-property-additional-rules.md)
