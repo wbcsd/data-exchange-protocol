@@ -37,10 +37,10 @@ Architecture decisions and changes to the technical specification are submitted 
 
 ## Propagating Accepted ADR changes to Technical Specification
 - Content from Accepted ADRs will be incorporated in the applicable Technical Specification as below -
-    - If the PR for the ADR **did not already include** proposed changes to the Technical Spectification ([see above](#on-providing-feedback-and-participating-in-the-development-of-the technical-specifications) and was merged into `main` branch -  then a new PR needs to be submitted with the respective changes. Otherwise if the PR was not merged into the `main` branch, please Commit the respective changes in the same PR. <br/><br/>
-    > **_NOTE:_** The PR for Technical Specificaiton related changes only, will be reviewed and merged (if accepted) into `main` branch by the PACT Team
+    - If the PR for the ADR **did not already include** proposed changes to the Technical Specification ([see above](#on-providing-feedback-and-participating-in-the-development-of-the technical-specifications) and was merged into `main` branch -  then a new PR needs to be submitted with the respective changes. Otherwise if the PR was not merged into the `main` branch, please Commit the respective changes in the same PR. <br/><br/>
+    > **_NOTE:_** The PR for Technical Specification related changes only, will be reviewed and merged (if accepted) into `main` branch by the PACT Team
 
-    - If the PR for the ADR **already included** the proposed changes to the Technical Spectification, then no additonal PR is needed and the changes will be merged in `main` branch
+    - If the PR for the ADR **already included** the proposed changes to the Technical Specification, then no additional PR is needed and the changes will be merged in `main` branch
 
 
 

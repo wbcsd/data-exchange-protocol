@@ -15,7 +15,7 @@ Furthermore managing the access rights upfront for `ListFootprints` requests are
 The seconds synchronous request is `GetFootprint` which uses PF IDs to select the requested PCF. But _PF IDs_ are a detail which is usually unknown to the data requester (customer). Data requesters usually only know _Material Identifiers_ (e.g. catalog number, part number).
 Product specific requests would in addition enable data providers (suppliers) to prioritize the calculation of PCF when these are not available yet.
 
-The specification[^1] already adresses all this by supporting `PF Request Events and Responses`. But this feature is _optional_ at the moment whereas synchronous communication mechanisms (as `ListFootprints` or `GetFootprint`) are defined as _mandatory_. This complicates or even block integration of existing PCF exchange apps as those apps usually work in an asynchrounous and productId focused way.
+The specification[^1] already addresses all this by supporting `PF Request Events and Responses`. But this feature is _optional_ at the moment whereas synchronous communication mechanisms (as `ListFootprints` or `GetFootprint`) are defined as _mandatory_. This complicates or even block integration of existing PCF exchange apps as those apps usually work in an asynchronous and productId focused way.
 
 Other exchange networks like Catena-X also use this asynchronous/material approach. With the current specification the PACT API requires the user to handle two APIs with different logic.
 
@@ -39,7 +39,7 @@ The following changes to the tech spec Bikeshed file[^1] shall be made:
         ]
      }
     ```
-4. Add an example of an asynchrounous PF request / repsonse flow to the `Examples` section:
+4. Add an example of an asynchronous PF request / response flow to the `Examples` section:
 
    Example PF Request Event
 

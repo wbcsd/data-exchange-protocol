@@ -1,4 +1,4 @@
-# 12. Request-Reponse Pattern Variants for wbcsd PACT
+# 12. Request-Response Pattern Variants for wbcsd PACT
 
 Date: 2022-11-22
 

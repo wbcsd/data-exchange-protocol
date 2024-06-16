@@ -1,4 +1,4 @@
-# 14. Event-based communication between Host Systmes (Push based)
+# 14. Event-based communication between Host Systems (Push based)
 
 Date: 2022-10-31
 
@@ -25,7 +25,7 @@ Accepted
 1. Addition of an HTTP endpoint to exchange different kinds of Events between Host Systems
 2. Specification of an Event and a Request/Response flow to notify downstream Customers on PF updates
     - Operating on top of the Events endpoint (Item #1)
-3. Specification of Events and a Request/Response flow for requesting PF data from Supplier which was not available ealrier
+3. Specification of Events and a Request/Response flow for requesting PF data from Supplier which was not available earlier
     - Operating on top of the Events endpoint (Item #1)
 4. Usage of JSON Event Data model from CloudEvents[^1] to encode aforementioned Events
    1. Usage of `Structured Content Mode` [^3] when exchanging events over HTTP
@@ -195,7 +195,7 @@ The response event in case 0 or more ProductFootprints requested are ready:
 
 If the host system has no ProductFootprints matching the request, it MUST still send a response event `pfs` set to the empty array.
 
-If the host system of the original requestor (the data recipient) is not available or does not accept the response with a HTTP success code (2xx), the host system MUST retry sending the response event to the host system referenced in `source` of the original request event using expoenential backoff. 
+If the host system of the original requestor (the data recipient) is not available or does not accept the response with a HTTP success code (2xx), the host system MUST retry sending the response event to the host system referenced in `source` of the original request event using exponential backoff.
 
 A host system MUST NOT retry sending the response event for more than 3 days.
 

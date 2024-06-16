@@ -45,7 +45,7 @@ This proposal aims at providing a forward-looking change on characterization fac
 
 Backwards-compatibility is preserved by keeping the `characterizationFactors` property (despite its becoming deprecated).
 
-It is forward-looking because future adaptations are unlikely to break backwards-compatibility. If a more fine-grained account of characterization factors use is ever desired, it can be included through optional properties of `CharacterizationFactorsSource`. If ever other sources become relevant (e.g., for specific industries) this too can be acommodated without the need for a breaking change.
+It is forward-looking because future adaptations are unlikely to break backwards-compatibility. If a more fine-grained account of characterization factors use is ever desired, it can be included through optional properties of `CharacterizationFactorsSource`. If ever other sources become relevant (e.g., for specific industries) this too can be accommodated without the need for a breaking change.
 
 ## Consequences
 
