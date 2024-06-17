@@ -19,12 +19,12 @@ In addition, the tables below disclose deprecation of releases and subsequent su
 | Version| Draft Release | Published Release | Deprecation | Sunset |
 | --- | --- | --- | --- | --- |
 | [Version 1](https://www.wbcsd.org/contentwbc/download/13299/194600/1) | N/A | June 2022 | Dec 31, 2023 | Oct 1, 2024 |
-| [Version 2](https://www.carbon-transparency.com/media/jpslsujn/pathfinder-framework.pdf) | N/A | January 26, 2023 | Q3 2024 (when Framework Version 2.1 is released) | June 2025 |
-| Version 2.1 | Mid-May to Mid-June 2024* | Q4 2024** | TBD | TBD |
+| [Version 2](https://www.carbon-transparency.com/media/jpslsujn/pathfinder-framework.pdf) | N/A | January 26, 2023 | Q1 2025 (when Framework Version 3 is released) | June 2025 |
+| Version 3 | November 2024 | Feb 2025 | TBD | TBD |
 
-*_Biogenic chapter revision may be shared at a later date. This is due to GHG Protocol updates related to this topic._
+_Update April 2024: Release pushed from Q3 to Q4 2024 (both framework and tech specs) given learnings in Q1 2024 requiring more time to reach consensus and alignment on all critical topics_  
 
-**_Update April 2024: Release pushed from Q3 to Q4 2024 (both framework and tech specs) given learnings in Q1 2024 requiring more time to reach consensus and alignment on all critical topics_  
+_Update June 2024: Release pushed from Q4 2024 to Q1 2025 (both framework and tech specs) given known delay in biogenic chapter and need to use the extra quarter to finalize alignment between Methodology and Technology. The release in Feb 2025 is a fixed deadline, we do not intend to push it out any longer, given we aim to release before another annual cycle of implementation._  
 
 ## Tech Specs
 
@@ -37,8 +37,8 @@ In addition, the tables below disclose deprecation of releases and subsequent su
 | [v1.0.1](https://wbcsd.github.io/tr/2023/data-exchange-protocol-20230201/) | N/A  | Feb 1, 2023 | Dec 31, 2023 | Oct 1, 2024  |
 | [v2.1.0](https://wbcsd.github.io/tr/2023/data-exchange-protocol-20231207/)  | Nov 9, 2023 | Dec 7, 2023 |  | |
 | [v2.2.0](https://wbcsd.github.io/tr/2024/data-exchange-protocol-20240410/) | Jan 2024 | April 10, 2024 | |
-| v2.3.0 | Q2 2024 | Q3 2024 | |
-| v3.0.0 | Q3 2024<br/> | Q4 2024<br/> (released w/ Framework) | |
+| [v2.3.0](https://wbcsd.github.io/data-exchange-protocol/v2/) | Q3 2024 | October 2024 | |
+| v3.0.0 | Q3 2024 | Feb 2025<br/> (released w/ Framework) | |
 
 ## Definitions
 
