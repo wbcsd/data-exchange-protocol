@@ -403,7 +403,7 @@ A ProductFootprint has the following properties:
 
           Advisement: This property will become OPTIONAL in version 3 of the Technical Specifications.
 
-          A UN Product Classification Code (CPC) that the given product belongs to.
+          The UN Central Product Classification (CPC) that the given product belongs to.
       <tr>
         <td><dfn>productNameCompany</dfn>
         <td>String
