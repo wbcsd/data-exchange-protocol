@@ -1,6 +1,6 @@
 <pre class='metadata'>
 Title: Technical Specifications for PCF Data Exchange
-Text Macro: VERSION 2.2.1-20240513
+Text Macro: VERSION 2.2.1-20240624
 Shortname: data-exchange-protocol
 Level: 1
 Status: LD
@@ -2537,6 +2537,11 @@ path: LICENSE.md
 </pre>
 
 # Appendix B: Changelog # {#changelog}
+
+## Version 2.2.1 (June 24, 2024) ## {#changelog-2.2.1-20240624}
+
+Summary of changes:
+1. add diagram with visual representation of asynchronous event processing workflow
 
 ## Version 2.2.1 (May 13, 2024) ## {#changelog-2.2.1-20240513}
 
