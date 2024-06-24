@@ -13,13 +13,13 @@ The proposal is still in draft stage and will require significant review and rev
 
 ## Proposal
 
-See details in above link
+See details in above link.
 
 ## Technical Specification
 
-To be specified following revision of proposal
+To be specified following revision of proposal.
 
 ## Consequences
 - Most likely, proposal will be released in v3 of PACT Tech Specs, but can be previewed in v2.3 of PACT Tech Specs as proposal will be a recommended (not required) format
 
-See details in above link
+See details in above link.
