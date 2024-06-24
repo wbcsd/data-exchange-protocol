@@ -1,6 +1,6 @@
 <pre class='metadata'>
 Title: Technical Specifications for PCF Data Exchange
-Text Macro: VERSION 2.2.1-20240624
+Text Macro: VERSION 2.3.0-20240625
 Shortname: data-exchange-protocol
 Level: 1
 Status: LD
@@ -400,7 +400,7 @@ A ProductFootprint has the following properties:
         <td><dfn>productDescription</dfn>
         <td>String
         <td>M
-        <td>The free-form description of the product plus other information related to it such as production technology or packaging.
+        <td>The free-form description of the product, including any additional relevant information such as production technology, packaging, process, feedstock and technical parameters (e.g. dimensions). Products which are services (i.e. consulting) should include a short description of the service.
       <tr>
         <td><dfn>productIds</dfn> : [=ProductIdSet=]
         <td>Array
@@ -629,7 +629,36 @@ Advisement:
         <td><dfn>crossSectoralStandardsUsed</dfn> : [=CrossSectoralStandardSet=]
         <td>Array
         <td>M
-        <td>The cross-sectoral standards applied for calculating or allocating [=GHG=] emissions
+        <td>
+
+          Advisement: This property is DEPRECATED and only kept to ensure backwards-compatibility. It will be removed in version 3 of these Technical Specifications. It does not replace the (also mandatory) property <{CarbonFootprint/crossSectoralStandards}>.
+
+          The cross-sectoral standards applied for calculating or allocating [=GHG=] emissions
+      <tr>
+        <td><dfn>crossSectoralStandards</dfn>
+        <td>Array of Strings
+        <td>M
+        <td>The cross-sectoral standards applied for calculating or allocating [=GHG=] emissions.
+
+          It MUST be a non-empty array and MUST contain only the following values without duplicates:
+
+        : ISO14067
+        :: for the ISO 14067 Standard, "Greenhouse gases — Carbon footprint of products — Requirements and guidelines for quantification"
+        : ISO14083
+        :: for the ISO 14083 Standard, "Greenhouse gases — Quantification and reporting of greenhouse gas emissions arising from transport chain operations"
+        : ISO14040-44
+        :: for the ISO 14040-44 Standard, "Environmental management — Life cycle assessment — Principles and framework"
+        : GHGP Product
+        :: for the Greehouse Gas Protocol (GHGP) Product Standard
+        : PEF
+        :: for the EU Product Environmental Footprint Guide
+        : PACT Methodology $VERSION$
+        :: for a given version of the [=Pathfinder Framework=], where $VERSION$ is the version number (1, 2, 3, etc.). It is recommended to use the latest version of the Methodology.
+        : PAS2050
+        :: for the Publicly Available Specification (PAS) 2050, "Specification for the assessment of the life cycle greenhouse gas emissions of goods and services". The use of this standard is permitted but not recommended.
+        
+          Advisement:
+            The enumeration of standards above CAN evolve in future revisions. A host system MUST accept ProductFootprints from later revisions with `crossSectoralStandards` containing values that are not defined in this specification.
       <tr>
         <td><dfn>productOrSectorSpecificRules</dfn> : [=ProductOrSectorSpecificRuleSet=]
         <td>Array
@@ -1118,6 +1147,7 @@ Each <{EmissionFactorDS}> MUST be encoded as a JSON object.
 
 
 ## Data Type: <dfn enum>CrossSectoralStandard</dfn> ## {#dt-crosssectoralstandard}
+Advisement: This data type is DEPRECATED and will be removed in version 3 of these Technical Specifications.
 
 CrossSectoralStandard is the enumeration of accounting standards used for product carbon footprint calculation. Valid values are
 
@@ -1141,6 +1171,8 @@ Each CrossSectoralStandard MUST be encoded as a JSON string.
 
 
 ## Data Type: <dfn>CrossSectoralStandardSet</dfn> ## {#dt-crosssectoralstandardset}
+
+Advisement: This data type is DEPRECATED and will be removed in version 3 of these Technical Specifications.
 
 A set of {{CrossSectoralStandard}} values.
 
@@ -2537,6 +2569,11 @@ path: LICENSE.md
 </pre>
 
 # Appendix B: Changelog # {#changelog}
+
+## Version 2.3.0 (June 25, 2024) ## {#changelog-2.3.0-20240625}
+Summary of changes:
+1. Revision of <{ProductFootprint/productDescription}> to be more descriptive, following decision to keep attribute as mandatory
+2. Indication of deprecation of <{CarbonFootprint/crossSectoralStandardsUsed}> and introduction of <{CarbonFootprint/crossSectoralStandards}>, reflecting consensus reached on ADR32
 
 ## Version 2.2.1 (June 24, 2024) ## {#changelog-2.2.1-20240624}
 
