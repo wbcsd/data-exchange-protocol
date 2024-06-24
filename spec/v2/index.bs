@@ -652,7 +652,7 @@ Advisement:
         :: for the Greehouse Gas Protocol (GHGP) Product Standard
         : PEF
         :: for the EU Product Environmental Footprint Guide
-        : PACT Methodology $VERSION$
+        : PACT Methodology `$VERSION$`
         :: for a given version of the [=Pathfinder Framework=], where $VERSION$ is the version number (1, 2, 3, etc.). It is recommended to use the latest version of the Methodology.
         : PAS2050
         :: for the Publicly Available Specification (PAS) 2050, "Specification for the assessment of the life cycle greenhouse gas emissions of goods and services". The use of this standard is permitted but not recommended.
