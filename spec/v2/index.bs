@@ -2586,6 +2586,7 @@ path: LICENSE.md
 Summary of changes:
 1. Revision of <{ProductFootprint/productDescription}> to be more descriptive, following decision to keep attribute as mandatory
 2. Indication of deprecation of <{CarbonFootprint/crossSectoralStandardsUsed}> and introduction of <{CarbonFootprint/crossSectoralStandards}>, reflecting consensus reached on ADR32
+3. Introduction of `piece` as a declaredUnit, in addition to the attribute <{CarbonFootprint/productMassPerDeclaredUnit}>, per consensus reached on ADR33.
 
 ## Version 2.2.1 (June 24, 2024) ## {#changelog-2.2.1-20240624}
 
