@@ -1300,7 +1300,7 @@ DeclaredUnit is the enumeration of accepted declared units with values
 :: for square meter, the Derived Unit from SI Base Unit `metre`
 
 : <dfn>piece</dfn>
-:: For a piece, a unit of product
+:: for a piece, a unit of product
 
 </dl>
 
