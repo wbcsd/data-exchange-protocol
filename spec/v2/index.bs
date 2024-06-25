@@ -5,8 +5,10 @@ Shortname: data-exchange-protocol
 Level: 1
 Status: LD
 Mailing List: pact@wbcsd.org
-Editor: Martin Pompéry (SINE Foundation), https://sine.foundation, martin@sine.foundation
-Editor: Cecilia Valeri (WBCSD), https://www.wbcsd.org, valeri@wbcsd.org
+Editor: Beth Hadley (WBCSD), https://www.wbcsd.org, hadley@wbcsd.org
+Former Editor: Martin Pompéry (SINE Foundation), https://sine.foundation, martin@sine.foundation
+Former Editor: Cecilia Valeri (WBCSD), https://www.wbcsd.org, valeri@wbcsd.org
+Former Editor: Raimundo Henriques (SINE Foundation), https://sine.foundation, raimundo@sine.foundation
 Abstract: This document specifies a data model for GHG emission data at product level based on the Pathfinder Framework Version 2, and a protocol for interoperable exchange of GHG emission data at product level.
 Markup Shorthands: markdown yes, idl yes, dfn yes
 Boilerplate: omit copyright, omit conformance
