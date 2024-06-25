@@ -26,7 +26,7 @@ jobs:
             echo "::set-output name=status::false"
           fi
 
-      - name: Create releas
+      - name: Create release
         if: ${{ inputs.draft != '' }}
         run: DRAFT=${{steps.set-status.outputs.status}} sh ./spec/release.sh
 
