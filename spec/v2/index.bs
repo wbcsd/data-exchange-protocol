@@ -656,7 +656,7 @@ Advisement:
         :: for a given version of the [=Pathfinder Framework=], where `$VERSION$` is the version number (1.0, 2.0, 3.0, etc.). It is recommended to use the latest version of the Methodology.
         : PAS2050
         :: for the Publicly Available Specification (PAS) 2050, "Specification for the assessment of the life cycle greenhouse gas emissions of goods and services". The use of this standard is permitted but not recommended.
-        
+
           Advisement:
             The enumeration of standards above CAN evolve in future revisions. A host system MUST accept ProductFootprints from later revisions with `crossSectoralStandards` containing values that are not defined in this specification.
       <tr>
