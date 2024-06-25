@@ -4,7 +4,7 @@ Text Macro: VERSION 2.3.0-20240625
 Shortname: data-exchange-protocol
 Level: 1
 Status: LD
-Mailing List: public-dev@pathfinder.sine.dev
+Mailing List: pact@wbcsd.org
 Editor: Martin Pompéry (SINE Foundation), https://sine.foundation, martin@sine.foundation
 Editor: Cecilia Valeri (WBCSD), https://www.wbcsd.org, valeri@wbcsd.org
 Abstract: This document specifies a data model for GHG emission data at product level based on the Pathfinder Framework Version 2, and a protocol for interoperable exchange of GHG emission data at product level.
@@ -29,7 +29,7 @@ The methodological foundation of the specification is the Pathfinder Framework V
 
 ## Status of This Document ## {#status}
 
-Comments regarding this document are welcome. Please file issues directly on [GitHub](https://github.com/wbcsd/data-exchange-protocol/), or send them to [public-dev@pathfinder.sine.dev](mailto:public-dev@pathfinder.sine.dev).
+Comments regarding this document are welcome. Please file issues directly on [GitHub](https://github.com/wbcsd/data-exchange-protocol/), or send them to [pact@wbcsd.org](mailto:pact@wbcsd.org).
 
 This document was published by [Partnership for Carbon Transparency (PACT)](https://www.carbon-transparency.com/) after an update to the [[!PATHFINDER-FRAMEWORK|Pathfinder Framework]]) was made.
 
@@ -656,7 +656,7 @@ Advisement:
         :: for a given version of the [=Pathfinder Framework=], where `$VERSION$` is the version number (1.0, 2.0, 3.0, etc.). It is recommended to use the latest version of the Methodology.
         : PAS2050
         :: for the Publicly Available Specification (PAS) 2050, "Specification for the assessment of the life cycle greenhouse gas emissions of goods and services". The use of this standard is permitted but not recommended.
-        
+
           Advisement:
             The enumeration of standards above CAN evolve in future revisions. A host system MUST accept ProductFootprints from later revisions with `crossSectoralStandards` containing values that are not defined in this specification.
       <tr>
