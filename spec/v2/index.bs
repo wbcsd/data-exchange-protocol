@@ -2572,30 +2572,31 @@ path: LICENSE.md
 
 # Appendix B: Changelog # {#changelog}
 
-## Version 2.3.0 (June 25, 2024) ## {#changelog-2.3.0-20240625}
+## Version 2.3.0-20240625 (June 25, 2024) ## {#changelog-2.3.0-20240625}
 Summary of changes:
 1. Revision of <{ProductFootprint/productDescription}> to be more descriptive, following decision to keep attribute as mandatory
 2. Indication of deprecation of <{CarbonFootprint/crossSectoralStandardsUsed}> and introduction of <{CarbonFootprint/crossSectoralStandards}>, reflecting consensus reached on ADR32
+3. Update contact email, Editor, and Former Editors
 
-## Version 2.2.1 (June 24, 2024) ## {#changelog-2.2.1-20240624}
+## Version 2.2.1-20240624 (June 24, 2024) ## {#changelog-2.2.1-20240624}
 
 Summary of changes:
 1. add diagram with visual representation of asynchronous event processing workflow
 
-## Version 2.2.1 (May 13, 2024) ## {#changelog-2.2.1-20240513}
+## Version 2.2.1-20240513 (May 13, 2024) ## {#changelog-2.2.1-20240513}
 
 Summary of changes:
 1. fixed [[#api-action-list-example]], [[#api-action-events-example]],
     [[#api-action-get-example]], and [[#business-cases-async-events-1-workflow]] by removing spurious
     `geographicScope` object
 
-## Version 2.2.1 (May 7, 2024) ## {#changelog-2.2.1-20240507}
+## Version 2.2.1-20240507 (May 7, 2024) ## {#changelog-2.2.1-20240507}
 
 Summary of changes:
 1. fixed <{CarbonFootprint/dqi}> value types in all examples
 2. clarification of <{DataQualityIndicators}> by removing misleading link to [=decimal=]
 
-## Version 2.2.1 (Apr 30, 2024) ## {#changelog-2.2.1-20240430}
+## Version 2.2.1-20240430 (Apr 30, 2024) ## {#changelog-2.2.1-20240430}
 
 Summary of changes:
 
