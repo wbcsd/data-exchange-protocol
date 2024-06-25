@@ -534,14 +534,20 @@ Advisement:
         <td>M
         <td>The amount of <{CarbonFootprint/declaredUnit|Declared Units}> contained within the product to which the [[#dt-carbonfootprint|PCF]] is referring to. The value MUST be strictly greater than `0`.
       <tr>
+
+
         <td><dfn>productMassPerDeclaredUnit</dfn> : [=Decimal=]
-        <td>string
-        <td>M
-        <td>The mass (in kg) of the product per the provided <{CarbonFootprint/declaredUnit|declared unit}>, excluding packaging.
+        <td>String
+        <td>O
+        <td>
+
+          Advisement: This property is optional in v2.3 but will be released in v3 as a mandatory attribute.
+
+The mass (in kg) of the product per the provided <{CarbonFootprint/declaredUnit|declared unit}>, excluding packaging.
           For example, if the declared unit is `piece`, this attribute MUST be populated with the mass of one piece (aka unit) of product.
-          If the declared unit is `liter`, this attribute MUST be populated with the mass of 1 liter of product (i.e. the density of the product).
-          If the declared unit is `kilogram`, this attribute MUST by definition be populated with `1`.
-          If the product mass is not relevant (i.e. PCF is for an energy (kWh, MJ), logistics (ton.km) or service product), this attribute MUST be populated with `0`.
+          If the declared unit is `liter`, this attribute SHOULD be populated with the mass of 1 liter of product (i.e. the density of the product).
+          If the declared unit is `kilogram`, this attribute SHOULD by definition be populated with `1`.
+          If the product mass is not relevant (i.e. PCF is for an energy (kWh, MJ), logistics (ton.km) or service product), this attribute SHOULD be populated with `0`.
       <tr>
         <td><dfn>pCfExcludingBiogenic</dfn> : [=Decimal=]
         <td>String
@@ -1299,8 +1305,7 @@ DeclaredUnit is the enumeration of accepted declared units with values
 : <dfn>square meter</dfn>
 :: for square meter, the Derived Unit from SI Base Unit `metre`
 
-: <dfn>piece</dfn>
-:: for a piece, a unit of product
+Advisement: v3 will also include the following `DeclaredUnit`: <dfn>piece</dfn>, for a piece, a unit of product
 
 </dl>
 
@@ -2586,7 +2591,7 @@ path: LICENSE.md
 Summary of changes:
 1. Revision of <{ProductFootprint/productDescription}> to be more descriptive, following decision to keep attribute as mandatory
 2. Indication of deprecation of <{CarbonFootprint/crossSectoralStandardsUsed}> and introduction of <{CarbonFootprint/crossSectoralStandards}>, reflecting consensus reached on ADR32
-3. Introduction of `piece` as a declaredUnit, in addition to the attribute <{CarbonFootprint/productMassPerDeclaredUnit}>, per consensus reached on ADR33.
+3. Addition of advisement that `piece` will be added as a `DeclaredUnit` in v3; addition of attribute <{CarbonFootprint/productMassPerDeclaredUnit}>, per consensus reached on ADR33.
 
 ## Version 2.2.1 (June 24, 2024) ## {#changelog-2.2.1-20240624}
 
