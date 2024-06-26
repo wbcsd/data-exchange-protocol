@@ -364,8 +364,20 @@ A ProductFootprint has the following properties:
         <td>String
         <td>O
         <td>
-          If defined, the value should be a message explaining the reason for the current status.
+          If defined, a descriptive reasoning explaining the current status of the PCF, what was changed since the last version, etc. If the PCF was changed since a previous version, indicate all methodological and/or production process change(s) that occurred to result in the PCF change. For example, include the relevant change(s) from the list below:
 
+          Methodological:
+          - Access to new Emission Factor data (database, supplier-specific, company-specific)
+          - Updated upstream data (i.e. upstream supplier updated their PCF based on methodology change)
+
+          Production Process:
+          - Change in process
+          - Change in feedstock
+          - Change from conventional to certified sustainable material
+          - Change in energy source
+          - Change in upstream supplier
+          - Updated upstream data (i.e. upstream supplier updated their PCF based on process change)
+        
           See [[#lifecycle]] for details.
       <tr>
         <td><dfn>validityPeriodStart</dfn> : [=DateTime=]
@@ -535,6 +547,21 @@ Advisement:
         <td>String
         <td>M
         <td>The amount of <{CarbonFootprint/declaredUnit|Declared Units}> contained within the product to which the [[#dt-carbonfootprint|PCF]] is referring to. The value MUST be strictly greater than `0`.
+      <tr>
+
+
+        <td><dfn>productMassPerDeclaredUnit</dfn> : [=Decimal=]
+        <td>String
+        <td>O
+        <td>
+
+          Advisement: This property is optional in v2.3 but will be released in v3 as a mandatory attribute.
+
+The mass (in kg) of the product per the provided <{CarbonFootprint/declaredUnit|declared unit}>, excluding packaging.
+          For example, if the declared unit is `piece`, this attribute MUST be populated with the mass of one piece (aka unit) of product.
+          If the declared unit is `liter`, this attribute SHOULD be populated with the mass of 1 liter of product (i.e. the density of the product).
+          If the declared unit is `kilogram`, this attribute SHOULD by definition be populated with `1`.
+          If the product mass is not relevant (i.e. PCF is for an energy (kWh, MJ), logistics (ton.km) or service product), this attribute SHOULD be populated with `0`.
       <tr>
         <td><dfn>pCfExcludingBiogenic</dfn> : [=Decimal=]
         <td>String
@@ -1291,6 +1318,8 @@ DeclaredUnit is the enumeration of accepted declared units with values
 
 : <dfn>square meter</dfn>
 :: for square meter, the Derived Unit from SI Base Unit `metre`
+
+Advisement: v3 will also include the following `DeclaredUnit`: <dfn>piece</dfn>, for a piece, a unit of product
 
 </dl>
 
@@ -2576,7 +2605,10 @@ path: LICENSE.md
 Summary of changes:
 1. Revision of <{ProductFootprint/productDescription}> to be more descriptive, following decision to keep attribute as mandatory
 2. Indication of deprecation of <{CarbonFootprint/crossSectoralStandardsUsed}> and introduction of <{CarbonFootprint/crossSectoralStandards}>, reflecting consensus reached on ADR32
-3. Update contact email, Editor, and Former Editors
+3. Addition of advisement that `piece` will be added as a `DeclaredUnit` in v3; addition of attribute <{CarbonFootprint/productMassPerDeclaredUnit}>, per consensus reached on ADR33.
+4. Clarification added to <{ProductFootprint/statusComment}> attribute, per consensus reached in Methodology WG, to include descriptive reasoning behind a given change in status.
+5. Update contact email, Editor, and Former Editors
+
 
 ## Version 2.2.1-20240624 (June 24, 2024) ## {#changelog-2.2.1-20240624}
 
