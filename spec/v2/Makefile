@@ -1,6 +1,7 @@
 DIAGRAMS := $(patsubst %.mmd,%.svg,$(wildcard diagrams/*.mmd))
 OUTDIR := ../../upload/v2
 MMDC := mmdc
+STATUS ?= ""
 
 all: index.html
 
@@ -14,7 +15,7 @@ publish: index.html computed-metadata.include
 	cp $^ $(OUTDIR)
 
 index.html: index.bs $(DIAGRAMS)
-	bikeshed spec $< $@
+	bikeshed spec $< $@ --md-text-macro="$(STATUS)"
 
 %.svg: %.mmd $(MMDC)
 	$(MMDC) -i $< -o $@
