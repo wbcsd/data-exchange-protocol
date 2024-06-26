@@ -4,9 +4,11 @@ Text Macro: VERSION 2.3.0-20240625
 Shortname: data-exchange-protocol
 Level: 1
 Status: LD
-Mailing List: public-dev@pathfinder.sine.dev
-Editor: Martin Pompéry (SINE Foundation), https://sine.foundation, martin@sine.foundation
-Editor: Cecilia Valeri (WBCSD), https://www.wbcsd.org, valeri@wbcsd.org
+Mailing List: pact@wbcsd.org
+Editor: Beth Hadley (WBCSD), https://www.wbcsd.org, hadley@wbcsd.org
+Former Editor: Martin Pompéry (SINE Foundation), https://sine.foundation, martin@sine.foundation
+Former Editor: Cecilia Valeri (WBCSD), https://www.wbcsd.org, valeri@wbcsd.org
+Former Editor: Raimundo Henriques (SINE Foundation), https://sine.foundation, raimundo@sine.foundation
 Abstract: This document specifies a data model for GHG emission data at product level based on the Pathfinder Framework Version 2, and a protocol for interoperable exchange of GHG emission data at product level.
 Markup Shorthands: markdown yes, idl yes, dfn yes
 Boilerplate: omit copyright, omit conformance
@@ -29,7 +31,7 @@ The methodological foundation of the specification is the Pathfinder Framework V
 
 ## Status of This Document ## {#status}
 
-Comments regarding this document are welcome. Please file issues directly on [GitHub](https://github.com/wbcsd/data-exchange-protocol/), or send them to [public-dev@pathfinder.sine.dev](mailto:public-dev@pathfinder.sine.dev).
+Comments regarding this document are welcome. Please file issues directly on [GitHub](https://github.com/wbcsd/data-exchange-protocol/), or send them to [pact@wbcsd.org](mailto:pact@wbcsd.org).
 
 This document was published by [Partnership for Carbon Transparency (PACT)](https://www.carbon-transparency.com/) after an update to the [[!PATHFINDER-FRAMEWORK|Pathfinder Framework]]) was made.
 
@@ -2599,32 +2601,34 @@ path: LICENSE.md
 
 # Appendix B: Changelog # {#changelog}
 
-## Version 2.3.0 (June 25, 2024) ## {#changelog-2.3.0-20240625}
+## Version 2.3.0-20240625 (June 25, 2024) ## {#changelog-2.3.0-20240625}
 Summary of changes:
 1. Revision of <{ProductFootprint/productDescription}> to be more descriptive, following decision to keep attribute as mandatory
 2. Indication of deprecation of <{CarbonFootprint/crossSectoralStandardsUsed}> and introduction of <{CarbonFootprint/crossSectoralStandards}>, reflecting consensus reached on ADR32
 3. Addition of advisement that `piece` will be added as a `DeclaredUnit` in v3; addition of attribute <{CarbonFootprint/productMassPerDeclaredUnit}>, per consensus reached on ADR33.
 4. Clarification added to <{ProductFootprint/statusComment}> attribute, per consensus reached in Methodology WG, to include descriptive reasoning behind a given change in status.
+5. Update contact email, Editor, and Former Editors
 
-## Version 2.2.1 (June 24, 2024) ## {#changelog-2.2.1-20240624}
+
+## Version 2.2.1-20240624 (June 24, 2024) ## {#changelog-2.2.1-20240624}
 
 Summary of changes:
 1. add diagram with visual representation of asynchronous event processing workflow
 
-## Version 2.2.1 (May 13, 2024) ## {#changelog-2.2.1-20240513}
+## Version 2.2.1-20240513 (May 13, 2024) ## {#changelog-2.2.1-20240513}
 
 Summary of changes:
 1. fixed [[#api-action-list-example]], [[#api-action-events-example]],
     [[#api-action-get-example]], and [[#business-cases-async-events-1-workflow]] by removing spurious
     `geographicScope` object
 
-## Version 2.2.1 (May 7, 2024) ## {#changelog-2.2.1-20240507}
+## Version 2.2.1-20240507 (May 7, 2024) ## {#changelog-2.2.1-20240507}
 
 Summary of changes:
 1. fixed <{CarbonFootprint/dqi}> value types in all examples
 2. clarification of <{DataQualityIndicators}> by removing misleading link to [=decimal=]
 
-## Version 2.2.1 (Apr 30, 2024) ## {#changelog-2.2.1-20240430}
+## Version 2.2.1-20240430 (Apr 30, 2024) ## {#changelog-2.2.1-20240430}
 
 Summary of changes:
 
