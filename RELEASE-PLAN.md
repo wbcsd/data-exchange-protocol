@@ -19,7 +19,7 @@ In addition, the tables below disclose deprecation of releases and subsequent su
 | Version| Draft Release | Published Release | Deprecation | Sunset |
 | --- | --- | --- | --- | --- |
 | [Version 1](https://www.wbcsd.org/contentwbc/download/13299/194600/1) | N/A | June 2022 | Dec 31, 2023 | Oct 1, 2024 |
-| [Version 2](https://www.carbon-transparency.com/media/jpslsujn/pathfinder-framework.pdf) | N/A | January 26, 2023 | Q1 2025 (when Framework Version 3 is released) | June 2025 |
+| [Version 2](https://wbcsd.github.io/tr/2023/framework-20232601/framework.pdf) | N/A | January 26, 2023 | Q1 2025 (when Framework Version 3 is released) | June 2025 |
 | Version 3 | November 2024 | Feb 2025 | TBD | TBD |
 
 _Update April 2024: Release pushed from Q3 to Q4 2024 (both framework and tech specs) given learnings in Q1 2024 requiring more time to reach consensus and alignment on all critical topics_  
@@ -33,7 +33,7 @@ _Update June 2024: Release pushed from Q4 2024 to Q1 2025 (both framework and te
 
 | Version| Draft Release | Published Release | Deprecation | Sunset |
 | --- | --- | --- | --- | --- |
-| [v1.0.0](https://www.carbon-transparency.com/media/1qcdbdyn/pathfinder-network_technical-specifications-for-use-case-001.pdf) | N/A | Jun 16, 2022 | Dec 31, 2023 | Oct 1, 2024 |
+| [v1.0.0](https://wbcsd.sharepoint.com/:b:/s/ClimateEnergy/ESqCiyrW5jpEmOTfwvLFjTYB9E8pY-vTnBuzIgEI6_K2EQ?e=rUeOBi) | N/A | Jun 16, 2022 | Dec 31, 2023 | Oct 1, 2024 |
 | [v1.0.1](https://wbcsd.github.io/tr/2023/data-exchange-protocol-20230201/) | N/A  | Feb 1, 2023 | Dec 31, 2023 | Oct 1, 2024  |
 | [v2.1.0](https://wbcsd.github.io/tr/2023/data-exchange-protocol-20231207/)  | Nov 9, 2023 | Dec 7, 2023 |  | |
 | [v2.2.0](https://wbcsd.github.io/tr/2024/data-exchange-protocol-20240410/) | Jan 2024 | April 10, 2024 | |
