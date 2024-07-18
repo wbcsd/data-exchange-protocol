@@ -1,6 +1,6 @@
 # About this repository
 
-This repository contains technical specifications for the Pathfinder Network:
+This repository contains technical specifications for the PACT Network:
 
 1. [Technical Specifications for PCF Data Exchange (Version 1.0.1)](spec/index.bs)
 2. [Technical Specifications for PCF Data Exchange (Version 2.1.0)](spec/v2/index.bs)
