@@ -30,6 +30,7 @@ When SAP first raised this question to PACT (October 2023) we learned from the e
 
 <img width="1016" alt="Screenshot 2024-08-06 at 12 17 08" src="https://github.com/user-attachments/assets/5d99865b-c290-4b98-8ed4-60dc81997285">
 
+PACT Decision Log Entry for this feedback: https://flat-dollar-c04.notion.site/Clarification-to-definition-of-tech-spec-attribute-created-updated-65455b3d9cb24329b2655d0ed3f8c7f7?pvs=74
 ## Proposal
 
 Given the above context, we have now clarified that the intention of the `created`  and `updated` attributes are strictly technical; to enable systems to maintain records internally, and to give indication to receiving systems regarding the data records. The attributes are not intended to have any functional interpretation, and further are standard attributes in any data model for data exchange. With this context, we are now able to provide unambiguous definitions of the attributes.
