@@ -42,13 +42,13 @@ Therefore, we propose to clarify the ambiguity by updating the attribute descrip
   <td><dfn>created</dfn> : [=DateTime=]
   <td>String
   <td>M
-  <td>A ProductFootprint MUST include the property created with value the timestamp of the creation of the ProductFootprint record in the system. No corresponding functional meaning is necessarily attributed to the record creation in the system. The timestamp MUST be in UTC.
+  <td>A ProductFootprint MUST include the property created with value the timestamp of the creation of the ProductFootprint record in the system, potentially independently from the PCF calculation, creation, issue, or sharing. This attribute is a technical system attribute, for maintaining records systematically within and between systems. The timestamp MUST be in UTC.
 
 <tr>
   <td><dfn>updated</dfn> : [=DateTime=]
   <td>String
   <td>O
-  <td>A ProductFootprint SHOULD include the property updated with value the timestamp of the update of the ProductFootprint record in the system. A ProductFootprint MUST NOT include this property if an update of the record has never been performed. No corresponding functional meaning is necessarily attributed to the record update in the system. The timestamp MUST be in UTC.
+  <td>A ProductFootprint SHOULD include the property updated with value the timestamp of the update of the ProductFootprint record in the system, potentially independently from when the PCF itself was updated. This attribute is a technical system attribute, for maintaining records systematically within and between systems. A ProductFootprint MUST NOT include this property if an update of the record has never been performed. The timestamp MUST be in UTC.
 <tr>
 ```
 
