@@ -191,7 +191,7 @@ below). See [[#api-auth]] for details.
 </figure>
 
 1. The data recipient sends a `ProductFootprintFragment`  to the `Events Endpoint` of the data owner. The data recipient should always include 1 or more product ids in property `productIds`. The data recipient should limit each fragment to exactly 1 specific product (e.g. a specific type of apple instead of all apples that somebody is offering)
-    1. If the recipient is requesting a specific reporting period, it should include the reporting
+    1. If the recipient is requesting a specific reference period, it should include the reporting
         period accordingly
         <div class="example">
           ```json
@@ -524,8 +524,8 @@ An overview of the relationship between the geographic scope and the definedness
 The properties of a CarbonFootprint are listed in the table below.
 
 Advisement:
-  The properties marked with `O*` are OPTIONAL only for reporting periods
-  before 2025, and for reporting periods including the beginning of calendar
+  The properties marked with `O*` are OPTIONAL only for reference periods
+  before 2025, and for reference periods including the beginning of calendar
   year 2025 or later, the properties marked with `O*` MUST be defined.
 
 <figure id="pf-carbonfootprint-properties-table" dfn-type="element-attr" dfn-for="CarbonFootprint">
@@ -819,9 +819,9 @@ The mass (in kg) of the product per the provided <{CarbonFootprint/declaredUnit|
         <td>
           The share of primary data in percent. See the [=Pathfinder Framework=] Sections 4.2.1 and 4.2.2, Appendix B.
 
-          For reporting periods ending before the beginning of year 2025, at least property <{CarbonFootprint/primaryDataShare}> or propery <{CarbonFootprint/dqi}> MUST be defined.
+          For reference periods ending before the beginning of year 2025, at least property <{CarbonFootprint/primaryDataShare}> or propery <{CarbonFootprint/dqi}> MUST be defined.
 
-          For reporting periods including the beginning of year 2025 or after, this property MUST be defined.
+          For reference periods including the beginning of year 2025 or after, this property MUST be defined.
       <tr>
         <td><dfn>dqi</dfn> : <{DataQualityIndicators}>
         <td>Object
@@ -829,9 +829,9 @@ The mass (in kg) of the product per the provided <{CarbonFootprint/declaredUnit|
         <td>
           If present, the Data Quality Indicators (dqi) in accordance with the [=Pathfinder Framework=] Sections 4.2.1 and 4.2.3, Appendix B.
 
-          For reporting periods ending before the beginning of year 2025, at least property <{CarbonFootprint/primaryDataShare}> or propery <{CarbonFootprint/dqi}> MUST be defined.
+          For reference periods ending before the beginning of year 2025, at least property <{CarbonFootprint/primaryDataShare}> or propery <{CarbonFootprint/dqi}> MUST be defined.
 
-          For reporting periods including the beginning of year 2025 or after, this property MUST be defined.
+          For reference periods including the beginning of year 2025 or after, this property MUST be defined.
       <tr>
         <td><dfn>assurance</dfn> : <{Assurance}>
         <td>Object
@@ -847,7 +847,7 @@ The mass (in kg) of the product per the provided <{CarbonFootprint/declaredUnit|
 
 Data type `DataQualityIndicators` contains the quantitative data quality indicators in conformance with [=Pathfinder Framework=] Section 4.2.3 and Appendix B.
 
-Each property is optional until the reporting period includes the beginning of calendar year 2025, or later, when all properties MUST be defined.
+Each property is optional until the reference period includes the beginning of calendar year 2025, or later, when all properties MUST be defined.
 
 The following properties are defined for data type <{DataQualityIndicators}>:
 
@@ -2004,7 +2004,7 @@ with request parameters:
     </div>
 
     <div class=example id="example-filter-period">
-        Get footprints for 2023 reporting period:
+        Get footprints for 2023 reference period:
 
         ```$filter=(pcf/referencePeriodStart ge '2023-01-01T00:00:00.000Z') and (pcf/referencePeriodEnd lt '2024-01-01T00:00:00.000Z') ```
     </div>
@@ -2255,7 +2255,7 @@ is requested, such as to select PCFs with specific scope(s) ([[#dt-carbonfootpri
 
 Note: this specification does not yet specify the processing requirements of a host system upon
 receiving such an event. This means the host system can e.g. ignore 1 or more properties, it might
-not accept specific patterns of requests (for instance it might support querying by reporting period
+not accept specific patterns of requests (for instance it might support querying by reference period
 but not by geography), etc.
 
 The [=PF Request Event=] is defined as a JSON-encoded CloudEvent event with the following syntax:
