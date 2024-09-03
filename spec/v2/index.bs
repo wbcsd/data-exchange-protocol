@@ -191,8 +191,7 @@ below). See [[#api-auth]] for details.
 </figure>
 
 1. The data recipient sends a `ProductFootprintFragment`  to the `Events Endpoint` of the data owner. The data recipient should always include 1 or more product ids in property `productIds`. The data recipient should limit each fragment to exactly 1 specific product (e.g. a specific type of apple instead of all apples that somebody is offering)
-    1. If the recipient is requesting a specific reference period, it should include the reporting
-        period accordingly
+    1. If the recipient is requesting a specific reference period, it should include the reference period accordingly
         <div class="example">
           ```json
           {
@@ -728,9 +727,10 @@ The mass (in kg) of the product per the provided <{CarbonFootprint/declaredUnit|
         <td>The start (including) of the time boundary for which the PCF value
               is considered to be representative. Specifically, this start date
               represents the earliest date from which activity data was collected
-              to include in the PCF calculation.
+              to include in the PCF calculation. 
 
-              See the [=Pathfinder Framework=] section 6.1.2.1 for further details.
+              See the [=Pathfinder Framework=] section 6.1.2.1 for further details. 
+              Can also be referred to as 'reporting period'.
       <tr>
         <td><dfn>referencePeriodEnd</dfn> : [=DateTime=]
         <td>String
@@ -738,9 +738,10 @@ The mass (in kg) of the product per the provided <{CarbonFootprint/declaredUnit|
         <td>The end (excluding) of the time boundary for which the PCF value is
               considered to be representative. Specifically, this end date
               represents the latest date from which activity data was collected
-              to include in the PCF calculation.
+              to include in the PCF calculation. Can al
 
-              See the [=Pathfinder Framework=] section 6.1.2.1 for further details.
+              See the [=Pathfinder Framework=] section 6.1.2.1 for further details. 
+              Can also be referred to as 'reporting period'. 
       <tr>
         <td><dfn>geographyCountrySubdivision</dfn>
         <td>String
