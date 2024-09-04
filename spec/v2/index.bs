@@ -5,7 +5,8 @@ Shortname: data-exchange-protocol
 Level: 1
 Status: LD
 Mailing List: pact@wbcsd.org
-Editor: Beth Hadley (WBCSD), https://www.wbcsd.org, hadley@wbcsd.org
+Editor: Gertjan Schuurmans (WBCSD), https://www.wbcsd.org, schuurmans@wbcsd.org
+Former Editor: Beth Hadley (WBCSD), https://www.wbcsd.org, hadley@wbcsd.org
 Former Editor: Martin Pompéry (SINE Foundation), https://sine.foundation, martin@sine.foundation
 Former Editor: Cecilia Valeri (WBCSD), https://www.wbcsd.org, valeri@wbcsd.org
 Former Editor: Raimundo Henriques (SINE Foundation), https://sine.foundation, raimundo@sine.foundation
@@ -2601,6 +2602,11 @@ path: LICENSE.md
 </pre>
 
 # Appendix B: Changelog # {#changelog}
+
+## Version 2.3.0-20240904 (September 4, 2024) ## {#changelog-2.3.0-20240904}
+Summary of changes:
+1. Replaced the term 'reporting period' with 'reference period' for consistency with the attributes <{CarbonFootprint/referencePeriodStart}> and <{CarbonFootprint/referencePeriodEnd}>.
+
 
 ## Version 2.3.0-20240625 (June 25, 2024) ## {#changelog-2.3.0-20240625}
 Summary of changes:
