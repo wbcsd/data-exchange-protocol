@@ -1,6 +1,6 @@
-# 34. Proposal to introduce a common URN structure for productIDs 
+# 34. Proposal for a common URN structure and awllowance for URI's for identifying products
 
-Date: 2024-24-06
+Date: 2024-09-10
 
 ## Status
 
@@ -8,18 +8,217 @@ Proposed
 
 ## Context
 
-See https://wbcsd.sharepoint.com/:w:/s/ClimateEnergy/ETiuwNrpFZpLvq6QLVA-lhIBlX5uYj-7UtsVgPAY1xBKjw
 The proposal is still in draft stage and will require significant review and revision from community to finalize, therefore we propose to keep teh proposal in word doc format for now to enable easier editing. Once finalized, we will update this ADR accordingly.
+
+## Context
+
+
+This proposal is based on the working draft https://wbcsd.sharepoint.com/:w:/s/ClimateEnergy/ETiuwNrpFZpLvq6QLVA-lhIBlX5uYj-7UtsVgPAY1xBKjw which has been used to
+review and collect feedback from the community over the course of june till september 2024.
+
+The Product Carbon Footprint (PCF) is calculated for specific products or materials. To exchange PCF data between organizations, it is necessary to identify the related product or material. Given suppliers and customers do not always (or often) use the same identification schemes, commonly and uniquely identifying the same product is a painful challenge - especially at scale. Given this situation, organizations commonly must perform laborious and manual “mapping” exercises to map their identifier(s) for a product to the identify their supplier can understand.  
+ 
+This proposal introduces to the PACT Technical Specification a recommended common structure for product identifiers, further specifying how the product ID URN (Uniform Resource Name) should be specified in cases where no formal namespace for a given product identifier is defined. This proposal does not eliminate the mapping process but aims to reduce the pain of mapping identifiers with a common, easily understood structure. Further, this proposal ensures interoperability with industry-specific product identifiers, and was originally proposed by Together for Sustainability. Special thanks to Bjoern Ebeling (TfS, Merck) who contributed substantially to authoring the original proposal. 
+
+TODO: Add allowing URI context.
+
+Specific problems this proposal addresses: 
+ * Interoperability: Using a common structure for product identifier URNs will support interoperability between organizations, as well as between industry networks (Catena-X, TfS, GxD, etc.) A recommended common structure helps to reduce this confusion while still providing industry-specific flexibility. 
+* Increase clarity and examples: Given the PACT Tech Specs provide significant flexibility regarding which company and product identifiers may be specified, additional examples are added which bring clarity regarding how to specify these identifiers 
+* Formal IANA Registration: By registering a common product footprint namespace with IANA, this proposal future-proofs the common structure able to be communicated across the web 
+ 
+Scope 
+ * The scope of this proposal is limited to product identifiers, although we hypothesize introducing a common structure will be useful to additional identifiers, especially company identifiers. Learnings from this proposal will inform future proposals. 
+ 
 
 ## Proposal
 
-See details in above link
+The proposal consists of four recommendations:
+ 1. *A common URN Structure*: Introduction of a recommended common structure for the productID URI, when no relevant IANA namespace (and corresponding specification) is relevant.
+ 1. *Examples*: Introduces a set of examples for productID and companyID which help the community understand how to specify URNs across a number of examples and networks (TfS, Catena-X, etc.) 
+ 1. *Allow the use of URI's*: for identifying products. This includes the use of URN's (as a URN is a URI), but also allows for upcoming standards like Digital Link.
+ 1. *IANA Registration*: Recommends the registration of a PACT namespace with IANA
+ 1. *Introduction of productClassifications* Array to replace productCategoryCpc
 
 ## Technical Specification
 
-To be specified following revision of proposal
+## Part 1: Common URN Structure 
+This proposal introduction of a recommended common structure for the productID URN, when no relevant IANA namespace (and corresponding specification) is relevant. 
+We recognize there are a number of existing product identifiers which already have an existing relevant IANA namespace and corresponding URN format specification. When such a product identifier is used for PCF exchange, this corresponding specification should be used.  
+
+We illustrate below with several examples the two “types” of product identifiers; this proposal only applies to product identifiers which do not already have a relevant IANA scheme and therefore have no recommended URN structure. 
+
+### 1. Existing relevant IANA scheme for product identifier
+We list below relevant examples of product identifiers which fall within this category. 
+
+|Product Identifier|Scheme|Namespace Identifier|Example|Relevant specification|
+|:----|:----|:----|:----|:----|
+|ISBN|urn|ISBN|URN:ISBN:978-951-0-18435-6|https://www.iana.org/assignments/urn-formal/isbn|
+
+
+Note: 
+GTIN is not an official IANA registered namespace, however in practice it is used to specify GTINs as a URN. This was confirmed by experts at GS1.
+
+|Product Identifier|Scheme|Namespace Identifier|Example|Relevant specification|
+|:----|:----|:----|:----|:----|
+|GTIN|urn|gtin|urn:gtin:4712345060507| https://www.gs1.org/standards/id-keys/gtin|
+
+
+### 2. Product identifiers without an existing relevant IANA namespace
+The below identifiers may be unique product identifiers or product classification / category identifiers, all of which help identify the product.
+
+|Product Identifier|Description|Organization|Industry|
+|:----|:----|:----|:----|
+|Company-specific  (custom) identifiers|Identifiers which a given company creates for the purposes of uniquely identifying their products|Company-Specific|Industry-Agnostic|
+|CAS Registry Number|Unique identification number assigned to every chemical substance described in the open scientific literature|Chemical Abstracts Service (CAS)|Chemical|
+| |https://www.cas.org/cas-data/cas-registry | | |
+|InChI (International Chemical Identifier)|InChI is a structure-based chemical identifier, developed by IUPAC and the InChI Trust. It is a standard identifier for chemical databases that facilitates effective information management across chemistry.|Inchi Trust|Chemical|
+| |https://www.inchi-trust.org/ | | |
+|UN Central Product Classification Code|The Central Product Classification (CPC) consists of a coherent and consistent classification structure for products (goods and services) based on a set of internationally agreed concepts, definitions, principles and classification rules.      |UNSTATS|Industry-Agnostic|
+| |https://unstats.un.org/unsd/classifications/Econ/cpc | | |
+|<Additional examples here>   | | | |
+
+
+### URN Namespace Format
+Include additional specification to the ProductID Data Type:
+
+Each productId MUST be a URN.
+
+If the data owner (SCA) wishes to use a product identifier for which an existing URN specification exists, the relevant specification SHOULD be used. See https://www.iana.org/assignments/urn-namespaces/urn-namespaces.xhtml for existing specifications.
+
+If the data owner (SCA) wishes to use a product identifier for which an existing URN specification does not exist, the data owner SHOULD use the following format:
+
+    urn:<namespace TBD>:$fqdn-of-issuer$:$entity-idtype$:$id$
+
+
+- `urn:<namespace tbd>` is the fixed sub-string to identify the URN Namespace. The community must form consensus regarding the schema, and this will be registered with IANA. See below for further details.
+
+- `$fqdn-of-issuer$` is the fully qualified domain name of the organization issuing the identifier. The issuer of the code can be a company or an initiative (e.g., WBCSD, TFS). The fully qualified domain consists of top-level domain, domain, and sub-domain. Ideally the fully qualified domain points to the product specification. 
+
+- `$entity-idtype$` defines the kind of product identifier being specified. This brings clarity to the recipient to understand what kind of identifier is provided, is the identifier the buyer’s identifier, the supplier’s identifier, some standard third party identifier, etc.
+
+The following `$entity-idtype$` are recommended. 
+
+This is a non-exhaustive list of `$entity-idtype$` . PACT will maintain a set of general, industry-agnostic `$entity-idtype$` , as below. This set may be extended in minor versions of the standard release. Organizations may contact PACT to propose additional `$entity-idtype$` for consideration to be added as recommended industry-agnostic identifiers. Organizations (especially organizations initiatives) are encouraged to define the relevant `$entity-idtype$` for products within their industry separately. 
+
+Table: PACT Set of recommended `$entity-idtype$`
+
+|entity-idtype |Description      |Notes             |
+|--------------|-----------------|------------------|
+|`product-id`    | Specifies a product id from a third-party organization, standard, etc. |Use this entity-idtype when no other more specific one is applicable.|
+|`category-id`   | Indicates a category as grouping of several substances or products|Issuer for the identifier, i.e. CAS.org|
+|`buyer-id`      |Specifies a product id created by the buyer, aka “data recipient”|This is the equivalent of "buyer-assigned" as referenced in Tech Specs V2.|
+|`supplier-id`   | Specifies a product id created by the supplier, aka “data owner”|This is the equivalent of "vendor-assigned" as referenced in Tech Specs V2|
+
+#### Namespace to use
+
+As a community, we must agree on an appropriate namespace, which we could then apply to register with IANA. The basic requirements of a URN namespace are:
+ - unique and descriptive
+ - not be easily confused with existing namespaces
+ - short and memorable, ideally reflecting the name or purpose of the organization or entity
+
+Typically, namespace identifiers either refer to the organization which defines the given namespace (such as “ieee”, “iso”), or refers to the identifier itself (“epc”, "uuid”, “isbn”, etc.)
+
+We are currently considered two options
+- **pfi**
+  pfi could stand for “PACT Footprint Identification” or “Product Footprint Identification” (depending on community preference). The namespace would include all identifiers which facilitate the exchange of product (sustainability) footprint information
+- **pact**
+  PACT stands for “Partnership for Carbon Transparency” and would be a namespace to indicate all identifiers relevant for the industry-agnostic exchange of product carbon footprint information.
+
+
+### Part 2: Examples
+
+The below examples are proposed for inclusion in the PACT Tech Specs
+Product ID Examples
+
+#### Ex 1: Custom Product Ids (Product Codes)
+This example would replace https://wbcsd.github.io/data-exchange-protocol/v2/#dt-productid-custom
+
+    urn:<namespace tbd>:buyerfqdn.com:buyer-id:$CUSTOM-PRODUCT-CODE$
+    
+    urn:pact:buyer.com:buyer-id:1234
+>
+
+    urn:<namespace tbd>:buyerfqdn.com:supplier-id:$CUSTOM-PRODUCT-CODE$
+    
+    urn:<namespace tbd>:supplier.com:supplier-id:1234
+
+#### Ex 2: Product ID defined by TfS
+TfS platform (i.e. SiGREEN) creates UUID credentials for the PCF. With the next release, there will 
+be a UUID for any entity.
+
+    urn:pfi:sigreen.siemens.com: component-identifier:4303F98A-785F-42CD-8DE0-0B79F34FCD40
+
+#### Ex3: Product ID defined by Catena-X
+Per the Catena-X specification, productID corresponds with Industry Core manufacturerPartId. 
+See full details on the [PCF Specification](https://github.com/eclipse-tractusx/sldt-semantic-models/blob/main/io.catenax.pcf/7.0.0/Pcf.ttl) and
+[PartTypeInformation](https://github.com/eclipse-tractusx/sldt-semantic-models/blob/main/io.catenax.part_type_information/1.0.0/PartTypeInformation.ttl)
+
+Per Catena-X specification, manufacturerPartID is defined as the “Part ID as assigned by 
+the manufacturer of the part. The part ID identifies the part in the manufacturer`s dataspace. 
+The part ID references a specific version of a part. The version number must be included in 
+the part ID if it is available. The part ID does not reference a specific instance of a part 
+and must not be confused with the serial number."
+
+This specification aligns with the PACT proposal. For example 
+
+    urn:gtin:4712345060507
+is a valid URN.
+
+#### Ex 4: Product ID defined by registries like CAS
+If the data owner (SCA) wishes to use a CAS Registry Number as a ProductId value, 
+the data owner SHOULD use the following format:
+
+    urn:<namespace tbd>:cas.org:substance-id:$CAS-REGISTRY-NUMBER$
+    urn:<namespace tbd>:cas.org:category-id:$CAS-REGISTRY-NUMBER$
+
+where `$CAS-REGISTRY-NUMBER$` stands for a CAS Registry Number.
+Other Registries are for example:
+https://pubchem.ncbi.nlm.nih.gov/compound/26042#section=Other-Identifiers
+
+#### Ex 5: ProductId based on IUPAC InChi identifier or key
+If the data owner (SCA) wishes to use a IUPAC InChi Code as a ProductId value, the data owner SHOULD use the following format:
+
+    urn:<namespace tbd>:inchi-trust.org:substance-id:$INCHI-ID$
+    urn:<namespace tbd>:inchi-trust.org:substance-key:$INCHI-KEY$
+
+
+#### Ex 6: Product ID using a UUID
+
+    urn:uuid:69585GB6-56T9-6958-E526-6FDGZJHU1326
+
+##### Ex 7: Product ID using a GTIN
+
+When GTIN is a relevant identifier for a given product (and therefore PCF), the appropriate identifier to share as part of the productIDs attribute will be a URN specifying the GTIN, and not the SGTIN. This is because a GTIN identifies a specific group of identical products (single SKU), while SGTIN identifies each unit of identical products using serial numbers. E.g. a light fixture has a GTIN, and to distinguish between two identical light fixtures, they must have their own SGTIN. Therefore the GTIN should be encoded in URN form, not an SGTIN.
+
+    urn:gtin:4712345060507
+
+Note that “gtin” is not an official registered namespace, however upon consultation with GS1 experts, we undrstood that in practicality "gtin” is used as a namespace for specifying gtin urns. In this case, GTIN is such an established identifier that GS1 explained if you get a URN that indicates the identifier is a GTIN, then treat it like a GTIN (as simple as that!) - therefore registering "gtin” with IANA in this case isn't necessary or relevant.
+
+#### Ex8: Combined example of a substance (Titan Dioxide of supplier Sigmaaldrich)
+
+    urn:<namespace tbd>:sigmaaldrich.com:supplier-id:14021
+    urn:<namespace tbd>:cas.org:substance-number:13463-67-7
+    urn:<namespace tbd>:iupac.org:substance-name:dioxotitanium
+    urn:<namespace tbd>:inchi-trust.org:substance-id:1S/2O.Ti
+    urn:<namespace tbd>:inchi-trust.org:substance-key:GWEVSGVZZGPLCZ-UHFFFAOYSA-N 
+
+### Part 4 productClassifications Array
+
+The productIDs attribute is intended to include ALL product identifiers that uniquely identify the product being sold (i.e. at the UPC / GTIN level). However, additional identifiers may be useful in helping to categorize or classify the product, which do not uniquely identify the product. These include for example the UN CPC code. We believe that the format of such identifiers could likewise benefit from adopting the same URN format as proposed here, hence we propose the following:
+
+- Deprecate productCategoryCpc
+- Introduce a new optional attribute, productClassifications, and Array of URNs, where the URN format aligns to this proposal
+
+>
+    "productClassifications": [
+      urn:<namespace tbd>:unstats.un.org:product-id:31230
+    ],
+
 
 ## Consequences
-- Most likely, proposal will be released in v3 of PACT Tech Specs, but can be previewed in v2.3 of PACT Tech Specs as proposal will be a recommended (not required) format
 
-See details in above link
+- The existing recommended URN format for custom product codes, CAS, and InChi Codes as specified in the PACT Tech Specs must be revised.
+- As the proposal is a recommended format (not a required format), technically it may be introduced already in v2.3 release as it does not break backwards compatibility necessarily. However as the proposal differs from the existing recommended formats, we believe it would be less disruptive to the community to include the v3 release.
+- Community should consider the value of productCategoryCpc, as CPC code may be specified as a productID, and therefore there is an opportunity to remove productCategoryCpc as an attribute in v3. 
+
