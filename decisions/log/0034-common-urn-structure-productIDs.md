@@ -62,13 +62,9 @@ The below identifiers may be unique product identifiers or product classificatio
 |Product Identifier|Description|Organization|Industry|
 |:----|:----|:----|:----|
 |Company-specific  (custom) identifiers|Identifiers which a given company creates for the purposes of uniquely identifying their products|Company-Specific|Industry-Agnostic|
-|CAS Registry Number|Unique identification number assigned to every chemical substance described in the open scientific literature|Chemical Abstracts Service (CAS)|Chemical|
-| |https://www.cas.org/cas-data/cas-registry | | |
-|InChI (International Chemical Identifier)|InChI is a structure-based chemical identifier, developed by IUPAC and the InChI Trust. It is a standard identifier for chemical databases that facilitates effective information management across chemistry.|Inchi Trust|Chemical|
-| |https://www.inchi-trust.org/ | | |
-|UN Central Product Classification Code|The Central Product Classification (CPC) consists of a coherent and consistent classification structure for products (goods and services) based on a set of internationally agreed concepts, definitions, principles and classification rules.      |UNSTATS|Industry-Agnostic|
-| |https://unstats.un.org/unsd/classifications/Econ/cpc | | |
-|<Additional examples here>   | | | |
+|CAS Registry Number|Unique identification number assigned to every chemical substance described in the open scientific literature (https://www.cas.org/cas-data/cas-registry) |Chemical Abstracts Service (CAS)|Chemical|
+|InChI (International Chemical Identifier)|InChI is a structure-based chemical identifier, developed by IUPAC and the InChI Trust. It is a standard identifier for chemical databases that facilitates effective information management across chemistry (https://www.inchi-trust.org/)|Inchi Trust|Chemical|
+|UN Central Product Classification Code|The Central Product Classification (CPC) consists of a coherent and consistent classification structure for products (goods and services) based on a set of internationally agreed concepts, definitions, principles and classification rules (https://unstats.un.org/unsd/classifications/Econ/cpc)|UNSTATS|Industry-Agnostic|
 
 
 ### 2. PACT Common Namespace Format
