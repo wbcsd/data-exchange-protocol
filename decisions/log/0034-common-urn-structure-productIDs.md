@@ -12,7 +12,7 @@ The proposal is still in draft stage and will require significant review and rev
 
 ## Context
 
-This proposal is based on the working draft https://wbcsd.sharepoint.com/:w:/s/ClimateEnergy/ETiuwNrpFZpLvq6QLVA-lhIBlX5uYj-7UtsVgPAY1xBKjw which has been used to review and collect feedback from the community in the peri course of june till september 2024.
+This proposal is based on the working draft https://wbcsd.sharepoint.com/:w:/s/ClimateEnergy/ETiuwNrpFZpLvq6QLVA-lhIBlX5uYj-7UtsVgPAY1xBKjw which has been used to review and collect feedback from the community.
 
 The Product Carbon Footprint (PCF) is calculated for specific products or materials. To exchange PCF data between organizations, it is necessary to identify the related product or material. Given suppliers and customers do not always (or often) use the same identification schemes, commonly and uniquely identifying the same product is a painful challenge - especially at scale. Given this situation, organizations commonly must perform laborious and manual “mapping” exercises to map their identifier(s) for a product to the identify their supplier can understand.  
  
