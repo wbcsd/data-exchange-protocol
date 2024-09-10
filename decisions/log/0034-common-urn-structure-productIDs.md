@@ -1,4 +1,4 @@
-# 34. Proposal for a recommended URN structure and allowance for URI's for identifying products
+# 34. Proposal for a common URN structure for identifying products
 
 Date: 2024-09-10
 
