@@ -30,10 +30,10 @@ Scope
 
 ## Proposal
 
-The proposal consists of four recommendations:
+The proposal consists of three recommendations:
  1. *A common URN Structure*: Introduction of a recommended common structure for the productID URN, when no relevant IANA namespace (and corresponding specification) is applicable.
  1. *Examples*: Introduces a set of examples for productID and companyID which help the community understand how to specify URNs across a number of examples and networks (TfS, Catena-X, etc.) 
- 1. *IANA Registration*: Registration  registration of the pact URN namespace with IANA
+ 1. *IANA Registration*: Optional registration registration of the pact URN namespace with IANA
 
 ## Technical Specification
 
@@ -106,7 +106,7 @@ Table: PACT Set of recommended `$entity-idtype$`
 |`buyer-id`      |Specifies a product id created by the buyer, aka “data recipient”|This is the equivalent of "buyer-assigned" as referenced in Tech Specs V2.|
 |`supplier-id`   | Specifies a product id created by the supplier, aka “data owner”|This is the equivalent of "vendor-assigned" as referenced in Tech Specs V2|
 
-#### Considerations Namespace to use
+#### Considerations on using 'pact' namespace
 
 As a community, we will agree on an appropriate namespace, which we could then apply to register with IANA. The basic requirements of a URN namespace are:
  - unique and descriptive
@@ -217,5 +217,4 @@ If the PACT community decides to apply, the process is free, although requires a
 
 - The existing recommended URN format for custom product codes, CAS, and InChi Codes as specified in the PACT Tech Specs must be revised.
 - As the proposal is a recommended format (not a required format), technically it may be introduced already in v2.3 release as it does not break backwards compatibility necessarily. However as the proposal differs from the existing recommended formats, we believe it would be less disruptive to the community to include the v3 release.
-- Community should consider the value of productCategoryCpc, as CPC code may be specified as a productID, and therefore there is an opportunity to remove productCategoryCpc as an attribute in v3. 
 
