@@ -212,6 +212,7 @@ However, there are a lot of URN namespaces in widespread use which have not been
 
 If the PACT community decides to apply, the process is free, although requires a rigorous application process which PACT Tech WG members will be requested to contribute to. Doing this in collaboration with a number of PACT’s closet partner initiatives (TfS, Catena-X, SFC, RMI, and Green x Digital) will strengthen the application.
 
+Our recommmendation for now is to hold off on IANA registration, as it will be a substantial effort eating away from capacity to drive further adoption of the PACT framework.
 
 ## Consequences
 
