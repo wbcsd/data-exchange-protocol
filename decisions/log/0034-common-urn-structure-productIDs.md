@@ -6,9 +6,7 @@ Date: 2024-09-10
 
 Proposed
 
-## Context
-
-The proposal is still in draft stage and will require significant review and revision from community to finalize, therefore we propose to keep teh proposal in word doc format for now to enable easier editing. Once finalized, we will update this ADR accordingly.
+An earlier version of this proposal was introduced to the PACT Tech Working Group in Fall 2023; the proposal was then refined and evolved based on community and initaitive feedback. The proposal is now in its final stages of revision, and following presentation to the PACT Tech WG September 11, a call for consensus will be conducted in the September 25 WG.
 
 ## Context
 
