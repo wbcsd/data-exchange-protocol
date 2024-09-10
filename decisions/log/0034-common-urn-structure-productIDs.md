@@ -20,7 +20,6 @@ This proposal introduces to the PACT Technical Specification a recommended commo
 Specific problems this proposal addresses: 
  * Interoperability: Using a common structure for product identifier URNs will support interoperability between organizations, as well as between industry networks (Catena-X, TfS, GxD, etc.) A recommended common structure helps to reduce this confusion while still providing industry-specific flexibility. 
 * Increase clarity and examples: Given the PACT Tech Specs provide significant flexibility regarding which company and product identifiers may be specified, additional examples are added which bring clarity regarding how to specify these identifiers 
-* Future-proofing: while not mandatory, registering a common product footprint URN namespace with IANA will enable the structure to be widely communicated across the web.
  
 Scope 
  * The scope of this proposal is limited to product identifiers, although we hypothesize introducing a common structure will be useful to additional identifiers, especially company identifiers. Learnings from this proposal will inform future proposals. 
@@ -30,13 +29,13 @@ Scope
 
 The proposal consists of three recommendations:
  1. *A common URN Structure*: Introduction of a recommended common structure for the productID URN, when no relevant IANA namespace (and corresponding specification) is applicable.
- 1. *Examples*: Introduces a set of examples for productID and companyID which help the community understand how to specify URNs across a number of examples and networks (TfS, Catena-X, etc.) 
+ 1. *Examples*: Introduces a set of examples for productIDs which help the community understand how to specify URNs across a number of identifiers
  1. *IANA Registration*: Optional registration registration of the pact URN namespace with IANA
 
 ## Technical Specification
 
 ## Part 1: Common URN Structure 
-This proposal introduction of a recommended common structure for the productID URN, when no relevant IANA namespace (and corresponding specification) is relevant. 
+This proposal introduces a recommended common structure for the productID URN, when no relevant IANA namespace (and corresponding specification) is relevant. 
 We recognize there are a number of existing product identifiers which already have an existing relevant IANA namespace and corresponding URN format specification. When such a product identifier is used for PCF exchange, this corresponding specification should be used.  
 
 We illustrate below with several examples the two “types” of product identifiers; this proposal only applies to product identifiers which do not already have a relevant IANA scheme and therefore have no recommended URN structure. 
@@ -119,7 +118,7 @@ After having gathered feedback on two options:
 - **pact**
   PACT stands for “Partnership for Carbon Transparency” and would be a namespace to indicate all identifiers relevant for the industry-agnostic exchange of product carbon footprint information.
 
-We have landed on **pact** as the recommended namespace option. R
+After consultation with the PACT community, no strong opinions formed in favor or against the above two options, although a general preference formed in favor of **pact**. We recommend therefore to proceed with **pact** as the recommended namespace option. This is our recommendation given **pact** is a term our community is already familiar with, whereas **pfi** introduces a new abbreviation which could cause more confusion.
 
 
 ### Part 2: Examples
