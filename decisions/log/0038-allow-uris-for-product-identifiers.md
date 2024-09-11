@@ -8,13 +8,18 @@ Proposed
 
 This is an expansion of the common URN format introduced by ADR-0034. The proposal is ready for review, following consultation with GS1, Digital Twin and being presented in the PACT Tech WG September 11.
 
+
 ## Context
 
 
 
 The current PACT Technical Specifications mandate the use of Uniform Resource Names (URNs) for product identification and classification, and include a recommended `urn:pact` namespace with a common format for specifying product ids. 
 
-For most point-to-point cases this default, recommended way of using id's will suffice. However, there is a need to accommodate emerging standards like Digital Link and Digital Product Passport, which rely on Uniform Resource Identifiers (URIs), a superset of URNs. 
+For most point-to-point cases this default, recommended way of using id's will suffice. However, there is a need to accommodate emerging standards like Digital Link and Digital Product Passport, which rely on Uniform Resource Identifiers (URIs), a superset of URNs.
+
+
+https://gs1.eu/activities/digital-product-passport/gs1-data-architecture-for-the-dpp/  
+https://ref.gs1.org/standards/digital-link/uri-syntax/  
 
 This ADR proposes expanding from URNs to URIs for product identification within the PACT Technical Specifications.
 
@@ -31,7 +36,7 @@ Scope
 ## Proposal
 
 The proposal consists of three recommendations:
- 1. Change the data type of `productIDs` from URN to **URI** (as defined in RFC )
+ 1. Change the data type of `productIDs` from URN to **URI** (as defined in RFC 3986)
  1. Change the data type of `productClassification` from *array* or URN to *array* of **URI** 
  1. Include additional examples for real-world URI's in the documentation
 
