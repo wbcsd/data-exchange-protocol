@@ -1,4 +1,4 @@
-# 39. Consistent typing of real numbers the PACT specification
+# 39. Consistent typing of real numbers
 
 Date: 2024-09-23
 
