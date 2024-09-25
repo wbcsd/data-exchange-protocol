@@ -48,6 +48,8 @@ Based on discussion both with the community (Takuro Okada of NRI) and internally
   - `pcf.dqi.completenessDQR`    
   - `pcf.dqi.reliabilityDQR`      
 
+- Note: property `version` will stay a Number as it will always be an integer.
+
 - Add a guideline to the Tech Specs, aiding the addition of future properties, as well
 as guiding the types in data extensions:
     - For integers (*and only* for integers) use the JSON **Number** type and include the `integer` format specifier in the OpenAPI schema.
