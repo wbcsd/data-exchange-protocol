@@ -54,6 +54,9 @@ as guiding the types in data extensions:
     - For integers (*and only* for integers) use the JSON Number type and include the `integer` format in the OpenAPI schema.
     - For real numbers *ALWAYS* use the Decimal type: number formatted as string, with '.' (dot) as decimal point, *without* any thousands separator. 
 
+## Consequences
+
+As this would break backwards compatibility with version 2.x these changes should - if accepted - be included from version 3 upwards.
 
 ## Status
 
