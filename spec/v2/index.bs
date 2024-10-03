@@ -90,10 +90,10 @@ The license can be found in [[#license]].
     See [[!DATA-MODEL-EXTENSIONS]] and [[!EXTENSIONS-GUIDANCE]] for further details.
 
 : <dfn>Data recipient</dfn>
-:: The [=SCA|Supply Chain Actor=] requesting and/or receiving [=PCF=] data from another [=SCA=].
+:: The company requesting and/or receiving [=PCF=] data from another company, using the technical means specified in this document.
 
 : <dfn>Data owner</dfn>
-:: The Supply Chain Actor (SCA) exchanging PCF data with another SCA.
+:: The company exchanging PCF data with another company, using the technical means specified in this document.
 
 : <dfn>interoperable</dfn>
 :: The quality of being able to exchange data between [=host systems=] irrespective of the vendors of the host systems, without the need for translation or transformation of the data.
