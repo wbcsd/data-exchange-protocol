@@ -1,8 +1,8 @@
 # Background and Context
 
-Releases of the PACT Framework are strongly informing the tech specs releases.
+Releases of the PACT Methodology are strongly informing the tech specs releases.
 
-Therefore, this timeline page contains the release plan for both, the PACT Framework and the PACT Tech Specs.
+Therefore, this timeline page contains the release plan for both, the PACT Methodology and the PACT Tech Specs.
 
 In addition, the tables below disclose deprecation of releases and subsequent sunset dates.
 
@@ -12,7 +12,7 @@ In addition, the tables below disclose deprecation of releases and subsequent su
 
 **As always, the timelines are subject to change.**
 
-## PACT Pathfinder Framework
+## PACT Methodology
 
 ### Releases – Past and Future
 
@@ -22,9 +22,9 @@ In addition, the tables below disclose deprecation of releases and subsequent su
 | [Version 2](https://wbcsd.github.io/tr/2023/framework-20232601/framework.pdf) | N/A | January 26, 2023 | Q1 2025 (when Framework Version 3 is released) | June 2025 |
 | Version 3 | November 2024 | Feb 2025 | TBD | TBD |
 
-_Update April 2024: Release pushed from Q3 to Q4 2024 (both framework and tech specs) given learnings in Q1 2024 requiring more time to reach consensus and alignment on all critical topics_  
+_Update April 2024: Release pushed from Q3 to Q4 2024 (both methodology and tech specs) given learnings in Q1 2024 requiring more time to reach consensus and alignment on all critical topics_  
 
-_Update June 2024: Release pushed from Q4 2024 to Q1 2025 (both framework and tech specs) given known delay in biogenic chapter and need to use the extra quarter to finalize alignment between Methodology and Technology. The release in Feb 2025 is a fixed deadline, we do not intend to push it out any longer, given we aim to release before another annual cycle of implementation._  
+_Update June 2024: Release pushed from Q4 2024 to Q1 2025 (both methodology and tech specs) given known delay in biogenic chapter and need to use the extra quarter to finalize alignment between Methodology and Technology. The release in Feb 2025 is a fixed deadline, we do not intend to push it out any longer, given we aim to release before another annual cycle of implementation._  
 
 ## Tech Specs
 
