@@ -1,8 +1,8 @@
 # Background and Context
 
-Releases of the Pathfinder Framework are strongly informing the tech specs releases.
+Releases of the PACT Framework are strongly informing the tech specs releases.
 
-Therefore, this timeline page contains the release plan for both, the Pathfinder Framework and the Pathfinder Tech Specs.
+Therefore, this timeline page contains the release plan for both, the PACT Framework and the PACT Tech Specs.
 
 In addition, the tables below disclose deprecation of releases and subsequent sunset dates.
 
@@ -12,7 +12,7 @@ In addition, the tables below disclose deprecation of releases and subsequent su
 
 **As always, the timelines are subject to change.**
 
-## Pathfinder Framework
+## PACT Pathfinder Framework
 
 ### Releases – Past and Future
 
@@ -38,7 +38,7 @@ _Update June 2024: Release pushed from Q4 2024 to Q1 2025 (both framework and te
 | [v2.0.0](https://wbcsd.github.io/tr/2023/data-exchange-protocol-20230221/)  | Feb 1, 2023 | Feb 21, 2023 |  | |
 | [v2.1.0](https://wbcsd.github.io/tr/2023/data-exchange-protocol-20231207/)  | Nov 9, 2023 | Dec 7, 2023 |  | |
 | [v2.2.0](https://wbcsd.github.io/tr/2024/data-exchange-protocol-20240410/) | Jan 2024 | April 10, 2024 | |
-| [v2.3.0](https://wbcsd.github.io/data-exchange-protocol/v2/) | Q3 2024 | October 2024 | |
+| [v2.3.0](https://wbcsd.github.io/data-exchange-protocol/v2/) | October 2024 | October 2024 | |
 | v3.0.0 | Q3 2024 | Feb 2025<br/> (released w/ Framework) | |
 
 ## Definitions
