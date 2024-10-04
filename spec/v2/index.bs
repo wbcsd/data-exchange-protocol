@@ -114,17 +114,14 @@ The license can be found in [[#license]].
     See [[!PACT-METHODOLOGY]] for further details.
 
 : <dfn>PACT Network</dfn>
-:: An information network (previously Pathfinder Network) of and for supply chain actors to securely exchange environmental data with each other, with an initial focus on PCF data.
+:: An information network (previously Pathfinder Network) of and for companies to securely exchange environmental data with each other, with an initial focus on PCF data.
 
 : Product Carbon Footprint (<dfn>PCF</dfn>)
 :: The carbon (equivalent) emissions relating to a product. Products can be any kind of item exchanged between entities, including metric or volumetric quantities of a product.
      The <{ProductFootprint}> data model is a digital representation of a PCF in accordance with the [=PACT Methodology=].
 
-: Supply Chain Actor (<dfn>SCA</dfn>)
-:: An entity intending on exchanging PCF data with another entity using the technical means specified in this document.
-
 : <dfn>Solution Provider</dfn>
-:: An entity providing technical solutions to SCAs by implementing and offering [=host systems=].
+:: An entity providing technical solutions to companies by implementing and offering [=host systems=].
 
 : <dfn>UN geographic region</dfn>, <dfn>UN geographic subregion</dfn>
 :: See [https://unstats.un.org/unsd/methodology/m49/](https://unstats.un.org/unsd/methodology/m49/) for details.
@@ -1354,7 +1351,7 @@ Each CompanyId MUST be a [=URN=].
 
 ### Custom Company Ids (Company Codes) ### {#dt-companyid-custom}
 
-If the [=data owner=] ([=SCA=]) wishes to use a custom company code assigned to it by
+If the [=data owner=] wishes to use a custom company code assigned to it by
 a [=data recipient=] as a [=CompanyId=] value, the [=data owner=] SHOULD use the following format:
 
 ```
@@ -1370,7 +1367,7 @@ A data owner got assigned the custom vendor code `4321` by a buyer, the value of
 </div>
 
 
-If the [=data owner=] ([=SCA=]) wishes to use its own custom company code known by
+If the [=data owner=] wishes to use its own custom company code known by
 a [=data recipient=] as a [=CompanyId=] value, the [=data owner=] SHOULD use the following format:
 
 ```
@@ -1404,7 +1401,7 @@ Each ProductId MUST be a [=URN=].
 
 ### Custom Product Ids (Product Codes) ### {#dt-productid-custom}
 
-If the [=data owner=] ([=SCA=]) wishes to use a custom product code assigned to it by
+If the [=data owner=] wishes to use a custom product code assigned to it by
 a [=data recipient=] as a [=ProductId=] value, the [=data owner=] SHOULD use the following format:
 
 ```
@@ -1420,7 +1417,7 @@ A data owner got assigned the custom product code `1234` for one of its products
 </div>
 
 
-If the [=data owner=] ([=SCA=]) wishes to use its own custom product code known by
+If the [=data owner=] wishes to use its own custom product code known by
 a [=data recipient=] as a `ProductId` value, the [=data owner=] SHOULD use the following format:
 
 ```
@@ -1437,7 +1434,7 @@ A data owner uses as custom product code `8765` which is known to a buyer, the v
 
 ### ProductId based on CAS Registry Numbers ### {#dt-productid-cas}
 
-If the [=data owner=] ([=SCA=]) wishes to use a [CAS Registry Number](https://www.cas.org/cas-data/cas-registry)
+If the [=data owner=] wishes to use a [CAS Registry Number](https://www.cas.org/cas-data/cas-registry)
 as a [=ProductId=] value, the [=data owner=] SHOULD use the following format:
 
 ```
@@ -1454,7 +1451,7 @@ Example ProductId encoding of ethanol with the CAS Registry Number `64-17-5`:
 
 ### ProductId based on IUPAC InChi Code ### {#dt-productid-inchicode}
 
-If the [=data owner=] ([=SCA=]) wishes to use a [IUPAC InChi Code](https://www.inchi-trust.org/) as a [=ProductId=] value, the [=data owner=] SHOULD use the following format:
+If the [=data owner=] wishes to use a [IUPAC InChi Code](https://www.inchi-trust.org/) as a [=ProductId=] value, the [=data owner=] SHOULD use the following format:
 
 ```
 urn:pact:product:id:iupac-inchi:$INCHI-CODE$
