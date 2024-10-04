@@ -110,10 +110,11 @@ The license can be found in [[#license]].
 : PACT Methodology Version 2.0 (<dfn>PACT Methodology</dfn>)
 :: Guidance for the Accounting and Exchange of Product Life Cycle Emissions,
     building on existing standards and protocols, such as the GHG Protocol
-    Product standard. See [[!PACT-METHODOLOGY]] for further details.
+    Product standard. Previously named PACT Framework. 
+    See [[!PACT-METHODOLOGY]] for further details.
 
-: <dfn>PACT (previously Pathfinder) Network</dfn>
-:: An information network of and for supply chain actors to securely exchange environmental data with each other, with an initial focus on PCF data.
+: <dfn>PACT Network</dfn>
+:: An information network (previously Pathfinder Network) of and for supply chain actors to securely exchange environmental data with each other, with an initial focus on PCF data.
 
 : Product Carbon Footprint (<dfn>PCF</dfn>)
 :: The carbon (equivalent) emissions relating to a product. Products can be any kind of item exchanged between entities, including metric or volumetric quantities of a product.
@@ -2605,8 +2606,8 @@ path: LICENSE.md
 
 ## Version 2.3.0-20241002 (October 2, 2024) ## {#changelog-2.3.0-20241002}
 Summary of changes:
-1. Sunsetting the Pathfinder name replacing Pathfinder Framework with 'PACT Methodology' and 'Pathfinder Network' with 'PACT Network'.  
-Exceptions are technical id's for the Events (org.wbcsd.pathfinder.xxx) and mentions in the changelog.
+1. Sunsetting the Pathfinder name replacing Pathfinder Framework with 'PACT Methodology' and 'Pathfinder Network' with 'PACT Network'.
+    Exceptions are technical id's for the Events (org.wbcsd.pathfinder.xxx) and mentions in the changelog.
 
 ## Version 2.3.0-20240904 (September 4, 2024) ## {#changelog-2.3.0-20240904}
 Summary of changes:
@@ -2888,7 +2889,7 @@ The following changes have been applied for version 1.0.1
     "status": "LS",
     "publisher": "The Linux Foundation"
   },
-  "PATHFINDER-METHODOLOGY": {
+  "PACT-METHODOLOGY": {
     "authors": [],
     "href": "https://wbcsd.github.io/tr/2023/framework-20232601/framework.pdf",
     "title": "PACT Pathfinder Framework: Guidance for the Accounting and Exchange of Product Life Cycle Emissions (Version 2.0)",
