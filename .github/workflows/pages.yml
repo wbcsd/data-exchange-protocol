@@ -35,7 +35,7 @@ jobs:
       - name: Install Bikeshed
         run: pip3 install bikeshed && bikeshed update
       - name: Install Mermaid
-        run: npm list -g @mermaid-js/mermaid-cli || install -g @mermaid-js/mermaid-cli
+        run: npm list -g @mermaid-js/mermaid-cli || npm install -g @mermaid-js/mermaid-cli
       - name: Build specs
         run: make -C spec publish && make -C spec/v2 publish && make -C spec/faq publish
       - name: Upload artifact
