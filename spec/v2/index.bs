@@ -1574,7 +1574,7 @@ Each Decimal MUST be encoded as a JSON String.
 
 ## Data Type: <dfn>PfId</dfn> ## {#dt-pfid}
 
-A PfId MUST be a UUID v4 as specified in [[!RFC4122]].
+A PfId MUST be a UUID v4 as specified in [[!RFC9562]].
 
 
 ### JSON Representation ### {#dt-pfid-json}
