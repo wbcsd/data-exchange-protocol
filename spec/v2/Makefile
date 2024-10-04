@@ -18,7 +18,7 @@ publish: index.html computed-metadata.include
 index.html: index.bs $(DIAGRAMS)
 	bikeshed spec $< $@ --md-text-macro="$(STATUS)"
 
-%.svg: %.mmd $(MMDC)
+%.svg: %.mmd
 	mmdc -i $< -o $@
 
 serve: $(DIAGRAMS)
