@@ -1,13 +1,16 @@
 <pre class='metadata'>
 Title: Technical Specifications for PCF Data Exchange
-Text Macro: VERSION 2.2.1-20240513
+Text Macro: VERSION 2.3.0-20241002
 Shortname: data-exchange-protocol
 Level: 1
 Status: LD
-Mailing List: public-dev@pathfinder.sine.dev
-Editor: Martin Pompéry (SINE Foundation), https://sine.foundation, martin@sine.foundation
-Editor: Cecilia Valeri (WBCSD), https://www.wbcsd.org, valeri@wbcsd.org
-Abstract: This document specifies a data model for GHG emission data at product level based on the Pathfinder Framework Version 2, and a protocol for interoperable exchange of GHG emission data at product level.
+Mailing List: pact@wbcsd.org
+Editor: Gertjan Schuurmans (WBCSD), https://www.wbcsd.org, schuurmans@wbcsd.org
+Former Editor: Beth Hadley (WBCSD), https://www.wbcsd.org, hadley@wbcsd.org
+Former Editor: Martin Pompéry (SINE Foundation), https://sine.foundation, martin@sine.foundation
+Former Editor: Cecilia Valeri (WBCSD), https://www.wbcsd.org, valeri@wbcsd.org
+Former Editor: Raimundo Henriques (SINE Foundation), https://sine.foundation, raimundo@sine.foundation
+Abstract: This document specifies a data model for GHG emission data at product level based on the PACT Methodology (previously Pathfinder Framework) Version 2, and a protocol for interoperable exchange of GHG emission data at product level.
 Markup Shorthands: markdown yes, idl yes, dfn yes
 Boilerplate: omit copyright, omit conformance
 Local Boilerplate: header yes
@@ -21,17 +24,17 @@ Advisement: This document is a work in progress and should not be used for confo
   Please refer to the [latest stable version of the Technical Specifications]([LATEST]) for conformance testing.
   All feedback is welcome.
 
-This document contains the necessary technical foundation for the [=Pathfinder Network=], an open and global network for emission data exchange.
+This document contains the necessary technical foundation for the [=PACT Network=], an open and global network for emission data exchange.
 
 The goal of this document is to enable the [=interoperable=] exchange of [=PCF|Product Carbon Footprints=] across [[#conformance|conforming]] [=host systems=].
 
-The methodological foundation of the specification is the Pathfinder Framework Version 2.0 ([[!PATHFINDER-FRAMEWORK]]).
+The methodological foundation of the specification is the PACT Methodology Version 2.0 ([[!PACT-METHODOLOGY]]).
 
 ## Status of This Document ## {#status}
 
-Comments regarding this document are welcome. Please file issues directly on [GitHub](https://github.com/wbcsd/data-exchange-protocol/), or send them to [public-dev@pathfinder.sine.dev](mailto:public-dev@pathfinder.sine.dev).
+Comments regarding this document are welcome. Please file issues directly on [GitHub](https://github.com/wbcsd/data-exchange-protocol/), or send them to [pact@wbcsd.org](mailto:pact@wbcsd.org).
 
-This document was published by [Partnership for Carbon Transparency (PACT)](https://www.carbon-transparency.com/) after an update to the [[!PATHFINDER-FRAMEWORK|Pathfinder Framework]]) was made.
+This document was published by [Partnership for Carbon Transparency (PACT)](https://www.carbon-transparency.com/) after an update to the [[!PACT-METHODOLOGY|PACT Methodology]]) was made.
 
 The technical specifications within this document are the result of consent processes by PACT members and the WBCSD.
 
@@ -40,23 +43,23 @@ PACT recommends the wide deployment of this specification.
 
 ## Scope ## {#scope}
 
-The scope of this document is to reach interoperability for product-level GHG emission data exchange through the definition of a data model ([[#data-model]]) based on the [=Pathfinder Framework=] Version 2.0 and the definition of a HTTP REST API ([[#api]]).
+The scope of this document is to reach interoperability for product-level GHG emission data exchange through the definition of a data model ([[#data-model]]) based on the [=PACT Methodology=] Version 2.0 and the definition of a HTTP REST API ([[#api]]).
 
 
 ## Intended Audience ## {#audience}
 
 This technical specification is for
 
-- software developers who want to build software for the exchange of product footprints according to the [=Pathfinder Framework=];
+- software developers who want to build software for the exchange of product footprints according to the [=PACT Methodology=];
 - auditors and sustainability experts who want to understand the data semantics of product footprints or how they are exchanged between partners; and
-- anyone that wants to understand more about the technological foundations of the Pathfinder Network.
+- anyone that wants to understand more about the technological foundations of the PACT Network.
 
 
-## About PACT and the Pathfinder Network ## {#about-pact}
+## About PACT and the PACT Network ## {#about-pact}
 
-The Pathfinder Network is a concept developed by PACT and powered by the World Business Council for Sustainable Development (WBCSD). PACT is working toward the vision of an open and global network of interoperable solutions for the secure peer-to-peer exchange of accurate, primary and verified product emissions data – across all industries and value chains.
+The PACT (previously Pathfinder) Network is a concept developed by PACT and powered by the World Business Council for Sustainable Development (WBCSD). PACT is working toward the vision of an open and global network of interoperable solutions for the secure peer-to-peer exchange of accurate, primary and verified product emissions data – across all industries and value chains.
 
-For further information, please refer to the [PACT website](https://www.carbon-transparency.com) and the [Pathfinder Network Vision Paper](https://wbcsd.sharepoint.com/:b:/s/ClimateEnergy/EXuphu_V4FZHqG1R8sr1mz8B5bo6bhhF0DBHnWDQq-_vCQ?e=Tae0eR).
+For further information, please refer to the [PACT website](https://www.carbon-transparency.com) and the [PACT Pathfinder Network Vision Paper](https://wbcsd.sharepoint.com/:b:/s/ClimateEnergy/EXuphu_V4FZHqG1R8sr1mz8B5bo6bhhF0DBHnWDQq-_vCQ?e=Tae0eR).
 
 
 ## Disclaimer ## {#disclaimer}
@@ -87,10 +90,10 @@ The license can be found in [[#license]].
     See [[!DATA-MODEL-EXTENSIONS]] and [[!EXTENSIONS-GUIDANCE]] for further details.
 
 : <dfn>Data recipient</dfn>
-:: The [=SCA|Supply Chain Actor=] requesting and/or receiving [=PCF=] data from another [=SCA=].
+:: The company requesting and/or receiving [=PCF=] data from another company, using the technical means specified in this document.
 
 : <dfn>Data owner</dfn>
-:: The Supply Chain Actor (SCA) exchanging PCF data with another SCA.
+:: The company exchanging PCF data with another company, using the technical means specified in this document.
 
 : <dfn>interoperable</dfn>
 :: The quality of being able to exchange data between [=host systems=] irrespective of the vendors of the host systems, without the need for translation or transformation of the data.
@@ -104,23 +107,21 @@ The license can be found in [[#license]].
 : Partnership for Carbon Transparency (<dfn>PACT</dfn>)
 :: A WBCSD-led group of companies and organizations working together to develop a global and open network for the secure peer-to-peer exchange of accurate, primary and verified product emissions data. See [www.carbon-transparency.com](www.carbon-transparency.com) for more information.
 
-: Pathfinder Framework Version 2.0 (<dfn>Pathfinder Framework</dfn>)
+: PACT Methodology Version 2.0 (<dfn>PACT Methodology</dfn>)
 :: Guidance for the Accounting and Exchange of Product Life Cycle Emissions,
     building on existing standards and protocols, such as the GHG Protocol
-    Product standard. See [[!PATHFINDER-FRAMEWORK]] for further details.
+    Product standard. Previously named PACT Framework. 
+    See [[!PACT-METHODOLOGY]] for further details.
 
-: <dfn>Pathfinder Network</dfn>
-:: An information network of and for supply chain actors to securely exchange environmental data with each other, with an initial focus on PCF data.
+: <dfn>PACT Network</dfn>
+:: An information network (previously Pathfinder Network) of and for companies to securely exchange environmental data with each other, with an initial focus on PCF data.
 
 : Product Carbon Footprint (<dfn>PCF</dfn>)
 :: The carbon (equivalent) emissions relating to a product. Products can be any kind of item exchanged between entities, including metric or volumetric quantities of a product.
-     The <{ProductFootprint}> data model is a digital representation of a PCF in accordance with the [=Pathfinder Framework=].
-
-: Supply Chain Actor (<dfn>SCA</dfn>)
-:: An entity intending on exchanging PCF data with another entity using the technical means specified in this document.
+     The <{ProductFootprint}> data model is a digital representation of a PCF in accordance with the [=PACT Methodology=].
 
 : <dfn>Solution Provider</dfn>
-:: An entity providing technical solutions to SCAs by implementing and offering [=host systems=].
+:: An entity providing technical solutions to companies by implementing and offering [=host systems=].
 
 : <dfn>UN geographic region</dfn>, <dfn>UN geographic subregion</dfn>
 :: See [https://unstats.un.org/unsd/methodology/m49/](https://unstats.un.org/unsd/methodology/m49/) for details.
@@ -144,7 +145,7 @@ A conforming requesting [=data recipient=] is any algorithm realized as software
 Note: This chapter is non-normative.
 
 Due to the complexity and nature of global supply chains, achieving transparency in carbon emissions at the product level is a challenging task.
-As the [[!PATHFINDER-FRAMEWORK|Pathfinder Framework Version 2.0]] provides the methodological foundations for calculating product carbon footprints (PCFs),
+As the [[!PACT-METHODOLOGY|PACT Methodology Version 2.0]] provides the methodological foundations for calculating product carbon footprints (PCFs),
 this specification focuses on enabling transparency through a peer-to-peer PCF data exchange by specifying necessary aspects for achieving interoperability, such as the [[#data-model|data model]] and [[#api|API]].
 
 However, these two aspects can be combined in various ways to achieve different business objectives.
@@ -177,13 +178,23 @@ For now, this chapter focuses on asynchronous event processing. It will be expan
 
 #### Workflow #### {#business-cases-async-events-1-workflow}
 
+A graphical representation of the workflow is given below. However, this flow is for illustrative
+purposes only and does not replace or otherwise alter the text below the diagram.
+
+Note: All requests to the `/events` endpoint require authentication (omitted from the diagram
+below). See [[#api-auth]] for details.
+
+<figure>
+  <img src="diagrams/events.svg" height="100%" width="100%" >
+  <figcaption>Event processing workflow.</figcaption>
+</figure>
+
 1. The data recipient sends a `ProductFootprintFragment`  to the `Events Endpoint` of the data owner. The data recipient should always include 1 or more product ids in property `productIds`. The data recipient should limit each fragment to exactly 1 specific product (e.g. a specific type of apple instead of all apples that somebody is offering)
-    1. If the recipient is requesting a specific reporting period, it should include the reporting
-        period accordingly
+    1. If the recipient is requesting a specific reference period, it should include the reference period accordingly
         <div class="example">
           ```json
           {
-            "productIds": ["urn:pathfinder:company:customcode:buyer-assigned:4321"],
+            "productIds": ["urn:pact:company:customcode:buyer-assigned:4321"],
             "referencePeriodStart": "2023-01-01T00:00:00Z",
             "referencePeriodEnd": "2024-01-01T00:00:00Z"
           }
@@ -193,7 +204,7 @@ For now, this chapter focuses on asynchronous event processing. It will be expan
         <div class="example">
           ```json
           {
-            "productIds": ["urn:pathfinder:company:customcode:buyer-assigned:4321"],
+            "productIds": ["urn:pact:company:customcode:buyer-assigned:4321"],
             "geographyCountry": "FR"
           }
           ```
@@ -237,7 +248,7 @@ For now, this chapter focuses on asynchronous event processing. It will be expan
 # Data Model # {#data-model}
 
 This section specifies a data model for [[#dt-pf|product footprints]] conforming
-with the [=Pathfinder Framework=] Version 2.
+with the [=PACT Methodology=] Version 2.
 
 The data model consists of the following major data types:
 
@@ -263,7 +274,7 @@ further information to a <{ProductFootprint}>.
 
 `ProductFootprint` is a data type which represents the carbon footprint
 of a product under a specific scope ([[#dt-carbonfootprint-scope]])
-and with values calculated in accordance with the [=Pathfinder Framework=].
+and with values calculated in accordance with the [=PACT Methodology=].
 
 The objective of a `ProductFootprint` is to provide interoperability between
 the creator (the [=data owner=]) and the consumer (the [=data recipient=]) of
@@ -351,8 +362,20 @@ A ProductFootprint has the following properties:
         <td>String
         <td>O
         <td>
-          If defined, the value should be a message explaining the reason for the current status.
+          If defined, a descriptive reasoning explaining the current status of the PCF, what was changed since the last version, etc. If the PCF was changed since a previous version, indicate all methodological and/or production process change(s) that occurred to result in the PCF change. For example, include the relevant change(s) from the list below:
 
+          Methodological:
+          - Access to new Emission Factor data (database, supplier-specific, company-specific)
+          - Updated upstream data (i.e. upstream supplier updated their PCF based on methodology change)
+
+          Production Process:
+          - Change in process
+          - Change in feedstock
+          - Change from conventional to certified sustainable material
+          - Change in energy source
+          - Change in upstream supplier
+          - Updated upstream data (i.e. upstream supplier updated their PCF based on process change)
+        
           See [[#lifecycle]] for details.
       <tr>
         <td><dfn>validityPeriodStart</dfn> : [=DateTime=]
@@ -389,7 +412,7 @@ A ProductFootprint has the following properties:
         <td><dfn>productDescription</dfn>
         <td>String
         <td>M
-        <td>The free-form description of the product plus other information related to it such as production technology or packaging.
+        <td>The free-form description of the product, including any additional relevant information such as production technology, packaging, process, feedstock and technical parameters (e.g. dimensions). Products which are services (i.e. consulting) should include a short description of the service.
       <tr>
         <td><dfn>productIds</dfn> : [=ProductIdSet=]
         <td>Array
@@ -442,13 +465,13 @@ A ProductFootprint has the following properties:
 
 ## Data Type: <dfn element>CarbonFootprint</dfn> ## {#dt-carbonfootprint}
 
-A CarbonFootprint represents the carbon footprint of a product and related data in accordance with the [=Pathfinder Framework=].
+A CarbonFootprint represents the carbon footprint of a product and related data in accordance with the [=PACT Methodology=].
 
 ### Scope of a CarbonFootprint ### {#dt-carbonfootprint-scope}
 
 Each CarbonFootprint is scoped by
-1. Time Period: the time period is defined by the properties <{CarbonFootprint/referencePeriodStart}> and <{CarbonFootprint/referencePeriodEnd}> (see [=Pathfinder Framework=] section 6.1.2.1)
-2. Geography: further set by the properties <{CarbonFootprint/geographyRegionOrSubregion}>, <{CarbonFootprint/geographyCountry}>, and <{CarbonFootprint/geographyCountrySubdivision}> (see [=Pathfinder Framework=] section 6.1.2.2)
+1. Time Period: the time period is defined by the properties <{CarbonFootprint/referencePeriodStart}> and <{CarbonFootprint/referencePeriodEnd}> (see [=PACT Methodology=] section 6.1.2.1)
+2. Geography: further set by the properties <{CarbonFootprint/geographyRegionOrSubregion}>, <{CarbonFootprint/geographyCountry}>, and <{CarbonFootprint/geographyCountrySubdivision}> (see [=PACT Methodology=] section 6.1.2.2)
 
 If a CarbonFootprint
 1. Has geographical granularity `Global`, then the properties <{CarbonFootprint/geographyCountry}> and <{CarbonFootprint/geographyRegionOrSubregion}> and <{CarbonFootprint/geographyCountrySubdivision}> MUST be `undefined`;
@@ -499,8 +522,8 @@ An overview of the relationship between the geographic scope and the definedness
 The properties of a CarbonFootprint are listed in the table below.
 
 Advisement:
-  The properties marked with `O*` are OPTIONAL only for reporting periods
-  before 2025, and for reporting periods including the beginning of calendar
+  The properties marked with `O*` are OPTIONAL only for reference periods
+  before 2025, and for reference periods including the beginning of calendar
   year 2025 or later, the properties marked with `O*` MUST be defined.
 
 <figure id="pf-carbonfootprint-properties-table" dfn-type="element-attr" dfn-for="CarbonFootprint">
@@ -522,6 +545,21 @@ Advisement:
         <td>String
         <td>M
         <td>The amount of <{CarbonFootprint/declaredUnit|Declared Units}> contained within the product to which the [[#dt-carbonfootprint|PCF]] is referring to. The value MUST be strictly greater than `0`.
+      <tr>
+
+
+        <td><dfn>productMassPerDeclaredUnit</dfn> : [=Decimal=]
+        <td>String
+        <td>O
+        <td>
+
+          Advisement: This property is optional in v2.3 but will be released in v3 as a mandatory attribute.
+
+The mass (in kg) of the product per the provided <{CarbonFootprint/declaredUnit|declared unit}>, excluding packaging.
+          For example, if the declared unit is `piece`, this attribute MUST be populated with the mass of one piece (aka unit) of product.
+          If the declared unit is `liter`, this attribute SHOULD be populated with the mass of 1 liter of product (i.e. the density of the product).
+          If the declared unit is `kilogram`, this attribute SHOULD by definition be populated with `1`.
+          If the product mass is not relevant (i.e. PCF is for an energy (kWh, MJ), logistics (ton.km) or service product), this attribute SHOULD be populated with `0`.
       <tr>
         <td><dfn>pCfExcludingBiogenic</dfn> : [=Decimal=]
         <td>String
@@ -556,7 +594,7 @@ Advisement:
         <td>O*
         <td>If present, emissions resulting from recent (i.e., previous 20 years) carbon stock loss due to land conversion directly on the area of land under consideration. The value of this property MUST include direct land use change (dLUC) where available, otherwise statistical land use change (sLUC) can be used.
           The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg of CO2 equivalent per declared unit` (`kgCO2e / declaredUnit`), expressed as a [=decimal=] equal to or greater than zero.
-          See [=Pathfinder Framework=] (Appendix B) for details.
+          See [=PACT Methodology=] (Appendix B) for details.
       <tr>
         <td><dfn>landManagementGhgEmissions</dfn> : [=Decimal=]
         <td>String
@@ -575,7 +613,7 @@ Advisement:
         <td>O
         <td>If present, emissions resulting from recent (i.e., previous 20 years) carbon stock loss due to land conversion on land not owned or controlled by the company or in its supply chain, induced by change in demand for products produced or sourced by the company.
           The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg of CO2 equivalent per declared unit` (`kgCO2e / declaredUnit`), expressed as a [=decimal=] equal to or greater than zero.
-          See [=Pathfinder Framework=] (Appendix B) for details.
+          See [=PACT Methodology=] (Appendix B) for details.
       <tr>
         <td><dfn>biogenicCarbonWithdrawal</dfn> : [=Decimal=]
         <td>String
@@ -595,7 +633,7 @@ Advisement:
 
           Advisement: This property is DEPRECATED and only kept to ensure backwards-compatibility. It will be removed in version 3 of these Technical Specifications. It does not replace the (also mandatory) property <{CarbonFootprint/ipccCharacterizationFactorsSources}>.
 
-          The IPCC version of the GWP characterization factors used in the calculation of the PCF (see [=Pathfinder Framework=] Section 3.2.2). In case several characterization factors are used, indicate the earliest version used in your calculations, disregarding supplier provided PCFs. The value MUST be one of the following:
+          The IPCC version of the GWP characterization factors used in the calculation of the PCF (see [=PACT Methodology=] Section 3.2.2). In case several characterization factors are used, indicate the earliest version used in your calculations, disregarding supplier provided PCFs. The value MUST be one of the following:
 
           : `AR6`
           :: for the Sixth Assessment Report of the Intergovernmental Panel on Climate Change (IPCC)
@@ -605,7 +643,7 @@ Advisement:
         <td><dfn>ipccCharacterizationFactorsSources</dfn>
         <td>Array of Strings
         <td>M
-        <td>The characterization factors from one or more IPCC Assessment Reports used in the calculation of the PCF (see [=Pathfinder Framework=] Section 3.2.2).
+        <td>The characterization factors from one or more IPCC Assessment Reports used in the calculation of the PCF (see [=PACT Methodology=] Section 3.2.2).
               It MUST be a non-empty set of strings with the format `AR$VERSION$`, where `$VERSION$` stands for the
               IPCC report version number and MUST be an integer.
 
@@ -613,12 +651,41 @@ Advisement:
           <div class=example>["AR6"]</div>
           <div class=example>["AR5", "AR6"]</div>
 
-          Advisement: Per the Framework, the latest available characterization factor version shall be used, i.e., `["AR6"]`. In the event this is not possible, include the set of all characterization factors used.
+          Advisement: Per the Methodology the latest available characterization factor version shall be used, i.e., `["AR6"]`. In the event this is not possible, include the set of all characterization factors used.
       <tr>
         <td><dfn>crossSectoralStandardsUsed</dfn> : [=CrossSectoralStandardSet=]
         <td>Array
         <td>M
-        <td>The cross-sectoral standards applied for calculating or allocating [=GHG=] emissions
+        <td>
+
+          Advisement: This property is DEPRECATED and only kept to ensure backwards-compatibility. It will be removed in version 3 of these Technical Specifications. It does not replace the (also mandatory) property <{CarbonFootprint/crossSectoralStandards}>.
+
+          The cross-sectoral standards applied for calculating or allocating [=GHG=] emissions
+      <tr>
+        <td><dfn>crossSectoralStandards</dfn>
+        <td>Array of Strings
+        <td>M
+        <td>The cross-sectoral standards applied for calculating or allocating [=GHG=] emissions.
+
+          It MUST be a non-empty array and MUST contain only the following values without duplicates:
+
+        : ISO14067
+        :: for the ISO 14067 Standard, "Greenhouse gases — Carbon footprint of products — Requirements and guidelines for quantification"
+        : ISO14083
+        :: for the ISO 14083 Standard, "Greenhouse gases — Quantification and reporting of greenhouse gas emissions arising from transport chain operations"
+        : ISO14040-44
+        :: for the ISO 14040-44 Standard, "Environmental management — Life cycle assessment — Principles and framework"
+        : GHGP Product
+        :: for the Greehouse Gas Protocol (GHGP) Product Standard
+        : PEF
+        :: for the EU Product Environmental Footprint Guide
+        : PACT Methodology `$VERSION$`
+        :: for a given version of the [=PACT Methodology=], where `$VERSION$` is the version number (1.0, 2.0, 3.0, etc.). It is recommended to use the latest version of the Methodology.
+        : PAS2050
+        :: for the Publicly Available Specification (PAS) 2050, "Specification for the assessment of the life cycle greenhouse gas emissions of goods and services". The use of this standard is permitted but not recommended.
+
+          Advisement:
+            The enumeration of standards above CAN evolve in future revisions. A host system MUST accept ProductFootprints from later revisions with `crossSectoralStandards` containing values that are not defined in this specification.
       <tr>
         <td><dfn>productOrSectorSpecificRules</dfn> : [=ProductOrSectorSpecificRuleSet=]
         <td>Array
@@ -659,9 +726,10 @@ Advisement:
         <td>The start (including) of the time boundary for which the PCF value
               is considered to be representative. Specifically, this start date
               represents the earliest date from which activity data was collected
-              to include in the PCF calculation.
+              to include in the PCF calculation. 
 
-              See the [=Pathfinder Framework=] section 6.1.2.1 for further details.
+              See the [=PACT Methodology=] section 6.1.2.1 for further details. 
+              Can also be referred to as 'reporting period'.
       <tr>
         <td><dfn>referencePeriodEnd</dfn> : [=DateTime=]
         <td>String
@@ -669,9 +737,10 @@ Advisement:
         <td>The end (excluding) of the time boundary for which the PCF value is
               considered to be representative. Specifically, this end date
               represents the latest date from which activity data was collected
-              to include in the PCF calculation.
+              to include in the PCF calculation. Can al
 
-              See the [=Pathfinder Framework=] section 6.1.2.1 for further details.
+              See the [=PACT Methodology=] section 6.1.2.1 for further details. 
+              Can also be referred to as 'reporting period'. 
       <tr>
         <td><dfn>geographyCountrySubdivision</dfn>
         <td>String
@@ -694,7 +763,7 @@ Advisement:
         <td><dfn>geographyRegionOrSubregion</dfn> : {{RegionOrSubregion}}
         <td>String
         <td>
-        <td>If present, the value MUST conform to data type {{RegionOrSubregion}}. See [[#dt-carbonfootprint-scope]] for further details. Additionally, see the [=Pathfinder Framework=] Section 6.1.2.2.
+        <td>If present, the value MUST conform to data type {{RegionOrSubregion}}. See [[#dt-carbonfootprint-scope]] for further details. Additionally, see the [=PACT Methodology=] Section 6.1.2.2.
       <tr>
         <td><dfn>secondaryEmissionFactorSources</dfn> : <{EmissionFactorDSSet}>
         <td>Array
@@ -710,7 +779,7 @@ Advisement:
 
             Advisement: The upper boundary of this property (currently `5`) will be removed in version 3 of the Technical Specifications.
 
-            The Percentage of emissions excluded from PCF, expressed as a decimal number between `0.0` and `5` including. See [=Pathfinder Framework=].
+            The Percentage of emissions excluded from PCF, expressed as a decimal number between `0.0` and `5` including. See [=PACT Methodology=].
       <tr>
         <td><dfn>exemptedEmissionsDescription</dfn>
         <td>String
@@ -737,7 +806,7 @@ Advisement:
         <td><dfn>allocationRulesDescription</dfn>
         <td>String
         <td>O
-            <td>If present, a description of any allocation rules applied and the rationale explaining how the selected approach aligns with [=Pathfinder Framework=] rules (see Section 3.3.1.4).
+            <td>If present, a description of any allocation rules applied and the rationale explaining how the selected approach aligns with [=PACT Methodology=] rules (see Section 3.3.1.4).
       <tr>
         <td><dfn>uncertaintyAssessmentDescription</dfn>
         <td>String
@@ -748,26 +817,26 @@ Advisement:
         <td>Number
         <td>O*
         <td>
-          The share of primary data in percent. See the [=Pathfinder Framework=] Sections 4.2.1 and 4.2.2, Appendix B.
+          The share of primary data in percent. See the [=PACT Methodology=] Sections 4.2.1 and 4.2.2, Appendix B.
 
-          For reporting periods ending before the beginning of year 2025, at least property <{CarbonFootprint/primaryDataShare}> or propery <{CarbonFootprint/dqi}> MUST be defined.
+          For reference periods ending before the beginning of year 2025, at least property <{CarbonFootprint/primaryDataShare}> or propery <{CarbonFootprint/dqi}> MUST be defined.
 
-          For reporting periods including the beginning of year 2025 or after, this property MUST be defined.
+          For reference periods including the beginning of year 2025 or after, this property MUST be defined.
       <tr>
         <td><dfn>dqi</dfn> : <{DataQualityIndicators}>
         <td>Object
         <td>O*
         <td>
-          If present, the Data Quality Indicators (dqi) in accordance with the [=Pathfinder Framework=] Sections 4.2.1 and 4.2.3, Appendix B.
+          If present, the Data Quality Indicators (dqi) in accordance with the [=PACT Methodology=] Sections 4.2.1 and 4.2.3, Appendix B.
 
-          For reporting periods ending before the beginning of year 2025, at least property <{CarbonFootprint/primaryDataShare}> or propery <{CarbonFootprint/dqi}> MUST be defined.
+          For reference periods ending before the beginning of year 2025, at least property <{CarbonFootprint/primaryDataShare}> or propery <{CarbonFootprint/dqi}> MUST be defined.
 
-          For reporting periods including the beginning of year 2025 or after, this property MUST be defined.
+          For reference periods including the beginning of year 2025 or after, this property MUST be defined.
       <tr>
         <td><dfn>assurance</dfn> : <{Assurance}>
         <td>Object
         <td>O
-            <td>If present, the Assurance information in accordance with the [=Pathfinder Framework=].
+            <td>If present, the Assurance information in accordance with the [=PACT Methodology=].
   </table>
   <figcaption>Properties of data type CarbonFootprint</figcaption>
 
@@ -776,9 +845,9 @@ Advisement:
 
 ## Data Type: <dfn element>DataQualityIndicators</dfn> ## {#dt-dataqualityindicators}
 
-Data type `DataQualityIndicators` contains the quantitative data quality indicators in conformance with [=Pathfinder Framework=] Section 4.2.3 and Appendix B.
+Data type `DataQualityIndicators` contains the quantitative data quality indicators in conformance with [=PACT Methodology=] Section 4.2.3 and Appendix B.
 
-Each property is optional until the reporting period includes the beginning of calendar year 2025, or later, when all properties MUST be defined.
+Each property is optional until the reference period includes the beginning of calendar year 2025, or later, when all properties MUST be defined.
 
 The following properties are defined for data type <{DataQualityIndicators}>:
 
@@ -799,7 +868,7 @@ The following properties are defined for data type <{DataQualityIndicators}>:
         <td><dfn>technologicalDQR</dfn>
         <td>Number
         <td>
-          Quantitative data quality rating (DQR) based on the data quality matrix (See [=Pathfinder Framework=] Table 9),
+          Quantitative data quality rating (DQR) based on the data quality matrix (See [=PACT Methodology=] Table 9),
           scoring the technological representativeness of the sources used for PCF calculation based on
           weighted average of all inputs representing >5% of PCF emissions.
 
@@ -860,7 +929,7 @@ The following properties are defined for data type <{DataQualityIndicators}>:
 
 ## Data Type: <dfn element>Assurance</dfn> ## {#dt-assurance}
 
-Data type `Assurance` contains the assurance in conformance with [=Pathfinder Framework=] chapter 5 and appendix B.
+Data type `Assurance` contains the assurance in conformance with [=PACT Methodology=] chapter 5 and appendix B.
 
 The following properties are defined for data type <{Assurance}>:
 
@@ -879,7 +948,7 @@ The following properties are defined for data type <{Assurance}>:
         <td>M
         <td>
           A boolean flag indicating whether the <{CarbonFootprint}> has been
-          assured in line with [=Pathfinder Framework=] requirements (section 5).
+          assured in line with [=PACT Methodology=] requirements (section 5).
       <tr>
         <td><dfn>coverage</dfn>
         <td>String
@@ -1073,7 +1142,7 @@ As an array of objects, with each object conforming to the JSON representation o
 
 ## Data Type: <dfn element>EmissionFactorDS</dfn> ## {#dt-emissionfactords}
 
-An EmissionFactorDS references emission factor databases (see [=Pathfinder Framework=] Section 4.1.3.2).
+An EmissionFactorDS references emission factor databases (see [=PACT Methodology=] Section 4.1.3.2).
 
 ### Properties ### {#dt-emissionfactords-properties}
 
@@ -1107,6 +1176,7 @@ Each <{EmissionFactorDS}> MUST be encoded as a JSON object.
 
 
 ## Data Type: <dfn enum>CrossSectoralStandard</dfn> ## {#dt-crosssectoralstandard}
+Advisement: This data type is DEPRECATED and will be removed in version 3 of these Technical Specifications.
 
 CrossSectoralStandard is the enumeration of accounting standards used for product carbon footprint calculation. Valid values are
 
@@ -1130,6 +1200,8 @@ Each CrossSectoralStandard MUST be encoded as a JSON string.
 
 
 ## Data Type: <dfn>CrossSectoralStandardSet</dfn> ## {#dt-crosssectoralstandardset}
+
+Advisement: This data type is DEPRECATED and will be removed in version 3 of these Technical Specifications.
 
 A set of {{CrossSectoralStandard}} values.
 
@@ -1247,6 +1319,8 @@ DeclaredUnit is the enumeration of accepted declared units with values
 : <dfn>square meter</dfn>
 :: for square meter, the Derived Unit from SI Base Unit `metre`
 
+Advisement: v3 will also include the following `DeclaredUnit`: <dfn>piece</dfn>, for a piece, a unit of product
+
 </dl>
 
 
@@ -1277,11 +1351,11 @@ Each CompanyId MUST be a [=URN=].
 
 ### Custom Company Ids (Company Codes) ### {#dt-companyid-custom}
 
-If the [=data owner=] ([=SCA=]) wishes to use a custom company code assigned to it by
+If the [=data owner=] wishes to use a custom company code assigned to it by
 a [=data recipient=] as a [=CompanyId=] value, the [=data owner=] SHOULD use the following format:
 
 ```
-urn:pathfinder:company:customcode:buyer-assigned:$custom-company-code$
+urn:pact:company:customcode:buyer-assigned:$custom-company-code$
 ```
 
 where `$custom-company-code$` stands for the custom company code assigned by the [=data recipient=].
@@ -1289,15 +1363,15 @@ where `$custom-company-code$` stands for the custom company code assigned by the
 <div class=example>
 A data owner got assigned the custom vendor code `4321` by a buyer, the value of the CompanyId is then:
 
-`urn:pathfinder:company:customcode:buyer-assigned:4321`.
+`urn:pact:company:customcode:buyer-assigned:4321`.
 </div>
 
 
-If the [=data owner=] ([=SCA=]) wishes to use its own custom company code known by
+If the [=data owner=] wishes to use its own custom company code known by
 a [=data recipient=] as a [=CompanyId=] value, the [=data owner=] SHOULD use the following format:
 
 ```
-urn:pathfinder:company:customcode:vendor-assigned:$custom-company-code$
+urn:pact:company:customcode:vendor-assigned:$custom-company-code$
 ```
 
 where `$custom-company-code$` stands for the custom company code set by the [=data recipient=].
@@ -1305,7 +1379,7 @@ where `$custom-company-code$` stands for the custom company code set by the [=da
 <div class=example>
 A data owner uses as custom vendor code `6789` which is known to a buyer, the value of the CompanyId is then:
 
-`urn:pathfinder:company:customcode:vendor-assigned:6789`.
+`urn:pact:company:customcode:vendor-assigned:6789`.
 </div>
 
 
@@ -1327,11 +1401,11 @@ Each ProductId MUST be a [=URN=].
 
 ### Custom Product Ids (Product Codes) ### {#dt-productid-custom}
 
-If the [=data owner=] ([=SCA=]) wishes to use a custom product code assigned to it by
+If the [=data owner=] wishes to use a custom product code assigned to it by
 a [=data recipient=] as a [=ProductId=] value, the [=data owner=] SHOULD use the following format:
 
 ```
-urn:pathfinder:product:customcode:buyer-assigned:$CUSTOM-PRODUCT-CODE$
+urn:pact:product:customcode:buyer-assigned:$CUSTOM-PRODUCT-CODE$
 ```
 
 where `$CUSTOM-PRODUCT-CODE$` stands for the custom product code assigned by the [=data recipient=].
@@ -1339,15 +1413,15 @@ where `$CUSTOM-PRODUCT-CODE$` stands for the custom product code assigned by the
 <div class=example>
 A data owner got assigned the custom product code `1234` for one of its products by a buyer, the value of the ProductId is then:
 
-`urn:pathfinder:product:customcode:buyer-assigned:1234`.
+`urn:pact:product:customcode:buyer-assigned:1234`.
 </div>
 
 
-If the [=data owner=] ([=SCA=]) wishes to use its own custom product code known by
+If the [=data owner=] wishes to use its own custom product code known by
 a [=data recipient=] as a `ProductId` value, the [=data owner=] SHOULD use the following format:
 
 ```
-urn:pathfinder:product:customcode:vendor-assigned:$CUSTOM-PRODUCT-CODE$
+urn:pact:product:customcode:vendor-assigned:$CUSTOM-PRODUCT-CODE$
 ```
 
 where `$CUSTOM-PRODUCT-CODE$` stands for the custom product code set by the [=data recipient=].
@@ -1355,16 +1429,16 @@ where `$CUSTOM-PRODUCT-CODE$` stands for the custom product code set by the [=da
 <div class=example>
 A data owner uses as custom product code `8765` which is known to a buyer, the value of the ProductId is then:
 
-`urn:pathfinder:product:customcode:vendor-assigned:8765`.
+`urn:pact:product:customcode:vendor-assigned:8765`.
 </div>
 
 ### ProductId based on CAS Registry Numbers ### {#dt-productid-cas}
 
-If the [=data owner=] ([=SCA=]) wishes to use a [CAS Registry Number](https://www.cas.org/cas-data/cas-registry)
+If the [=data owner=] wishes to use a [CAS Registry Number](https://www.cas.org/cas-data/cas-registry)
 as a [=ProductId=] value, the [=data owner=] SHOULD use the following format:
 
 ```
-urn:pathfinder:product:id:cas:$CAS-REGISTRY-NUMBER$
+urn:pact:product:id:cas:$CAS-REGISTRY-NUMBER$
 ```
 
 where `$CAS-REGISTRY-NUMBER$` stands for a CAS Registry Number.
@@ -1372,15 +1446,15 @@ where `$CAS-REGISTRY-NUMBER$` stands for a CAS Registry Number.
 <div class=example>
 Example ProductId encoding of ethanol with the CAS Registry Number `64-17-5`:
 
-`urn:pathfinder:product:id:cas:64-17-5`
+`urn:pact:product:id:cas:64-17-5`
 </div>
 
 ### ProductId based on IUPAC InChi Code ### {#dt-productid-inchicode}
 
-If the [=data owner=] ([=SCA=]) wishes to use a [IUPAC InChi Code](https://www.inchi-trust.org/) as a [=ProductId=] value, the [=data owner=] SHOULD use the following format:
+If the [=data owner=] wishes to use a [IUPAC InChi Code](https://www.inchi-trust.org/) as a [=ProductId=] value, the [=data owner=] SHOULD use the following format:
 
 ```
-urn:pathfinder:product:id:iupac-inchi:$INCHI-CODE$
+urn:pact:product:id:iupac-inchi:$INCHI-CODE$
 ```
 
 where `$INCHI-CODE$` stands for a IUPAC InChi Code.
@@ -1391,7 +1465,7 @@ Example ProductId encoding of Aspirin with the IUPAC InChi Code
 `1S/C9H8O4/c1-6(10)13-8-5-3-2-4-7(8)9(11)12/h2-5H,1H3,(H,11,12)`:
 
 ```
-urn:pathfinder:product:id:iupac-inchi:1S%2FC9H8O4%2Fc1-6%2810%2913-8-5-3-2-4-7%288%299%2811%2912%2Fh2-5H%2C1H3%2C%28H%2C11%2C12%29
+urn:pact:product:id:iupac-inchi:1S%2FC9H8O4%2Fc1-6%2810%2913-8-5-3-2-4-7%288%299%2811%2912%2Fh2-5H%2C1H3%2C%28H%2C11%2C12%29
 ```
 
 </div>
@@ -1498,7 +1572,7 @@ Each Decimal MUST be encoded as a JSON String.
 
 ## Data Type: <dfn>PfId</dfn> ## {#dt-pfid}
 
-A PfId MUST be a UUID v4 as specified in [[!RFC4122]].
+A PfId MUST be a UUID v4 as specified in [[!RFC9562]].
 
 
 ### JSON Representation ### {#dt-pfid-json}
@@ -1662,7 +1736,7 @@ Solutions add further functionality on top of this standard in order to enable m
 The following section briefly describes some of the additional functionality which is beyond the scope of this document:
 
 <ol type="a">
-  <li>Footprint calculation according to the Pathfinder Framework</li>
+  <li>Footprint calculation according to the PACT Methodology</li>
   <li>Authentication and access management: the act of deciding and setting which product footprint may be accessed by each data recipient</li>
   <li>Credentials management: the overall functionality to generate access credentials for data recipients, to exchange these credentials with data recipients, to rotate or revoke such credentials, etc.</li>
   <li>Logging: creation and storage of access logs and audit trails related to data exchange, authentication processes, etc.</li>
@@ -1930,7 +2004,7 @@ with request parameters:
     </div>
 
     <div class=example id="example-filter-period">
-        Get footprints for 2023 reporting period:
+        Get footprints for 2023 reference period:
 
         ```$filter=(pcf/referencePeriodStart ge '2023-01-01T00:00:00.000Z') and (pcf/referencePeriodEnd lt '2024-01-01T00:00:00.000Z') ```
     </div>
@@ -2181,7 +2255,7 @@ is requested, such as to select PCFs with specific scope(s) ([[#dt-carbonfootpri
 
 Note: this specification does not yet specify the processing requirements of a host system upon
 receiving such an event. This means the host system can e.g. ignore 1 or more properties, it might
-not accept specific patterns of requests (for instance it might support querying by reporting period
+not accept specific patterns of requests (for instance it might support querying by reference period
 but not by geography), etc.
 
 The [=PF Request Event=] is defined as a JSON-encoded CloudEvent event with the following syntax:
@@ -2527,20 +2601,43 @@ path: LICENSE.md
 
 # Appendix B: Changelog # {#changelog}
 
-## Version 2.2.1 (May 13, 2024) ## {#changelog-2.2.1-20240513}
+## Version 2.3.0-20241002 (October 2, 2024) ## {#changelog-2.3.0-20241002}
+Summary of changes:
+1. Sunsetting the Pathfinder name replacing Pathfinder Framework with 'PACT Methodology' and 'Pathfinder Network' with 'PACT Network'.
+    Exceptions are technical id's for the Events (org.wbcsd.pathfinder.xxx) and mentions in the changelog.
+
+## Version 2.3.0-20240904 (September 4, 2024) ## {#changelog-2.3.0-20240904}
+Summary of changes:
+1. Replaced the term 'reporting period' with 'reference period' for consistency with the attributes <{CarbonFootprint/referencePeriodStart}> and <{CarbonFootprint/referencePeriodEnd}>.
+
+## Version 2.3.0-20240625 (June 25, 2024) ## {#changelog-2.3.0-20240625}
+Summary of changes:
+1. Revision of <{ProductFootprint/productDescription}> to be more descriptive, following decision to keep attribute as mandatory
+2. Indication of deprecation of <{CarbonFootprint/crossSectoralStandardsUsed}> and introduction of <{CarbonFootprint/crossSectoralStandards}>, reflecting consensus reached on ADR32
+3. Addition of advisement that `piece` will be added as a `DeclaredUnit` in v3; addition of attribute <{CarbonFootprint/productMassPerDeclaredUnit}>, per consensus reached on ADR33.
+4. Clarification added to <{ProductFootprint/statusComment}> attribute, per consensus reached in Methodology WG, to include descriptive reasoning behind a given change in status.
+5. Update contact email, Editor, and Former Editors
+
+
+## Version 2.2.1-20240624 (June 24, 2024) ## {#changelog-2.2.1-20240624}
+
+Summary of changes:
+1. add diagram with visual representation of asynchronous event processing workflow
+
+## Version 2.2.1-20240513 (May 13, 2024) ## {#changelog-2.2.1-20240513}
 
 Summary of changes:
 1. fixed [[#api-action-list-example]], [[#api-action-events-example]],
     [[#api-action-get-example]], and [[#business-cases-async-events-1-workflow]] by removing spurious
     `geographicScope` object
 
-## Version 2.2.1 (May 7, 2024) ## {#changelog-2.2.1-20240507}
+## Version 2.2.1-20240507 (May 7, 2024) ## {#changelog-2.2.1-20240507}
 
 Summary of changes:
 1. fixed <{CarbonFootprint/dqi}> value types in all examples
 2. clarification of <{DataQualityIndicators}> by removing misleading link to [=decimal=]
 
-## Version 2.2.1 (Apr 30, 2024) ## {#changelog-2.2.1-20240430}
+## Version 2.2.1-20240430 (Apr 30, 2024) ## {#changelog-2.2.1-20240430}
 
 Summary of changes:
 
@@ -2789,10 +2886,10 @@ The following changes have been applied for version 1.0.1
     "status": "LS",
     "publisher": "The Linux Foundation"
   },
-  "PATHFINDER-FRAMEWORK": {
+  "PACT-METHODOLOGY": {
     "authors": [],
     "href": "https://wbcsd.github.io/tr/2023/framework-20232601/framework.pdf",
-    "title": "Pathfinder Framework: Guidance for the Accounting and Exchange of Product Life Cycle Emissions (Version 2.0)",
+    "title": "PACT Pathfinder Framework: Guidance for the Accounting and Exchange of Product Life Cycle Emissions (Version 2.0)",
     "status": "LS",
     "publisher": "WBCSD"
   },

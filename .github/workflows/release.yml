@@ -1,0 +1,80 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version"
+        required: true
+      draft:
+        description: "Flags if the release is a Consultation Draft"
+        default: "false"
+        required: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install Bikeshed
+        run: pip3 install bikeshed && bikeshed update
+
+      - name: Install Mermaid
+        run: npm install -g @mermaid-js/mermaid-cli
+
+      - name: Set status
+        id: set-status
+        run: |
+          if [ "${{ github.event.inputs.draft }}" != "false" ]; then
+            echo "::set-output name=status::true"
+          else
+            echo "::set-output name=status::false"
+          fi
+
+      - name: Create release
+        if: ${{ inputs.draft != '' }}
+        run: DRAFT=${{steps.set-status.outputs.status}} sh ./spec/release.sh
+
+      - name: Get date
+        id: date
+        run: echo "::set-output name=year::$(date +'%Y')" && echo "::set-output name=date::$(date +'%Y%m%d')"
+
+      - name: Push release to tr/${{steps.date.outputs.year}}
+        uses: cpina/github-action-push-to-another-repository@main
+        env:
+          SSH_DEPLOY_KEY: ${{ secrets.SSH_DEPLOY_KEY }}
+        with:
+          source-directory: "spec/release"
+          destination-github-username: "wbcsd"
+          destination-repository-name: "tr"
+          user-email:
+          target-directory: ./${{steps.date.outputs.year}}/data-exchange-protocol-${{steps.date.outputs.date}}
+          target-branch: release-v${{inputs.version}}-${{steps.date.outputs.date}}
+          create-target-branch-if-needed: true
+          commit-message: "Release v${{inputs.version}}"
+
+      - name: Push release to wbcsd/tr
+        uses: cpina/github-action-push-to-another-repository@main
+        env:
+          SSH_DEPLOY_KEY: ${{ secrets.SSH_DEPLOY_KEY }}
+        with:
+          source-directory: "spec/release"
+          destination-github-username: "wbcsd"
+          destination-repository-name: "tr"
+          user-email:
+          target-directory: ./data-exchange-protocol
+          target-branch: release-v${{inputs.version}}-${{steps.date.outputs.date}}
+          create-target-branch-if-needed: true
+          commit-message: "Release v${{inputs.version}}"
+      # - name: Create Pull Request
+      #   env:
+      #     SSH_DEPLOY_KEY: ${{ secrets.SSH_DEPLOY_KEY }}
+      #   run: |
+      #     gh api \
+      #     --method POST \
+      #     -H "Accept: application/vnd.github+json" \
+      #     -H "X-GitHub-Api-Version: 2022-11-28" \
+      #     /repos/wbcsd/tr/actions/workflows/release.yml/dispatches \
+      #     -f "ref=open-pr" -f "inputs[version]=${{inputs.version}}"
