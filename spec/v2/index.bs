@@ -1776,15 +1776,6 @@ Below is a list of examples of <{ProductFootprint/productIds}> as used in the <{
     "urn:pact:inchi-trust.org:substance-key:
     GWEVSGVZZGPLCZ-UHFFFAOYSA-N"]
     ```
-  <tr>
-    <td>TfS
-    
-    TfS platform (i.e. SiGREEN) creates UUID credentials for the PCF. With the next release, there will be a UUID for any entity.
-    <td><div class=example>
-    ```json
-    ["urn:pact:sigreen.siemens.com:component-identifier:
-    4303F98A-785F-42CD-8DE0-0B79F34FCD40"]
-    ```
 </table>
 </figure>
 
@@ -1799,7 +1790,6 @@ Below is a list of examples of <{ProductFootprint/productIds}> as used in the <{
 This section defines an [[!rfc9112|HTTP]]-based API for the [=interoperable=] exchange of [[#dt-pf|Product Footprint]] data between [=host systems=].
 
 The scope of the HTTP API is minimal by design. Additional features will be added in future versions of this specification.
-
 
 
 
