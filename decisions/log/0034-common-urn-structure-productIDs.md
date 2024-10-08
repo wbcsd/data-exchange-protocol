@@ -6,7 +6,7 @@ Date: 2024-09-10
 
 Proposed
 
-An earlier version of this proposal was introduced to the PACT Tech Working Group in Fall 2023; the proposal was then refined and evolved based on community and initaitive feedback. The proposal is now in its final stages of revision, and following presentation to the PACT Tech WG September 11, a call for consensus will be conducted in the September 25 WG.
+An earlier version of this proposal was introduced to the PACT Tech Working Group in Fall 2023; the proposal was then refined and evolved based on community and initaitive feedback. The proposal has been presented to the PACT Tech WG September 11, and accepted with consensus in the September 25 WG.
 
 ## Context
 
