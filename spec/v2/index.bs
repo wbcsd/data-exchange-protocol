@@ -2906,7 +2906,7 @@ Overview of the changes to the data model compared with the data model version 1
   - property `landUseEmissions` renamed to <{CarbonFootprint/landManagementGhgEmissions}>
   - property `otherEmissions` renamed to <{CarbonFootprint/otherBiogenicGhgEmissions}>
 - data type [=CompanyId=]: added, including instructions on custom company codes
-- changes to data type [=ProductId=]: addition of instructions ([[#dt-productid-cas]], [[#dt-productid-inchicode]], [[#dt-productid-custom]])
+- changes to data type [=ProductId=]: addition of instructions for CAS, InChi and custom URN's.
 
 ### API Changes ### {#changelog-2.0.0-api}
 
