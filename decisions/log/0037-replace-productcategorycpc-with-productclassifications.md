@@ -4,7 +4,7 @@ Date: 2024-09-10
 
  Proposed
 
-The proposal is now in its final stages of revision, and following presentation to the PACT Tech WG September 11, a call for consensus will be conducted in the September 25 WG.
+The proposal is now in its final stages of revision, and following presentation to the PACT Tech WG September 11, consensus has been reached during the September 25 WG. This ADR will be included in version 2.3 of the Technical Specifications.
 
  ## Context
 

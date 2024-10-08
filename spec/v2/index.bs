@@ -417,14 +417,20 @@ A ProductFootprint has the following properties:
         <td><dfn>productIds</dfn> : [=ProductIdSet=]
         <td>Array
         <td>M
-        <td>The non-empty set of [=ProductIds=]. Each of the values in the set is supposed to uniquely identify the product. What constitutes a suitable product identifier depends on the product, the conventions, contracts, and agreements between the [=Data Owner=] and a [=Data Recipient=] and is out of the scope of this specification.
+        <td>The non-empty set of [=ProductIds=] in [=URN=] format. Each of the values in the set is supposed to uniquely identify the product. What constitutes a suitable product identifier depends on the product, the conventions, contracts, and agreements between the [=Data Owner=] and a [=Data Recipient=] and is out of the scope of this specification.
+      <tr>
+        <td><dfn>productClassifications</dfn>
+        <td>Array of [=ProductClassification=]
+        <td>O
+        <td>
+          The non-empty set of [=ProductClassifications=] in [=URN=] format. Each of the values in the set can classify the product as part of distinct groupings and categorizations. This property will supersede the [=CpcCode=] property in version 3 of the Technical Specifications.
       <tr>
         <td><dfn>productCategoryCpc</dfn> : [=CpcCode=]
         <td>String
         <td>M
         <td>
 
-          Advisement: This property will become OPTIONAL in version 3 of the Technical Specifications.
+          Advisement: This property will become DEPRECATED in version 3 of the Technical Specifications. It will be replaced by productClassifications
 
           The UN Central Product Classification (CPC) that the given product belongs to.
       <tr>
@@ -1469,6 +1475,80 @@ urn:pact:product:id:iupac-inchi:1S%2FC9H8O4%2Fc1-6%2810%2913-8-5-3-2-4-7%288%299
 ```
 
 </div>
+
+## Data Type: <dfn>ProductClassification</dfn> ## {#dt-productclassification}
+
+A ProductClassification is a [[URN]] conforming to the syntax described under Product Identifiers and Classifiers.
+
+The URN follows this syntax:
+
+`urn:pact:$fqdn-of-issuer$:$identifier-type$:$value$`
+ - `urn:pact:` is the fixed sub-string to identify the URN Namespace. Based on feedback from the community we propose the use of **pact** as the recommended namespace. See below for considerations.
+
+ - `$fqdn-of-issuer$` is the fully qualified domain name of the organization issuing the category identifier. The issuer of the code can be an organization, company or an initiative (e.g., UN, WBCSD, ISO). Example: `data.mycompany.com` or `unstats.un.org`
+
+ - `$identifier-type$` defines the kind of product category identifier being specified. This brings clarity to the recipient to understand what kind of identifier is provided, is the identifier the buyer’s identifier, the supplier’s identifier, some standard third party identifier, etc.
+
+There are several existing URN namespaces used for classifying or categorizing products, materials, or services across different industries and standards. A URN can be used to uniquely identify a resource in a consistent and persistent way, and some standards use URNs for taxonomy or classification systems. Here are a few notable URN namespaces that might be of interest.
+
+<table>
+<thead>
+<tr>
+<td>
+URN:CPC (Central Product Classification, UN)
+
+This is an international standard for categorizing goods and services.
+<td><div class=example>
+```json
+"urn:cpc:0151 (for wheat)"
+```
+</div>
+</table>
+
+### URN:UNSPSC (United Nations Standard Products and Services Code)
+<div class=example>
+Usage: UNSPSC is a global classification system for products and services, often used in procurement.
+```
+urn:unspsc:43211507 (for desktop computers)
+```
+</div>
+
+### URN:ECLASS
+<div class=example>
+Usage: ECLASS is a standard classification system for products and services, widely used in industrial and engineering contexts.
+```
+urn:eclass:01040101
+```
+</div>
+
+### URN:ISO
+<div class=example>
+Usage: Used for identifying ISO standards, which include many technical standards for materials and products.
+```
+urn:iso:std:iso:4217
+```
+</div>
+
+### URN:MPN (Manufacturer Part Number)
+<div class=example>
+Usage: Used to uniquely identify a part or product as assigned by its manufacturer.
+```
+urn:mpn:3M123456
+```
+</div>
+
+These namespaces allow systems and standards to consistently identify and categorize products, making them useful in a variety of domains like supply chain management, retail, industrial procurement, and publication. If you’re working with a specific product categorization system, you may find these URNs particularly relevant for classification or reference purposes.
+
+<div class=example>
+  31230 represents the class “Wood in chips or particles” in the UN Central Product Classification (CPC) code for the product:
+
+  ```json
+    "productClassifications": [
+      "urn:pact:unstats.un.org:cpc21:31230",
+    ]
+    ```
+</div>
+
 
 ## Data Type: <dfn>URN</dfn> ## {#dt-urn}
 
