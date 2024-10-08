@@ -1647,7 +1647,7 @@ urn:namespace:namespace-specific-string
 
 In determining which URN namespace and corresponding syntax to use, the data owner SHOULD follow the reasoning below:
 
-1.	If an IANA-registered URN namespace exists and is applicable, this SHOULD be used. See (IANA Registered Namespaces)[https://www.iana.org/assignments/urn-namespaces/urn-namespaces.xhtml] for existing specifications, like ISBN.
+1.	If an IANA-registered URN namespace exists and is applicable, this SHOULD be used. See [IANA Registered Namespaces](https://www.iana.org/assignments/urn-namespaces/urn-namespaces.xhtml) for existing specifications, like ISBN.
 
 2.	If a widely used URN schema exists and is applicable, this SHOULD be used, for example GTIN product identifiers.
 
