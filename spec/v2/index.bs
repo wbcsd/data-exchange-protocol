@@ -1647,56 +1647,56 @@ urn:namespace:namespace-specific-string
 
 In determining which URN namespace and corresponding syntax to use, the data owner SHOULD follow the reasoning below:
 
-1.	If an IANA-registered URN namespace exists and is applicable, this SHOULD be used. See IANA Registered Namespaces for existing specifications, like ISBN.
+1.	If an IANA-registered URN namespace exists and is applicable, this SHOULD be used. See (IANA Registered Namespaces)[https://www.iana.org/assignments/urn-namespaces/urn-namespaces.xhtml] for existing specifications, like ISBN.
 
 2.	If a widely used URN schema exists and is applicable, this SHOULD be used, for example GTIN product identifiers.
 
 3.	If the data owner wishes to use a product identifier for which an existing URN specification does not exist, the data owner SHOULD use the following format:
 
 ```
-urn:pact:$fqdn-of-issuer$:$id-type$:$id$
+urn:pact:$domain-of-issuer$:$identifier-type$:$id$
 ```
 
  - `urn:pact`: is the fixed sub-string to identify the URN namespace. 
 
- - `$fqdn-of-issuer$` is the fully qualified domain name [[RFC1035]] of the organization issuing the identifier. Ideally the fully qualified domain points to the product specification. For example: `catalog.mycompany.com`
+ - `$domain-of-issuer$` is the fully qualified domain name [[RFC1035]] of the organization issuing the identifier. Ideally the fully qualified domain points to the product specification. For example: `catalog.mycompany.com`
 
- - `$id-type$` defines the kind of product identifier being specified. This brings clarity to the recipient to understand what kind of identifier is provided. 
+ - `$identifier-type$` defines the kind of product identifier being specified. This brings clarity to the recipient to understand what kind of identifier is provided. 
 
- - `$id$` is the actual id the product within this context. This can be any string uniquely identifying the product.
+ - `$id$` is the actual id of the product within this context. This can be any string uniquely identifying the product.
 
-The following `$id-type$` values are recommended.
+The following `$identifier-type$` values are recommended.
 
 <figure id="pdf-product-id-urn-entities">
 <table class="data">
 <thead>
   <tr>
-    <td>`$id-type$`
+    <td nowrap>`$identifier-type$`
     <td>Description
     <td>Notes
 <tbody>
   <tr>
     <td>`product-id`
     <td>Specifies a product id from a third-party organization, standard, etc. 
-    <td>Use this entity-idtype when no other, more specific one is applicable.
+    <td>Use this identifier-type when no other, more specific one is applicable.
   <tr>
     <td>`buyer-id`
-    <td>Specifies a product id created by the buyer, aka “data recipient”
+    <td>Specifies a product id created by the buyer, aka [=data recipient=].
     <td>This is the equivalent of "buyer-assigned" as referenced in Tech Specs V2.
   <tr>
     <td>`supplier-id`
-    <td> Specifies a product id created by the supplier, aka “data owner”
-    <td>This is the equivalent of "vendor-assigned" as referenced in Tech Specs V2
+    <td> Specifies a product id created by the supplier, aka [=data owner=].
+    <td>This is the equivalent of "vendor-assigned" as referenced in Tech Specs V2.
 </table>
 </figure>
 
-This is a non-exhaustive list of `$entity-idtype$`. This set MAY be extended in minor versions of the standard release. Organizations may contact PACT to propose additional `$entity-idtype$` for consideration to be added as recommended industry-agnostic identifiers. 
+This is a non-exhaustive list of `$identifier-type$`. This set MAY be extended in minor versions of the standard release. Organizations may contact PACT to propose additional `$identifier-type$` for consideration to be added as recommended industry-agnostic identifiers. 
 
-Organizations (especially organizations initiatives) are encouraged to define the relevant `$entity-idtype$` for products within their industry separately. 
+Organizations and industry initiatives are encouraged to define the relevant `$identifier-type$` for products within their industry separately. 
 
 ## Examples ## {#product-identifier-examples}
 
-Below is a list of examples of <{ProductFootprint/productIds}> as used in the <{ProductFootprint}> datat type clarifying the use of well-known and custom URN namespaces for identifying products. 
+Below is a list of examples of <{ProductFootprint/productIds}> as used in the <{ProductFootprint}> data type clarifying the use of well-known and custom URN namespaces for identifying products. 
 
 <figure id="product-id-examples">
 <table class="data">
