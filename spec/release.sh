@@ -1,12 +1,10 @@
 #!/bin/sh
 
 cd spec/v2
-pip3 install bikeshed && bikeshed update
+
 mv header.include header.include_temp
 mv header.include_release header.include
 rm index.html
-
-
 
 if [ "$DRAFT" = "true" ]; then
     RELEASE_STATUS="RELEASE Consultation Draft"
