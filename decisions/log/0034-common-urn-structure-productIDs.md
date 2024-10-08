@@ -82,7 +82,7 @@ If the data owner (SCA) wishes to use a product identifier for which an existing
 
 - `urn:pact:` is the fixed sub-string to identify the URN Namespace. Based on feedback from the community we propose the use of **pact** as the recommended namespace. See below for considerations.
 
-- `$fqdn-of-issuer$` is the fully qualified domain name of the organization issuing the identifier. The issuer of the code can be a company or an initiative (e.g., WBCSD, TFS). The fully qualified domain consists of top-level domain, domain, and sub-domain. Ideally the fully qualified domain points to the product specification. 
+ - `$fqdn-of-issuer$` is the fully qualified domain name [[RFC1035]] of the organization issuing the identifier. Ideally the fully qualified domain points to the product specification. For example: `catalog.mycompany.com`
 
 - `$entity-idtype$` defines the kind of product identifier being specified. This brings clarity to the recipient to understand what kind of identifier is provided, is the identifier the buyer’s identifier, the supplier’s identifier, some standard third party identifier, etc.
 
