@@ -15,14 +15,14 @@ publish: index.html computed-metadata.include
 	cp $(DIAGRAMS) $(OUTDIR)/diagrams/
 	cp $^ $(OUTDIR)
 
-index.html: index.bs $(DIAGRAMS)
+index.html: index.md $(DIAGRAMS)
 	bikeshed spec $< $@ --md-text-macro="$(STATUS)"
 
 %.svg: %.mmd
 	mmdc -i $< -o $@
 
 serve: $(DIAGRAMS)
-	bikeshed serve index.bs
+	bikeshed serve index.md index.html
 
 pull-metadata:
 	curl -o computed-metadata.include https://raw.githubusercontent.com/wbcsd/tr/main/data-exchange-protocol/computed-metadata.include
