@@ -1395,7 +1395,7 @@ Each ProductIdSet MUST be encoded as an array of strings.
 
 ## Data Type: <dfn>ProductId</dfn> ## {#dt-productid}
 
-Each ProductId MUST be a [=URN=], see [[#product-identifiers]] for details and examples.
+Each ProductId MUST be a [=URN=], see [[#product-identification-classification]] for details and examples.
 
 ## Data Type: <dfn>URN</dfn> ## {#dt-urn}
 
@@ -1626,7 +1626,7 @@ For each new ProductFootprint, the [=data owner=] MUST
 4. set <{ProductFootprint/precedingPfIds}> to the set of <{ProductFootprint/id}> of the 1 or more preceding ProductFootprints
 
 
-# Product Identifiers # {#product-identifiers}
+# Product Identification and Classification # {#product-identification-classification}
 
 <div class=note>Non-normative</div>
 
@@ -2685,7 +2685,7 @@ path: LICENSE.md
 Summary of changes:
 1. Sunsetting the Pathfinder name replacing Pathfinder Framework with 'PACT Methodology' and 'Pathfinder Network' with 'PACT Network'.
     Exceptions are technical id's for the Events (org.wbcsd.pathfinder.xxx) and mentions in the changelog.
-2. Added chapter [[#product-identifiers]] including specification and examples for a common URN namespace syntax for <{ProductFootprint/ProductId}>, reflecting consensus reached on ADR34.
+2. Added chapter [[#product-identification-classification]] including specification and examples for a common URN namespace syntax for <{ProductFootprint/ProductId}>, reflecting consensus reached on ADR34.
 
 ## Version 2.3.0-20240904 (September 4, 2024) ## {#changelog-2.3.0-20240904}
 Summary of changes:
