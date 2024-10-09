@@ -417,13 +417,13 @@ A ProductFootprint has the following properties:
         <td><dfn>productIds</dfn> : [=ProductIdSet=]
         <td>Array
         <td>M
-        <td>The non-empty set of [=ProductIds=] in [=URN=] format. Each of the values in the set is supposed to uniquely identify the product. What constitutes a suitable product identifier depends on the product, the conventions, contracts, and agreements between the [=Data Owner=] and a [=Data Recipient=] and is out of the scope of this specification.
+        <td>The non-empty set of [=ProductIds=] in [=URN=] format. Each of the values in the set is supposed to uniquely identify the product. See {#product-identifiers} for syntax and examples.
       <tr>
         <td><dfn>productClassifications</dfn>
         <td>Array of [=ProductClassification=]
         <td>O
         <td>
-          The non-empty set of [=ProductClassifications=] in [=URN=] format. Each of the values in the set can classify the product as part of distinct groupings and categorizations. This property will supersede the [=CpcCode=] property in version 3 of the Technical Specifications.
+          The non-empty set of [=ProductClassifications=] in [=URN=] format. Each of the values in the set can classify the product as part of distinct groupings and categorizations. See {#product-identifiers}. This property will supersede the [=CpcCode=] property in version 3 of the Technical Specifications.
       <tr>
         <td><dfn>productCategoryCpc</dfn> : [=CpcCode=]
         <td>String
