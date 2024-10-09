@@ -853,18 +853,18 @@ The following properties are defined for data type <{DataQualityIndicators}>:
 
 <figure id="pf-dataqualityindicators-properties-table" dfn-type="element-attr" dfn-for="DataQualityIndicators">
   <table class="data">
-    <thead>
-      <tr>
-        <th>Property
-        <th>Type
-        <th>Specification
-    <tbody>
-      <tr>
+  <thead>
+  <tr>
+    <th>Property
+    <th>Type
+    <th>Specification
+  <tbody>
+  <tr>
         <td><dfn>coveragePercent</dfn> : [=Percent=]
         <td>Number
         <td>
           Percentage of PCF included in the data quality assessment based on the `>5%` emissions threshold.
-      <tr>
+  <tr>
         <td><dfn>technologicalDQR</dfn>
         <td>Number
         <td>
@@ -873,7 +873,7 @@ The following properties are defined for data type <{DataQualityIndicators}>:
           weighted average of all inputs representing >5% of PCF emissions.
 
           The value MUST be a [=decimal=] between `1` and `3` including.
-      <tr>
+  <tr>
         <td><dfn>temporalDQR</dfn>
         <td>Number
         <td>
@@ -882,7 +882,7 @@ The following properties are defined for data type <{DataQualityIndicators}>:
           weighted average of all inputs representing >5% of PCF emissions.
 
           The value MUST be between `1` and `3` inclusive.
-      <tr>
+  <tr>
         <td><dfn>geographicalDQR</dfn>
         <td>Number
         <td>
@@ -891,7 +891,7 @@ The following properties are defined for data type <{DataQualityIndicators}>:
           based on weighted average of all inputs representing >5% of PCF emissions.
 
           The value MUST be between `1` and `3` inclusive.
-      <tr>
+  <tr>
         <td><dfn>completenessDQR</dfn>
         <td>Number
         <td>
@@ -900,7 +900,7 @@ The following properties are defined for data type <{DataQualityIndicators}>:
           weighted average of all inputs representing >5% of PCF emissions.
 
           The value MUST be between `1` and `3` inclusive.
-      <tr>
+  <tr>
         <td><dfn>reliabilityDQR</dfn>
         <td>Number
         <td>
@@ -908,8 +908,8 @@ The following properties are defined for data type <{DataQualityIndicators}>:
           scoring the reliability of the data collected for PCF calculation based on
           weighted average of all inputs representing >5% of PCF emissions.
 
-          The value MUST be between `1` and `3` inclusive.
-    </table>
+          The value MUST be between `1` and `3` inclusive.      
+  </table>
   <figcaption>Properties of data type DataQualityIndicators</figcaption>
 </figure>
 
@@ -931,10 +931,10 @@ The following properties are defined for data type <{DataQualityIndicators}>:
 
 Data type `Assurance` contains the assurance in conformance with [=PACT Methodology=] chapter 5 and appendix B.
 
-The following properties are defined for data type <{Assurance}>:
+The following properties are defined for data type <{Assurance}>
 
 <figure id="pf-assurance-properties-table" dfn-type="element-attr" dfn-for="Assurance">
-  <table class="data">
+<table class="data">
     <thead>
       <tr>
         <th>Property
@@ -942,14 +942,14 @@ The following properties are defined for data type <{Assurance}>:
         <th>Req
         <th>Specification
     <tbody>
-      <tr>
+  <tr>
         <td><dfn>assurance</dfn>
         <td>Boolean
         <td>M
         <td>
           A boolean flag indicating whether the <{CarbonFootprint}> has been
           assured in line with [=PACT Methodology=] requirements (section 5).
-      <tr>
+  <tr>
         <td><dfn>coverage</dfn>
         <td>String
         <td>O
@@ -962,7 +962,7 @@ The following properties are defined for data type <{Assurance}>:
 
           This property MAY be undefined only if the kind of assurance was not performed
 
-      <tr>
+  <tr>
         <td><dfn>level</dfn>
         <td>String
         <td>O
@@ -973,7 +973,7 @@ The following properties are defined for data type <{Assurance}>:
 
           This property MAY be undefined only if the kind of assurance was not performed.
 
-      <tr>
+  <tr>
         <td><dfn>boundary</dfn>
         <td>String
         <td>O
@@ -982,25 +982,25 @@ The following properties are defined for data type <{Assurance}>:
           - `Cradle-to-Gate` for Cradle-to-Gate.
 
           This property MAY be undefined only if the kind of assurance was not performed.
-      <tr>
+  <tr>
         <td><dfn>providerName</dfn>
         <td>String
         <td>M
         <td>The non-empty name of the independent third party engaged to undertake the assurance.
 
         Advisement: Given this property was incorrectly and unintentionally published in V2 of the Technical Specifications as Mandatory, it will be reverted to Optional in version 3 of the Technical Specifications.
-      <tr>
+  <tr>
         <td><dfn>completedAt</dfn> : [=DateTime=]
         <td>String
         <td>O
         <td>The date at which the assurance was completed. See data type [=DateTime=] for details.
-      <tr>
+  <tr>
         <td><dfn>standardName</dfn>
         <td>String
         <td>O
         <td>
           Name of the standard against which the PCF was assured.
-      <tr>
+  <tr>
         <td><dfn>comments</dfn>
         <td>String
         <td>O
@@ -1008,7 +1008,7 @@ The following properties are defined for data type <{Assurance}>:
           Any additional comments that will clarify the interpretation of the assurance.
 
           This value of this property MAY be the empty string.
-    </table>
+  </table>
   <figcaption>Properties of data type Assurance</figcaption>
 </figure>
 
