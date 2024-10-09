@@ -932,57 +932,56 @@ The following properties are defined for data type <{Assurance}>
 <table class="data">
   <thead>
   <tr>
-        <th>Property
-        <th>Type
-        <th>Req
-        <th>Specification
+    <th>Property
+    <th>Type
+    <th>Req
+    <th>Specification
   <tbody>
   <tr>
-        <td><dfn>assurance</dfn>
-        <td>Boolean
-        <td>M
-        <td>
-          A boolean flag indicating whether the <{CarbonFootprint}> has been
-          assured in line with [=PACT Methodology=] requirements (section 5).
+    <td><dfn>assurance</dfn>
+    <td>Boolean
+    <td>M
+    <td>
+      A boolean flag indicating whether the <{CarbonFootprint}> has been
+      assured in line with [=PACT Methodology=] requirements (section 5).
   <tr>
-        <td><dfn>coverage</dfn>
-        <td>String
-        <td>O
-        <td>
-          Level of granularity of the emissions data assured, with value equal to
-          - `corporate level` for corporate level
-          - `product line` for product line
-          - `PCF system` for PCF System
-          - `product level` for product level
+    <td><dfn>coverage</dfn>
+    <td>String
+    <td>O
+    <td>
+    Level of granularity of the emissions data assured, with value equal to
+    - `corporate level` for corporate level
+    - `product line` for product line
+    - `PCF system` for PCF System
+    - `product level` for product level
 
-          This property MAY be undefined only if the kind of assurance was not performed
+    This property MAY be undefined only if the kind of assurance was not performed
   <tr>
-        <td><dfn>level</dfn>
-        <td>String
-        <td>O
-        <td>
-          Level of assurance applicable to the PCF, with value equal to
-          - `limited` for limited assurance
-          - `reasonable` for reasonable assurance
+    <td><dfn>level</dfn>
+    <td>String
+    <td>O
+    <td>
+      Level of assurance applicable to the PCF, with value equal to
+      - `limited` for limited assurance
+      - `reasonable` for reasonable assurance
 
-          This property MAY be undefined only if the kind of assurance was not performed.
-
+      This property MAY be undefined only if the kind of assurance was not performed.
   <tr>
-        <td><dfn>boundary</dfn>
-        <td>String
-        <td>O
-        <td>Boundary of the assurance, with value equal to
-          - `Gate-to-Gate` for Gate-to-Gate
-          - `Cradle-to-Gate` for Cradle-to-Gate.
+    <td><dfn>boundary</dfn>
+    <td>String
+    <td>O
+    <td>Boundary of the assurance, with value equal to
+      - `Gate-to-Gate` for Gate-to-Gate
+      - `Cradle-to-Gate` for Cradle-to-Gate.
 
-          This property MAY be undefined only if the kind of assurance was not performed.
+      This property MAY be undefined only if the kind of assurance was not performed.
   <tr>
-        <td><dfn>providerName</dfn>
-        <td>String
-        <td>M
-        <td>The non-empty name of the independent third party engaged to undertake the assurance.
+    <td><dfn>providerName</dfn>
+    <td>String
+    <td>M
+    <td>The non-empty name of the independent third party engaged to undertake the assurance.
 
-        Advisement: Given this property was incorrectly and unintentionally published in V2 of the Technical Specifications as Mandatory, it will be reverted to Optional in version 3 of the Technical Specifications.
+    Advisement: Given this property was incorrectly and unintentionally published in V2 of the Technical Specifications as Mandatory, it will be reverted to Optional in version 3 of the Technical Specifications.
   <tr>
         <td><dfn>completedAt</dfn> : [=DateTime=]
         <td>String
