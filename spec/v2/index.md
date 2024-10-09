@@ -324,13 +324,20 @@ A ProductFootprint has the following properties:
         <td>Array of Strings
         <td>O
         <td>
-            If defined, MUST be non-empty set of preceding product footprint identifiers without duplicates.
-            See [[#dt-pfid]] and [[#lifecycle-classification]] for details.
+          TEST: New description added.
+
+          If defined, MUST be non-empty set of preceding product footprint identifiers without duplicates.
+          See [[#dt-pfid]] and [[#lifecycle-classification]] for details.
   <tr>
         <td><dfn>version</dfn>
         <td>Number
         <td>M
         <td>The version of the <{ProductFootprint}> with value an integer in the inclusive range of `0..2^31-1`.
+  <tr>
+        <td><dfn>TEST: NEW PROP</dfn> : [=DateTime=]
+        <td>String
+        <td>M
+        <td>A ProductFootprint MUST include the property `created` with value the timestamp of 
   <tr>
         <td><dfn>created</dfn> : [=DateTime=]
         <td>String
