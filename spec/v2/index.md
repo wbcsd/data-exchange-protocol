@@ -299,19 +299,19 @@ A ProductFootprint has the following properties:
 
 <figure id="pf-properties-table" dfn-type="element-attr" dfn-for="ProductFootprint">
   <table class="data">
-    <thead>
-      <tr>
-        <th>Property
-        <th>Type
-        <th>Req
-        <th>Specification
-    <tbody>
-      <tr>
+  <thead>
+    <tr>
+      <th>Property
+      <th>Type
+      <th>Req
+      <th>Specification
+  <tbody>
+  <tr>
         <td><dfn>id</dfn> : [=PfId=]
         <td>String
         <td>M
         <td>The product footprint identifier, See [[#dt-pfid]] for details.
-      <tr>
+  <tr>
         <td><dfn>specVersion</dfn>
         <td>String
         <td>M
@@ -319,29 +319,29 @@ A ProductFootprint has the following properties:
             The version of the ProductFootprint data specification with value <code>[VERSION]</code>.
 
             Advisement: Subsequent revisions will update this value according to [Semantic Versioning 2.0.0](https://semver.org/lang/en/).
-      <tr>
+  <tr>
         <td><dfn>precedingPfIds</dfn> : [=PfId=]
         <td>Array of Strings
         <td>O
         <td>
             If defined, MUST be non-empty set of preceding product footprint identifiers without duplicates.
             See [[#dt-pfid]] and [[#lifecycle-classification]] for details.
-      <tr>
+  <tr>
         <td><dfn>version</dfn>
         <td>Number
         <td>M
         <td>The version of the <{ProductFootprint}> with value an integer in the inclusive range of `0..2^31-1`.
-      <tr>
+  <tr>
         <td><dfn>created</dfn> : [=DateTime=]
         <td>String
         <td>M
         <td>A ProductFootprint MUST include the property `created` with value the timestamp of the creation of the ProductFootprint.
-      <tr>
+  <tr>
         <td><dfn>updated</dfn> : [=DateTime=]
         <td>String
         <td>O
         <td>A ProductFootprint SHOULD include the property `updated` with value the timestamp of the ProductFootprint update. A ProductFootprint MUST NOT include this property if an update has never been performed. The timestamp MUST be in UTC.
-      <tr>
+  <tr>
         <td><dfn>status</dfn>
         <td>String
         <td>M
@@ -357,7 +357,7 @@ A ProductFootprint has the following properties:
           :: The product footprint is deprecated and SHOULD NOT be used for e.g. product footprint calculations by [=data recipients=].
 
           See [[#lifecycle]] for details.
-      <tr>
+  <tr>
         <td><dfn>statusComment</dfn>
         <td>String
         <td>O
@@ -377,7 +377,7 @@ A ProductFootprint has the following properties:
           - Updated upstream data (i.e. upstream supplier updated their PCF based on process change)
         
           See [[#lifecycle]] for details.
-      <tr>
+  <tr>
         <td><dfn>validityPeriodStart</dfn> : [=DateTime=]
         <td>String
         <td>O
@@ -393,32 +393,32 @@ A ProductFootprint has the following properties:
               2. the value of <{ProductFootprint/validityPeriodEnd}> MUST be defined with value
                  1. strictly greater than <{ProductFootprint/validityPeriodStart}>, and
                  2. less than or equal to <{CarbonFootprint/referencePeriodEnd}> + 3 years.
-      <tr>
+  <tr>
         <td><dfn>validityPeriodEnd</dfn> : [=DateTime=]
         <td>String
         <td>O
         <td>The end (excluding) of the valid period of the ProductFootprint. See <{ProductFootprint/validityPeriodStart}> for further details.
-      <tr>
+  <tr>
         <td><dfn>companyName</dfn>
         <td>String
         <td>M
         <td>The name of the company that is the ProductFootprint Data Owner, with value a non-empty [=String=].
-      <tr>
+  <tr>
         <td><dfn>companyIds</dfn> : [=CompanyIdSet=]
         <td>Array
         <td>M
         <td>The non-empty set of Uniform Resource Names ([[!RFC8141|URN]]). Each value of this set is supposed to uniquely identify the ProductFootprint Data Owner. See [=CompanyIdSet=] for details.
-      <tr>
+  <tr>
         <td><dfn>productDescription</dfn>
         <td>String
         <td>M
         <td>The free-form description of the product, including any additional relevant information such as production technology, packaging, process, feedstock and technical parameters (e.g. dimensions). Products which are services (i.e. consulting) should include a short description of the service.
-      <tr>
+  <tr>
         <td><dfn>productIds</dfn> : [=ProductIdSet=]
         <td>Array
         <td>M
         <td>The non-empty set of [=ProductIds=]. Each of the values in the set is supposed to uniquely identify the product. What constitutes a suitable product identifier depends on the product, the conventions, contracts, and agreements between the [=Data Owner=] and a [=Data Recipient=] and is out of the scope of this specification.
-      <tr>
+  <tr>
         <td><dfn>productCategoryCpc</dfn> : [=CpcCode=]
         <td>String
         <td>M
@@ -427,12 +427,12 @@ A ProductFootprint has the following properties:
           Advisement: This property will become OPTIONAL in version 3 of the Technical Specifications.
 
           The UN Central Product Classification (CPC) that the given product belongs to.
-      <tr>
+  <tr>
         <td><dfn>productNameCompany</dfn>
         <td>String
         <td>M
         <td>The non-empty trade name of the product.
-      <tr>
+  <tr>
         <td><dfn>comment</dfn>
         <td>String
         <td>M
@@ -443,12 +443,12 @@ A ProductFootprint has the following properties:
           The additional information related to the product footprint.
 
           Whereas the property <{ProductFootprint/productDescription}> contains product-level information, <{ProductFootprint/comment}> SHOULD be used for information and instructions related to the calculation of the footprint, or other information which informs the ability to interpret, to audit or to verify the Product Footprint.
-      <tr>
+  <tr>
         <td><dfn>pcf</dfn> : <{CarbonFootprint}>
         <td>Object
         <td>M
         <td>The carbon footprint of the given product with value conforming to the data type <{CarbonFootprint}>.
-      <tr>
+  <tr>
         <td><dfn>extensions</dfn> : <{DataModelExtension}>[]
         <td>Array
         <td>O
@@ -485,28 +485,28 @@ An overview of the relationship between the geographic scope and the definedness
 <figure id="pdf-geographic-scopes-table">
   <table class="data">
     <thead>
-      <tr>
+  <tr>
         <th>Geographical Granularity / Level of aggregation
         <th>Property <{CarbonFootprint/geographyRegionOrSubregion}>
         <th>Property <{CarbonFootprint/geographyCountry}>
         <th>Property <{CarbonFootprint/geographyCountrySubdivision}>
     <tbody>
-      <tr>
+  <tr>
         <td>Global
         <td>`undefined`
         <td>`undefined`
         <td>`undefined`
-      <tr>
+  <tr>
         <td>Regional or Subregional
         <td>`defined`
         <td>`undefined`
         <td>`undefined`
-      <tr>
+  <tr>
         <td>Country
         <td>`undefined`
         <td>`defined`
         <td>`undefined`
-      <tr>
+  <tr>
         <td>Subdivision
         <td>`undefined`
         <td>`undefined`
@@ -528,44 +528,41 @@ Advisement:
 
 <figure id="pf-carbonfootprint-properties-table" dfn-type="element-attr" dfn-for="CarbonFootprint">
   <table class="data">
-    <thead>
-      <tr>
-        <th>Property
-        <th>Type
-        <th>Req
-        <th>Specification
-    <tbody>
-      <tr>
+  <thead>
+  <tr>
+    <th>Property
+    <th>Type
+    <th>Req
+    <th>Specification
+  <tbody>
+  <tr>
         <td><dfn>declaredUnit</dfn> : {{DeclaredUnit}}
         <td>String
         <td>M
         <td>The unit of analysis of the product. See Data Type {{DeclaredUnit}} for further information.
-      <tr>
+  <tr>
         <td><dfn>unitaryProductAmount</dfn> : [=Decimal=]
         <td>String
         <td>M
         <td>The amount of <{CarbonFootprint/declaredUnit|Declared Units}> contained within the product to which the [[#dt-carbonfootprint|PCF]] is referring to. The value MUST be strictly greater than `0`.
-      <tr>
-
-
+  <tr>
         <td><dfn>productMassPerDeclaredUnit</dfn> : [=Decimal=]
         <td>String
         <td>O
         <td>
-
           Advisement: This property is optional in v2.3 but will be released in v3 as a mandatory attribute.
 
-The mass (in kg) of the product per the provided <{CarbonFootprint/declaredUnit|declared unit}>, excluding packaging.
+          The mass (in kg) of the product per the provided <{CarbonFootprint/declaredUnit|declared unit}>, excluding packaging.
           For example, if the declared unit is `piece`, this attribute MUST be populated with the mass of one piece (aka unit) of product.
           If the declared unit is `liter`, this attribute SHOULD be populated with the mass of 1 liter of product (i.e. the density of the product).
           If the declared unit is `kilogram`, this attribute SHOULD by definition be populated with `1`.
           If the product mass is not relevant (i.e. PCF is for an energy (kWh, MJ), logistics (ton.km) or service product), this attribute SHOULD be populated with `0`.
-      <tr>
+  <tr>
         <td><dfn>pCfExcludingBiogenic</dfn> : [=Decimal=]
         <td>String
         <td>M
         <td>The product carbon footprint of the product <i>excluding</i> biogenic CO2 emissions. The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg of CO2 equivalent per declared unit` (`kgCO2e / declaredUnit`), expressed as a [=decimal=] equal to or greater than zero.
-      <tr>
+  <tr>
         <td><dfn>pCfIncludingBiogenic</dfn> : [=Decimal=]
         <td>String
         <td>O*
@@ -573,59 +570,58 @@ The mass (in kg) of the product per the provided <{CarbonFootprint/declaredUnit|
 
               Note: the value of this property can be less than `0` (zero).
 
-      <tr>
+  <tr>
         <td><dfn>fossilGhgEmissions</dfn> : [=Decimal=]
         <td>String
         <td>M
         <td>The emissions from fossil sources as a result of fuel combustion, from fugitive emissions, and from process emissions. The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg of CO2 equivalent per declared unit` (`kgCO2e / declaredUnit`), expressed as a [=decimal=] equal to or greater than zero.
-      <tr>
+  <tr>
         <td><dfn>fossilCarbonContent</dfn> : [=Decimal=]
         <td>String
         <td>M
         <td>The fossil carbon content of the product (mass of carbon). The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg Carbon per declared unit` (`kgC / declaredUnit`), expressed as a [=decimal=] equal to or greater than zero.
-      <tr>
+  <tr>
         <td><dfn>biogenicCarbonContent</dfn> : [=Decimal=]
         <td>String
         <td>M
         <td>The biogenic carbon content of the product (mass of carbon). The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg Carbon per declared unit` (`kgC / declaredUnit`), expressed as a [=decimal=] equal to or greater than zero.
-      <tr>
+  <tr>
         <td><dfn>dLucGhgEmissions</dfn> : [=Decimal=]
         <td>String
         <td>O*
         <td>If present, emissions resulting from recent (i.e., previous 20 years) carbon stock loss due to land conversion directly on the area of land under consideration. The value of this property MUST include direct land use change (dLUC) where available, otherwise statistical land use change (sLUC) can be used.
           The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg of CO2 equivalent per declared unit` (`kgCO2e / declaredUnit`), expressed as a [=decimal=] equal to or greater than zero.
           See [=PACT Methodology=] (Appendix B) for details.
-      <tr>
+  <tr>
         <td><dfn>landManagementGhgEmissions</dfn> : [=Decimal=]
         <td>String
         <td>O*
         <td>If present, GHG emissions and removals associated with land-management-related changes, including non-CO2 sources.
           The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg of CO2 equivalent per declared unit` (`kgCO2e / declaredUnit`), expressed as a [=decimal=].
-      <tr>
+  <tr>
         <td><dfn>otherBiogenicGhgEmissions</dfn> : [=Decimal=]
         <td>String
         <td>O*
         <td>If present, all other biogenic GHG emissions associated with product manufacturing and transport that are not included in dLUC (<{CarbonFootprint/dLucGhgEmissions}>), iLUC (<{CarbonFootprint/iLucGhgEmissions}>), and land management (<{CarbonFootprint/landManagementGhgEmissions}>).
           The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg of CO2 equivalent per declared unit` (`kgCO2e / declaredUnit`), expressed as a [=decimal=] equal to or greater than zero.
-      <tr>
+  <tr>
         <td><dfn>iLucGhgEmissions</dfn> : [=Decimal=]
         <td>String
         <td>O
         <td>If present, emissions resulting from recent (i.e., previous 20 years) carbon stock loss due to land conversion on land not owned or controlled by the company or in its supply chain, induced by change in demand for products produced or sourced by the company.
           The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg of CO2 equivalent per declared unit` (`kgCO2e / declaredUnit`), expressed as a [=decimal=] equal to or greater than zero.
           See [=PACT Methodology=] (Appendix B) for details.
-      <tr>
+  <tr>
         <td><dfn>biogenicCarbonWithdrawal</dfn> : [=Decimal=]
         <td>String
         <td>O*
         <td>If present, the Biogenic Carbon contained in the product converted to kilogram of CO2e. The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kgCO2e / declaredUnit` expressed as a [=decimal=] equal to or <i>less than</i> zero.
-
-      <tr>
+  <tr>
         <td><dfn>aircraftGhgEmissions</dfn> : [=Decimal=]
         <td>String
         <td>O
         <td>If present, the GHG emissions resulting from aircraft engine usage for the transport of the product, excluding radiative forcing. The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg of CO2 equivalent per declared unit` (`kgCO2e / declaredUnit`), expressed as a [=decimal=] equal to or greater than zero.
-      <tr>
+  <tr>
         <td><dfn>characterizationFactors</dfn>
         <td>String
         <td>M
@@ -639,7 +635,7 @@ The mass (in kg) of the product per the provided <{CarbonFootprint/declaredUnit|
           :: for the Sixth Assessment Report of the Intergovernmental Panel on Climate Change (IPCC)
           : `AR5`
           :: for the Fifth Assessment Report of the IPCC.
-     <tr>
+  <tr>
         <td><dfn>ipccCharacterizationFactorsSources</dfn>
         <td>Array of Strings
         <td>M
@@ -652,7 +648,7 @@ The mass (in kg) of the product per the provided <{CarbonFootprint/declaredUnit|
           <div class=example>["AR5", "AR6"]</div>
 
           Advisement: Per the Methodology the latest available characterization factor version shall be used, i.e., `["AR6"]`. In the event this is not possible, include the set of all characterization factors used.
-      <tr>
+  <tr>
         <td><dfn>crossSectoralStandardsUsed</dfn> : [=CrossSectoralStandardSet=]
         <td>Array
         <td>M
@@ -661,7 +657,7 @@ The mass (in kg) of the product per the provided <{CarbonFootprint/declaredUnit|
           Advisement: This property is DEPRECATED and only kept to ensure backwards-compatibility. It will be removed in version 3 of these Technical Specifications. It does not replace the (also mandatory) property <{CarbonFootprint/crossSectoralStandards}>.
 
           The cross-sectoral standards applied for calculating or allocating [=GHG=] emissions
-      <tr>
+  <tr>
         <td><dfn>crossSectoralStandards</dfn>
         <td>Array of Strings
         <td>M
@@ -686,12 +682,12 @@ The mass (in kg) of the product per the provided <{CarbonFootprint/declaredUnit|
 
           Advisement:
             The enumeration of standards above CAN evolve in future revisions. A host system MUST accept ProductFootprints from later revisions with `crossSectoralStandards` containing values that are not defined in this specification.
-      <tr>
+  <tr>
         <td><dfn>productOrSectorSpecificRules</dfn> : [=ProductOrSectorSpecificRuleSet=]
         <td>Array
         <td>O
         <td>The product-specific or sector-specific rules applied for calculating or allocating GHG emissions. If no product or sector specific rules were followed, this set MUST be empty.
-      <tr>
+  <tr>
         <td><dfn>biogenicAccountingMethodology</dfn>
         <td>String
         <td>O*
@@ -707,7 +703,7 @@ The mass (in kg) of the product per the provided <{CarbonFootprint/declaredUnit|
           :: For the Quantis [Accounting for Natural Climate Solutions](https://quantis.com/report/accounting-for-natural-climate-solutions-guidance/) Guidance
 
           Advisement: The enumeration of standards above will be evolved in future revisions. Account for this when implementing the validation of this property.
-      <tr>
+  <tr>
         <td><dfn>boundaryProcessesDescription</dfn>
         <td>String
         <td>M
@@ -719,7 +715,7 @@ The mass (in kg) of the product per the provided <{CarbonFootprint/declaredUnit|
 
           Example text value:
           <div class=example>`Electricity consumption included as an input in the production phase`</div>
-      <tr>
+  <tr>
         <td><dfn>referencePeriodStart</dfn> : [=DateTime=]
         <td>String
         <td>M
@@ -730,7 +726,7 @@ The mass (in kg) of the product per the provided <{CarbonFootprint/declaredUnit|
 
               See the [=PACT Methodology=] section 6.1.2.1 for further details. 
               Can also be referred to as 'reporting period'.
-      <tr>
+  <tr>
         <td><dfn>referencePeriodEnd</dfn> : [=DateTime=]
         <td>String
         <td>M
@@ -741,7 +737,7 @@ The mass (in kg) of the product per the provided <{CarbonFootprint/declaredUnit|
 
               See the [=PACT Methodology=] section 6.1.2.1 for further details. 
               Can also be referred to as 'reporting period'. 
-      <tr>
+  <tr>
         <td><dfn>geographyCountrySubdivision</dfn>
         <td>String
         <td>
@@ -751,7 +747,7 @@ The mass (in kg) of the product per the provided <{CarbonFootprint/declaredUnit|
           <div class=example>`US-NY`</div>
           Example value for the department Yonne in France
           <div class=example>`FR-89`</div>
-      <tr>
+  <tr>
         <td><dfn>geographyCountry</dfn> : [=ISO3166CC=]
         <td>String
         <td>
@@ -759,19 +755,19 @@ The mass (in kg) of the product per the provided <{CarbonFootprint/declaredUnit|
 
         Example value in case the geographic scope is France
         <div class=example>`FR`</div>
-      <tr>
+  <tr>
         <td><dfn>geographyRegionOrSubregion</dfn> : {{RegionOrSubregion}}
         <td>String
         <td>
         <td>If present, the value MUST conform to data type {{RegionOrSubregion}}. See [[#dt-carbonfootprint-scope]] for further details. Additionally, see the [=PACT Methodology=] Section 6.1.2.2.
-      <tr>
+  <tr>
         <td><dfn>secondaryEmissionFactorSources</dfn> : <{EmissionFactorDSSet}>
         <td>Array
         <td>O
         <td>If secondary data was used to calculate the <{CarbonFootprint}>, then it MUST include the property <{CarbonFootprint/secondaryEmissionFactorSources}> with value the emission factors used for the <{CarbonFootprint}> calculation.
 
         If no secondary data is used, this property MUST BE `undefined`.
-      <tr>
+  <tr>
         <td><dfn>exemptedEmissionsPercent</dfn>
         <td>Number
         <td>M
@@ -780,7 +776,7 @@ The mass (in kg) of the product per the provided <{CarbonFootprint/declaredUnit|
             Advisement: The upper boundary of this property (currently `5`) will be removed in version 3 of the Technical Specifications.
 
             The Percentage of emissions excluded from PCF, expressed as a decimal number between `0.0` and `5` including. See [=PACT Methodology=].
-      <tr>
+  <tr>
         <td><dfn>exemptedEmissionsDescription</dfn>
         <td>String
         <td>M
@@ -789,12 +785,12 @@ The mass (in kg) of the product per the provided <{CarbonFootprint/declaredUnit|
           Advisement: This property will become OPTIONAL in version 3 of the Technical Specifications.
 
           Rationale behind exclusion of specific PCF emissions, CAN be the empty string if no emissions were excluded.
-      <tr>
+  <tr>
         <td><dfn>packagingEmissionsIncluded</dfn>
         <td>Boolean
         <td>M
         <td>A boolean flag indicating whether packaging emissions are included in the PCF (<{CarbonFootprint/pCfExcludingBiogenic}>, <{CarbonFootprint/pCfIncludingBiogenic}>).
-      <tr>
+  <tr>
         <td><dfn>packagingGhgEmissions</dfn> : [=Decimal=]
         <td>String
         <td>O
@@ -802,17 +798,17 @@ The mass (in kg) of the product per the provided <{CarbonFootprint/declaredUnit|
           Emissions resulting from the packaging of the product.
           If present, the value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg of CO2 equivalent per kilogram` (`kgCO2e / declared unit`), expressed as a [=decimal=] equal to or greater than zero.
           The value MUST NOT be defined if <{CarbonFootprint/packagingEmissionsIncluded}> is `false`.
-      <tr>
+  <tr>
         <td><dfn>allocationRulesDescription</dfn>
         <td>String
         <td>O
             <td>If present, a description of any allocation rules applied and the rationale explaining how the selected approach aligns with [=PACT Methodology=] rules (see Section 3.3.1.4).
-      <tr>
+  <tr>
         <td><dfn>uncertaintyAssessmentDescription</dfn>
         <td>String
         <td>O
             <td>If present, the results, key drivers, and a short qualitative description of the uncertainty assessment.
-      <tr>
+  <tr>
         <td><dfn>primaryDataShare</dfn> : [=Percent=]
         <td>Number
         <td>O*
@@ -822,7 +818,7 @@ The mass (in kg) of the product per the provided <{CarbonFootprint/declaredUnit|
           For reference periods ending before the beginning of year 2025, at least property <{CarbonFootprint/primaryDataShare}> or propery <{CarbonFootprint/dqi}> MUST be defined.
 
           For reference periods including the beginning of year 2025 or after, this property MUST be defined.
-      <tr>
+  <tr>
         <td><dfn>dqi</dfn> : <{DataQualityIndicators}>
         <td>Object
         <td>O*
@@ -832,14 +828,13 @@ The mass (in kg) of the product per the provided <{CarbonFootprint/declaredUnit|
           For reference periods ending before the beginning of year 2025, at least property <{CarbonFootprint/primaryDataShare}> or propery <{CarbonFootprint/dqi}> MUST be defined.
 
           For reference periods including the beginning of year 2025 or after, this property MUST be defined.
-      <tr>
+  <tr>
         <td><dfn>assurance</dfn> : <{Assurance}>
         <td>Object
         <td>O
             <td>If present, the Assurance information in accordance with the [=PACT Methodology=].
-  </table>
-  <figcaption>Properties of data type CarbonFootprint</figcaption>
-
+</table>
+<figcaption>Properties of data type CarbonFootprint</figcaption>
 </figure>
 
 
@@ -935,13 +930,13 @@ The following properties are defined for data type <{Assurance}>
 
 <figure id="pf-assurance-properties-table" dfn-type="element-attr" dfn-for="Assurance">
 <table class="data">
-    <thead>
-      <tr>
+  <thead>
+  <tr>
         <th>Property
         <th>Type
         <th>Req
         <th>Specification
-    <tbody>
+  <tbody>
   <tr>
         <td><dfn>assurance</dfn>
         <td>Boolean
@@ -961,7 +956,6 @@ The following properties are defined for data type <{Assurance}>
           - `product level` for product level
 
           This property MAY be undefined only if the kind of assurance was not performed
-
   <tr>
         <td><dfn>level</dfn>
         <td>String
