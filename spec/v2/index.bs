@@ -1,6 +1,6 @@
 <pre class='metadata'>
 Title: Technical Specifications for PCF Data Exchange
-Text Macro: VERSION 2.3.0-20241008
+Text Macro: VERSION 2.3.0-20241010
 Shortname: data-exchange-protocol
 Level: 1
 Status: LD
@@ -28,7 +28,7 @@ This document contains the necessary technical foundation for the [=PACT Network
 
 The goal of this document is to enable the [=interoperable=] exchange of [=PCF|Product Carbon Footprints=] across [[#conformance|conforming]] [=host systems=].
 
-The methodological foundation of the specification is the PACT Methodology Version 2.0 ([[!PACT-METHODOLOGY]]).
+The methodological foundation of the specification is the PACT Methodology Version 2.0, see [[!PACT-METHODOLOGY]].
 
 ## Status of This Document ## {#status}
 
@@ -2801,11 +2801,14 @@ path: LICENSE.md
 
 # Appendix B: Changelog # {#changelog}
 
-## Version 2.3.0-20241008 (October 8, 2024) ## {#changelog-2.3.0-20241008}
+## Version 2.3.0-20241010 (October 10, 2024) ## {#changelog-2.3.0-20241008}
 Summary of changes:
 1. Sunsetting the Pathfinder name replacing Pathfinder Framework with 'PACT Methodology' and 'Pathfinder Network' with 'PACT Network'.
     Exceptions are technical id's for the Events (org.wbcsd.pathfinder.xxx) and mentions in the changelog.
-2. Added chapter [[#product-identifiers]] including specification and examples for a common URN namespace syntax for <{ProductFootprint/ProductId}>, reflecting consensus reached on ADR34.
+2. Added chapter [[#product-identifiers]] including specification and examples for a common URN namespace syntax for <{ProductFootprint/productIds}> (ADR34)
+3. Included URN namespace syntax for product classifications (ADR37)
+4. Added optional property <{ProductFootprint/productClassifications}> (ADR37)
+5. Advisement that property <{ProductFootprint/productCategoryCpc}> will be deprecated in version 3 (ADR37)
 
 ## Version 2.3.0-20240904 (September 4, 2024) ## {#changelog-2.3.0-20240904}
 Summary of changes:
