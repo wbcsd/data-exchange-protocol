@@ -27,21 +27,21 @@ We believe that the format of such identifiers could likewise benefit from adopt
 <br/>
 
     "productClassifications": [
-        urn:pact:$fqdn-of-issuer$:$identifier-type$:$value$,
+        urn:pact:$domain-of-issuer$:$identifier-type$:$value$,
         ...
     ],
 
  - `urn:pact:` is the fixed sub-string to identify the URN Namespace. Based on feedback from the community we propose the use of **pact** as the recommended namespace. See below for considerations.
 
- - `$fqdn-of-issuer$` is the fully qualified domain name of the organization issuing the category identifier. The issuer of the code can be an organization, company or an initiative (e.g., UN, WBCSD, ISO). The fully qualified domain consists of top-level domain, domain, and sub-domain. Ideally the fully qualified domain points to the product specification. 
+ - `$domain-of-issuer$` is the fully qualified domain name of the organization issuing the category identifier. The issuer of the code can be an organization, company or an initiative (e.g., UN, WBCSD, ISO). Ideally the fully qualified domain points to the product specification. 
 
  - `$identifier-type$` defines the kind of product category identifier being specified. This brings clarity to the recipient to understand what kind of identifier is provided, is the identifier the buyer’s identifier, the supplier’s identifier, some standard third party identifier, etc.
 
 For example:
 
     "productClassifications": [
-      urn:pact:unstats.un.org:cpc21:31230,
-
+      urn:pact:catalog.sample.com:category-id:3002,
+      urn:cpc:31230,
     ],
 
 Where 31230 represents the class “Wood in chips or particles” in the UN Central Product Classification (CPC) code for the product. 

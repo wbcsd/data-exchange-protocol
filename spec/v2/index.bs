@@ -1417,7 +1417,8 @@ A ProductClassification MUST be a [=URN=] conforming to the syntax described und
 
   ```json
     "productClassifications": [
-      "urn:pact:unstats.un.org:cpc21:31230",
+      "urn:pact:catalog.company.com:category-id:550010",
+      "urn:cpc:0151"
     ]
     ```
 </div>
@@ -1819,9 +1820,9 @@ urn:namespace:namespace-specific-string
 
 In determining which URN namespace and corresponding syntax to use, the data owner SHOULD follow the reasoning below:
 
-1.	If an IANA-registered URN namespace exists and is applicable, this SHOULD be used. See [IANA Registered Namespaces](https://www.iana.org/assignments/urn-namespaces/urn-namespaces.xhtml) for existing specifications.
+1.	If an IANA-registered URN namespace exists and is applicable, this SHOULD be used. See [IANA Registered Namespaces](https://www.iana.org/assignments/urn-namespaces/urn-namespaces.xhtml) for existing specifications. Example: 'urn:iso'
 
-2.	If a widely used URN namespace exists and is applicable, this SHOULD be used. 
+2.	If a widely used URN namespace exists and is applicable, this SHOULD be used.
 
 3.	If the data owner wishes to use a product identifier for which an existing URN specification does not exist, the data owner SHOULD use the following format:
 
@@ -1829,7 +1830,7 @@ In determining which URN namespace and corresponding syntax to use, the data own
 
       - `urn:pact:` is the fixed sub-string to identify the URN Namespace. Based on feedback from the community we propose the use of **pact** as the recommended namespace. 
 
-      - `$domain-of-issuer$` is the fully qualified domain name of the organization issuing the category identifier. The issuer of the code can be an organization, company or an initiative (e.g., UN, WBCSD, ISO). Example: `data.mycompany.com` or `unstats.un.org`
+      - `$domain-of-issuer$` is the fully qualified domain name of the organization issuing the category identifier. The issuer of the code can be an organization, company or industry initiative. Example: `categories.mycompany.com`
 
       - `$type$` defines the kind of product category or classification being specified. This brings clarity to the recipient to understand what kind of classification is provided. 
 
@@ -1881,7 +1882,7 @@ In determining which URN namespace and corresponding syntax to use, the data own
   and engineering contexts.
   <td><div class=example>
   ```json
-  "urn:eclass:01040101"
+  "urn:eclass:28070000"
   ```
   </div>
 <tr>
