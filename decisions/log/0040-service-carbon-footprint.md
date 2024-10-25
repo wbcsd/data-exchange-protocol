@@ -6,6 +6,8 @@ Work in progress
 
 ## Context
 Proposal to include service related emissions in the carbon footprint. Addition of units of measurement. 
+Will be based on: 
+https://flat-dollar-c04.notion.site/Explore-the-possibility-of-including-service-carbon-footprints-methodology-3a9e509d97114e058cbacac03a859b9f
 
 ## Proposal 
 
