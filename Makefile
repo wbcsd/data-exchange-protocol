@@ -32,13 +32,14 @@ build/%.html: spec/%.bs
 	bikeshed --allow-nonlocal-files spec $< $@
 
 	@echo Set the status in the document
-	@if [ "$(status)"=="Release" ]; then \
+
+	@if [ '$(status)' == 'Release' ]; then \
 		echo "Release: add version to title"; \
 		mv -f $@ $@.tmp; \
 		sed 's/<title>\(.*\)<\/title>/<title>\1 (Version $(version))<\/title>/g' $@.tmp > $@; \
 		mv -f $@ $@.tmp; \
 		sed 's/\(<h1 .*id="title">.*\)\(<\/h1>\)/\1 (Version $(version))\2/g' $@.tmp > $@; \
-	elif [ "$(status)" == "Draft" || "$(status)" == "Consultation" ]; then \
+	elif [ '$(status)' == 'Draft' ] || [ '$(status)' == 'Consultation' ]; then \
 		echo "No release: add version-date to title"; \
 		mv -f $@ $@.tmp; \
 		sed 's/<title>\(.*\)<\/title>/<title>\1 (Version $(version)-$(date))<\/title>/g' $@.tmp > $@; \
