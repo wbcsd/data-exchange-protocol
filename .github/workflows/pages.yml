@@ -34,8 +34,10 @@ jobs:
         uses: actions/configure-pages@v2
       - name: Install Bikeshed and Mermaid
         run: make install
+        shell: bash
       - name: Build specs
         run: make all
+        shell: bash
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
