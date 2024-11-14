@@ -1,9 +1,23 @@
+<!-- 
+Before publishing, make sure to: 
+ - Add an entry to Changelog
+ - Update the DATE below
+ - STATUS can be Draft|Consultation|Release
+In addition, for publishing a release:
+  Set STATUS Release
+  Update VERSION major.minor.patch
+  Update the Previous Version and TR links
+-->
 <pre class='metadata'>
-Title: Technical Specifications for PCF Data Exchange
+Text Macro: DATE 20241024
 Text Macro: VERSION 2.3.0
-Shortname: data-exchange-protocol
+Text Macro: STATUS Draft
+Title: Technical Specifications for PCF Data Exchange
+TR: https://wbcsd.github.io/tr/2024/data-exchange-protocol-20241024/
+Previous Version: https://wbcsd.github.io/tr/2024/data-exchange-protocol-20240410/
 Level: 1
 Status: LD
+Shortname: data-exchange-protocol
 Mailing List: pact@wbcsd.org
 Editor: Gertjan Schuurmans (WBCSD), https://www.wbcsd.org, schuurmans@wbcsd.org
 Former Editor: Beth Hadley (WBCSD), https://www.wbcsd.org, hadley@wbcsd.org
@@ -14,7 +28,6 @@ Abstract: This document specifies a data model for GHG emission data at product 
 Markup Shorthands: markdown yes, idl yes, dfn yes
 Boilerplate: omit copyright, omit conformance
 Local Boilerplate: header yes
-Local Boilerplate: computed-metadata yes
 Metadata Include: This version off
 </pre>
 
@@ -2792,7 +2805,7 @@ highlight: json
 # Appendix A: License # {#license}
 
 <pre class=include>
-path: LICENSE.md
+path: ../../LICENSE.md
 </pre>
 
 # Appendix B: Changelog # {#changelog}

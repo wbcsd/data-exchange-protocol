@@ -1,9 +1,11 @@
 <pre class='metadata'>
-Title: Technical Specifications for PCF Data Exchange
+Text Macro: DATE 20230201
 Text Macro: VERSION 1.0.1
-Shortname: data-exchange-protocol
+Text Macro: STATUS Release
+Title: Technical Specifications for PCF Data Exchange
 Level: 1
 Status: LD
+Shortname: data-exchange-protocol
 TR: https://wbcsd.github.io/tr/2023/data-exchange-protocol-20230201/
 Mailing List: pact@wbcsd.org
 Editor:
@@ -1384,5 +1386,5 @@ highlight: json
 # Appendix A: License # {#license}
 
 <pre class=include>
-path: LICENSE.md
+path: ../LICENSE.md
 </pre>

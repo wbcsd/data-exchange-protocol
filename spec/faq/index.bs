@@ -11,7 +11,6 @@ Abstract: This document provides Frequently Asked Questions for PACT Technical S
 Repository: wbcsd/data-exchange-protocol
 Markup Shorthands: markdown yes, idl yes, dfn yes
 Boilerplate: omit copyright, omit conformance
-
 </pre>
 
 # Frequently Asked Questions # {#faqs}

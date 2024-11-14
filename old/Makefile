@@ -1,4 +1,4 @@
-OUTDIR := upload
+OUTDIR := ../upload
 MMDC := ./node_modules/.bin/mmdc
 
 all: index.html
@@ -11,7 +11,7 @@ publish: index.html
 	cp $< $(OUTDIR)
 
 index.html: index.bs $(DIAGRAMS)
-	bikeshed spec $< $@
+	bikeshed --allow-nonlocal-files spec $< $@ 
 
 serve:
 	bikeshed serve index.bs
