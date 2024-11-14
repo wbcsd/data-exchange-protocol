@@ -16,7 +16,7 @@ publish: index.html computed-metadata.include
 	cp $^ $(OUTDIR)
 
 index.html: index.bs $(DIAGRAMS)
-	bikeshed spec $< $@ --md-text-macro="$(STATUS)"
+	bikeshed --allow-nonlocal-files spec $< $@ --md-text-macro="$(STATUS)"
 
 %.svg: %.mmd
 	mmdc -i $< -o $@
