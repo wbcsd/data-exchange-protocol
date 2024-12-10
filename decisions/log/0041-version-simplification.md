@@ -1,4 +1,4 @@
-# Proposal to simply versioning of Product Footprints
+# Proposal to simplify versioning of Product Footprints
 Date: 2024-10-21
 
 ## Status
