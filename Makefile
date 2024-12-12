@@ -74,3 +74,26 @@ build: \
 	build/v2/index.html \
 	build/faq/index.html \
 	$(DIAGRAMS)
+
+release: clean build
+	$(eval release_year := 2024)
+	$(eval version := v2)
+	@echo "Release $(version) of the PACT Technical Specifications"
+	@echo "Please read RELEASE.md for more details on publishing the documents."	
+
+	$(eval status := $(shell sed -n 's/^Text Macro: STATUS //p' spec/$(version)/index.bs))
+	$(eval release_date := $(shell sed -n 's/^Text Macro: DATE //p' spec/$(version)/index.bs))
+	@if [ "$(status)" = "Release" ]; then \
+		echo "Creating release at ../tr/$(release_year)/data-exchange-protocol-${release_date}"; \
+		rm -rf ../tr/data-exchange-protocol; \
+		cp -r build/$(version)/ ../tr/data-exchange-protocol; \
+		cp -r build/$(version)/ ../tr/$(release_year)/data-exchange-protocol-${release_date}; \
+		echo "Please create a branch in ../tr, commit the changes and push them to the repository."; \
+		pushd ../tr ; \
+		git fetch origin main ; \
+		git checkout -f -B release-${release_date} origin/main ; \
+		git add . ;\
+		popd ; \
+	else \
+		echo "STATUS is not Release, adapt index.bs. See RELEASE.md for more information."; \
+	fi
