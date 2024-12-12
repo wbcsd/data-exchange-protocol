@@ -668,15 +668,6 @@ The mass (in kg) of the product per the provided <{CarbonFootprint/declaredUnit|
 
           Per the Methodology the latest available characterization factor version shall be used, i.e., `["AR6"]`. In the event this is not possible, include the set of all characterization factors used.
       <tr>
-        <td><dfn>crossSectoralStandardsUsed</dfn> : [=CrossSectoralStandardSet=]
-        <td>Array
-        <td>M
-        <td>
-
-          Advisement: This property is DEPRECATED and only kept to ensure backwards-compatibility. It will be removed in version 3 of these Technical Specifications. It does not replace the (also mandatory) property <{CarbonFootprint/crossSectoralStandards}>.
-
-          The cross-sectoral standards applied for calculating or allocating [=GHG=] emissions
-      <tr>
         <td><dfn>crossSectoralStandards</dfn>
         <td>Array of Strings
         <td>M
@@ -699,8 +690,10 @@ The mass (in kg) of the product per the provided <{CarbonFootprint/declaredUnit|
         : PAS2050
         :: for the Publicly Available Specification (PAS) 2050, "Specification for the assessment of the life cycle greenhouse gas emissions of goods and services". The use of this standard is permitted but not recommended.
 
-          Advisement:
-            The enumeration of standards above CAN evolve in future revisions. A host system MUST accept ProductFootprints from later revisions with `crossSectoralStandards` containing values that are not defined in this specification.
+        The enumeration of standards above CAN evolve in future revisions. A host system MUST accept ProductFootprints from later revisions with `crossSectoralStandards` containing values that are not defined in this specification.
+
+        Advisement: This property supersedes `crossSectoralStandardsUsed` deprecated in version 2.3.
+            
       <tr>
         <td><dfn>productOrSectorSpecificRules</dfn> : [=ProductOrSectorSpecificRuleSet=]
         <td>Array
@@ -1187,42 +1180,6 @@ Example encoding of a <{EmissionFactorDS}> in JSON:
 ### JSON Representation ### {#dt-emissionfactords-json}
 
 Each <{EmissionFactorDS}> MUST be encoded as a JSON object.
-
-
-
-## Data Type: <dfn enum>CrossSectoralStandard</dfn> ## {#dt-crosssectoralstandard}
-Advisement: This data type is DEPRECATED and will be removed in version 3 of these Technical Specifications.
-
-CrossSectoralStandard is the enumeration of accounting standards used for product carbon footprint calculation. Valid values are
-
-<dl dfn-type="enum-value" dfn-for="CrossSectoralStandard">
-
-: <dfn>GHG Protocol Product standard</dfn>
-:: for the GHG Protocol Product standard
-
-: <dfn>ISO Standard 14067</dfn>
-:: for ISO Standard 14067
-
-: <dfn>ISO Standard 14044</dfn>
-:: for ISO Standard 14044
-
-</dl>
-
-### JSON Representation ### {#dt-crosssectoralstandard-json}
-
-Each CrossSectoralStandard MUST be encoded as a JSON string.
-
-
-
-## Data Type: <dfn>CrossSectoralStandardSet</dfn> ## {#dt-crosssectoralstandardset}
-
-Advisement: This data type is DEPRECATED and will be removed in version 3 of these Technical Specifications.
-
-A set of {{CrossSectoralStandard}} values.
-
-### JSON Representation ### {#dt-crosssectoralstandardset-json}
-
-As an array of strings, with each string conforming to the JSON representation of {{CrossSectoralStandard}}.
 
 
 ## Data Type: <dfn element>ProductOrSectorSpecificRule</dfn> ## {#dt-productorsectorspecificrule}
@@ -2807,6 +2764,7 @@ Summary of changes:
 4. Property <{CarbonFootprint/boundaryProcessesDescription}> now optional (ADR31)
 5. Property <{CarbonFootprint/exemptedEmissionsDescription}> now optional (ADR31)
 6. Deprecation of property <{CarbonFootprint/characterizationFactors}> (ADR28)
+7. Removal of `crossSectoralStandardsUsed` which has been deprecated in 2.3 and is now superseeded by extensible crossSectoralStandards (ADR32).
 
 ## Version 2.3.0 (Oct 24, 2024) ## {#changelog-2.3.0}
 
