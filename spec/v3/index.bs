@@ -798,10 +798,10 @@ The mass (in kg) of the product per the provided <{CarbonFootprint/declaredUnit|
       <tr>
         <td><dfn>exemptedEmissionsDescription</dfn>
         <td>String
-        <td>M
+        <td>O
         <td>
 
-          Advisement: This property will become OPTIONAL in version 3 of the Technical Specifications.
+          Advisement: OPTIONAL in 3.0.
 
           Rationale behind exclusion of specific PCF emissions, CAN be the empty string if no emissions were excluded.
       <tr>
@@ -2805,6 +2805,8 @@ Summary of changes:
 2. Deprecation of property <{ProductFootprint/productCategoryCpc}> (ADR37)
 3. Property <{ProductFootprint/comment}> now optional (ADR31)
 4. Property <{CarbonFootprint/boundaryProcessesDescription}> now optional (ADR31)
+5. Property <{CarbonFootprint/exemptedEmissionsDescription}> now optional (ADR31)
+6. Deprecation of property <{CarbonFootprint/characterizationFactors}> (ADR28)
 
 ## Version 2.3.0 (Oct 24, 2024) ## {#changelog-2.3.0}
 
