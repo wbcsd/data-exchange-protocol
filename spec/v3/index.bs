@@ -453,7 +453,7 @@ A ProductFootprint has the following properties:
         <td>O
         <td>
 
-          Advisement: OPTIONAL in 3.0
+          Advisement: OPTIONAL in 3.0.
 
           Additional information related to the product footprint.
 
@@ -643,10 +643,10 @@ The mass (in kg) of the product per the provided <{CarbonFootprint/declaredUnit|
       <tr>
         <td><dfn>characterizationFactors</dfn>
         <td>String
-        <td>M
+        <td>O
         <td>
 
-          Advisement: This property is DEPRECATED and only kept to ensure backwards-compatibility. It will be removed in version 3 of these Technical Specifications. It does not replace the (also mandatory) property <{CarbonFootprint/ipccCharacterizationFactorsSources}>.
+          Advisement: DEPRECATED in 3.0. Superseded by <{CarbonFootprint/ipccCharacterizationFactorsSources}>.
 
           The IPCC version of the GWP characterization factors used in the calculation of the PCF (see [=PACT Methodology=] Section 3.2.2). In case several characterization factors are used, indicate the earliest version used in your calculations, disregarding supplier provided PCFs. The value MUST be one of the following:
 
@@ -666,7 +666,7 @@ The mass (in kg) of the product per the provided <{CarbonFootprint/declaredUnit|
           <div class=example>["AR6"]</div>
           <div class=example>["AR5", "AR6"]</div>
 
-          Advisement: Per the Methodology the latest available characterization factor version shall be used, i.e., `["AR6"]`. In the event this is not possible, include the set of all characterization factors used.
+          Per the Methodology the latest available characterization factor version shall be used, i.e., `["AR6"]`. In the event this is not possible, include the set of all characterization factors used.
       <tr>
         <td><dfn>crossSectoralStandardsUsed</dfn> : [=CrossSectoralStandardSet=]
         <td>Array
