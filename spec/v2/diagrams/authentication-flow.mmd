@@ -1,0 +1,12 @@
+sequenceDiagram
+    Data recipient->>+Host system: GET [AuthHostname]/[AuthSubpath]/.well-known/openid-configuration
+    alt OpenID Connect-enabled authentication workflow
+        Host system -->>-Data recipient: Host system returns valid OpenID Connect document
+        Note over Data recipient: Recipient uses token_endpoint<br/> as AuthEndpoint
+    else
+        Host system-->>Data recipient: Any Error response or invalid OpenID Connect document
+        Note over Data recipient: Recipient uses regular AuthEndpoint:<br/>[AuthHostname]/[AuthSubpath]/auth/token
+    end
+    Data recipient->>Host system: Authentication flow against AuthEndpoint
+    Host system-->>Data recipient: Response as specified in `Action Authenticate`
+    
