@@ -450,12 +450,12 @@ A ProductFootprint has the following properties:
       <tr>
         <td><dfn>comment</dfn>
         <td>String
-        <td>M
+        <td>O
         <td>
 
-          Advisement: This property will become OPTIONAL in version 3 of the Technical Specifications.
+          Advisement: OPTIONAL in 3.0
 
-          The additional information related to the product footprint.
+          Additional information related to the product footprint.
 
           Whereas the property <{ProductFootprint/productDescription}> contains product-level information, <{ProductFootprint/comment}> SHOULD be used for information and instructions related to the calculation of the footprint, or other information which informs the ability to interpret, to audit or to verify the Product Footprint.
       <tr>
@@ -2803,6 +2803,7 @@ path: ../../LICENSE.md
 Summary of changes:
 1. Updated references to the upcoming PACT Framework 3.0 
 2. Deprecation of property <{ProductFootprint/productCategoryCpc}> (ADR37)
+3. Property <{ProductFootprint/comment}> now optional (ADR31)
 
 ## Version 2.3.0 (Oct 24, 2024) ## {#changelog-2.3.0}
 
