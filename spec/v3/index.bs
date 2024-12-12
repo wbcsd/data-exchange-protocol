@@ -432,14 +432,14 @@ A ProductFootprint has the following properties:
         <td>Array of [=ProductClassification=]
         <td>O
         <td>
-          The non-empty set of [=ProductClassifications=] in [=URN=] format. Each of the values in the set can classify the product as part of distinct groupings and categorizations. See {#product-identifiers}. This property will supersede the [=CpcCode=] property in version 3 of the Technical Specifications.
+          The non-empty set of [=ProductClassifications=] in [=URN=] format. Each of the values in the set can classify the product as part of distinct groupings and categorizations. See {#product-identifiers}. This property supersedes the <{ProductFootprint/productCategoryCpc}> property in version 2.x.
       <tr>
-        <td><dfn>productCategoryCpc</dfn> : [=CpcCode=]
+        <td><dfn>productCategoryCpc</dfn>
         <td>String
-        <td>M
+        <td>O
         <td>
 
-          Advisement: This property will become DEPRECATED in version 3 of the Technical Specifications. It will be replaced by productClassifications
+          Advisement: DEPRECATED in 3.0. Use <{ProductFootprint/productClassifications}>.
 
           The UN Central Product Classification (CPC) that the given product belongs to.
       <tr>
@@ -1293,18 +1293,6 @@ A list of [=NonEmptyString=] of length 1 or greater.
 ### JSON Representation ### {#dt-nonemptystringvector-json}
 
 Each NonEmptyStringVector MUST be encoded as an array of [=NonEmptyStrings=].
-
-
-## Data Type: <dfn>CpcCode</dfn> ## {#dt-cpccode}
-
-A CpCode represents a UN CPC Code version 2.1 value.
-
-Example value of the CPC code for "wood in chips or particles":
-<div class="example">`31230`</div>
-
-### JSON Representation ### {#dt-cpccode-json}
-
-Each CpcCode MUST be encoded as a JSON String.
 
 
 ## Data Type: <dfn enum>DeclaredUnit</dfn> ## {#dt-declaredunit}
@@ -2814,6 +2802,7 @@ path: ../../LICENSE.md
 
 Summary of changes:
 1. Updated references to the upcoming PACT Framework 3.0 
+2. Deprecation of property <{ProductFootprint/productCategoryCpc}> (ADR37)
 
 ## Version 2.3.0 (Oct 24, 2024) ## {#changelog-2.3.0}
 
