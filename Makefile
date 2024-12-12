@@ -16,7 +16,7 @@
 # 	Will install bikeshed and mermaid-cli globally
 
 # spec/**.mmd -> build/**.svg
-DIAGRAMS := $(wildcard spec/v2/diagrams/*.mmd)
+DIAGRAMS := $(wildcard spec/v*/diagrams/*.mmd)
 DIAGRAMS := $(DIAGRAMS:spec/%.mmd=build/%.svg)
 SOURCES := $(wildcard **.bs)
 
@@ -70,8 +70,9 @@ clean:
 	rm -rf build
 
 build: \
-	build/index.html \
+	build/v1/index.html \
 	build/v2/index.html \
+	build/v3/index.html \
 	build/faq/index.html \
 	$(DIAGRAMS)
 

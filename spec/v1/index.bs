@@ -1386,5 +1386,5 @@ highlight: json
 # Appendix A: License # {#license}
 
 <pre class=include>
-path: ../LICENSE.md
+path: ../../LICENSE.md
 </pre>
