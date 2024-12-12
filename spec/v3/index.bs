@@ -24,7 +24,7 @@ Former Editor: Beth Hadley (WBCSD), https://www.wbcsd.org, hadley@wbcsd.org
 Former Editor: Martin Pompéry (SINE Foundation), https://sine.foundation, martin@sine.foundation
 Former Editor: Cecilia Valeri (WBCSD), https://www.wbcsd.org, valeri@wbcsd.org
 Former Editor: Raimundo Henriques (SINE Foundation), https://sine.foundation, raimundo@sine.foundation
-Abstract: This document specifies a data model for GHG emission data at product level based on the PACT Methodology (previously Pathfinder Framework) Version 2, and a protocol for interoperable exchange of GHG emission data at product level.
+Abstract: This document specifies a data model for GHG emission data at product level based on the PACT Methodology (previously Pathfinder Framework) Version 3, and a protocol for interoperable exchange of GHG emission data at product level.
 Markup Shorthands: markdown yes, idl yes, dfn yes
 Boilerplate: omit copyright, omit conformance
 Local Boilerplate: header yes
@@ -257,7 +257,7 @@ below). See [[#api-auth]] for details.
 # Data Model # {#data-model}
 
 This section specifies a data model for [[#dt-pf|product footprints]] conforming
-with the [=PACT Methodology=] Version 2.
+with the [=PACT Methodology=] Version 3.
 
 The data model consists of the following major data types:
 
