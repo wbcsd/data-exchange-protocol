@@ -37,7 +37,7 @@ This document contains the necessary technical foundation for the [=PACT Network
 
 The goal of this document is to enable the [=interoperable=] exchange of [=PCF|Product Carbon Footprints=] across [[#conformance|conforming]] [=host systems=].
 
-The methodological foundation of the specification is the PACT Methodology Version 2.0, see [[!PACT-METHODOLOGY]].
+The methodological foundation of the specification is the PACT Methodology Version 3.0, see [[!PACT-METHODOLOGY]].
 
 ## Status of This Document ## {#status}
 
@@ -52,7 +52,7 @@ PACT recommends the wide deployment of this specification.
 
 ## Scope ## {#scope}
 
-The scope of this document is to reach interoperability for product-level GHG emission data exchange through the definition of a data model ([[#data-model]]) based on the [=PACT Methodology=] Version 2.0 and the definition of a HTTP REST API ([[#api]]).
+The scope of this document is to reach interoperability for product-level GHG emission data exchange through the definition of a data model ([[#data-model]]) based on the [=PACT Methodology=] Version 3.0 and the definition of a HTTP REST API ([[#api]]).
 
 
 ## Intended Audience ## {#audience}
@@ -116,7 +116,7 @@ The license can be found in [[#license]].
 : Partnership for Carbon Transparency (<dfn>PACT</dfn>)
 :: A WBCSD-led group of companies and organizations working together to develop a global and open network for the secure peer-to-peer exchange of accurate, primary and verified product emissions data. See [www.carbon-transparency.com](www.carbon-transparency.com) for more information.
 
-: PACT Methodology Version 2.0 (<dfn>PACT Methodology</dfn>)
+: PACT Methodology Version 3.0 (<dfn>PACT Methodology</dfn>)
 :: Guidance for the Accounting and Exchange of Product Life Cycle Emissions,
     building on existing standards and protocols, such as the GHG Protocol
     Product standard. Previously named PACT Framework. 
@@ -154,7 +154,7 @@ A conforming requesting [=data recipient=] is any algorithm realized as software
 Note: This chapter is non-normative.
 
 Due to the complexity and nature of global supply chains, achieving transparency in carbon emissions at the product level is a challenging task.
-As the [[!PACT-METHODOLOGY|PACT Methodology Version 2.0]] provides the methodological foundations for calculating product carbon footprints (PCFs),
+As the [[!PACT-METHODOLOGY|PACT Methodology Version 3.0]] provides the methodological foundations for calculating product carbon footprints (PCFs),
 this specification focuses on enabling transparency through a peer-to-peer PCF data exchange by specifying necessary aspects for achieving interoperability, such as the [[#data-model|data model]] and [[#api|API]].
 
 However, these two aspects can be combined in various ways to achieve different business objectives.
@@ -2809,6 +2809,11 @@ path: ../../LICENSE.md
 </pre>
 
 # Appendix B: Changelog # {#changelog}
+
+## Version 3.0.0-20241212 (Oct 24, 2024) ## {#changelog-2.3.0}
+
+Summary of changes:
+1. Updated references to the upcoming PACT Framework 3.0 
 
 ## Version 2.3.0 (Oct 24, 2024) ## {#changelog-2.3.0}
 
