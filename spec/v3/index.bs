@@ -992,10 +992,10 @@ The following properties are defined for data type <{Assurance}>:
       <tr>
         <td><dfn>providerName</dfn>
         <td>String
-        <td>M
+        <td>O
         <td>The non-empty name of the independent third party engaged to undertake the assurance.
 
-        Advisement: Given this property was incorrectly and unintentionally published in V2 of the Technical Specifications as Mandatory, it will be reverted to Optional in version 3 of the Technical Specifications.
+        Advisement: OPTIONAL in version 3.0.
       <tr>
         <td><dfn>completedAt</dfn> : [=DateTime=]
         <td>String
@@ -2765,6 +2765,7 @@ Summary of changes:
 5. Property <{CarbonFootprint/exemptedEmissionsDescription}> now optional (ADR31)
 6. Deprecation of property <{CarbonFootprint/characterizationFactors}> (ADR28)
 7. Removal of `crossSectoralStandardsUsed` which has been deprecated in 2.3 and is now superseeded by extensible crossSectoralStandards (ADR32).
+8. Assurance/<{Assurance/providername}> now optional, after being mistakenly made mandatory in version 2.x
 
 ## Version 2.3.0 (Oct 24, 2024) ## {#changelog-2.3.0}
 
