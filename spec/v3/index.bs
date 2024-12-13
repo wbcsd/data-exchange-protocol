@@ -432,14 +432,16 @@ A ProductFootprint has the following properties:
         <td>Array of [=ProductClassification=]
         <td>O
         <td>
-          The non-empty set of [=ProductClassifications=] in [=URN=] format. Each of the values in the set can classify the product as part of distinct groupings and categorizations. See {#product-identifiers}. This property supersedes the <{ProductFootprint/productCategoryCpc}> property in version 2.x.
+          The non-empty set of [=ProductClassifications=] in [=URN=] format. Each of the values in the set can classify the product as part of distinct groupings and categorizations. See {#product-identifiers}. 
+          
+          Advisement: Supersedes productCategoryCpc deprecated in version 2.3.
       <tr>
         <td><dfn>productCategoryCpc</dfn>
         <td>String
         <td>O
         <td>
 
-          Advisement: DEPRECATED in 3.0. Use <{ProductFootprint/productClassifications}>.
+          Advisement: DEPRECATED in 3.0. Superseded by <{ProductFootprint/productClassifications}>.
 
           The UN Central Product Classification (CPC) that the given product belongs to.
       <tr>
@@ -659,40 +661,45 @@ The mass (in kg) of the product per the provided <{CarbonFootprint/declaredUnit|
         <td>Array of Strings
         <td>M
         <td>The characterization factors from one or more IPCC Assessment Reports used in the calculation of the PCF (see [=PACT Methodology=] Section 3.2.2).
-              It MUST be a non-empty set of strings with the format `AR$VERSION$`, where `$VERSION$` stands for the
-              IPCC report version number and MUST be an integer.
+          It MUST be a non-empty set of strings with the format `AR$VERSION$`, where `$VERSION$` stands for the
+          IPCC report version number and MUST be an integer.
 
           Example values:
           <div class=example>["AR6"]</div>
           <div class=example>["AR5", "AR6"]</div>
 
           Per the Methodology the latest available characterization factor version shall be used, i.e., `["AR6"]`. In the event this is not possible, include the set of all characterization factors used.
+
+          Advisement: Supersedes `characterizationFactors` deprecated in version 2.3.
+
       <tr>
         <td><dfn>crossSectoralStandards</dfn>
         <td>Array of Strings
         <td>M
         <td>The cross-sectoral standards applied for calculating or allocating [=GHG=] emissions.
 
-          It MUST be a non-empty array and MUST contain only the following values without duplicates:
+          It MUST be a non-empty array and SHOULD contain only the following values without duplicates:
 
-        : ISO14067
+        : `ISO14067`
         :: for the ISO 14067 Standard, "Greenhouse gases — Carbon footprint of products — Requirements and guidelines for quantification"
-        : ISO14083
+        : `ISO14083`
         :: for the ISO 14083 Standard, "Greenhouse gases — Quantification and reporting of greenhouse gas emissions arising from transport chain operations"
-        : ISO14040-44
+        : `ISO14040-44`
         :: for the ISO 14040-44 Standard, "Environmental management — Life cycle assessment — Principles and framework"
-        : GHGP Product
+        : `GHGP-Product`
         :: for the Greehouse Gas Protocol (GHGP) Product Standard
         : PEF
         :: for the EU Product Environmental Footprint Guide
-        : PACT Methodology `$VERSION$`
-        :: for a given version of the [=PACT Methodology=], where `$VERSION$` is the version number (1.0, 2.0, 3.0, etc.). It is recommended to use the latest version of the Methodology.
+        : `PACT-1.0`
+        : `PACT-2.0`
+        : `PACT-3.0`
+        :: for a given version of the [=PACT Methodology=]. It is recommended to use the latest version of the Methodology.
         : PAS2050
         :: for the Publicly Available Specification (PAS) 2050, "Specification for the assessment of the life cycle greenhouse gas emissions of goods and services". The use of this standard is permitted but not recommended.
 
         The enumeration of standards above CAN evolve in future revisions. A host system MUST accept ProductFootprints from later revisions with `crossSectoralStandards` containing values that are not defined in this specification.
 
-        Advisement: This property supersedes `crossSectoralStandardsUsed` deprecated in version 2.3.
+        Advisement: Supersedes `crossSectoralStandardsUsed` deprecated in version 2.3.
             
       <tr>
         <td><dfn>productOrSectorSpecificRules</dfn> : [=ProductOrSectorSpecificRuleSet=]
@@ -703,18 +710,18 @@ The mass (in kg) of the product per the provided <{CarbonFootprint/declaredUnit|
         <td><dfn>biogenicAccountingMethodology</dfn>
         <td>String
         <td>O*
-        <td>The standard followed to account for biogenic emissions and removals. If defined, the value MUST be one of the following:
+        <td>The standard followed to account for biogenic emissions and removals. If defined, the value SHOULD be one of the following:
 
-          : PEF
+          : `PEF`
           :: for the EU [Product Environmental Footprint Guide](https://ec.europa.eu/environment/archives/eussd/pdf/footprint/PEF%20methodology%20final%20draft.pdf)
-          : ISO
+          : `ISO`
           :: For the ISO 14067 standard
-          : GHGP
+          : `GHGP`
           :: For the Greenhouse Gas Protocol (GHGP) Land sector and Removals Guidance
-          : Quantis
+          : `Quantis`
           :: For the Quantis [Accounting for Natural Climate Solutions](https://quantis.com/report/accounting-for-natural-climate-solutions-guidance/) Guidance
 
-          Advisement: The enumeration of standards above will be evolved in future revisions. Account for this when implementing the validation of this property.
+          The enumeration of standards above will be evolved in future revisions. Account for this when implementing the validation of this property.
       <tr>
         <td><dfn>boundaryProcessesDescription</dfn>
         <td>String
