@@ -788,7 +788,7 @@ The mass (in kg) of the product per the provided <{CarbonFootprint/declaredUnit|
         If no secondary data is used, this property MUST BE `undefined`.
       <tr>
         <td><dfn>exemptedEmissionsPercent</dfn>
-        <td>Number
+        <td>[=Decimal=]
         <td>M
         <td>
 
@@ -828,8 +828,8 @@ The mass (in kg) of the product per the provided <{CarbonFootprint/declaredUnit|
         <td>O
             <td>If present, the results, key drivers, and a short qualitative description of the uncertainty assessment.
       <tr>
-        <td><dfn>primaryDataShare</dfn> : [=Percent=]
-        <td>Number
+        <td><dfn>primaryDataShare</dfn>
+        <td>[=Decimal=]
         <td>O*
         <td>
           The share of primary data in percent. See the [=PACT Methodology=] Sections 4.2.1 and 4.2.2, Appendix B.
@@ -864,6 +864,8 @@ Data type `DataQualityIndicators` contains the quantitative data quality indicat
 
 Each property is optional until the reference period includes the beginning of calendar year 2025, or later, when all properties MUST be defined.
 
+Advisement: Starting version 3.0 the properties in DataQualityIndicators are typed [=Decimal=], instead of `Number`.
+
 The following properties are defined for data type <{DataQualityIndicators}>:
 
 <figure id="pf-dataqualityindicators-properties-table" dfn-type="element-attr" dfn-for="DataQualityIndicators">
@@ -875,13 +877,13 @@ The following properties are defined for data type <{DataQualityIndicators}>:
         <th>Specification
     <tbody>
       <tr>
-        <td><dfn>coveragePercent</dfn> : [=Percent=]
-        <td>Number
+        <td><dfn>coveragePercent</dfn>
+        <td>Decimal
         <td>
           Percentage of PCF included in the data quality assessment based on the `>5%` emissions threshold.
       <tr>
         <td><dfn>technologicalDQR</dfn>
-        <td>Number
+        <td>Decimal
         <td>
           Quantitative data quality rating (DQR) based on the data quality matrix (See [=PACT Methodology=] Table 9),
           scoring the technological representativeness of the sources used for PCF calculation based on
@@ -890,7 +892,7 @@ The following properties are defined for data type <{DataQualityIndicators}>:
           The value MUST be a [=decimal=] between `1` and `3` including.
       <tr>
         <td><dfn>temporalDQR</dfn>
-        <td>Number
+        <td>Decimal
         <td>
           Quantitative data quality rating (DQR) based on the data quality matrix (Table 9),
           scoring the temporal representativeness of the sources used for PCF calculation based on
@@ -899,7 +901,7 @@ The following properties are defined for data type <{DataQualityIndicators}>:
           The value MUST be between `1` and `3` inclusive.
       <tr>
         <td><dfn>geographicalDQR</dfn>
-        <td>Number
+        <td>Decimal
         <td>
           Quantitative data quality rating (DQR) based on the data quality matrix (Table 9),
           scoring the geographical representativeness of the sources used for PCF calculation
@@ -908,7 +910,7 @@ The following properties are defined for data type <{DataQualityIndicators}>:
           The value MUST be between `1` and `3` inclusive.
       <tr>
         <td><dfn>completenessDQR</dfn>
-        <td>Number
+        <td>Decimal
         <td>
           Quantitative data quality rating (DQR) based on the data quality matrix (Table 9),
           scoring the completeness of the data collected for PCF calculation based on
@@ -917,7 +919,7 @@ The following properties are defined for data type <{DataQualityIndicators}>:
           The value MUST be between `1` and `3` inclusive.
       <tr>
         <td><dfn>reliabilityDQR</dfn>
-        <td>Number
+        <td>Decimal
         <td>
           Quantitative data quality rating (DQR) based on the data quality matrix (Table 9),
           scoring the reliability of the data collected for PCF calculation based on
@@ -932,11 +934,11 @@ The following properties are defined for data type <{DataQualityIndicators}>:
   Example value for the case that all DQIs are known but no coverage after exemption assessment performed:
   <pre highlight=json>
   {
-    "technologicalDQR": 2.0,
-    "temporalDQR": 2.0,
-    "geographicalDQR": 2.0,
-    "completenessDQR": 2.0,
-    "reliabilityDQR": 2.0
+    "technologicalDQR": "2.0",
+    "temporalDQR": "2.0",
+    "geographicalDQR": "2.0",
+    "completenessDQR": "2.0",
+    "reliabilityDQR": "2.0"
   }
   </pre>
 </div>
