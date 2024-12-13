@@ -2184,7 +2184,6 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
 <div class="head">
   <p data-fill-with="logo"></p>
   <h1 id="title" class="p-name no-ref">[TITLE] (Version [VERSION])</h1>
-  <h2 id="subtitle" class="no-num no-toc no-ref">[STATUS]</h2>
   <div data-fill-with="spec-metadata"></div>
   <div data-fill-with="warning"></div>
   <p class='copyright' data-fill-with='copyright'></p>

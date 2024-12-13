@@ -10,7 +10,7 @@ In addition, for publishing a release:
 -->
 <pre class='metadata'>
 Text Macro: DATE 20241212
-Text Macro: VERSION 2.3.1
+Text Macro: VERSION 3.0.0-wip
 Text Macro: STATUS Draft
 Title: Technical Specifications for PCF Data Exchange
 TR: https://wbcsd.github.io/tr/2024/data-exchange-protocol-20241024/
@@ -24,7 +24,7 @@ Former Editor: Beth Hadley (WBCSD), https://www.wbcsd.org, hadley@wbcsd.org
 Former Editor: Martin Pompéry (SINE Foundation), https://sine.foundation, martin@sine.foundation
 Former Editor: Cecilia Valeri (WBCSD), https://www.wbcsd.org, valeri@wbcsd.org
 Former Editor: Raimundo Henriques (SINE Foundation), https://sine.foundation, raimundo@sine.foundation
-Abstract: This document specifies a data model for GHG emission data at product level based on the PACT Methodology (previously Pathfinder Framework) Version 2, and a protocol for interoperable exchange of GHG emission data at product level.
+Abstract: This document specifies a data model for GHG emission data at product level based on the PACT Methodology (previously Pathfinder Framework) Version 3, and a protocol for interoperable exchange of GHG emission data at product level.
 Markup Shorthands: markdown yes, idl yes, dfn yes
 Boilerplate: omit copyright, omit conformance
 Local Boilerplate: header yes
@@ -37,7 +37,7 @@ This document contains the necessary technical foundation for the [=PACT Network
 
 The goal of this document is to enable the [=interoperable=] exchange of [=PCF|Product Carbon Footprints=] across [[#conformance|conforming]] [=host systems=].
 
-The methodological foundation of the specification is the PACT Methodology Version 2.0, see [[!PACT-METHODOLOGY]].
+The methodological foundation of the specification is the PACT Methodology Version 3.0, see [[!PACT-METHODOLOGY]].
 
 ## Status of This Document ## {#status}
 
@@ -52,7 +52,7 @@ PACT recommends the wide deployment of this specification.
 
 ## Scope ## {#scope}
 
-The scope of this document is to reach interoperability for product-level GHG emission data exchange through the definition of a data model ([[#data-model]]) based on the [=PACT Methodology=] Version 2.0 and the definition of a HTTP REST API ([[#api]]).
+The scope of this document is to reach interoperability for product-level GHG emission data exchange through the definition of a data model ([[#data-model]]) based on the [=PACT Methodology=] Version 3.0 and the definition of a HTTP REST API ([[#api]]).
 
 
 ## Intended Audience ## {#audience}
@@ -116,7 +116,7 @@ The license can be found in [[#license]].
 : Partnership for Carbon Transparency (<dfn>PACT</dfn>)
 :: A WBCSD-led group of companies and organizations working together to develop a global and open network for the secure peer-to-peer exchange of accurate, primary and verified product emissions data. See [www.carbon-transparency.com](www.carbon-transparency.com) for more information.
 
-: PACT Methodology Version 2.0 (<dfn>PACT Methodology</dfn>)
+: PACT Methodology Version 3.0 (<dfn>PACT Methodology</dfn>)
 :: Guidance for the Accounting and Exchange of Product Life Cycle Emissions,
     building on existing standards and protocols, such as the GHG Protocol
     Product standard. Previously named PACT Framework. 
@@ -154,7 +154,7 @@ A conforming requesting [=data recipient=] is any algorithm realized as software
 Note: This chapter is non-normative.
 
 Due to the complexity and nature of global supply chains, achieving transparency in carbon emissions at the product level is a challenging task.
-As the [[!PACT-METHODOLOGY|PACT Methodology Version 2.0]] provides the methodological foundations for calculating product carbon footprints (PCFs),
+As the [[!PACT-METHODOLOGY|PACT Methodology Version 3.0]] provides the methodological foundations for calculating product carbon footprints (PCFs),
 this specification focuses on enabling transparency through a peer-to-peer PCF data exchange by specifying necessary aspects for achieving interoperability, such as the [[#data-model|data model]] and [[#api|API]].
 
 However, these two aspects can be combined in various ways to achieve different business objectives.
@@ -257,7 +257,7 @@ below). See [[#api-auth]] for details.
 # Data Model # {#data-model}
 
 This section specifies a data model for [[#dt-pf|product footprints]] conforming
-with the [=PACT Methodology=] Version 2.
+with the [=PACT Methodology=] Version 3.
 
 The data model consists of the following major data types:
 
@@ -432,14 +432,16 @@ A ProductFootprint has the following properties:
         <td>Array of [=ProductClassification=]
         <td>O
         <td>
-          The non-empty set of [=ProductClassifications=] in [=URN=] format. Each of the values in the set can classify the product as part of distinct groupings and categorizations. See {#product-identifiers}. This property will supersede the [=CpcCode=] property in version 3 of the Technical Specifications.
+          The non-empty set of [=ProductClassifications=] in [=URN=] format. Each of the values in the set can classify the product as part of distinct groupings and categorizations. See {#product-identifiers}. 
+          
+          Advisement: Supersedes productCategoryCpc deprecated in version 2.3.
       <tr>
-        <td><dfn>productCategoryCpc</dfn> : [=CpcCode=]
+        <td><dfn>productCategoryCpc</dfn>
         <td>String
-        <td>M
+        <td>O
         <td>
 
-          Advisement: This property will become DEPRECATED in version 3 of the Technical Specifications. It will be replaced by productClassifications
+          Advisement: DEPRECATED in 3.0. Superseded by <{ProductFootprint/productClassifications}>.
 
           The UN Central Product Classification (CPC) that the given product belongs to.
       <tr>
@@ -450,12 +452,12 @@ A ProductFootprint has the following properties:
       <tr>
         <td><dfn>comment</dfn>
         <td>String
-        <td>M
+        <td>O
         <td>
 
-          Advisement: This property will become OPTIONAL in version 3 of the Technical Specifications.
+          Advisement: OPTIONAL in 3.0.
 
-          The additional information related to the product footprint.
+          Additional information related to the product footprint.
 
           Whereas the property <{ProductFootprint/productDescription}> contains product-level information, <{ProductFootprint/comment}> SHOULD be used for information and instructions related to the calculation of the footprint, or other information which informs the ability to interpret, to audit or to verify the Product Footprint.
       <tr>
@@ -643,10 +645,10 @@ The mass (in kg) of the product per the provided <{CarbonFootprint/declaredUnit|
       <tr>
         <td><dfn>characterizationFactors</dfn>
         <td>String
-        <td>M
+        <td>O
         <td>
 
-          Advisement: This property is DEPRECATED and only kept to ensure backwards-compatibility. It will be removed in version 3 of these Technical Specifications. It does not replace the (also mandatory) property <{CarbonFootprint/ipccCharacterizationFactorsSources}>.
+          Advisement: DEPRECATED in 3.0. Superseded by <{CarbonFootprint/ipccCharacterizationFactorsSources}>.
 
           The IPCC version of the GWP characterization factors used in the calculation of the PCF (see [=PACT Methodology=] Section 3.2.2). In case several characterization factors are used, indicate the earliest version used in your calculations, disregarding supplier provided PCFs. The value MUST be one of the following:
 
@@ -659,48 +661,46 @@ The mass (in kg) of the product per the provided <{CarbonFootprint/declaredUnit|
         <td>Array of Strings
         <td>M
         <td>The characterization factors from one or more IPCC Assessment Reports used in the calculation of the PCF (see [=PACT Methodology=] Section 3.2.2).
-              It MUST be a non-empty set of strings with the format `AR$VERSION$`, where `$VERSION$` stands for the
-              IPCC report version number and MUST be an integer.
+          It MUST be a non-empty set of strings with the format `AR$VERSION$`, where `$VERSION$` stands for the
+          IPCC report version number and MUST be an integer.
 
           Example values:
           <div class=example>["AR6"]</div>
           <div class=example>["AR5", "AR6"]</div>
 
-          Advisement: Per the Methodology the latest available characterization factor version shall be used, i.e., `["AR6"]`. In the event this is not possible, include the set of all characterization factors used.
-      <tr>
-        <td><dfn>crossSectoralStandardsUsed</dfn> : [=CrossSectoralStandardSet=]
-        <td>Array
-        <td>M
-        <td>
+          Per the Methodology the latest available characterization factor version shall be used, i.e., `["AR6"]`. In the event this is not possible, include the set of all characterization factors used.
 
-          Advisement: This property is DEPRECATED and only kept to ensure backwards-compatibility. It will be removed in version 3 of these Technical Specifications. It does not replace the (also mandatory) property <{CarbonFootprint/crossSectoralStandards}>.
+          Advisement: Supersedes `characterizationFactors` deprecated in version 2.3.
 
-          The cross-sectoral standards applied for calculating or allocating [=GHG=] emissions
       <tr>
         <td><dfn>crossSectoralStandards</dfn>
         <td>Array of Strings
         <td>M
         <td>The cross-sectoral standards applied for calculating or allocating [=GHG=] emissions.
 
-          It MUST be a non-empty array and MUST contain only the following values without duplicates:
+          It MUST be a non-empty array and SHOULD contain only the following values without duplicates:
 
-        : ISO14067
+        : `ISO14067`
         :: for the ISO 14067 Standard, "Greenhouse gases — Carbon footprint of products — Requirements and guidelines for quantification"
-        : ISO14083
+        : `ISO14083`
         :: for the ISO 14083 Standard, "Greenhouse gases — Quantification and reporting of greenhouse gas emissions arising from transport chain operations"
-        : ISO14040-44
+        : `ISO14040-44`
         :: for the ISO 14040-44 Standard, "Environmental management — Life cycle assessment — Principles and framework"
-        : GHGP Product
+        : `GHGP-Product`
         :: for the Greehouse Gas Protocol (GHGP) Product Standard
         : PEF
         :: for the EU Product Environmental Footprint Guide
-        : PACT Methodology `$VERSION$`
-        :: for a given version of the [=PACT Methodology=], where `$VERSION$` is the version number (1.0, 2.0, 3.0, etc.). It is recommended to use the latest version of the Methodology.
+        : `PACT-1.0`
+        : `PACT-2.0`
+        : `PACT-3.0`
+        :: for a given version of the [=PACT Methodology=]. It is recommended to use the latest version of the Methodology.
         : PAS2050
         :: for the Publicly Available Specification (PAS) 2050, "Specification for the assessment of the life cycle greenhouse gas emissions of goods and services". The use of this standard is permitted but not recommended.
 
-          Advisement:
-            The enumeration of standards above CAN evolve in future revisions. A host system MUST accept ProductFootprints from later revisions with `crossSectoralStandards` containing values that are not defined in this specification.
+        The enumeration of standards above CAN evolve in future revisions. A host system MUST accept ProductFootprints from later revisions with `crossSectoralStandards` containing values that are not defined in this specification.
+
+        Advisement: Supersedes `crossSectoralStandardsUsed` deprecated in version 2.3.
+            
       <tr>
         <td><dfn>productOrSectorSpecificRules</dfn> : [=ProductOrSectorSpecificRuleSet=]
         <td>Array
@@ -710,25 +710,25 @@ The mass (in kg) of the product per the provided <{CarbonFootprint/declaredUnit|
         <td><dfn>biogenicAccountingMethodology</dfn>
         <td>String
         <td>O*
-        <td>The standard followed to account for biogenic emissions and removals. If defined, the value MUST be one of the following:
+        <td>The standard followed to account for biogenic emissions and removals. If defined, the value SHOULD be one of the following:
 
-          : PEF
+          : `PEF`
           :: for the EU [Product Environmental Footprint Guide](https://ec.europa.eu/environment/archives/eussd/pdf/footprint/PEF%20methodology%20final%20draft.pdf)
-          : ISO
+          : `ISO`
           :: For the ISO 14067 standard
-          : GHGP
+          : `GHGP`
           :: For the Greenhouse Gas Protocol (GHGP) Land sector and Removals Guidance
-          : Quantis
+          : `Quantis`
           :: For the Quantis [Accounting for Natural Climate Solutions](https://quantis.com/report/accounting-for-natural-climate-solutions-guidance/) Guidance
 
-          Advisement: The enumeration of standards above will be evolved in future revisions. Account for this when implementing the validation of this property.
+          The enumeration of standards above will be evolved in future revisions. Account for this when implementing the validation of this property.
       <tr>
         <td><dfn>boundaryProcessesDescription</dfn>
         <td>String
-        <td>M
+        <td>O
         <td>
 
-          Advisement: This property will become OPTIONAL in version 3 of the Technical Specifications.
+          Advisement: OPTIONAL in 3.0.
 
           The processes attributable to each lifecycle stage.
 
@@ -798,10 +798,10 @@ The mass (in kg) of the product per the provided <{CarbonFootprint/declaredUnit|
       <tr>
         <td><dfn>exemptedEmissionsDescription</dfn>
         <td>String
-        <td>M
+        <td>O
         <td>
 
-          Advisement: This property will become OPTIONAL in version 3 of the Technical Specifications.
+          Advisement: OPTIONAL in 3.0.
 
           Rationale behind exclusion of specific PCF emissions, CAN be the empty string if no emissions were excluded.
       <tr>
@@ -999,10 +999,10 @@ The following properties are defined for data type <{Assurance}>:
       <tr>
         <td><dfn>providerName</dfn>
         <td>String
-        <td>M
+        <td>O
         <td>The non-empty name of the independent third party engaged to undertake the assurance.
 
-        Advisement: Given this property was incorrectly and unintentionally published in V2 of the Technical Specifications as Mandatory, it will be reverted to Optional in version 3 of the Technical Specifications.
+        Advisement: OPTIONAL in version 3.0.
       <tr>
         <td><dfn>completedAt</dfn> : [=DateTime=]
         <td>String
@@ -1189,42 +1189,6 @@ Example encoding of a <{EmissionFactorDS}> in JSON:
 Each <{EmissionFactorDS}> MUST be encoded as a JSON object.
 
 
-
-## Data Type: <dfn enum>CrossSectoralStandard</dfn> ## {#dt-crosssectoralstandard}
-Advisement: This data type is DEPRECATED and will be removed in version 3 of these Technical Specifications.
-
-CrossSectoralStandard is the enumeration of accounting standards used for product carbon footprint calculation. Valid values are
-
-<dl dfn-type="enum-value" dfn-for="CrossSectoralStandard">
-
-: <dfn>GHG Protocol Product standard</dfn>
-:: for the GHG Protocol Product standard
-
-: <dfn>ISO Standard 14067</dfn>
-:: for ISO Standard 14067
-
-: <dfn>ISO Standard 14044</dfn>
-:: for ISO Standard 14044
-
-</dl>
-
-### JSON Representation ### {#dt-crosssectoralstandard-json}
-
-Each CrossSectoralStandard MUST be encoded as a JSON string.
-
-
-
-## Data Type: <dfn>CrossSectoralStandardSet</dfn> ## {#dt-crosssectoralstandardset}
-
-Advisement: This data type is DEPRECATED and will be removed in version 3 of these Technical Specifications.
-
-A set of {{CrossSectoralStandard}} values.
-
-### JSON Representation ### {#dt-crosssectoralstandardset-json}
-
-As an array of strings, with each string conforming to the JSON representation of {{CrossSectoralStandard}}.
-
-
 ## Data Type: <dfn element>ProductOrSectorSpecificRule</dfn> ## {#dt-productorsectorspecificrule}
 
 A ProductOrSectorSpecificRule refers to a set of product or sector specific rules published by a specific operator and applied during product carbon footprint calculation.
@@ -1293,18 +1257,6 @@ A list of [=NonEmptyString=] of length 1 or greater.
 ### JSON Representation ### {#dt-nonemptystringvector-json}
 
 Each NonEmptyStringVector MUST be encoded as an array of [=NonEmptyStrings=].
-
-
-## Data Type: <dfn>CpcCode</dfn> ## {#dt-cpccode}
-
-A CpCode represents a UN CPC Code version 2.1 value.
-
-Example value of the CPC code for "wood in chips or particles":
-<div class="example">`31230`</div>
-
-### JSON Representation ### {#dt-cpccode-json}
-
-Each CpcCode MUST be encoded as a JSON String.
 
 
 ## Data Type: <dfn enum>DeclaredUnit</dfn> ## {#dt-declaredunit}
@@ -2810,6 +2762,18 @@ path: ../../LICENSE.md
 
 # Appendix B: Changelog # {#changelog}
 
+## Version 3.0.0-20241212 (Dec 12, 2024) ## {#changelog-3.0.0}
+
+Summary of changes:
+1. Updated references to the upcoming PACT Framework 3.0 
+2. Deprecation of property <{ProductFootprint/productCategoryCpc}> (ADR37)
+3. Property <{ProductFootprint/comment}> now optional (ADR31)
+4. Property <{CarbonFootprint/boundaryProcessesDescription}> now optional (ADR31)
+5. Property <{CarbonFootprint/exemptedEmissionsDescription}> now optional (ADR31)
+6. Deprecation of property <{CarbonFootprint/characterizationFactors}> (ADR28)
+7. Removal of `crossSectoralStandardsUsed` which has been deprecated in 2.3 and is now superseeded by extensible crossSectoralStandards (ADR32).
+8. Assurance/<{Assurance/providername}> now optional, after being mistakenly made mandatory in version 2.x
+
 ## Version 2.3.0 (Oct 24, 2024) ## {#changelog-2.3.0}
 
 Release.
@@ -2830,7 +2794,7 @@ Summary of changes:
 ## Version 2.3.0-20240625 (June 25, 2024) ## {#changelog-2.3.0-20240625}
 Summary of changes:
 1. Revision of <{ProductFootprint/productDescription}> to be more descriptive, following decision to keep attribute as mandatory
-2. Indication of deprecation of <{CarbonFootprint/crossSectoralStandardsUsed}> and introduction of <{CarbonFootprint/crossSectoralStandards}>, reflecting consensus reached on ADR32
+2. Indication of deprecation of `crossSectoralStandardsUsed` and introduction of <{CarbonFootprint/crossSectoralStandards}>, reflecting consensus reached on ADR32
 3. Addition of advisement that `piece` will be added as a `DeclaredUnit` in v3; addition of attribute <{CarbonFootprint/productMassPerDeclaredUnit}>, per consensus reached on ADR33.
 4. Clarification added to <{ProductFootprint/statusComment}> attribute, per consensus reached in Methodology WG, to include descriptive reasoning behind a given change in status.
 5. Update contact email, Editor, and Former Editors
@@ -3061,7 +3025,7 @@ Overview of the changes to the data model compared with the data model version 1
 The following changes have been applied for version 1.0.1
 
 1. Addition of data type {{RegionOrSubregion}}, cleaning up the definition of property <{CarbonFootprint/geographyRegionOrSubregion}>
-2. Fix to the JSON representation specification in [[#dt-crosssectoralstandardset-json]]
+2. Fix to the JSON representation specification in `crosssectoralstandardset-json`
 3. Change to the minimum size of the set [[#dt-productorsectorspecificruleset]] from `0` to `1`, aligning with the overall specification.
 4. Removal of unreferenced data type `Boolean` from the data model section
 5. Rewording, simplified wording of chapter [[#api-action-auth]]

@@ -1,3 +1,4 @@
 index.html
 upload/
 *.svg
+.DS_Store
