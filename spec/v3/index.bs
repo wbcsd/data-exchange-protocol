@@ -1406,41 +1406,6 @@ Each [=String=] MUST be encoded as a JSON String.
 
 
 
-## Data Type: <dfn>Percent</dfn> ## {#dt-percent}
-
-A Decimal number in the range of and including `0` and `100`.
-
-Example values:
-<div class=example>
-    - `100`
-    - `23.0`
-    - `7.183924`
-    - `0.0`
-</div>
-
-### JSON Representation ### {#dt-percent-json}
-
-Each Percent MUST be encoded in IEEE-754 [double-precision floating-point format](https://en.wikipedia.org/wiki/Double-precision_floating-point_format) as a JSON number.
-
-
-
-## Data Type: <dfn element>StrictlyPositiveDecimal</dfn> ## {#dt-strictlypositivedecimal}
-
-A positive, non-zero Decimal.
-
-Example values:
-<div class=example>
-    - 0.123
-    - 1000
-    - 42.102340
-</div>
-
-### JSON Representation ### {#dt-strictlypositivedecimal-json}
-
-See [[[#dt-decimal-json]]].
-
-
-
 ## Data Type: <dfn>DateTime</dfn> ## {#dt-datetime}
 
 Each DateTime MUST be a date and time string conforming to ISO 8601. The timezone MUST be UTC.
@@ -1485,6 +1450,7 @@ Example values:
 ### JSON Representation ### {#dt-decimal-json}
 
 Each Decimal MUST be encoded as a JSON String.
+
 
 
 ## Data Type: <dfn>PfId</dfn> ## {#dt-pfid}
@@ -2775,6 +2741,9 @@ Summary of changes:
 6. Deprecation of property <{CarbonFootprint/characterizationFactors}> (ADR28)
 7. Removal of `crossSectoralStandardsUsed` which has been deprecated in 2.3 and is now superseeded by extensible crossSectoralStandards (ADR32).
 8. Assurance/<{Assurance/providername}> now optional, after being mistakenly made mandatory in version 2.x
+9. Consistent Decimal typing for all fractional numbers (ADR39). The data type of the following fields has 
+been changed from Number to Decimal: `primaryDataShare`, `exemptedEmissionsPercent`, `coveragePercent`, `technologicalDQR`, `temporalDQR`, `geographicalDQR`, `completenessDQR`, `reliabilityDQR`
+
 
 ## Version 2.3.0 (Oct 24, 2024) ## {#changelog-2.3.0}
 
