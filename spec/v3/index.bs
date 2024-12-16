@@ -788,13 +788,12 @@ The mass (in kg) of the product per the provided <{CarbonFootprint/declaredUnit|
         If no secondary data is used, this property MUST BE `undefined`.
       <tr>
         <td><dfn>exemptedEmissionsPercent</dfn>
-        <td>Number
+        <td>[=Decimal=]
         <td>M
         <td>
+          The percentage of emissions excluded from PCF, expressed as a decimal number. See [=PACT Methodology=].
 
-            Advisement: The upper boundary of this property (currently `5`) will be removed in version 3 of the Technical Specifications.
-
-            The Percentage of emissions excluded from PCF, expressed as a decimal number between `0.0` and `5` including. See [=PACT Methodology=].
+          Advisement: [=Decimal=] in 3.0, was Number in 2.x
       <tr>
         <td><dfn>exemptedEmissionsDescription</dfn>
         <td>String
@@ -828,8 +827,8 @@ The mass (in kg) of the product per the provided <{CarbonFootprint/declaredUnit|
         <td>O
             <td>If present, the results, key drivers, and a short qualitative description of the uncertainty assessment.
       <tr>
-        <td><dfn>primaryDataShare</dfn> : [=Percent=]
-        <td>Number
+        <td><dfn>primaryDataShare</dfn>
+        <td>[=Decimal=]
         <td>O*
         <td>
           The share of primary data in percent. See the [=PACT Methodology=] Sections 4.2.1 and 4.2.2, Appendix B.
@@ -837,6 +836,8 @@ The mass (in kg) of the product per the provided <{CarbonFootprint/declaredUnit|
           For reference periods ending before the beginning of year 2025, at least property <{CarbonFootprint/primaryDataShare}> or propery <{CarbonFootprint/dqi}> MUST be defined.
 
           For reference periods including the beginning of year 2025 or after, this property MUST be defined.
+
+          Advisement: [=Decimal=] in 3.0, was Number in 2.x
       <tr>
         <td><dfn>dqi</dfn> : <{DataQualityIndicators}>
         <td>Object
@@ -864,6 +865,8 @@ Data type `DataQualityIndicators` contains the quantitative data quality indicat
 
 Each property is optional until the reference period includes the beginning of calendar year 2025, or later, when all properties MUST be defined.
 
+Advisement: Starting version 3.0 the properties in DataQualityIndicators are typed [=Decimal=], instead of `Number`.
+
 The following properties are defined for data type <{DataQualityIndicators}>:
 
 <figure id="pf-dataqualityindicators-properties-table" dfn-type="element-attr" dfn-for="DataQualityIndicators">
@@ -875,55 +878,67 @@ The following properties are defined for data type <{DataQualityIndicators}>:
         <th>Specification
     <tbody>
       <tr>
-        <td><dfn>coveragePercent</dfn> : [=Percent=]
-        <td>Number
+        <td><dfn>coveragePercent</dfn>
+        <td>Decimal
         <td>
           Percentage of PCF included in the data quality assessment based on the `>5%` emissions threshold.
+          
+          Advisement: [=Decimal=] in 3.0, was Number in 2.x
       <tr>
         <td><dfn>technologicalDQR</dfn>
-        <td>Number
+        <td>Decimal
         <td>
           Quantitative data quality rating (DQR) based on the data quality matrix (See [=PACT Methodology=] Table 9),
           scoring the technological representativeness of the sources used for PCF calculation based on
           weighted average of all inputs representing >5% of PCF emissions.
 
           The value MUST be a [=decimal=] between `1` and `3` including.
+
+          Advisement: [=Decimal=] in 3.0, was Number in 2.x
       <tr>
         <td><dfn>temporalDQR</dfn>
-        <td>Number
+        <td>Decimal
         <td>
           Quantitative data quality rating (DQR) based on the data quality matrix (Table 9),
           scoring the temporal representativeness of the sources used for PCF calculation based on
           weighted average of all inputs representing >5% of PCF emissions.
 
           The value MUST be between `1` and `3` inclusive.
+          
+          Advisement: [=Decimal=] in 3.0, was Number in 2.x
       <tr>
         <td><dfn>geographicalDQR</dfn>
-        <td>Number
+        <td>Decimal
         <td>
           Quantitative data quality rating (DQR) based on the data quality matrix (Table 9),
           scoring the geographical representativeness of the sources used for PCF calculation
           based on weighted average of all inputs representing >5% of PCF emissions.
 
           The value MUST be between `1` and `3` inclusive.
+          
+          Advisement: [=Decimal=] in 3.0, was Number in 2.x
       <tr>
         <td><dfn>completenessDQR</dfn>
-        <td>Number
+        <td>Decimal
         <td>
           Quantitative data quality rating (DQR) based on the data quality matrix (Table 9),
           scoring the completeness of the data collected for PCF calculation based on
           weighted average of all inputs representing >5% of PCF emissions.
 
           The value MUST be between `1` and `3` inclusive.
+          
+          Advisement: [=Decimal=] in 3.0, was Number in 2.x
       <tr>
         <td><dfn>reliabilityDQR</dfn>
-        <td>Number
+        <td>Decimal
         <td>
           Quantitative data quality rating (DQR) based on the data quality matrix (Table 9),
           scoring the reliability of the data collected for PCF calculation based on
           weighted average of all inputs representing >5% of PCF emissions.
 
           The value MUST be between `1` and `3` inclusive.
+          
+          Advisement: [=Decimal=] in 3.0, was Number in 2.x
     </table>
   <figcaption>Properties of data type DataQualityIndicators</figcaption>
 </figure>
@@ -932,11 +947,11 @@ The following properties are defined for data type <{DataQualityIndicators}>:
   Example value for the case that all DQIs are known but no coverage after exemption assessment performed:
   <pre highlight=json>
   {
-    "technologicalDQR": 2.0,
-    "temporalDQR": 2.0,
-    "geographicalDQR": 2.0,
-    "completenessDQR": 2.0,
-    "reliabilityDQR": 2.0
+    "technologicalDQR": "2.0",
+    "temporalDQR": "2.0",
+    "geographicalDQR": "2.0",
+    "completenessDQR": "2.0",
+    "reliabilityDQR": "2.0"
   }
   </pre>
 </div>
@@ -1404,41 +1419,6 @@ Each [=String=] MUST be encoded as a JSON String.
 
 
 
-## Data Type: <dfn>Percent</dfn> ## {#dt-percent}
-
-A Decimal number in the range of and including `0` and `100`.
-
-Example values:
-<div class=example>
-    - `100`
-    - `23.0`
-    - `7.183924`
-    - `0.0`
-</div>
-
-### JSON Representation ### {#dt-percent-json}
-
-Each Percent MUST be encoded in IEEE-754 [double-precision floating-point format](https://en.wikipedia.org/wiki/Double-precision_floating-point_format) as a JSON number.
-
-
-
-## Data Type: <dfn element>StrictlyPositiveDecimal</dfn> ## {#dt-strictlypositivedecimal}
-
-A positive, non-zero Decimal.
-
-Example values:
-<div class=example>
-    - 0.123
-    - 1000
-    - 42.102340
-</div>
-
-### JSON Representation ### {#dt-strictlypositivedecimal-json}
-
-See [[[#dt-decimal-json]]].
-
-
-
 ## Data Type: <dfn>DateTime</dfn> ## {#dt-datetime}
 
 Each DateTime MUST be a date and time string conforming to ISO 8601. The timezone MUST be UTC.
@@ -1483,6 +1463,7 @@ Example values:
 ### JSON Representation ### {#dt-decimal-json}
 
 Each Decimal MUST be encoded as a JSON String.
+
 
 
 ## Data Type: <dfn>PfId</dfn> ## {#dt-pfid}
@@ -2762,6 +2743,7 @@ path: ../../LICENSE.md
 
 # Appendix B: Changelog # {#changelog}
 
+
 ## Version 3.0.0-20241212 (Dec 12, 2024) ## {#changelog-3.0.0}
 
 Summary of changes:
@@ -2773,6 +2755,8 @@ Summary of changes:
 6. Deprecation of property <{CarbonFootprint/characterizationFactors}> (ADR28)
 7. Removal of `crossSectoralStandardsUsed` which has been deprecated in 2.3 and is now superseeded by extensible crossSectoralStandards (ADR32).
 8. Assurance/<{Assurance/providername}> now optional, after being mistakenly made mandatory in version 2.x
+9. Consistent Decimal typing for all fractional numbers (ADR39). The data type of the following fields has been changed from Number to Decimal: `primaryDataShare`, `exemptedEmissionsPercent`, `coveragePercent`, `technologicalDQR`, `temporalDQR`, `geographicalDQR`, `completenessDQR`, `reliabilityDQR`
+
 
 ## Version 2.3.0 (Oct 24, 2024) ## {#changelog-2.3.0}
 
