@@ -791,10 +791,9 @@ The mass (in kg) of the product per the provided <{CarbonFootprint/declaredUnit|
         <td>[=Decimal=]
         <td>M
         <td>
+          The percentage of emissions excluded from PCF, expressed as a decimal number. See [=PACT Methodology=].
 
-            Advisement: The upper boundary of this property (currently `5`) will be removed in version 3 of the Technical Specifications.
-
-            The Percentage of emissions excluded from PCF, expressed as a decimal number between `0.0` and `5` including. See [=PACT Methodology=].
+          Advisement: [=Decimal=] in 3.0, was Number in 2.x
       <tr>
         <td><dfn>exemptedEmissionsDescription</dfn>
         <td>String
@@ -837,6 +836,8 @@ The mass (in kg) of the product per the provided <{CarbonFootprint/declaredUnit|
           For reference periods ending before the beginning of year 2025, at least property <{CarbonFootprint/primaryDataShare}> or propery <{CarbonFootprint/dqi}> MUST be defined.
 
           For reference periods including the beginning of year 2025 or after, this property MUST be defined.
+
+          Advisement: [=Decimal=] in 3.0, was Number in 2.x
       <tr>
         <td><dfn>dqi</dfn> : <{DataQualityIndicators}>
         <td>Object
@@ -881,6 +882,8 @@ The following properties are defined for data type <{DataQualityIndicators}>:
         <td>Decimal
         <td>
           Percentage of PCF included in the data quality assessment based on the `>5%` emissions threshold.
+          
+          Advisement: [=Decimal=] in 3.0, was Number in 2.x
       <tr>
         <td><dfn>technologicalDQR</dfn>
         <td>Decimal
@@ -890,6 +893,8 @@ The following properties are defined for data type <{DataQualityIndicators}>:
           weighted average of all inputs representing >5% of PCF emissions.
 
           The value MUST be a [=decimal=] between `1` and `3` including.
+
+          Advisement: [=Decimal=] in 3.0, was Number in 2.x
       <tr>
         <td><dfn>temporalDQR</dfn>
         <td>Decimal
@@ -899,6 +904,8 @@ The following properties are defined for data type <{DataQualityIndicators}>:
           weighted average of all inputs representing >5% of PCF emissions.
 
           The value MUST be between `1` and `3` inclusive.
+          
+          Advisement: [=Decimal=] in 3.0, was Number in 2.x
       <tr>
         <td><dfn>geographicalDQR</dfn>
         <td>Decimal
@@ -908,6 +915,8 @@ The following properties are defined for data type <{DataQualityIndicators}>:
           based on weighted average of all inputs representing >5% of PCF emissions.
 
           The value MUST be between `1` and `3` inclusive.
+          
+          Advisement: [=Decimal=] in 3.0, was Number in 2.x
       <tr>
         <td><dfn>completenessDQR</dfn>
         <td>Decimal
@@ -917,6 +926,8 @@ The following properties are defined for data type <{DataQualityIndicators}>:
           weighted average of all inputs representing >5% of PCF emissions.
 
           The value MUST be between `1` and `3` inclusive.
+          
+          Advisement: [=Decimal=] in 3.0, was Number in 2.x
       <tr>
         <td><dfn>reliabilityDQR</dfn>
         <td>Decimal
@@ -926,6 +937,8 @@ The following properties are defined for data type <{DataQualityIndicators}>:
           weighted average of all inputs representing >5% of PCF emissions.
 
           The value MUST be between `1` and `3` inclusive.
+          
+          Advisement: [=Decimal=] in 3.0, was Number in 2.x
     </table>
   <figcaption>Properties of data type DataQualityIndicators</figcaption>
 </figure>
@@ -2730,6 +2743,7 @@ path: ../../LICENSE.md
 
 # Appendix B: Changelog # {#changelog}
 
+
 ## Version 3.0.0-20241212 (Dec 12, 2024) ## {#changelog-3.0.0}
 
 Summary of changes:
@@ -2741,8 +2755,7 @@ Summary of changes:
 6. Deprecation of property <{CarbonFootprint/characterizationFactors}> (ADR28)
 7. Removal of `crossSectoralStandardsUsed` which has been deprecated in 2.3 and is now superseeded by extensible crossSectoralStandards (ADR32).
 8. Assurance/<{Assurance/providername}> now optional, after being mistakenly made mandatory in version 2.x
-9. Consistent Decimal typing for all fractional numbers (ADR39). The data type of the following fields has 
-been changed from Number to Decimal: `primaryDataShare`, `exemptedEmissionsPercent`, `coveragePercent`, `technologicalDQR`, `temporalDQR`, `geographicalDQR`, `completenessDQR`, `reliabilityDQR`
+9. Consistent Decimal typing for all fractional numbers (ADR39). The data type of the following fields has been changed from Number to Decimal: `primaryDataShare`, `exemptedEmissionsPercent`, `coveragePercent`, `technologicalDQR`, `temporalDQR`, `geographicalDQR`, `completenessDQR`, `reliabilityDQR`
 
 
 ## Version 2.3.0 (Oct 24, 2024) ## {#changelog-2.3.0}
