@@ -1276,7 +1276,9 @@ Each NonEmptyStringVector MUST be encoded as an array of [=NonEmptyStrings=].
 
 ## Data Type: <dfn enum>DeclaredUnit</dfn> ## {#dt-declaredunit}
 
-DeclaredUnit is the enumeration of accepted declared units with values
+DeclaredUnit is the enumeration of accepted declared units with values.
+
+Advisement: Additional units in version 3.0: `piece`, `mbps`, `hour`
 
 <dl dfn-type="enum-value" dfn-for="DeclaredUnit">
 
@@ -1301,7 +1303,7 @@ DeclaredUnit is the enumeration of accepted declared units with values
 : <dfn>square meter</dfn>
 :: for square meter, the Derived Unit from SI Base Unit `metre`
 
-: <dfn>Mbps</dfn>
+: <dfn>mbps</dfn>
 :: Megabits per second, as a unit of data transfer related to IT services.
 
 : <dfn>hour</dfn>
