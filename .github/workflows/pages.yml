@@ -32,15 +32,16 @@ jobs:
         uses: actions/checkout@v3
       - name: Setup Pages
         uses: actions/configure-pages@v2
-      - name: Install Bikeshed
-        run: pip3 install bikeshed && bikeshed update
+      - name: Install Bikeshed and Mermaid
+        run: make install
+        shell: bash
       - name: Build specs
-        run: make -C spec publish && make -C spec/v2 publish && make -C spec/faq publish
+        run: make all
+        shell: bash
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
-          # Upload entire repository
-          path: "upload"
+          path: "build"
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v1

@@ -15,7 +15,14 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install Bikeshed
+        run: pip3 install bikeshed && bikeshed update
+
+      - name: Install Mermaid
+        run: npm install -g @mermaid-js/mermaid-cli
 
       - name: Set status
         id: set-status
@@ -33,6 +40,7 @@ jobs:
       - name: Get date
         id: date
         run: echo "::set-output name=year::$(date +'%Y')" && echo "::set-output name=date::$(date +'%Y%m%d')"
+
       - name: Push release to tr/${{steps.date.outputs.year}}
         uses: cpina/github-action-push-to-another-repository@main
         env:
@@ -46,6 +54,7 @@ jobs:
           target-branch: release-v${{inputs.version}}-${{steps.date.outputs.date}}
           create-target-branch-if-needed: true
           commit-message: "Release v${{inputs.version}}"
+
       - name: Push release to wbcsd/tr
         uses: cpina/github-action-push-to-another-repository@main
         env:

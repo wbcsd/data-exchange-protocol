@@ -1,4 +1,4 @@
-OUTDIR := ../upload/faq
+OUTDIR := ../../upload/faq
 
 all: index.html
 
