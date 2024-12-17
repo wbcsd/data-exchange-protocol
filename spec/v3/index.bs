@@ -572,7 +572,7 @@ Advisement:
 
           Advisement: This property is optional in v2.3 but will be released in v3 as a mandatory attribute.
 
-The mass (in kg) of the product per the provided <{CarbonFootprint/declaredUnit|declared unit}>, excluding packaging.
+          The mass (in kg) of the product per the provided <{CarbonFootprint/declaredUnit|declared unit}>, excluding packaging.
           For example, if the declared unit is `piece`, this attribute MUST be populated with the mass of one piece (aka unit) of product.
           If the declared unit is `liter`, this attribute SHOULD be populated with the mass of 1 liter of product (i.e. the density of the product).
           If the declared unit is `kilogram`, this attribute SHOULD by definition be populated with `1`.
@@ -1301,7 +1301,11 @@ DeclaredUnit is the enumeration of accepted declared units with values
 : <dfn>square meter</dfn>
 :: for square meter, the Derived Unit from SI Base Unit `metre`
 
-Advisement: v3 will also include the following `DeclaredUnit`: <dfn>piece</dfn>, for a piece, a unit of product
+: <dfn>Mbps</dfn>
+:: Megabits per second, as a unit of data transfer related to IT services.
+
+: <dfn>hour</dfn>
+:: Hours for desk-based services.
 
 </dl>
 
