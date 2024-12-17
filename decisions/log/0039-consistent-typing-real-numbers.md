@@ -66,7 +66,6 @@ As this would break backwards compatibility with version 2.x these changes shoul
 
 ## Status
 
-Proposed 
 Presented in the Tech Working Group meeting of Sept 25, 2024. 
-Feedback to be collected.
-
+Feedback collected.
+Call for consensus Oct 9, 2024. Consensus reached.
