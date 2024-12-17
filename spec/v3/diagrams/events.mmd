@@ -1,0 +1,25 @@
+sequenceDiagram
+    participant D as Data Recipient
+    participant H as Data Owner
+
+    Note over D, H: Data Recipient requests a new<br/> or updated PCF from Host System
+    D->>H: POST [SubPath]/2/events
+    Activate H
+    break Does not accept event
+        H->>D: Returns with HTTP Code 400
+    end
+
+    H->>D: Returns with HTTP Code 200
+    Deactivate H
+
+    Note over D, H: Host system now processes<br/> the request as specified in<br/>Business Case 1
+
+    alt PCFs do not exist / partial match
+        H->>H: Host system decides on processing<br/>potentially involving skilled personnel
+        H->>D: Sends event with either PCFs or error body
+    else 1 or more matching PCFs exist
+        Note over H: Sends matching PCFs as<br/>an event
+        H->>D: Sends event containing matching PCFs
+    else Default case
+        H->>D: Sends event with an error body
+    end

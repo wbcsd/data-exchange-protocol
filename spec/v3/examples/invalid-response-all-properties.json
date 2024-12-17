@@ -1,0 +1,108 @@
+{
+    "data": [
+        {
+            "id": "d9be4477-e351-45b3-acd9-e1da05e6f633",
+            "specVersion": "2.1.0",
+            "precedingPfIds": [
+                "51131FB5-42A2-4267-A402-0ECFEFAD1619"
+            ],
+            "version": 0,
+            "created": "2022-12-08T14:47:32Z",
+            "updated": "2023-1-08T14:47:32Z",
+            "status": "Active",
+            "statusComment": "This is an optional comment",
+            "validityPeriodStart": "2022-12-08T14:47:32Z",
+            "validityPeriodEnd": "2023-12-08T14:47:32Z",
+            "companyName": "My Corp",
+            "companyIds": [
+                "urn:uuid:51131FB5-42A2-4267-A402-0ECFEFAD1619",
+                "urn:epc:id:sgln:4063973.00000.8"
+            ],
+            "productDescription": "Cote'd Or Ethanol",
+            "productIds": [
+                "urn:gtin:4712345060507"
+            ],
+            "productCategoryCpc": "3342",
+            "productNameCompany": "Green Ethanol",
+            "comment": "Should have information and instructions related to the calculation of the footprint, or other information which informs the ability to interpret, to audit or to verify the Product Footprint.",
+            "pcf": {
+                "declaredUnit": "liter",
+                "unitaryProductAmount": "12.0",
+                "pCfExcludingBiogenic": "0.123",
+                "pCfIncludingBiogenic": "0.0",
+                "fossilGhgEmissions": "0.123",
+                "fossilCarbonContent": "1.721",
+                "biogenicCarbonContent": "0.0",
+                "dLucGhgEmissions": "0.011",
+                "landManagementGhgEmissions": "0.001",
+                "otherBiogenicGhgEmissions": "0.0",
+                "iLucGhgEmissions": "0.021",
+                "biogenicCarbonWithdrawal": "0.0",
+                "aircraftGhgEmissions": "0.0",
+                "characterizationFactors": "AR6",
+                "crossSectoralStandardsUsed": [
+                    "GHG Protocol Product standard"
+                ],
+                "productOrSectorSpecificRules": [
+                    {
+                        "operator": "EPD International",
+                        "ruleNames": [
+                            "ABC 2021"
+                        ]
+                    }
+                ],
+                "biogenicAccountingMethodology": "ISO",
+                "boundaryProcessesDescription": "End-of-life included",
+                "referencePeriodStart": "2021-01-01T00:00:00Z",
+                "referencePeriodEnd": "2022-01-01T00:00:00Z",
+                "geographyCountrySubdivision": "US-NY",
+                "geography_country": "US",
+                "geographyRegionOrSubregion": "North America",
+                "secondaryEmissionFactorSources": [
+                    {
+                        "name": "Ecoinvent",
+                        "version": "1.2.3"
+                    }
+                ],
+                "exemptedEmissionsPercent": "0.0",
+                "exemptedEmissionsDescription": "",
+                "packagingEmissionsIncluded": true,
+                "packagingGhgEmissions": "2.123",
+                "allocationRulesDescription": "Allocation rules description",
+                "uncertaintyAssessmentDescription": "Uncertainty assessment description",
+                "primaryDataShare": "10.4",
+                "dqi": {
+                    "coveragePercent": "100",
+                    "technologicalDQR": "1.13",
+                    "temporalDQR": "2.57",
+                    "geographicalDQR": "1",
+                    "completenessDQR": "2.6",
+                    "reliabilityDQR": "1.79"
+                },
+                "assurance": {
+                    "coverage": "product line",
+                    "level": "reasonable",
+                    "boundary": "Cradle-to-Gate",
+                    "providerName": "My Auditor",
+                    "completedAt": "2022-12-08T14:47:32Z",
+                    "standardName": "ISO ...",
+                    "comments": "This is a comment",
+                    "assurance": false
+                }
+            },
+            "extensions": [
+                {
+                    "specVersion": "2.0.0",
+                    "dataSchema": "https://catalog.carbon-transparency.com/shipment/1.0.0/data-model.json",
+                    "data": {
+                        "shipmentId": "S1234567890",
+                        "consignmentId": "Cabc.def-ghi",
+                        "shipmentType": "PICKUP",
+                        "weight": 10,
+                        "transportChainElementId": "ABCDEFGHI"
+                    }
+                }
+            ]
+        }
+    ]
+}
