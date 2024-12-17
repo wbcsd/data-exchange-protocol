@@ -1301,7 +1301,8 @@ DeclaredUnit is the enumeration of accepted declared units with values
 : <dfn>square meter</dfn>
 :: for square meter, the Derived Unit from SI Base Unit `metre`
 
-Advisement: v3 will also include the following `DeclaredUnit`: <dfn>piece</dfn>, for a piece, a unit of product
+: <dfn>piece</dfn>
+:: for a piece, a unit of product. If this is unit is specified, {CarbonFootprint/productMassPerDeclaredUnit}> MUST to be provided as well.
 
 </dl>
 
