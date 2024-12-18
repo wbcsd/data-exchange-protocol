@@ -10,7 +10,7 @@ In addition, for publishing a release:
 -->
 <pre class='metadata'>
 Text Macro: DATE 20241212
-Text Macro: VERSION 3.0.0-wip
+Text Macro: VERSION 3.0.0
 Text Macro: STATUS Draft
 Title: Technical Specifications for PCF Data Exchange
 TR: https://wbcsd.github.io/tr/2024/data-exchange-protocol-20241024/
@@ -203,7 +203,7 @@ below). See [[#api-auth]] for details.
         <div class="example">
           ```json
           {
-            "productIds": ["urn:pact:company:customcode:buyer-assigned:4321"],
+            "productIds": ["urn:pact:company:customcode:buyer-id:4321"],
             "referencePeriodStart": "2023-01-01T00:00:00Z",
             "referencePeriodEnd": "2024-01-01T00:00:00Z"
           }
@@ -213,7 +213,7 @@ below). See [[#api-auth]] for details.
         <div class="example">
           ```json
           {
-            "productIds": ["urn:pact:company:customcode:buyer-assigned:4321"],
+            "productIds": ["urn:pact:company:customcode:buyer-id:4321"],
             "geographyCountry": "FR"
           }
           ```
@@ -1338,7 +1338,7 @@ If the [=data owner=] wishes to use a custom company code assigned to it by
 a [=data recipient=] as a [=CompanyId=] value, the [=data owner=] SHOULD use the following format:
 
 ```
-urn:pact:company:customcode:buyer-assigned:$custom-company-code$
+urn:pact:company:customcode:buyer-id:$custom-company-code$
 ```
 
 where `$custom-company-code$` stands for the custom company code assigned by the [=data recipient=].
@@ -1346,7 +1346,7 @@ where `$custom-company-code$` stands for the custom company code assigned by the
 <div class=example>
 A data owner got assigned the custom vendor code `4321` by a buyer, the value of the CompanyId is then:
 
-`urn:pact:company:customcode:buyer-assigned:4321`.
+`urn:pact:company:customcode:buyer-id:4321`.
 </div>
 
 
@@ -1354,7 +1354,7 @@ If the [=data owner=] wishes to use its own custom company code known by
 a [=data recipient=] as a [=CompanyId=] value, the [=data owner=] SHOULD use the following format:
 
 ```
-urn:pact:company:customcode:vendor-assigned:$custom-company-code$
+urn:pact:company:customcode:supplier-id:$custom-company-code$
 ```
 
 where `$custom-company-code$` stands for the custom company code set by the [=data recipient=].
@@ -1362,7 +1362,7 @@ where `$custom-company-code$` stands for the custom company code set by the [=da
 <div class=example>
 A data owner uses as custom vendor code `6789` which is known to a buyer, the value of the CompanyId is then:
 
-`urn:pact:company:customcode:vendor-assigned:6789`.
+`urn:pact:company:customcode:buyer-id:6789`.
 </div>
 
 
@@ -1726,7 +1726,7 @@ Below is a list of examples of <{ProductFootprint/productIds}> as used in the <{
     Unique identification number assigned to every chemical substance described in the open scientific literature See [cas.org](https://www.cas.org/cas-data/cas-registry)
     <td><div class=example>
     ```json
-    ["urn:pact:cas.org:substance-id13463-67-7"]
+    ["urn:pact:cas.org:substance-number:13463-67-7"]
     ```
   <tr>
     <td>InChI (International Chemical Identifier)
