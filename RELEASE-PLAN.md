@@ -19,12 +19,14 @@ In addition, the tables below disclose deprecation of releases and subsequent su
 | Version| Draft Release | Published Release | Deprecation | Sunset |
 | --- | --- | --- | --- | --- |
 | [Version 1](https://www.wbcsd.org/contentwbc/download/13299/194600/1) | N/A | June 2022 | Dec 31, 2023 | Oct 1, 2024 |
-| [Version 2](https://wbcsd.github.io/tr/2023/framework-20232601/framework.pdf) | N/A | January 26, 2023 | Q1 2025 (when Framework Version 3 is released) | June 2025 |
-| Version 3 | November 2024 | Feb 2025 | TBD | TBD |
+| [Version 2](https://wbcsd.github.io/tr/2023/framework-20232601/framework.pdf) | N/A | January 26, 2023 | TBD | TBD |
+| Version 3 | Q1 2025 | Q1 2025 | TBD | TBD |
 
 _Update April 2024: Release pushed from Q3 to Q4 2024 (both methodology and tech specs) given learnings in Q1 2024 requiring more time to reach consensus and alignment on all critical topics_  
 
-_Update June 2024: Release pushed from Q4 2024 to Q1 2025 (both methodology and tech specs) given known delay in biogenic chapter and need to use the extra quarter to finalize alignment between Methodology and Technology. The release in Feb 2025 is a fixed deadline, we do not intend to push it out any longer, given we aim to release before another annual cycle of implementation._  
+_Update June 2024: Release pushed from Q4 2024 to Q1 2025 (both methodology and tech specs) given known delay in biogenic chapter and need to use the extra quarter to finalize alignment between Methodology and Technology. _  
+
+_Update December 2024: Deprecation and Sunset dates for V2 need to be determined._
 
 ## Tech Specs
 
