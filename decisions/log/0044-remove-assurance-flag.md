@@ -1,4 +1,4 @@
-# 44. Consistent typing of real numbers
+# 44. Remove assurance flag
 
 Date: 2024-12-11
 
