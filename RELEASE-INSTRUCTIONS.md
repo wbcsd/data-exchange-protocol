@@ -8,20 +8,24 @@ Follow the instructions below to trigger a release of the Technical Specificatio
 
 ## 1. Preparation
 
-Make sure your `specs/v2/index.bs` file is ready. In particular, you should double check if:
-- The version number (`Text Macro: VERSION <x.y.z>`) contains a date (e.g. `2.2.1-20240521`). This should only be used for the work in progress version of the Technical Specifications and should not be included in any release.
-- There is a changelog entry, indicating that a release is being made, and whether it is a consultation draft or a stable version.
+Make sure your `specs/v#/index.bs` file is ready. Follow this checklist:
+ - Add an entry to to Changelog indicating that a release is being made, and whether it is a consultation draft or a stable version.
+ - At the top of the file: set the text macro `STATUS` to either `Consultation` or `Release`
+ - Set the publication date: `DATE yyyymmdd` 
+ - Update version `VERSION major.minor.patch`
+ - Update the `Previous Version` and `TR` links
 
-## 2. Trigger the Release Workflow
+## 2. Create the Release
 
 On your command line, navigate to the `data-exchange-protocol` directory.
 
-Use the following command to trigger the release:
+Use the following command to create the release:
 ```
-sh release.sh <Consultation Draft|Release>
+make release
 ```
-> Make sure to replace `<Consultation Draft|Release>` by the actual option, i.e., either
-> `Consultation Draft` or `Release`.
+This will create the artifacts and copy them to a new branch under the  `tr` directory.
+
+Now navigate to the `../tr` directory and add + commit all changes.
 
 ## 3. Open a PR in the [`wbcsd/tr`](https://github.com/wbcsd/tr) Repository
 

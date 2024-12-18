@@ -84,17 +84,17 @@ release: clean build
 
 	$(eval status := $(shell sed -n 's/^Text Macro: STATUS //p' spec/$(version)/index.bs))
 	$(eval release_date := $(shell sed -n 's/^Text Macro: DATE //p' spec/$(version)/index.bs))
-	@if [ "$(status)" = "Release" ]; then \
+	@if [ "$(status)" = "Release" ] || [ "$(status)" = "Consultation" ]; then \
 		echo "Creating release at ../tr/$(release_year)/data-exchange-protocol-${release_date}"; \
+		pushd ../tr ; \
+		git fetch origin main ; \
+		echo "Creating branch release-${release_date}"; \
+		git checkout -f -B release-${release_date} origin/main ; \
+		popd ; \
 		rm -rf ../tr/data-exchange-protocol; \
 		cp -r build/$(version)/ ../tr/data-exchange-protocol; \
 		cp -r build/$(version)/ ../tr/$(release_year)/data-exchange-protocol-${release_date}; \
-		echo "Please create a branch in ../tr, commit the changes and push them to the repository."; \
-		pushd ../tr ; \
-		git fetch origin main ; \
-		git checkout -f -B release-${release_date} origin/main ; \
-		git add . ;\
-		popd ; \
+		echo "Please commit the changes and push them to the repository."; \
 	else \
 		echo "STATUS is not Release, adapt index.bs. See RELEASE.md for more information."; \
 	fi
