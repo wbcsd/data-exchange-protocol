@@ -6,6 +6,10 @@ import subprocess
 import scripts.patchup
 from invoke import task
 
+# Set up a custom exception handler to print errors to stderr
+sys.excepthook = (lambda extype,value,trace: 
+    print(f"Error: {value}", file=sys.stderr))
+
 # Get all input files matching a given pattern and iterate
 # over them. For each input file, yield the input and output
 # file paths.
@@ -25,6 +29,7 @@ def fileset(input_pattern, output_pattern, forceUpdate=False, createDirs=True):
                 os.makedirs(os.path.dirname(output), exist_ok=True)
             yield (input, output)
 
+# Display and run the command
 def run(cmd):
     print(cmd)
     os.system(cmd)
