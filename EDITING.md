@@ -208,7 +208,7 @@ On your command line, navigate to the `data-exchange-protocol` directory.
 
 Use the following command to create the release:
 ```
-involke release
+invoke release
 ```
 This will create all the artifacts and copy them to a new branch under the  `tr` directory.
 
