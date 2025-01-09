@@ -32,11 +32,12 @@ jobs:
         uses: actions/checkout@v3
       - name: Setup Pages
         uses: actions/configure-pages@v2
-      - name: Install Bikeshed and Mermaid
-        run: make install
-        shell: bash
+      - name: Install Bikeshed and Invoke
+        run: pip3 install bikeshed invoke && bikeshed update
+      - name: Install Mermaid
+        run: 	npm list -g @mermaid-js/mermaid-cli || npm install -g @mermaid-js/mermaid-cli
       - name: Build specs
-        run: make all
+        run: invoke all
         shell: bash
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
