@@ -46,7 +46,7 @@ def update_html_file(html_file, title, status):
         file.write(content)
 
 # Pacth the spec
-def patch_spec(input, output):
+def patchup(input, output):
     title, date, version, status = parse_bikeshed_file(input)
     if title is None:
         raise "Title not found"
@@ -67,4 +67,4 @@ if __name__ == "__main__":
         print("Usage: patch-up-spec.py <bikeshed_file> <html_file>")
         sys.exit(1)
     
-    patch_spec(sys.argv[1], sys.argv[2])
+    patchup(sys.argv[1], sys.argv[2])
