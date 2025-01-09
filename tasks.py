@@ -7,7 +7,7 @@ from scripts.patchup import patchup
 from scripts.build import Dependency, fileset
 from invoke import task
 
-# Tasks for build the bikeshed documentation and releasing the specification.
+# Tasks for building the bikeshed documentation and releasing the specification.
 # The tasks are implemented using python Invoke. For setting up your local
 # editing environment, see EDITING.md
 #
