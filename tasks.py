@@ -7,11 +7,25 @@ from scripts.patchup import patchup
 from scripts.build import Dependency, fileset
 from invoke import task
 
+# Tasks for build the bikeshed documentation and releasing the specification.
+# The tasks are implemented using python Invoke. For setting up your local
+# editing environment, see EDITING.md
+#
+# Tasks include:
+# - clean: Clean the build directory
+# - build: Build the specification from the source files
+# - release: Release a version of the specification
+# - serve: Serve the specification for browsing locally  
 
 # Display and run the command
 def run(cmd):
     print(cmd)
     os.system(cmd)
+
+# Set up a custom exception handler to print friendly errors to stderr
+sys.excepthook = (lambda extype,value,trace: 
+    print(f"Error: {value}", file=sys.stderr))
+
 
 # Check if the git repository is pristine and does not contain
 # any uncommitted changes.
@@ -56,7 +70,6 @@ def build(c):
         Dependency(target, [source]) for source,target in fileset("./spec/**/*.mmd", "./build/**/*.svg")
         ])
 
-
 @task(help={"ver": "Major version to release, can be v2 or v3"})
 def release(c, ver="v2"):
     """
@@ -78,5 +91,4 @@ def release(c, ver="v2"):
 def serve(c, ver="v3"):
     build(c)
     run(f"bikeshed --allow-nonlocal-files serve spec/{ver}/index.bs build/{ver}/index.html")
-
 

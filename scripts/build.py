@@ -1,10 +1,6 @@
 import glob
 import os
 
-# Set up a custom exception handler to print errors to stderr
-#sys.excepthook = (lambda extype,value,trace: 
-#    print(f"Error: {value}", file=sys.stderr))
-
 # Get all input files matching a given pattern and iterate
 # over them. For each input file, yield the input and output
 # file paths.
@@ -18,10 +14,6 @@ def fileset(input_pattern, output_pattern, forceUpdate=False, createDirs=True):
     output_suffix = segments[-1] if len(segments) > 1 else ""
     for input in glob.iglob(input_pattern, recursive=True):
         output = output_prefix + input[len(input_prefix):-len(input_suffix)] + output_suffix
-        #if forceUpdate or not os.path.exists(output) or os.path.getmtime(input) > os.path.getmtime(output):
-        #    # file needs to be updated
-        #    if createDirs:
-        #        os.makedirs(os.path.dirname(output), exist_ok=True)
         yield (input, output)
 
 class Dependency:
