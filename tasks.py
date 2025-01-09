@@ -3,31 +3,10 @@ import glob
 import os
 import sys
 import subprocess
-import scripts.patchup
+from scripts.patchup import patchup
+from scripts.build import Dependency, fileset
 from invoke import task
 
-# Set up a custom exception handler to print errors to stderr
-sys.excepthook = (lambda extype,value,trace: 
-    print(f"Error: {value}", file=sys.stderr))
-
-# Get all input files matching a given pattern and iterate
-# over them. For each input file, yield the input and output
-# file paths.
-# example usage: "doc/**/*.md", "build/**/*.html"
-def fileset(input_pattern, output_pattern, forceUpdate=False, createDirs=True):
-    segments = input_pattern.split("*")
-    input_prefix = segments[0]
-    input_suffix = segments[-1] if len(segments) > 1 else ""
-    segments = output_pattern.split("*")
-    output_prefix = segments[0]
-    output_suffix = segments[-1] if len(segments) > 1 else ""
-    for input in glob.iglob(input_pattern, recursive=True):
-        output = output_prefix + input[len(input_prefix):-len(input_suffix)] + output_suffix
-        if forceUpdate or not os.path.exists(output) or os.path.getmtime(input) > os.path.getmtime(output):
-            # file needs to be updated
-            if createDirs:
-                os.makedirs(os.path.dirname(output), exist_ok=True)
-            yield (input, output)
 
 # Display and run the command
 def run(cmd):
@@ -39,16 +18,20 @@ def run(cmd):
 def is_repo_pristine(directory = None):
     return subprocess.check_output("git diff --stat", shell=True, cwd=directory).decode(encoding="utf-8") == ""
 
-# Build Bikeshed files, and patch up title and status based on metadat
-def build_bikeshed(input_pattern, output_pattern):
-    for input, output in fileset(input_pattern, output_pattern):
-        run(f"bikeshed -f --allow-nonlocal-files spec {input} {output}")
-        scripts.patchup.patch_spec(input, output)
+# Build Bikeshed files, and patch up title and status based on metadata
+def build_bikeshed(dependencies):
+    for dependency in dependencies:
+        if dependency.outdated():
+            dependency.makedir()
+            run(f"bikeshed -f --no-update --allow-nonlocal-files spec {dependency.sources[0]} {dependency.target}")
+            patchup(dependency.sources[0], dependency.target)
 
 # Build Mermaid diagrams.
-def build_mermaid(input_pattern, output_pattern):
-    for input, output in fileset(input_pattern, output_pattern):
-        run(f"mmdc -i {input} -o {output} --theme default")
+def build_mermaid(dependencies):
+    for dependency in dependencies:
+        if dependency.outdated():
+            dependency.makedir()
+            run(f"mmdc -i {dependency.sources[0]} -o {dependency.target} --theme default")
 
 @task
 def clean(c):
@@ -62,8 +45,17 @@ def build(c):
     """ 
     Build the specifcation (all versions) from the source files.
     """
-    build_bikeshed("./spec/**/*.bs", "./build/**/*.html")
-    build_mermaid("./spec/**/*.mmd", "./build/**/*.svg")
+    build_bikeshed([
+        Dependency("build/faq/index.html", ["spec/faq/index.bs"]),
+        Dependency("build/v1/index.html", ["spec/v1/index.bs", "spec/v1/examples/*", "LICENSE.md"]),
+        Dependency("build/v2/index.html", ["spec/v2/index.bs", "spec/v2/examples/*", "LICENSE.md"]),
+        Dependency("build/v3/index.html", ["spec/v3/index.bs", "spec/v3/*.md", "spec/v3/examples/*", "LICENSE.md"])
+        ])
+
+    build_mermaid([
+        Dependency(target, [source]) for source,target in fileset("./spec/**/*.mmd", "./build/**/*.svg")
+        ])
+
 
 @task(help={"ver": "Major version to release, can be v2 or v3"})
 def release(c, ver="v2"):
@@ -86,4 +78,5 @@ def release(c, ver="v2"):
 def serve(c, ver="v3"):
     build(c)
     run(f"bikeshed --allow-nonlocal-files serve spec/{ver}/index.bs build/{ver}/index.html")
+
 
