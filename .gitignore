@@ -1,5 +1,5 @@
 index.html
 upload/
-*.svg
+build/**/*.svg
 .DS_Store
 scripts/__pycache__/*
