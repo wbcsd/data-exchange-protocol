@@ -90,5 +90,7 @@ def release(c, ver="v2"):
 @task(help={"ver": "Major version to serve, can be v2 or v3"}) 
 def serve(c, ver="v3"):
     build(c)
-    run(f"bikeshed --allow-nonlocal-files serve spec/{ver}/index.bs build/{ver}/index.html")
+    print(f"Open your browser at \033[4mhttp://localhost:8000/build/{ver}\033[0m")
+    print(f"Press Ctrl+C to stop the server\n")
+    run(f"bikeshed --allow-nonlocal-files --no-update serve spec/{ver}/index.bs build/{ver}/index.html")
 
