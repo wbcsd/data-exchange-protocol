@@ -1,6 +1,3 @@
-
-# HTTP REST API # {#api}
-
 ## Introduction ## {#api-intro}
 
 <div class=note>Non-normative</div>

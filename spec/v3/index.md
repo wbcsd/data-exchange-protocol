@@ -610,25 +610,28 @@ In determining which URN namespace and corresponding syntax to use, the data own
 </table>
 
 These namespaces allow systems and standards to consistently identify and categorize products, making them useful in a variety of domains like supply chain management, retail, industrial procurement, and publication. If you’re working with a specific product categorization system, you may find these URNs particularly relevant for classification or reference purposes.
-<!-- 
+
+
 # Data Model # {#data-model}
--->
+
 <pre class=include>
 path: data-model.md
 </pre>
 
-<!--
+
 # HTTP REST API # {#api}
--->
+
 <pre class=include>
 path: rest-api.md
 </pre>
+
 
 # Appendix A: License # {#license}
 
 <pre class=include>
 path: ../../LICENSE.md
 </pre>
+
 
 # Appendix B: Changelog # {#changelog}
 

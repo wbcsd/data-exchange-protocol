@@ -1,4 +1,4 @@
-# Data Model # {#data-model}
+## Introduction ## {#data-model-intro}
 
 This section specifies a data model for [[#dt-pf|product footprints]] conforming
 with the [=PACT Methodology=] Version 3.
