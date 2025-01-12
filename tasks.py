@@ -63,7 +63,7 @@ def build(c):
         Dependency("build/faq/index.html", ["spec/faq/index.bs"]),
         Dependency("build/v1/index.html", ["spec/v1/index.bs", "spec/v1/examples/*", "LICENSE.md"]),
         Dependency("build/v2/index.html", ["spec/v2/index.bs", "spec/v2/examples/*", "LICENSE.md"]),
-        Dependency("build/v3/index.html", ["spec/v3/index.bs", "spec/v3/*.md", "spec/v3/examples/*", "LICENSE.md"])
+        Dependency("build/v3/index.html", ["spec/v3/index.md", "spec/v3/*.md", "spec/v3/examples/*", "LICENSE.md"])
         ])
 
     build_mermaid([
