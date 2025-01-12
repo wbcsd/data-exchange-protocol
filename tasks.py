@@ -3,7 +3,7 @@ import glob
 import os
 import sys
 import subprocess
-from scripts.patchup import patchup
+from scripts.patchup import patchup, parse_bikeshed_file
 from scripts.build import Dependency, fileset
 from invoke import task
 
@@ -77,7 +77,7 @@ def release(c, ver="v2"):
     version to release, this can be v1, v2 or v3.
     """
     input = f"./spec/{ver}/index.bs"
-    title, date, version, status = scripts.patchup.parse_bikeshed_file(input)
+    title, date, version, status = parse_bikeshed_file(input)
     print(f"Building release version {version}", file=sys.stderr)
 
     if status != "Release":
