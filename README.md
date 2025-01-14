@@ -16,8 +16,8 @@ The technical specification Version 3.0.0 is the current focus of work.
 
 ## Governance
 
-1. The decision making process around this repository is documented here: [DECISION-MAKING-PROCESS.md](DECISION-MAKING-PROCESS.md)
-2. The planned release timeline is documented here: [RELEASE-PLAN.md](RELEASE-PLAN.md)
+1. See https://www.carbon-transparency.org/governance
+2. Release timeline is documented here: [RELEASE-PLAN.md](RELEASE-PLAN.md)
 
 ## Implementations
 
@@ -25,7 +25,7 @@ For a list of Software Solution Providers offering PACT conformant software, see
 
 ## Contributing
 
-TODO
+We welcome contributions to the PACT Specifications, please see [CONTRIBUTING.md](CONTRIBUTING.md) for ways to help.
 
 ## Editing
 
