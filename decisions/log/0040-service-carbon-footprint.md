@@ -17,7 +17,7 @@ See for more information https://backlog.carbon-transparency.org/Explore-the-pos
 Proposal to include 2 additional units of measurement into the data model for accounting for service-releated emissions.
 
 - **hour**: time in hours for Desk-based services
-- **mbps**: data transfer in megabit per second for IT-related services
+- **MB**: amount of data used, transferred or stored for IT-related services, as a proxy to actual emissions. 
 
 ## Rationale
 
