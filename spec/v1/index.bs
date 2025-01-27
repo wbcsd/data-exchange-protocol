@@ -644,7 +644,7 @@ A set of ProductOrSectorSpecificRule of size 1 or larger.
 
 ### JSON Representation ### {#dt-productorsectorspecificruleset-json}
 
-Each [[#ProductOrSectorSpecificRuleSet#]] MUST be encoded as an array of JSON objects, with each object conforming to [[#dt-productorsectorspecificrule-json]].
+Each [=ProductOrSectorSpecificRuleSet=] MUST be encoded as an array of JSON objects, with each object conforming to [[#dt-productorsectorspecificrule-json]].
 
 
 
