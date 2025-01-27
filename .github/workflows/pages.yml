@@ -37,7 +37,7 @@ jobs:
       - name: Install Mermaid
         run: 	npm list -g @mermaid-js/mermaid-cli || npm install -g @mermaid-js/mermaid-cli
       - name: Build specs
-        run: invoke all
+        run: invoke clean build
         shell: bash
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
