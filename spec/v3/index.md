@@ -472,7 +472,7 @@ Below is a list of examples of <{ProductFootprint/productIds}> as used in the <{
     <td><div class=example>
     ```json
     ["urn:isbn:978-951-0-18435-6"]
-    ```
+    ```</div>
   <tr>
     <td>GTIN (widely used)
 
@@ -480,7 +480,7 @@ Below is a list of examples of <{ProductFootprint/productIds}> as used in the <{
     <td><div class=example>
     ```json
     ["urn:gtin:4712345060507"]
-    ```
+    ```</div>
   <tr>
     <td>UUID
 
@@ -488,7 +488,7 @@ Below is a list of examples of <{ProductFootprint/productIds}> as used in the <{
     <td><div class=example>
     ```json
     ["urn:uuid:69585GB6-56T9-6958-E526-6FDGZJHU1326"]
-    ```
+    ```</div>
   <tr>
     <td>CAS Registry Number
 
@@ -496,7 +496,7 @@ Below is a list of examples of <{ProductFootprint/productIds}> as used in the <{
     <td><div class=example>
     ```json
     ["urn:pact:cas.org:substance-number:13463-67-7"]
-    ```
+    ```</div>
   <tr>
     <td>InChI (International Chemical Identifier)
 
@@ -504,7 +504,7 @@ Below is a list of examples of <{ProductFootprint/productIds}> as used in the <{
     <td><div class=example>
     ```json
     ["urn:pact:inchi-trust.org:substance-id:$INCHI-ID$"]
-    ```
+    ```</div>
   <tr>
     <td>Combined example of a substance
 
@@ -517,7 +517,7 @@ Below is a list of examples of <{ProductFootprint/productIds}> as used in the <{
     "urn:pact:inchi-trust.org:substance-id:1S,/2O.Ti",
     "urn:pact:inchi-trust.org:substance-key:
     GWEVSGVZZGPLCZ-UHFFFAOYSA-N"]
-    ```
+    ```</div>
 </table>
 </figure>
 
