@@ -705,6 +705,8 @@ The following properties are defined for data type <{DataQualityIndicators}>:
 
 Data type `Assurance` contains the assurance in conformance with [=PACT Methodology=] chapter 5 and appendix B.
 
+Advisement: the superfluous boolean property `assurance` has been REMOVED in version 3.0. The presence of the <{Assurance}> element indicates whether or not the <{CarbonFootprint}> has been assured in line with [=PACT Methodology=] requirements (section 5). 
+
 The following properties are defined for data type <{Assurance}>:
 
 <figure id="pf-assurance-properties-table" dfn-type="element-attr" dfn-for="Assurance">
@@ -716,13 +718,6 @@ The following properties are defined for data type <{Assurance}>:
         <th>Req
         <th>Specification
     <tbody>
-      <tr>
-        <td><dfn>assurance</dfn>
-        <td>Boolean
-        <td>M
-        <td>
-          A boolean flag indicating whether the <{CarbonFootprint}> has been
-          assured in line with [=PACT Methodology=] requirements (section 5).
       <tr>
         <td><dfn>coverage</dfn>
         <td>String
