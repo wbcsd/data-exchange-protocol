@@ -3,6 +3,7 @@ Text Macro: DATE 20230201
 Text Macro: VERSION 1.0.1
 Text Macro: STATUS Release
 Title: Technical Specifications for PCF Data Exchange
+Complain About: mixed-indents no
 Level: 1
 Status: LD
 Shortname: data-exchange-protocol
