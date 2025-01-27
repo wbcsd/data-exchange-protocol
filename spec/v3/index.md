@@ -9,7 +9,7 @@ In addition, for publishing a release:
   Update the Previous Version and TR links
 -->
 <pre class='metadata'>
-Text Macro: DATE 20241212
+Text Macro: DATE 20250127
 Text Macro: VERSION 3.0.0
 Text Macro: STATUS Draft
 Title: Technical Specifications for PCF Data Exchange
@@ -636,7 +636,12 @@ path: ../../LICENSE.md
 # Appendix B: Changelog # {#changelog}
 
 
-## Version 3.0.0-20241212 (Dec 12, 2024) ## {#changelog-3.0.0}
+## Version 3.0.0-20250127 (Jan 27, 2025) ## {#changelog-3.0.0-20250127}
+
+Summary of changes:
+1. Removal of property `assurance` on {Assurance} object> (ADR44)
+
+## Version 3.0.0-20241212 (Dec 12, 2024) ## {#changelog-3.0.0-20241212}
 
 Summary of changes:
 1. Updated references to the upcoming PACT Framework 3.0 
