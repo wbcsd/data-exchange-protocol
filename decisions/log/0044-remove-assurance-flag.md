@@ -50,3 +50,6 @@ As this would break backwards compatibility with version 2.x these changes shoul
 Presented in the Tech Working Group meeting of December 4, 2024. Feedback collected.
 
 Call for consensus Dec 18, 2024.
+Consensus reached.
+
+
