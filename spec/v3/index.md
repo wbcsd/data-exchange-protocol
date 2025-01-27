@@ -639,7 +639,7 @@ path: ../../LICENSE.md
 ## Version 3.0.0-20250127 (Jan 27, 2025) ## {#changelog-3.0.0-20250127}
 
 Summary of changes:
-1. Removal of property `assurance` on {Assurance} object> (ADR44)
+1. Removal of property `assurance` on <{Assurance}> object (ADR44)
 
 ## Version 3.0.0-20241212 (Dec 12, 2024) ## {#changelog-3.0.0-20241212}
 
