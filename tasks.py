@@ -23,9 +23,11 @@ def run(cmd):
     os.system(cmd)
 
 # Set up a custom exception handler to print friendly errors to stderr
-sys.excepthook = (lambda extype,value,trace: 
-    print(f"Error: {value}", file=sys.stderr))
+def error_handler(exctype, value, traceback):
+    print(f"Error: {value}", file=sys.stderr)
+    exit(1)
 
+sys.excepthook = error_handler
 
 # Check if the git repository is pristine and does not contain
 # any uncommitted changes.
