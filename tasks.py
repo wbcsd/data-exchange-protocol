@@ -45,7 +45,8 @@ def build_mermaid(dependencies):
     for dependency in dependencies:
         if dependency.outdated():
             dependency.makedir()
-            run(f"mmdc -i {dependency.sources[0]} -o {dependency.target} --theme default")
+            # running with .github/puppeteer-config.json to avoid rendering issues on GitHub Actions
+            run(f"mmdc -i {dependency.sources[0]} -o {dependency.target} --theme default -p .github/puppeteer-config.json")
 
 @task
 def clean(c):
