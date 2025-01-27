@@ -56,7 +56,7 @@ build/%.html: spec/%.bs
 # Build rule for mermaid diagrams
 build/%.svg: spec/%.mmd
 	mkdir -p $(dir $@)
-	mmdc -i $< -o $@ --theme default
+	mmdc -i $< -o $@ -p .github/puppeteer-config.json --theme default 
 
 all: clean build
 
