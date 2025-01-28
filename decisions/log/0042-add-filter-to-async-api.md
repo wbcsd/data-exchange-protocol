@@ -14,13 +14,13 @@ This is true for both the synchronous as well as the asynchronous way of getting
 
 Currently this is functionality is implied in the API specifciation in two ways:
  
-  - First, as a `filter` query-parameter fo the sync API (`/2/footprints`) which is OPTIONAL. 
+  - First, as a `$filter` OData query-parameter for the sync API (`/2/footprints`) which has been OPTIONAL. 
   - Second, in the async API (/2/event footprint-request.created) takes a `FootprintFragment` as a crude input filter.
 
 ### Observations
 
 - Filtering in the async API is optional in v2.
-- Using a ProductFootprintFragment offers a very crude way to search and not precisely specified.
+- Using a ProductFootprintFragment offers a crude way to search and not precisely specified.
 
   For example, given a fragment:
 
@@ -32,27 +32,59 @@ Currently this is functionality is implied in the API specifciation in two ways:
 It is unclear if this means looking for any PCF with both productId="x" *and* productId="y" *and* standardsUsed="z" or 
 other logic, like productId="x" *or* productId="y"?
 
+An initial proposal was presented in December 2024 to make the OData $filter implementation **MANDATORY** for both synchronous and asynchronous API’s. 
+
+However this was met with pushback from the Tech WG on 18/12/24, because implementing the OData filter:
+  - Requires substantial development effort for a perceived overkill of search capabilties.
+  - Brings with it unneccesary complications like searching on non-indexed fields being able to construct wildly expensive queries.
+  - Does not map well on the async use-case. In case a recipient requests the creation of a PCF, a full OData query can not easily be used to infer what conditions the newly created PCF should match.
+
+As a consequence, after consulting with the Tech WG on 15/1/2025 a limited list of crucial search criteria has been assembled and a new proposal is made to filter on these, using only simple OR + AND operators.
+
 
 ## Proposal 
 
-Streamline the sync + async API by 
-  1) **Requiring** the `filter` parameter and implementation for Action list-footprints. 
-  2) **Adding** the `filter` parameter to the /event/footprint.request.created
+1) Keep the OData `$filter` parameter for `ListFootprints`  **OPTIONAL** 
+
+2) Add the following limited list of criteria to the `List-Footprints` and `Event-FootprintRequest-Created` methods:
+    
+    * PfId
+    * ProductId
+    * CompanyId
+    * Classification
+    * Geography
+    * ValidOn
+    * ValidBefore
+    * ValidAfter
+    * Status
+
+3) It must be possible to fiter on 
+    
+    * multiple values for the same criterium: e.g. *ProductID* 1 **OR** 2
+  
+    * and for multiple criteria: e.g. (*ProductID* 1 **OR** 2) **AND** (*Region* DE)
+
+
+### Criteria
+
+* `productId` (string) can be 1 or more product ID's. Will return all footprints which have a corresponding ID in their `productIds` attribute. Note that a footprint itself can also have multiple product IDs.
+* `companyId` (string) can be 1 or more company ID's. Will return all footprints with corresponding id's in the `companyIds` attribute. Note that a footprint itself can also have multiple company IDs.
+* `geography` (string) can be 1 or more geographic specifiers. Values specified can denote `geographicRegion` or `geographyCountry` or `geographyCountrySubdivision`. Will return all footprints within the specified geography.
+* `classification` (string) can be 1 or more product classifications. Will return all footprints with corresponding values in the `productClassifications` attribute. Note that a footprint itself can have multiple classifications.
+* `validOn` (date-string) will match all PCF's which where valid on the date specified: footprint.validityPeriodBegin <= validOn AND validFrom <= footprint.validityPeriodEnd
+* `validAfter` (date-string) will match PCF's whith validAfter < footprint.validityPeriodBegin
+* `validBefore` (date-string) will match PCF's whith validBefore > footprint.validityPeriodEnd
 
 
 ### Synchronous API:
 
-Make the exisiting specified filter parameter MANDATORY.
+Implementors MUST accept the criteria mentioned above for the `ListFootprints` method as regular querystring parameters.
 
-example
-
-    /footprint?query=((x in productids) and|or (pcf.region=’de’ pcf.region=’de-ba’))
-
-As specified in 2.x the filter should be implemented according to the OData query standard: https://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html
+    example.org/pact/3/footprint?productId=1234&productId=5678&validFrom=2020-01-20&validOn=2025-12-31
 
 ### Asynchronous API:
 
-Include a `filter` property in the `FootprintRequest.Created` event:
+Include a `filter` object in the `FootprintRequest.Created` event. This object can contain the fixed set of criteria.  
 
     {
         "type": "org.wbcsd.pathfinder.ProductFootprintRequest.Created.v1",
@@ -61,18 +93,33 @@ Include a `filter` property in the `FootprintRequest.Created` event:
         "source": "//EventHostname/EventSubpath",
         "time": "2022-05-31T17:31:00Z",
         "data": {
-        --> "filter": "OData Query"
+        --> "filter": {
+              "productId": ["1234","5678"],
+              "geography": ["DE"],
+              "validFrom": "2024-12-30T00:00:00"
+            }
             "comment": PFRequestComment
         }
     }
 
 This will enable data recipients to select product footprints with sufficient flexibility for real-world scenario's.
 
+## Extensions
+
+Implementors MAY offer additional criteria to filter on. In doing so, both the sync (ListFootprints) AND async (Events/ProductFootprintRequest.Created) methods MUST implement these criteria.
+
+Additional critera MUST be named x-<implementor>-<criterium>. For example, adding functionality to search for product footprints based on an invoice-id, an software provider could choose to use: 
+
+  `x-atq-invoice-id`
+
+This will enable queries like `.../footprint/?x-atq-invoice-id=12345&geography=FR`
+
 
 ## Consequences
 
-Any implementation which has not yet implemented filtering for /2/footprints will need to implement this for version 3. 
-The event API will have a new filter parameter, offering the exact same way of filtering via the synchronous ListFootprint  action. In version 2 
+Implementing filtering will be MANDATORY from 3.0 on both ListFootprints and Events methods. 
 
-As any ProductFootprintFragment can easily be expressd as a query, using the ProductFootprintFragment will become OBSOLETE in a later version.
+As any v2 ProductFootprintFragment can easily be expressd as a query, using the ProductFootprintFragment will become OBSOLETE in a later version.
+
+Depending on usage and number of implementations, the 2.x optional OData $filter might become OBSOLETE in a later version as well.
 
