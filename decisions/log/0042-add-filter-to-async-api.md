@@ -44,9 +44,7 @@ As a consequence, after consulting with the Tech WG on 15/1/2025 a limited list 
 
 ## Proposal 
 
-1) Keep the OData `$filter` parameter for `ListFootprints`  **OPTIONAL** 
-
-2) Add the following limited list of criteria to the `List-Footprints` and `Event-FootprintRequest-Created` methods:
+1) Add the following limited list of criteria to the `List-Footprints` and `Event-FootprintRequest-Created` methods:
     
     * PfId
     * ProductId
@@ -58,11 +56,15 @@ As a consequence, after consulting with the Tech WG on 15/1/2025 a limited list 
     * ValidAfter
     * Status
 
-3) It must be possible to fiter on 
+2) It must be possible to match: 
     
     * multiple values for the same criterium: e.g. *ProductID* 1 **OR** 2
   
-    * and for multiple criteria: e.g. (*ProductID* 1 **OR** 2) **AND** (*Region* DE)
+    * on multiple criteria: e.g. (*ProductID* 1 **OR** 2) **AND** (*Region* DE)
+
+3) No other logical operations other than these limited AND/OR combinations will be supported
+
+4) The OData `$filter` parameter for `ListFootprints`  stays **OPTIONAL**. For any implementation already supporting OData, this proposal will be trivial to implement. 
 
 
 ### Criteria
