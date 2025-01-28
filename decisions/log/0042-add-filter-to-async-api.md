@@ -1,4 +1,4 @@
-Date: 2024-11-11
+Date: 2025-01-28
 
  ## Status
 
@@ -36,10 +36,10 @@ An initial proposal was presented in December 2024 to make the OData $filter imp
 
 However this was met with pushback from the Tech WG on 18/12/24, because implementing the OData filter:
   - Requires substantial development effort for a perceived overkill of search capabilties.
-  - Brings with it unneccesary complications like searching on non-indexed fields being able to construct wildly expensive queries.
-  - Does not map well on the async use-case. In case a recipient requests the creation of a PCF, a full OData query can not easily be used to infer what conditions the newly created PCF should match.
+  - Brings with it unneccesary complications like searching on non-indexed fields, and being able to construct wildly expensive queries.
+  - Does not map well on the asynchronous use-case. In case a recipient requests the creation of a PCF, a full OData query can not easily be used to infer what conditions the newly created PCF should match.
 
-As a consequence, after consulting with the Tech WG on 15/1/2025 a limited list of crucial search criteria has been assembled and a new proposal is made to filter on these, using only simple OR + AND operators.
+As a consequence, after consulting with the Tech WG on 15/1/2025 a limited list of essential criteria has been assembled and a new proposal is made to filter on these, using only simple OR + AND operators.
 
 
 ## Proposal 
@@ -76,6 +76,8 @@ As a consequence, after consulting with the Tech WG on 15/1/2025 a limited list 
 * `validOn` (date-string) will match all PCF's which where valid on the date specified: footprint.validityPeriodBegin <= validOn AND validFrom <= footprint.validityPeriodEnd
 * `validAfter` (date-string) will match PCF's whith validAfter < footprint.validityPeriodBegin
 * `validBefore` (date-string) will match PCF's whith validBefore > footprint.validityPeriodEnd
+* `status` (string) Can be "Active" or "Deprecated"
+* **MAYBE?**`pfId` (string) Search for a specific Product Footprint Id. Note that this is synonymous with calling `/footprints/{pfid}`
 
 
 ### Synchronous API:
