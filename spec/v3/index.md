@@ -615,6 +615,11 @@ These namespaces allow systems and standards to consistently identify and catego
 # Data Model # {#data-model}
 
 <pre class=include>
+path: datamodel.generated.md
+</pre>
+
+
+<pre class=include>
 path: data-model.md
 </pre>
 

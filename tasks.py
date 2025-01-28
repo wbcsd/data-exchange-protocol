@@ -3,6 +3,7 @@ import glob
 import os
 import sys
 import subprocess
+import scripts.openapi
 from scripts.patchup import patchup, parse_bikeshed_file
 from scripts.build import Dependency, fileset
 from invoke import task
@@ -97,3 +98,9 @@ def serve(c, ver="v3"):
     print(f"Press Ctrl+C to stop the server\n")
     run(f"bikeshed --allow-nonlocal-files --no-update serve spec/{ver}/index.bs build/{ver}/index.html")
 
+@task
+def experiment(c):
+    """
+    Experimental generation of data models, based on OpenAPI schema
+    """
+    scripts.openapi.generate_data_model("spec/v3/openapi.yaml", "spec/v3/datamodel")
