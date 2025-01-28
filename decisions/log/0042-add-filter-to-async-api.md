@@ -121,9 +121,9 @@ This will enable queries like `.../footprint/?x-atq-invoice-id=12345&geography=F
 
 ## Consequences
 
-Implementing filtering will be MANDATORY from 3.0 on both ListFootprints and Events methods. 
+Implementing the filtering described here will be MANDATORY from version 3.0 onwards for both ListFootprints and Events methods. 
 
-As any v2 ProductFootprintFragment can easily be expressd as a query, using the ProductFootprintFragment will become OBSOLETE in a later version.
+As any v2.x ProductFootprintFragment can easily be expressd as a query, using the ProductFootprintFragment will become OBSOLETE in a later version.
 
 Depending on usage and number of implementations, the 2.x optional OData $filter might become OBSOLETE in a later version as well.
 
