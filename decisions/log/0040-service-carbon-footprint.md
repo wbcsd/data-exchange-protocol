@@ -1,4 +1,4 @@
-Date: 2024-10-21
+Date: 2024-10-29
 
 ## Status
 
@@ -48,7 +48,7 @@ https://ghgprotocol.org/sites/default/files/ghgp/GHGP-ICTSG%20-%20ALL%20Chapters
 
 
 In PCF format:
-```
+```json
 "unitOfMeasurement": "Mbps"
 "productDescription": "Streaming Service"
 "productAmount": "1"
