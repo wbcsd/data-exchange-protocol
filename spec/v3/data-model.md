@@ -1,27 +1,3 @@
-## Introduction ## {#data-model-intro}
-
-This section specifies a data model for [[#dt-pf|product footprints]] conforming
-with the [=PACT Methodology=] Version 3.
-
-The data model consists of the following major data types:
-
-1. <{ProductFootprint}>: contains information to identify a product,
-    plus further information such as the <{CarbonFootprint}> (see [[#dt-pf]])
-2. <{CarbonFootprint}>: contains information related to the carbon footprint
-    of a product (see [[#dt-carbonfootprint]])
-3. <{DataModelExtension}>: contains additional information beyond the data model
-    specified in this document.
-
-The overall data model is designed for interactions between [=data owners=] and
-[=data recipients=], to enable
-(i) interoperability,
-(ii) comparability of and transparency over product footprints, or
-(iii) the calculation of derived <{CarbonFootprint|CarbonFootprints}> from other <{CarbonFootprint|CarbonFootprints}>.
-
-Additional uses of the data model are supported through the concept of
-[=Data Model Extensions=]. These allow [=data owners=] to add
-further information to a <{ProductFootprint}>.
-
 
 ## Data Type: <dfn element>ProductFootprint</dfn> ## {#dt-pf}
 
