@@ -197,20 +197,59 @@ paths:
       - BearerAuth: []
 components:
   schemas:
+    Introduction:
+      description: >
+        This section specifies a data model for [[#dt-pf|product footprints]] conforming
+        with the [=PACT Methodology=] Version 3.
+
+
+        The data model consists of the following major data types:
+
+
+        1. <{ProductFootprint}>: contains information to identify a product,
+            plus further information such as the <{CarbonFootprint}> (see [[#dt-pf]])
+        2. <{CarbonFootprint}>: contains information related to the carbon footprint
+            of a product (see [[#dt-carbonfootprint]])
+        3. <{DataModelExtension}>: contains additional information beyond the data model
+            specified in this document.
+
+
+        The overall data model is designed for interactions between [=data owners=] and
+        [=data recipients=], to enable
+        (i) interoperability,
+        (ii) comparability of and transparency over product footprints, or
+        (iii) the calculation of derived <{CarbonFootprint|CarbonFootprints}> from other <{CarbonFootprint|CarbonFootprints}>.
+
+
+        Additional uses of the data model are supported through the concept of
+        [=Data Model Extensions=]. These allow [=data owners=] to add
+        further information to a <{ProductFootprint}>.
+
     ProductFootprint:
       description: >
-        The ProductFootprint is a data type which represents the footprint
-        of a product under a specific scope (§ 5.2.1 Scope of a Footprint) 
-        and with values calculated in accordance with the PACT Methodology.
+        `ProductFootprint` is a data type which represents the carbon footprint
+        of a product under a specific scope ([[#dt-carbonfootprint-scope]])
+        and with values calculated in accordance with the [=PACT Methodology=].
 
 
-        Conceptually, the data type ProductFootprint is modeled as a multi-purpose 
-        container for product-specific emissions factors which is supported by 
-        extensibility through Data Model Extensions.
+        The objective of a `ProductFootprint` is to provide interoperability between
+        the creator (the [=data owner=]) and the consumer (the [=data recipient=]) of
+        ProductFootprints. The details on the exchange of ProductFootprints are
+        specified in [[#api]].
 
 
-        Each ProductFootprint can and should be updated over time, for instance 
-        to incorporate new or refined data from data owners (see [[#lifecycle]])
+        Conceptually, the data type <{ProductFootprint}> is modeled as a multi-purpose
+        container for product-specific emissions factors which is supported by
+        extensibility through [=Data Model Extensions=].
+
+
+        Data Model Extensions enable [=data owners=] to exchange additional information
+        related to a product with [=data recipients=]. The details are specified
+        in [[#dt-datamodelextension]] as well as [[!EXTENSIONS-GUIDANCE]], and [[!DATA-MODEL-EXTENSIONS]].
+
+
+        Each `ProductFootprint` can and should be updated over time, for instance to
+        incorporate new or refined data from [=data owners=] (see [[#lifecycle]]).
       type: object
       title: ProductFootprint
       required:
@@ -237,7 +276,7 @@ components:
           type: string
           format: uuid
           examples:
-            - "f4b1225a-bd44-4c8e-861d-079e4e1dfd69"
+          - "f4b1225a-bd44-4c8e-861d-079e4e1dfd69"
         specVersion:
           description: >
             The version of the PACT Tech Specs that the data being shared complies with. 
@@ -259,7 +298,8 @@ components:
           minItems: 1
           uniqueItems: true
           examples:
-          - ["f4b1225a-bd44-4c8e-861d-079e4e1dfd69","079e425a-464f-528d-341d-4a944a1dfd70"]
+          - ["f4b1225a-bd44-4c8e-861d-079e4e1dfd69", 
+             "079e425a-464f-528d-341d-4a944a1dfd70"]
         version:
           description: >
             The version number of the PCF; for example starting with 1 and incrementing.
@@ -276,6 +316,7 @@ components:
             generated field by the software solution.
           type: string
           format: date-time
+          example: '2024-10-31T00:00:00Z'
         updated:
           description: >
             The date and time when the PCF was last updated. This is typically an automatically 
@@ -294,6 +335,7 @@ components:
           enum:
             - Active
             - Deprecated
+          example: Active
         statusComment:
           type: string
           description: >
@@ -587,6 +629,9 @@ components:
               # - PACT Methodology 3.0
           minItems: 1
           uniqueItems: true
+          example:
+          - ISO14067
+          - PACT-3.0
         productOrSectorSpecificRules:
           description: >
             The product-specific or sector-specific rules applied for calculating or 
@@ -602,6 +647,11 @@ components:
             $ref: '#/components/schemas/ProductOrSectorSpecificRule'
           minItems: 1
           uniqueItems: true
+          example: 
+          - operator: PEF
+            ruleNames:
+            - "PEF 1.0"
+            - "PEF 2.0"
         biogenicAccountingMethodology:
           description: >
             Name of the standard followed to account for biogenic emissions and removals.
@@ -611,6 +661,7 @@ components:
             - ISO
             - GHGP
             - Quantis
+          example: GHGP
         boundaryProcessesDescription:
           description: >  
             Brief description of the processes attributable to each life cycle stage included 
@@ -664,6 +715,7 @@ components:
             - Sub-Saharan Africa
             - Western Asia
             - Western Europe
+          example: "Eastern Asia"
         geographyCountry:
           description: >
             The geographic representation of the PCF may be reported at different levels
@@ -700,6 +752,9 @@ components:
           minItems: 1
           items:
             $ref: '#/components/schemas/EmissionFactorDS'
+          example:
+          - name: ecoinvent
+            version: "3.7"          
         exemptedEmissionsPercent:
           description: >
             Percentage of emissions EXCLUDED from the cradle to gate PCF in total. 
@@ -771,6 +826,7 @@ components:
       format: decimal
       pattern: ^-((\d*[1-9]\d*)(\.\d+)?|(0+\.\d*[1-9]\d*))$
     ProductOrSectorSpecificRule:
+      title: ProductOrSectorSpecificRule
       type: object
       required:
       - operator
@@ -797,13 +853,14 @@ components:
             minLength: 1
           minItems: 1
           uniqueItems: true
-        otherOperatorName:
+        otherOperatorName: 
           description: >
             If operator is Other, then this attribute must be populated with the name 
             of the operator.
           type: string
           minLength: 1
     EmissionFactorDS:
+      title: EmissionFactorDS
       type: object
       required:
       - name
@@ -937,7 +994,7 @@ components:
     # Events
     BaseEvent:
       title: BaseEvent
-      describes: >
+      description: >
         Base class for all events, it follows the CloudEvents specification.
       type: object
       required:
@@ -975,8 +1032,8 @@ components:
       properties:
         type:
           type: string
-          enum:
-            - org.wbcsd.pathfinder.ProductFootprint.Published.v1
+          const: org.wbcsd.pathfinder.ProductFootprint.Published.v1
+          description: Event type identifier.
         specversion:
           type: string
           description: CloudEvents version.
@@ -993,6 +1050,7 @@ components:
           description: The time the event occurred.
         data:
           type: object
+          description: data object
           properties:
             pfIds:
               type: array
@@ -1014,8 +1072,8 @@ components:
       properties:
         type:
           type: string
-          enum:
-            - org.wbcsd.pathfinder.ProductFootprintRequest.Created.v1
+          const: org.wbcsd.pathfinder.ProductFootprintRequest.Created.v1
+          description: Event type identifier.
         specversion:
           type: string
           description: CloudEvents version.
@@ -1032,6 +1090,7 @@ components:
           description: The time the event occurred.
         data:
           type: object
+          description: data object
           required:
           - pf
           properties:
@@ -1047,8 +1106,8 @@ components:
       properties:
         type:
           type: string
-          enum:
-            - org.wbcsd.pathfinder.ProductFootprintRequest.Fulfilled.v1
+          const: org.wbcsd.pathfinder.ProductFootprintRequest.Fulfilled.v1
+          description: Event type identifier.
         specversion:
           type: string
           description: CloudEvents version.
@@ -1065,6 +1124,7 @@ components:
           description: The time the event occurred.
         data:
           type: object
+          description: data object
           required:
             - requestEventId
             - pfs
@@ -1082,8 +1142,8 @@ components:
       properties:
         type:
           type: string
-          enum:
-            - org.wbcsd.pathfinder.ProductFootprintRequest.Rejected.v1
+          const: org.wbcsd.pathfinder.ProductFootprintRequest.Rejected.v1
+          description: Event type identifier.
         specversion:
           type: string
           description: CloudEvents version.
@@ -1100,6 +1160,7 @@ components:
           description: The time the event occurred.
         data:
           type: object
+          description: data object
           required:
             - requestEventId
             - error
@@ -1117,6 +1178,7 @@ components:
       properties:
         code:
           type: string
+          description: Error code identifier.
           enum:
             - BadRequest
             - NotImplemented
@@ -1126,6 +1188,7 @@ components:
             - InternalError
         message:
           type: string
+          description: Human readable error message.
       required:
       - code
       - message
