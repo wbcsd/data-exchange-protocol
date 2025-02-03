@@ -18,6 +18,7 @@ Previous Version: https://wbcsd.github.io/tr/2024/data-exchange-protocol-2024041
 Level: 1
 Status: LD
 Shortname: data-exchange-protocol
+Max ToC Depth: 2
 Mailing List: pact@wbcsd.org
 Editor: Gertjan Schuurmans (WBCSD), https://www.wbcsd.org, schuurmans@wbcsd.org
 Former Editor: Beth Hadley (WBCSD), https://www.wbcsd.org, hadley@wbcsd.org
