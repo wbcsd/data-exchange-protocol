@@ -33,6 +33,12 @@ Metadata Include: This version off
 
 # Introduction # {#intro}
 
+Advisement: This document is a work in progress and should not be used for conformance testing. 
+  Please refer to the [latest stable version of the Technical Specifications](https://wbcsd.github.io/tr/2024/data-exchange-protocol-20241024/) for this.
+
+Advisement: This document will change heavily preparing for the 3.0 draft for consultation, ETA Mid-Feb.
+  All feedback is welcome.
+
 This document contains the necessary technical foundation for the [=PACT Network=], an open and global network for emission data exchange.
 
 The goal of this document is to enable the [=interoperable=] exchange of [=PCF|Product Carbon Footprints=] across [[#conformance|conforming]] [=host systems=].
