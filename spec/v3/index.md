@@ -621,6 +621,12 @@ These namespaces allow systems and standards to consistently identify and catego
 This section specifies a data model for [[#dt-pf|product footprints]] conforming
 with the [=PACT Methodology=] Version 3.
 
+The overall data model is designed for interactions between [=data owners=] and
+[=data recipients=], to enable
+(i) interoperability,
+(ii) comparability of and transparency over product footprints, or
+(iii) the calculation of derived <{CarbonFootprint|CarbonFootprints}> from other <{CarbonFootprint|CarbonFootprints}>.
+
 The data model consists of the following major data types:
 
 1. <{ProductFootprint}>: contains information to identify a product,
@@ -630,21 +636,21 @@ The data model consists of the following major data types:
 3. <{DataModelExtension}>: contains additional information beyond the data model
     specified in this document.
 
-The overall data model is designed for interactions between [=data owners=] and
-[=data recipients=], to enable
-(i) interoperability,
-(ii) comparability of and transparency over product footprints, or
-(iii) the calculation of derived <{CarbonFootprint|CarbonFootprints}> from other <{CarbonFootprint|CarbonFootprints}>.
-
 Additional uses of the data model are supported through the concept of
 [=Data Model Extensions=]. These allow [=data owners=] to add
 further information to a <{ProductFootprint}>.
 
-## OpenAPI Schema
+### OpenAPI Schema
 
-The the data model and the API events are defined by the following OpenAPI specification: [](https://specs.carbon-transparency.org/v3.0). All data types described below are based on this schema.
+The data model and the REST API are defined by the corresponding OpenAPI specification at [https://specs.carbon-transparency.org/](https://specs.carbon-transparency.org/). All data types described below are based on this schema.
 
-### Simple Types
+
+<pre class=include>
+path: data-model.generated.md
+</pre>
+
+
+## Simple Types
 
 The following basic types are used:
 
@@ -730,10 +736,6 @@ Types can have the following qualifiers:
   <td>All items in an `array` MUST be unique
 </table>
 
-
-<pre class=include>
-path: data-model.generated.md
-</pre>
 
 
 <pre class=include>
