@@ -63,6 +63,10 @@ def build(c):
     """ 
     Build the specifcation (all versions) from the source files.
     """
+    dep = Dependency("spec/v3/datamodel.generated.md", ["spec/v3/pact-spec-3.0.yaml"])
+    if dep.outdated():
+        scripts.openapi.generate_data_model(dep.sources[0], dep.target)
+
     build_bikeshed([
         Dependency("build/faq/index.html", ["spec/faq/index.bs"]),
         Dependency("build/v1/index.html", ["spec/v1/index.bs", "spec/v1/examples/*", "LICENSE.md"]),
@@ -103,4 +107,4 @@ def experiment(c):
     """
     Experimental generation of data models, based on OpenAPI schema
     """
-    scripts.openapi.generate_data_model("spec/v3/openapi.yaml", "spec/v3/datamodel")
+    scripts.openapi.test("spec/v3/pact-spec-3.0.yaml")
