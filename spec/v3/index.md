@@ -615,8 +615,124 @@ These namespaces allow systems and standards to consistently identify and catego
 
 # Data Model # {#data-model}
 
+
+## Introduction ## {#data-model-intro}
+
+This section specifies a data model for [[#dt-pf|product footprints]] conforming
+with the [=PACT Methodology=] Version 3.
+
+The data model consists of the following major data types:
+
+1. <{ProductFootprint}>: contains information to identify a product,
+    plus further information such as the <{CarbonFootprint}>
+2. <{CarbonFootprint}>: contains information related to the carbon footprint
+    of a product.
+3. <{DataModelExtension}>: contains additional information beyond the data model
+    specified in this document.
+
+The overall data model is designed for interactions between [=data owners=] and
+[=data recipients=], to enable
+(i) interoperability,
+(ii) comparability of and transparency over product footprints, or
+(iii) the calculation of derived <{CarbonFootprint|CarbonFootprints}> from other <{CarbonFootprint|CarbonFootprints}>.
+
+Additional uses of the data model are supported through the concept of
+[=Data Model Extensions=]. These allow [=data owners=] to add
+further information to a <{ProductFootprint}>.
+
+## OpenAPI Schema
+
+The the data model and the API events are defined by the following OpenAPI specification: [](https://specs.carbon-transparency.org/v3.0). All data types described below are based on this schema.
+
+### Simple Types
+
+The following basic types are used:
+
+<table class="data">
+<thead>
+<th>Type
+<th>Description 
+<tbody>
+<tr>
+  <td><code>string</code>
+  <td> Any string of undetermined length, including the empty string ""
+
+  ```json
+  "Sample string"
+  ```
+<tr>
+  <td><code>string&lt;uuid&gt;</code>
+  <td> String repesentation of a UUID, see RFC?? 
+
+  ```json
+  "{91715e5e-fd0b-4d1c-8fab-76290c46e6ed}"
+  ```
+<tr>
+  <td><code>string&lt;urn&gt;</code>
+  <td> String repesentation of a URN, see RFC?? 
+  
+  ```json
+  "urn:gtin:5695872369587"
+  ```
+<tr>
+  <td><code>string&lt;decimal&gt;</code>
+  <td> Non-integer numbers in the data model MUST be represented as decimal strings. 
+
+  ```json
+  "12.3456",
+  "-9876.5432102"
+  "1.2345e+6"
+  ```
+<tr>
+  <td><code>integer</code>
+  <td>Non-fractional numbers SHOULD be represented as integers. 
+
+  ```json
+  123,
+  -456
+  ```
+<tr>
+  <td><code>string&lt;datetime&gt;</code>
+  <td> Dates MUST be formatted according to ISO8601
+
+  ```json
+  "2024-04-23T18:25:43.511Z"
+  ```
+
+<tr>
+  <td><code>boolean</code>
+  <td> Boolean flag: <code>true</code> or <code>false</code>
+
+  ```json
+  true
+  ```
+
+</table>
+ 
+ ## Qualifiers
+ 
+Types can have the following qualifiers:
+
+<table class="data">
+<thead>
+<tr>
+  <th>Qualifier
+  <th>Description
+<tbody>
+<tr>
+  <td><code>Required</code>
+  <td>The property MUST be provided and MUST NOT be `null`
+<tr>
+  <td><code>NonEmpty</code>
+  <td>The `string` or `array` MUST have a length >= 1
+<tr>
+  <td><code>Unique</code>
+  <td>All items in an `array` MUST be unique
+</table>
+
+
 <pre class=include>
-path: datamodel.generated.md
+path: data-model.generated.md
 </pre>
 
 
