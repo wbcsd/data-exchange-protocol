@@ -35,6 +35,51 @@ def parse_bikeshed_file(bikeshed_file):
     
     return title, date, version, status
 
+CUSTOM_CSS = """
+<style>
+pre, code, samp {
+  font-style: normal;
+}
+dfn > code {
+  font-weight: normal;
+}
+[data-link-type=element]::before,
+[data-link-type=element]::after
+{
+  content: initial;
+}
+.json-schema-type {
+  font-family: monospace;
+  font-size: 0.9em;
+}
+.json-schema-enum code {
+  background-color: rgba(100,100,100,0.03);
+  color: #666;
+  font-size: 0.8em;
+  border: 1px solid rgba(100,100,100,0.9);
+  border-radius: 2px;
+  padding: 2px;
+  margin-top: 6px;
+  margin-left: 0px;
+  margin-right: 0px;
+  display: inline-block;
+}
+.json-schema-required {
+/*  background-color: rgba(0,0,160,0.05);
+  background-color: rgba(0,0,160,0.9);
+  border-color: rgba(0,0,160,0.9);
+  font-size: 0.8em;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 2px;
+  padding: 2px;
+  margin: 1px;
+  display: inline-block;*/
+  color: rgba(160,0,0,0.9);
+}
+</style>
+"""
+
 # Patch the already generated html file with adapted title and status.
 def update_html_file(html_file, title, status):
     with open(html_file, 'r') as file:
@@ -42,6 +87,8 @@ def update_html_file(html_file, title, status):
     content = re.sub(r'(<title>).*(</title>)', r'\1' + title + r'\2', content, count=1)
     content = re.sub(r'(<h1 .*>).*(</h1>)', r'\1' + title + r'\2', content, count=1)
     content = re.sub(r'(<h2 .* id="profile-and-date">).*(</h2>)', r'\1' + status + r'\2', content, count=1)
+    # Patch some CSS as well. 
+    content = re.sub(r'^\s*<body', CUSTOM_CSS + '<body', content, count=1, flags=re.MULTILINE)
     with open(html_file, 'w') as file:
         file.write(content)
 
