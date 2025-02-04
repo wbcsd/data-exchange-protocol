@@ -40,6 +40,10 @@ CUSTOM_CSS = """
 pre, code, samp {
   font-style: normal;
 }
+li {
+  margin: initial;
+  padding: initial;
+}
 dfn > code {
   font-weight: normal;
 }
@@ -50,7 +54,9 @@ dfn > code {
 }
 .json-schema-type {
   font-family: monospace;
-  font-size: 0.9em;
+}
+.json-schema-required {
+  color: rgba(160,0,0,0.9);
 }
 .json-schema-enum code {
   background-color: rgba(100,100,100,0.03);
@@ -63,19 +69,6 @@ dfn > code {
   margin-left: 0px;
   margin-right: 0px;
   display: inline-block;
-}
-.json-schema-required {
-/*  background-color: rgba(0,0,160,0.05);
-  background-color: rgba(0,0,160,0.9);
-  border-color: rgba(0,0,160,0.9);
-  font-size: 0.8em;
-  border-style: solid;
-  border-width: 1px;
-  border-radius: 2px;
-  padding: 2px;
-  margin: 1px;
-  display: inline-block;*/
-  color: rgba(160,0,0,0.9);
 }
 </style>
 """
