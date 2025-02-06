@@ -85,7 +85,7 @@ def update_html_file(html_file, title, status):
     with open(html_file, 'w') as file:
         file.write(content)
 
-# Pacth the spec
+# Patch the spec
 def patchup(input, output):
     title, date, version, status = parse_bikeshed_file(input)
     if title is None:
@@ -100,6 +100,25 @@ def patchup(input, output):
         return
     
     update_html_file(output, title, status)
+
+
+def extract_property_descriptions(input_file_path):
+    # Read the input file
+    with open(input_file_path, 'r') as file:
+        content = file.read()
+    
+    # Extract the property descriptions using regular expressions
+    pattern = re.compile(r'<td><dfn>(.*?)</dfn>.*?<td>.*?<td>.*?<td>(.*?)(<tr>|</table>)', re.MULTILINE + re.DOTALL)
+    matches = pattern.findall(content)
+    
+    # Prepare the descriptions in the required format
+    descriptions = []
+    for match in matches:
+        property_name = match[0].strip()
+        description = match[1].strip()
+        descriptions.append(f"{property_name}:\n  description: |\n    {description}")
+    
+    return descriptions
 
 
 if __name__ == "__main__":

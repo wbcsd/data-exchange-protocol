@@ -160,5 +160,9 @@ def test(input):
     with open(input, encoding="utf-8") as file:
         schema_unresolved = yaml.safe_load(file)
     print(json.dumps(schema_unresolved["components"]["schemas"]["ProductFootprint"], indent=2))
+    print(schema_unresolved["components"]["schemas"]["ProductFootprint"]["properties"]["statusComment"])
+    schema = jsonref.replace_refs(schema_unresolved, merge_props=True)
+    print("===================\n")
+    print(schema["components"]["schemas"]["ProductFootprint"]["properties"]["pcf"])
     #schema = jsonref.replace_refs(schema_unresolved, merge_props=True)
     #print(json.dumps(schema["components"]["schemas"]["ProductFootprint"], indent=2))
