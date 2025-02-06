@@ -17,7 +17,6 @@ tags:
 - name: footprint
   description: Synchronous retrieval of footprints
 - name: event
-  title: Event API
   # description: Asynchronous exchange of footprints
   description: Asynchronous Event API. This API is used to post events to the system. 
     Data recipients can request footprints and will receive notifications when these requests are fulfilled or rejected.
@@ -69,23 +68,11 @@ paths:
         '400':
           $ref: '#/components/schemas/BadRequestResponse'
         '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
+          $ref: '#/components/schemas/UnauthorizedResponse'
         '403':
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
+          $ref: '#/components/schemas/ForbiddenResponse'
         '500':
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
+          $ref: '#/components/schemas/InternalErrorResponse'
       security:
       - BearerAuth: []
   /2/footprints/{id}:
@@ -115,35 +102,15 @@ paths:
                   data:
                     $ref: '#/components/schemas/ProductFootprint'
         '400':
-          description: Bad request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
+          $ref: '#/components/schemas/BadRequestResponse'
         '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
+          $ref: '#/components/schemas/UnauthorizedResponse'
         '403':
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
+          $ref: '#/components/schemas/ForbiddenResponse'
         '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
+          $ref: '#/components/schemas/NotFoundResponse'
         '500':
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
+          $ref: '#/components/schemas/InternalErrorResponse'
       security:
       - BearerAuth: []
   /2/events:
@@ -176,23 +143,17 @@ paths:
                   message: 
                     type: string
         '400':
-          description: Bad request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
+          $ref: '#/components/schemas/BadRequestResponse'
+        '401':
+          $ref: '#/components/schemas/UnauthorizedResponse'
         '403':
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
+          $ref: '#/components/schemas/ForbiddenResponse'
+        '404':
+          $ref: '#/components/schemas/NotFoundResponse'
+        '500':
+          $ref: '#/components/schemas/InternalErrorResponse'
         '501':
-          description: Not implemented
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
+          $ref: '#/components/schemas/NotImplementedResponse'
       security:
       - BearerAuth: []
 components:
@@ -1546,51 +1507,39 @@ components:
           type: string
           description: Error code identifier.
           enum:
-            - BadRequest
-            - NotImplemented
-            - AccessDenied
-            - NoSuchFootprint
-            - TokenExpired
-            - InternalError
+            - BadRequest # 400
+            - AccessDenied # 401
+            - TokenExpired # 401
+            - NotFound # NoSuchFootprint
+            - InternalError # 500
+            - NotImplemented #501
         message:
           type: string
           description: Human readable error message.
       required:
       - code
       - message
-    BaseErrorResponse:
-      content: 
-          application/json:
-            schema:    
-              description: Response with an error code and descripton. See Chapter "Error Codes" of the Tech Specs for more details.
-              type: object
-              properties:
-                code:
-                  type: string
-                  enum:
-                    - BadRequest
-                    - NotImplemented
-                    - AccessDenied
-                    - NoSuchFootprint
-                    - TokenExpired
-                    - InternalError
-                message:
-                  type: string
-              required:
-              - code
-              - message
     BadRequestResponse:
       description: Bad request.
-      $ref: '#/components/schemas/BaseErrorResponse'
-    AccessDeniedResponse:
+      $ref: '#/components/schemas/ErrorResponse'
+    NotFoundResponse:
+      description: Not found.
+      $ref: '#/components/schemas/ErrorResponse'
+    UnauthorizedResponse: # 401
+      description: Unauthorized.
+      $ref: '#/components/schemas/ErrorResponse'
+    TokenExpiredResponse: # 401
+      description: Token expired.
+      $ref: '#/components/schemas/ErrorResponse'
+    ForbiddenResponse:
       description: Access Denied.
-      $ref: '#/components/schemas/BaseErrorResponse'
+      $ref: '#/components/schemas/ErrorResponse'
     NotImplementedResponse:
       description: Not implemented.
-      $ref: '#/components/schemas/BaseErrorResponse'
-    NotFoundResponse:
-      description: Not implemented.
-      $ref: '#/components/schemas/BaseErrorResponse'
+      $ref: '#/components/schemas/ErrorResponse'
+    InternalErrorResponse:
+      description: Internal Error.
+      $ref: '#/components/schemas/ErrorResponse'
   securitySchemes:
     BearerAuth:
       description: OAuth2 Client Credentials Grant (RFC6749 4.4)
