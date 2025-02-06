@@ -2,7 +2,7 @@
 
 <div class=note>Non-normative</div>
 
-This section defines an [[!rfc9112|HTTP]]-based API for the [=interoperable=] exchange of [[#dt-pf|Product Footprint]] data between [=host systems=].
+This section defines an [[!rfc9112|HTTP]]-based API for the [=interoperable=] exchange of [[#productfootprint|Product Footprint]] data between [=host systems=].
 
 The scope of the HTTP API is minimal by design. Additional features will be added in future versions of this specification.
 
@@ -207,9 +207,9 @@ For further details, for instance on the list of specified values of property `e
 
 ## <dfn>Action ListFootprints</dfn> ## {#api-action-list}
 
-Lists [[#dt-pf|product footprints]] with [[#api-action-list-pagination|pagination]] and optional [[#api-action-list-filtering|filtering]].
+Lists [[#productfootprint|product footprints]] with [[#api-action-list-pagination|pagination]] and optional [[#api-action-list-filtering|filtering]].
 
-[=Host systems=] SHOULD implement an access management system and only return the [[#dt-pf|product footprints]] for which the [=data owner=] granted access to the requesting [=data recipient=].
+[=Host systems=] SHOULD implement an access management system and only return the [[#productfootprint|product footprints]] for which the [=data owner=] granted access to the requesting [=data recipient=].
 
 ### Filtering ### {#api-action-list-filtering}
 
@@ -339,7 +339,7 @@ With response parameters
 
     If the host system responds with an [=error response=], the `HttpStatusCode` MUST match the HTTP Status Code of the respective [=error response code=].
 
-    If the host system does not return the list of [[#dt-pf|ProductFootprints]], it MUST return an error HTTP Status Code (4xx, 5xx).
+    If the host system does not return the list of [[#productfootprint|ProductFootprints]], it MUST return an error HTTP Status Code (4xx, 5xx).
 
 : <dfn>ListStatusText</dfn>
 ::
@@ -364,7 +364,7 @@ With response parameters
 
 ## <dfn>Action GetFootprint</dfn> ## {#api-action-get}
 
-Retrieves [[#dt-pf|product footprints]].
+Retrieves [[#productfootprint|product footprints]].
 
 [=Host systems=] SHOULD implement an access management system and only return the product footprints for which the [=data owner=] granted access to the requesting [=data recipient=].
 
@@ -430,8 +430,8 @@ The <dfn>Action Events</dfn> enables the exchange of event data between [=data o
 
 The Action Events endpoint is specified for the following use cases:
 
-1. enabling a [=data owner=] to notify a [=data recipient=] on updates to 1 or more [[#dt-pf|Product Footprints]] (see [[#api-action-events-case-1]])
-2. enabling a [=data recipient=] to request [[#dt-pf|product footprints]] from a [=data owner=] by sending an event to the [=data owner's=] [=Action Events=] endpoint (see [[#api-action-events-case-2]]).
+1. enabling a [=data owner=] to notify a [=data recipient=] on updates to 1 or more [[#productfootprint|Product Footprints]] (see [[#api-action-events-case-1]])
+2. enabling a [=data recipient=] to request [[#productfootprint|product footprints]] from a [=data owner=] by sending an event to the [=data owner's=] [=Action Events=] endpoint (see [[#api-action-events-case-2]]).
 
 A [=host system=] SHOULD only accept events after authentication (see [[#api-auth]]).
 
@@ -484,9 +484,9 @@ The host system upon <strong>not</strong> accepting the event SHOULD respond wit
 
 ### Notification of data recipients on Product Footprint updates ### {#api-action-events-case-1}
 
-A [=data owner=] CAN notify a [=data recipient=] about changes to 1 or more [[#dt-pf|product footprints]] by sending a [=PF Update Event=] to the [=data recipient's=] [=Action Events=] endpoint.
+A [=data owner=] CAN notify a [=data recipient=] about changes to 1 or more [[#productfootprint|product footprints]] by sending a [=PF Update Event=] to the [=data recipient's=] [=Action Events=] endpoint.
 
-A [=data recipient=] upon receiving such an [=PF Update Event=] CAN retrieve the [[#dt-pf|product footprints]] through the [=Action GetFootprint=].
+A [=data recipient=] upon receiving such an [=PF Update Event=] CAN retrieve the [[#productfootprint|product footprints]] through the [=Action GetFootprint=].
 
 Accordingly, the [=data owner=] of the [=host system=] sending the event MUST make the referenced Product Footprints available to the [=data recipient=] notified through the PF Update Event.
 
@@ -513,7 +513,7 @@ with
     The [=EventId=] MUST be a string (see [[!CE-JSON]]).
 : <dfn>PfIds</dfn>
 ::
-    A list of [[#dt-pf|product footprint]] that have been updated.
+    A list of [[#productfootprint|product footprint]] that have been updated.
     The [=PfIds=] MUST be the non-empty list of <{ProductFootprint/id}> values of the updated Product Footprints,
     encoded as a JSON array.
 : <dfn>EventHostname</dfn>
@@ -524,7 +524,7 @@ with
 
 ### Asynchronous request and retrieval of Product Footprints ### {#api-action-events-case-2}
 
-A [=data recipient=] CAN request a [=data owner=] to send a [[#dt-pf|product footprint]] by sending a [=PF Request Event=] to the [=data owner's=] [=Action Events=] endpoint.
+A [=data recipient=] CAN request a [=data owner=] to send a [[#productfootprint|product footprint]] by sending a [=PF Request Event=] to the [=data owner's=] [=Action Events=] endpoint.
 
 A [=data owner=] upon receiving a [=PF Request Event=] can then decide how to process the request
 1. by sending a [=PF Response Event=] to the [=data recipient's=] [=Action Events=] endpoint
@@ -617,7 +617,7 @@ with
     The [=ReqEventId=] MUST be a string (see [[!CE-JSON]]).
 : <dfn>Pfs</dfn>
 ::
-    The list of [[#dt-pf|product footprints]] that have been requested with the [=PF Request Event=] and that are accessible to the [=data recipient=], encoded as an array of <{ProductFootprint}> in JSON.
+    The list of [[#productfootprint|product footprints]] that have been requested with the [=PF Request Event=] and that are accessible to the [=data recipient=], encoded as an array of <{ProductFootprint}> in JSON.
 
     Otherwise, the value of [=Pfs=] MUST be the empty JSON array.
 

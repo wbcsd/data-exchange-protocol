@@ -175,7 +175,7 @@ components:
 
         Data Model Extensions enable [=data owners=] to exchange additional information
         related to a product with [=data recipients=]. The details are specified
-        in [[#dt-datamodelextension]] as well as [[!EXTENSIONS-GUIDANCE]], and [[!DATA-MODEL-EXTENSIONS]].
+        in [[#datamodelextension]] as well as [[!EXTENSIONS-GUIDANCE]], and [[!DATA-MODEL-EXTENSIONS]].
 
         Each `ProductFootprint` can and should be updated over time, for instance to
         incorporate new or refined data from [=data owners=] (see [[#lifecycle]]).
@@ -501,7 +501,7 @@ components:
             - square meter
         unitaryProductAmount:
           description: |
-            The amount of <{CarbonFootprint/declaredUnit|Declared Units}> contained within the product to which the [[#dt-carbonfootprint|PCF]] is referring to. The value MUST be strictly greater than `0`.
+            The amount of <{CarbonFootprint/declaredUnit|Declared Units}> contained within the product to which the [[#carbonfootprint|PCF]] is referring to. The value MUST be strictly greater than `0`.
           summary: |
             The amount of Declared Units contained within the product to which the PCF refers to. 
             This is not representing the total annual quantity supplied (e.g. if the product is 
@@ -795,10 +795,9 @@ components:
           description: |
             Advisement: OPTIONAL in 3.0.
 
-            The processes attributable to each lifecycle stage.
-
-            Example text value:
-            <div class=example>`Electricity consumption included as an input in the production phase`</div>
+            The processes attributable to each lifecycle stage. 
+            
+            For example: electricity consumption included as an input in the production phase
           summary: |  
             Brief description of the processes attributable to each life cycle stage included 
             in the PCF (e.g. electricity consumption for manufacturing), especially those 
@@ -1006,6 +1005,26 @@ components:
 
     DataModelExtension:
       title: DataModelExtension
+      description: |
+        Each data model extension MUST be a valid JSON object conforming with the
+        [JSON Representation of a Data Model Extension](https://wbcsd.github.io/data-model-extensions/spec/#instantiation).
+
+        See [[!DATA-MODEL-EXTENSIONS]] for technical details and [[!EXTENSIONS-GUIDANCE]] for data model extension guidance.
+      example: |
+        Example imaginary Data Model Extension for encoding shipment-related data, encoded in JSON:
+        ```json
+        {
+          "specVersion": "2.0.0",
+          "dataSchema": "https://catalog.carbon-transparency.com/shipment/1.0.0/data-model.json",
+          "data": {
+            "shipmentId": "S1234567890",
+            "consignmentId": "Cabc.def-ghi",
+            "shipmentType": "PICKUP",
+            "weight": 10,
+            "transportChainElementId": "ABCDEFGHI"
+          }
+        }
+        ```
       type: object
       required:
       - specVersion
@@ -1064,7 +1083,8 @@ components:
 
     ProductOrSectorSpecificRule:    
       title: ProductOrSectorSpecificRule
-      descroption: 
+      description: |
+        A ProductOrSectorSpecificRule refers to a set of product or sector specific rules published by a specific operator and applied during product carbon footprint calculation.
       type: object
       required:
       - operator
@@ -1130,7 +1150,22 @@ components:
       maximum: 100
 
     DataQualityIndicators:
-      description: Data Type "DataQualityIndicators" of Spec Version 2
+      description: | 
+        Data type DataQualityIndicators contains the quantitative data quality indicators in conformance with PACT Methodology Section 4.2.3 and Appendix B.
+
+        Each property is optional until the reference period includes the beginning of calendar year 2025, or later, when all properties MUST be defined.
+      example: |
+        Example value for the case that all DQIs are known but no coverage after exemption assessment performed:
+
+        ```json
+        {
+          "technologicalDQR": "2.0",
+          "temporalDQR": "2.0",
+          "geographicalDQR": "2.0",
+          "completenessDQR": "2.0",
+          "reliabilityDQR": "2.0"
+        }
+        ```        
       title: DataQualityIndicators
       type: object
       required:
@@ -1242,7 +1277,19 @@ components:
         Data type `Assurance` contains the assurance in conformance with [=PACT Methodology=] chapter 5 and appendix B.
 
         Advisement: the boolean property `assurance` has been REMOVED in version 3.0. The presence of the <{Assurance}> element indicates whether or not the <{CarbonFootprint}> has been assured in line with [=PACT Methodology=] requirements (section 5). 
-
+      example: |
+        Example value for the case that 42% of the product’s overall GHG emissions covered by the data quality assessment:
+        ```json 
+        {
+          "assurance": true,
+          "coverage": "PCF system",
+          "level": "limited"
+          "boundary": "Cradle-to-Gate"
+          "providerName": "My Auditor",
+          "completedAt": "2022-12-08T14:47:32Z"
+          "standardName": "ISO 14044"
+        }
+        ```
       type: object
       required:
       - assurance

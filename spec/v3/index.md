@@ -95,7 +95,7 @@ The license can be found in [[#license]].
 ::
     A data model extension is a set of definitions that extends the data model of this document.
 
-    The encoding of a data model extension in the data model is specified in [[#dt-datamodelextension]].
+    The encoding of a data model extension in the data model is specified in [[#datamodelextension]]
 
     See [[!DATA-MODEL-EXTENSIONS]] and [[!EXTENSIONS-GUIDANCE]] for further details.
 
@@ -618,7 +618,7 @@ These namespaces allow systems and standards to consistently identify and catego
 
 ## Introduction ## {#data-model-intro}
 
-This section specifies a data model for [[#dt-pf|product footprints]] conforming
+This section specifies a data model for [[#productfootprint|product footprints]] conforming
 with the [=PACT Methodology=] Version 3.
 
 The overall data model is designed for interactions between [=data owners=] and
@@ -735,12 +735,6 @@ Types can have the following qualifiers:
   <td><code>Unique</code>
   <td>All items in an `array` MUST be unique
 </table>
-
-
-
-<pre class=include>
-path: data-model.md
-</pre>
 
 
 # HTTP REST API # {#api}
@@ -944,7 +938,7 @@ This version fixes 1 definition incorrectness and includes 4 documentation impro
 2. property <{ProductFootprint/status}>: minor documentation improvements
 3. Action [=Action ListFootprints=]: minor documentation improvements
 4. property <{CarbonFootprint/biogenicAccountingMethodology}>: addition of an advisement
-5. section [[#dt-dataqualityindicators]] is now referencing Table 9 of the Pathfinder Framework
+5. section [[#dataqualityindicators]] is now referencing Table 9 of the Pathfinder Framework
 
 
 ## Version 2.0.1-20230314 (Mar 14, 2023) ## {#changelog-2.0.1-20230314}
@@ -976,7 +970,7 @@ Summary of the major changes and concepts added with this version:
 1. update to Pathfinder Framework Version 2.0, including data model changes which are not backwards-compatible, including
     1. addition of data type <{DataQualityIndicators}> and <{Assurance}> to <{CarbonFootprint}>
 2. event-based communication between [=host systems=] ([[#api-action-events]])
-3. support for data model extensions ([[#dt-datamodelextension]])
+3. support for data model extensions ([[#datamodelextension]])
 4. life cycle management of a <{ProductFootprint}> ([[#lifecycle]])
 
 ### Data Model Changes ### {#changelog-2.0.0-data-model}
@@ -1031,7 +1025,7 @@ The following changes have been applied for version 1.0.1
 
 1. Addition of data type {{RegionOrSubregion}}, cleaning up the definition of property <{CarbonFootprint/geographyRegionOrSubregion}>
 2. Fix to the JSON representation specification in `crosssectoralstandardset-json`
-3. Change to the minimum size of the set [[#dt-productorsectorspecificruleset]] from `0` to `1`, aligning with the overall specification.
+3. Change to the minimum size of the set <{CarbonFootprint/productOrSectorSpecificRules}> from `0` to `1`, aligning with the overall specification.
 4. Removal of unreferenced data type `Boolean` from the data model section
 5. Rewording, simplified wording of chapter [[#api-action-auth]]
 6. Addition of an authentication flow specification in chapter [[#api-auth]]
@@ -1045,7 +1039,7 @@ The following changes have been applied for version 1.0.1
 9. Addition of Section [[#api-error-response-example]]
 10. Addition of term [=interoperable=] to section [[#terminology]], plus linking to in respective sections
 11. Addition of Terms [=UN geographic region=] and [=UN geographic subregion=]
-12. Introduction of a new property table layout in section [[#dt-carbonfootprint]] and [[#dt-pf]]
+12. Introduction of a new property table layout in section [[#carbonfootprint]] and [[#productfootprint]]
 13. Removal of data types `PositiveDecimal`, `SpecVersionString`, `VersionInteger`
 
 
