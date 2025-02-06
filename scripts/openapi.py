@@ -48,20 +48,23 @@ def get_example_text(name, property):
     elif "examples" in property:
         example = property["examples"][0]
 
+    # if example is of type string
+
     if example:
-        # create valid json string, with indentation. Wrap long lines if possible at 60 characters
-        jsontext = ""
-        for line in json.dumps(example, indent=2).splitlines():
-            while len(line) > 60:
-                pos = max(line.rfind(' ', 0, 60), line.rfind(',', 0, 60))
-                if pos == -1:
-                    pos = 60
-                jsontext += line[:pos] + "\n"
-                line = line[pos:].lstrip()
-            jsontext += line + "\n"
-        text += "\n\n```json\n"
-        text += f'"{name}": {jsontext.strip()}\n'
-        text += "```\n"
+        if property["type"] != "object" or not isinstance(example, str):
+            # create valid json string, with indentation. Wrap long lines if possible at 60 characters
+            jsontext = ""
+            for line in json.dumps(example, indent=2).splitlines():
+                while len(line) > 60:
+                    pos = max(line.rfind(' ', 0, 60), line.rfind(',', 0, 60))
+                    if pos == -1:
+                        pos = 60
+                    jsontext += line[:pos] + "\n"
+                    line = line[pos:].lstrip()
+                jsontext += line + "\n"
+            text += "\n\n```json\n"
+            text += f'"{name}": {jsontext.strip()}\n'
+            text += "```\n"
     
     return text
 
@@ -74,6 +77,10 @@ def generate_type_description(schema, type_name, type, output):
         description = description.replace("\n\n", "\n\n\n")
         output.write(f"{description}\n")
         output.write("\n")
+    if "example" in type:
+        output.write('<div class="example">\n')
+        output.write(type['example'])
+        output.write("\n</div>\n")
     if "properties" in type:
         output.write("### Properties\n")
         output.write("\n")
@@ -118,11 +125,11 @@ def generate_type_description(schema, type_name, type, output):
         for value in type["enum"]:
             output.write(f"* {value}\n")
         output.write("\n")
-    if "example" in type:
-        output.write("### Example\n")
-        output.write("\n")
-        output.write(f"```json\n{json.dumps(type['example'], indent=2)}\n```\n")
-        output.write("\n")
+    # if "example" in type:
+    #     output.write("### Example\n")
+    #     output.write("\n")
+    #     output.write(f"```json\n{json.dumps(type['example'], indent=2)}\n```\n")
+    #     output.write("\n")
     if "x-externalDocs" in type:
         output.write("### External Docs\n")
         output.write("\n")
