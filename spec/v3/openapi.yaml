@@ -558,7 +558,7 @@ components:
         biogenicCarbonContent:
           description: |
             The biogenic carbon content of the product (mass of carbon). 
-            The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg Carbon per declared unit` (`kgC / declaredUnit`), expressed as a [=decimal=] equal to or greater than zero.
+            TODO: The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg Carbon per declared unit` (`kgC / declaredUnit`), expressed as a [=decimal=] equal to or greater than zero.
           summary: |
             The biogenic carbon content of the product (mass of carbon).
           x-pact-unit: kgC/declared unit
@@ -567,7 +567,7 @@ components:
           description: |
             If present, emissions resulting from recent (i.e., previous 20 years) carbon stock loss due to land conversion directly on the area of land under consideration. 
             The value of this property MUST include direct land use change (dLUC) where available, otherwise statistical land use change (sLUC) can be used.
-            The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg of CO2 equivalent per declared unit` (`kgCO2e / declaredUnit`), expressed as a [=decimal=] equal to or greater than zero.
+            TODO: The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg of CO2 equivalent per declared unit` (`kgCO2e / declaredUnit`), expressed as a [=decimal=] equal to or greater than zero.
             See [=PACT Methodology=] (Appendix B) for details.
           summary: |
             The emissions from land use change (LUC) activities. Emissions resulting from 
@@ -580,7 +580,7 @@ components:
         landManagementGhgEmissions:
           description: |
             If present, GHG emissions and removals associated with land-management-related changes, including non-CO2 sources.
-            The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg of CO2 equivalent per declared unit` (`kgCO2e / declaredUnit`), expressed as a [=decimal=].
+            TODO: The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg of CO2 equivalent per declared unit` (`kgCO2e / declaredUnit`), expressed as a [=decimal=].
           summary: |
             GHG emissions and removals associated with land-management-related changes, 
             including non-CO2 sources.
@@ -589,7 +589,7 @@ components:
         otherBiogenicGhgEmissions:
           description: |
             If present, all other biogenic GHG emissions associated with product manufacturing and transport that are not included in dLUC (<{CarbonFootprint/dLucGhgEmissions}>), iLUC (<{CarbonFootprint/iLucGhgEmissions}>), and land management (<{CarbonFootprint/landManagementGhgEmissions}>).
-            The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg of CO2 equivalent per declared unit` (`kgCO2e / declaredUnit`), expressed as a [=decimal=] equal to or greater than zero.
+            TODO: The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg of CO2 equivalent per declared unit` (`kgCO2e / declaredUnit`), expressed as a [=decimal=] equal to or greater than zero.
           summary: |
             All other biogenic GHG emissions associated with product manufacturing and transport 
             that are not included in dLUC (dLucGhgEmissions), iLUC (iLucGhgEmissions), and land 
@@ -599,7 +599,7 @@ components:
         iLucGhgEmissions:
           description: |
             If present, emissions resulting from recent (i.e., previous 20 years) carbon stock loss due to land conversion on land not owned or controlled by the company or in its supply chain, induced by change in demand for products produced or sourced by the company.
-            The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg of CO2 equivalent per declared unit` (`kgCO2e / declaredUnit`), expressed as a [=decimal=] equal to or greater than zero.
+            TODO: The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg of CO2 equivalent per declared unit` (`kgCO2e / declaredUnit`), expressed as a [=decimal=] equal to or greater than zero.
             See [=PACT Methodology=] (Appendix B) for details.
           summary: |
             Emissions resulting from recent (i.e., previous 20 years) carbon stock loss due to 
@@ -609,14 +609,16 @@ components:
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
         biogenicCarbonWithdrawal:
           description: |
-            If present, the Biogenic Carbon contained in the product converted to kilogram of CO2e. The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kgCO2e / declaredUnit` expressed as a [=decimal=] equal to or <i>less than</i> zero.
+            If present, the Biogenic Carbon contained in the product converted to kilogram of CO2e. 
+            TODO: The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kgCO2e / declaredUnit` expressed as a [=decimal=] equal to or <i>less than</i> zero.
           summary: |
             The Biogenic Carbon contained in the product converted to kilogram of CO2e.
           x-pact-unit: kgCO2e/declared unit
           $ref: '#/components/schemas/NegativeOrZeroDecimal'
         aircraftGhgEmissions:
           description: |
-            If present, the GHG emissions resulting from aircraft engine usage for the transport of the product, excluding radiative forcing. The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg of CO2 equivalent per declared unit` (`kgCO2e / declaredUnit`), expressed as a [=decimal=] equal to or greater than zero.
+            If present, the GHG emissions resulting from aircraft engine usage for the transport of the product, excluding radiative forcing. 
+            TODO: The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg of CO2 equivalent per declared unit` (`kgCO2e / declaredUnit`), expressed as a [=decimal=] equal to or greater than zero.
           summary: |
             The GHG emissions resulting from aircraft engine usage for the transport of the
             product, excluding radiative forcing.
@@ -949,7 +951,7 @@ components:
         packagingGhgEmissions:
           description: |
             Emissions resulting from the packaging of the product.
-            If present, the value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg of CO2 equivalent per kilogram` (`kgCO2e / declared unit`), expressed as a [=decimal=] equal to or greater than zero.
+            TODO: If present, the value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg of CO2 equivalent per kilogram` (`kgCO2e / declared unit`), expressed as a [=decimal=] equal to or greater than zero.
             The value MUST NOT be defined if <{CarbonFootprint/packagingEmissionsIncluded}> is `false`.
           summary: |
             Emissions resulting from the packaging of the product. The value MUST NOT 
