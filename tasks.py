@@ -63,9 +63,13 @@ def build(c):
     """ 
     Build the specifcation (all versions) from the source files.
     """
-    dep = Dependency("spec/v3/data-model.generated.md", ["spec/v3/openapi.yaml"])
-    if dep.outdated():
-        scripts.openapi.generate_data_model(dep.sources[0], dep.target)
+    deps = [
+        Dependency("spec/v3/data-model.generated.md", ["spec/v3/openapi.yaml"]),
+        Dependency("spec/v2/data-model.generated.md", ["spec/v2/openapi.yaml"])
+    ]
+    for dep in deps:
+        if dep.outdated():
+            scripts.openapi.generate_data_model(dep.sources[0], dep.target)
 
     build_bikeshed([
         Dependency("build/faq/index.html", ["spec/faq/index.bs"]),
