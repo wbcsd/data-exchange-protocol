@@ -18,6 +18,7 @@ Previous Version: https://wbcsd.github.io/tr/2024/data-exchange-protocol-2024041
 Level: 1
 Status: LD
 Shortname: data-exchange-protocol
+Max ToC Depth: 2
 Mailing List: pact@wbcsd.org
 Editor: Gertjan Schuurmans (WBCSD), https://www.wbcsd.org, schuurmans@wbcsd.org
 Former Editor: Beth Hadley (WBCSD), https://www.wbcsd.org, hadley@wbcsd.org
@@ -100,7 +101,7 @@ The license can be found in [[#license]].
 ::
     A data model extension is a set of definitions that extends the data model of this document.
 
-    The encoding of a data model extension in the data model is specified in [[#dt-datamodelextension]].
+    The encoding of a data model extension in the data model is specified in [[#datamodelextension]]
 
     See [[!DATA-MODEL-EXTENSIONS]] and [[!EXTENSIONS-GUIDANCE]] for further details.
 
@@ -620,9 +621,126 @@ These namespaces allow systems and standards to consistently identify and catego
 
 # Data Model # {#data-model}
 
+
+## Introduction ## {#data-model-intro}
+
+This section specifies a data model for [[#productfootprint|product footprints]] conforming
+with the [=PACT Methodology=] Version 3.
+
+The overall data model is designed for interactions between [=data owners=] and
+[=data recipients=], to enable
+(i) interoperability,
+(ii) comparability of and transparency over product footprints, or
+(iii) the calculation of derived <{CarbonFootprint|CarbonFootprints}> from other <{CarbonFootprint|CarbonFootprints}>.
+
+The data model consists of the following major data types:
+
+1. <{ProductFootprint}>: contains information to identify a product,
+    plus further information such as the <{CarbonFootprint}>
+2. <{CarbonFootprint}>: contains information related to the carbon footprint
+    of a product.
+3. <{DataModelExtension}>: contains additional information beyond the data model
+    specified in this document.
+
+Additional uses of the data model are supported through the concept of
+[=Data Model Extensions=]. These allow [=data owners=] to add
+further information to a <{ProductFootprint}>.
+
+### OpenAPI Schema
+
+The data model and the REST API are defined by the corresponding OpenAPI specification at [https://specs.carbon-transparency.org/](https://specs.carbon-transparency.org/). All data types described below are based on this schema.
+
+
 <pre class=include>
-path: data-model.md
+path: data-model.generated.md
 </pre>
+
+
+## Simple Types
+
+The following basic types are used:
+
+<table class="data">
+<thead>
+<th>Type
+<th>Description 
+<tbody>
+<tr>
+  <td><code>string</code>
+  <td> Any string of undetermined length, including the empty string ""
+
+  ```json
+  "Sample string"
+  ```
+<tr>
+  <td><code>string&lt;uuid&gt;</code>
+  <td> String repesentation of a UUID, see RFC?? 
+
+  ```json
+  "{91715e5e-fd0b-4d1c-8fab-76290c46e6ed}"
+  ```
+<tr>
+  <td><code>string&lt;urn&gt;</code>
+  <td> String repesentation of a URN, see RFC?? 
+  
+  ```json
+  "urn:gtin:5695872369587"
+  ```
+<tr>
+  <td><code>string&lt;decimal&gt;</code>
+  <td> Non-integer numbers in the data model MUST be represented as decimal strings. 
+
+  ```json
+  "12.3456",
+  "-9876.5432102"
+  "1.2345e+6"
+  ```
+<tr>
+  <td><code>integer</code>
+  <td>Non-fractional numbers SHOULD be represented as integers. 
+
+  ```json
+  123,
+  -456
+  ```
+<tr>
+  <td><code>string&lt;datetime&gt;</code>
+  <td> Dates MUST be formatted according to ISO8601
+
+  ```json
+  "2024-04-23T18:25:43.511Z"
+  ```
+
+<tr>
+  <td><code>boolean</code>
+  <td> Boolean flag: <code>true</code> or <code>false</code>
+
+  ```json
+  true
+  ```
+
+</table>
+ 
+ ## Qualifiers
+ 
+Types can have the following qualifiers:
+
+<table class="data">
+<thead>
+<tr>
+  <th>Qualifier
+  <th>Description
+<tbody>
+<tr>
+  <td><code>Required</code>
+  <td>The property MUST be provided and MUST NOT be `null`
+<tr>
+  <td><code>NonEmpty</code>
+  <td>The `string` or `array` MUST have a length >= 1
+<tr>
+  <td><code>Unique</code>
+  <td>All items in an `array` MUST be unique
+</table>
 
 
 # HTTP REST API # {#api}
@@ -826,7 +944,7 @@ This version fixes 1 definition incorrectness and includes 4 documentation impro
 2. property <{ProductFootprint/status}>: minor documentation improvements
 3. Action [=Action ListFootprints=]: minor documentation improvements
 4. property <{CarbonFootprint/biogenicAccountingMethodology}>: addition of an advisement
-5. section [[#dt-dataqualityindicators]] is now referencing Table 9 of the Pathfinder Framework
+5. section [[#dataqualityindicators]] is now referencing Table 9 of the Pathfinder Framework
 
 
 ## Version 2.0.1-20230314 (Mar 14, 2023) ## {#changelog-2.0.1-20230314}
@@ -858,7 +976,7 @@ Summary of the major changes and concepts added with this version:
 1. update to Pathfinder Framework Version 2.0, including data model changes which are not backwards-compatible, including
     1. addition of data type <{DataQualityIndicators}> and <{Assurance}> to <{CarbonFootprint}>
 2. event-based communication between [=host systems=] ([[#api-action-events]])
-3. support for data model extensions ([[#dt-datamodelextension]])
+3. support for data model extensions ([[#datamodelextension]])
 4. life cycle management of a <{ProductFootprint}> ([[#lifecycle]])
 
 ### Data Model Changes ### {#changelog-2.0.0-data-model}
@@ -913,7 +1031,7 @@ The following changes have been applied for version 1.0.1
 
 1. Addition of data type {{RegionOrSubregion}}, cleaning up the definition of property <{CarbonFootprint/geographyRegionOrSubregion}>
 2. Fix to the JSON representation specification in `crosssectoralstandardset-json`
-3. Change to the minimum size of the set [[#dt-productorsectorspecificruleset]] from `0` to `1`, aligning with the overall specification.
+3. Change to the minimum size of the set <{CarbonFootprint/productOrSectorSpecificRules}> from `0` to `1`, aligning with the overall specification.
 4. Removal of unreferenced data type `Boolean` from the data model section
 5. Rewording, simplified wording of chapter [[#api-action-auth]]
 6. Addition of an authentication flow specification in chapter [[#api-auth]]
@@ -927,7 +1045,7 @@ The following changes have been applied for version 1.0.1
 9. Addition of Section [[#api-error-response-example]]
 10. Addition of term [=interoperable=] to section [[#terminology]], plus linking to in respective sections
 11. Addition of Terms [=UN geographic region=] and [=UN geographic subregion=]
-12. Introduction of a new property table layout in section [[#dt-carbonfootprint]] and [[#dt-pf]]
+12. Introduction of a new property table layout in section [[#carbonfootprint]] and [[#productfootprint]]
 13. Removal of data types `PositiveDecimal`, `SpecVersionString`, `VersionInteger`
 
 

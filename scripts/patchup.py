@@ -35,6 +35,44 @@ def parse_bikeshed_file(bikeshed_file):
     
     return title, date, version, status
 
+CUSTOM_CSS = """
+<style>
+pre, code, samp {
+  font-style: normal;
+}
+li {
+  margin: initial;
+  padding: initial;
+}
+dfn > code {
+  font-weight: normal;
+}
+[data-link-type=element]::before,
+[data-link-type=element]::after
+{
+  content: initial;
+}
+.json-schema-type {
+  font-family: monospace;
+}
+.json-schema-required {
+  color: rgba(160,0,0,0.9);
+}
+.json-schema-enum code {
+  background-color: rgba(100,100,100,0.03);
+  color: #666;
+  font-size: 0.8em;
+  border: 1px solid rgba(100,100,100,0.9);
+  border-radius: 2px;
+  padding: 2px;
+  margin-top: 6px;
+  margin-left: 0px;
+  margin-right: 0px;
+  display: inline-block;
+}
+</style>
+"""
+
 # Patch the already generated html file with adapted title and status.
 def update_html_file(html_file, title, status):
     with open(html_file, 'r') as file:
@@ -42,10 +80,12 @@ def update_html_file(html_file, title, status):
     content = re.sub(r'(<title>).*(</title>)', r'\1' + title + r'\2', content, count=1)
     content = re.sub(r'(<h1 .*>).*(</h1>)', r'\1' + title + r'\2', content, count=1)
     content = re.sub(r'(<h2 .* id="profile-and-date">).*(</h2>)', r'\1' + status + r'\2', content, count=1)
+    # Patch some CSS as well. 
+    content = re.sub(r'^\s*<body', CUSTOM_CSS + '<body', content, count=1, flags=re.MULTILINE)
     with open(html_file, 'w') as file:
         file.write(content)
 
-# Pacth the spec
+# Patch the spec
 def patchup(input, output):
     title, date, version, status = parse_bikeshed_file(input)
     if title is None:
@@ -60,6 +100,25 @@ def patchup(input, output):
         return
     
     update_html_file(output, title, status)
+
+
+def extract_property_descriptions(input_file_path):
+    # Read the input file
+    with open(input_file_path, 'r') as file:
+        content = file.read()
+    
+    # Extract the property descriptions using regular expressions
+    pattern = re.compile(r'<td><dfn>(.*?)</dfn>.*?<td>.*?<td>.*?<td>(.*?)(<tr>|</table>)', re.MULTILINE + re.DOTALL)
+    matches = pattern.findall(content)
+    
+    # Prepare the descriptions in the required format
+    descriptions = []
+    for match in matches:
+        property_name = match[0].strip()
+        description = match[1].strip()
+        descriptions.append(f"{property_name}:\n  description: |\n    {description}")
+    
+    return descriptions
 
 
 if __name__ == "__main__":

@@ -3,6 +3,7 @@ import glob
 import os
 import sys
 import subprocess
+import scripts.openapi
 from scripts.patchup import patchup, parse_bikeshed_file
 from scripts.build import Dependency, fileset
 from invoke import task
@@ -62,6 +63,14 @@ def build(c):
     """ 
     Build the specifcation (all versions) from the source files.
     """
+    deps = [
+        Dependency("spec/v3/data-model.generated.md", ["spec/v3/openapi.yaml"]),
+        Dependency("spec/v2/data-model.generated.md", ["spec/v2/openapi.yaml"])
+    ]
+    for dep in deps:
+        if dep.outdated():
+            scripts.openapi.generate_data_model(dep.sources[0], dep.target)
+
     build_bikeshed([
         Dependency("build/faq/index.html", ["spec/faq/index.bs"]),
         Dependency("build/v1/index.html", ["spec/v1/index.bs", "spec/v1/examples/*", "LICENSE.md"]),
@@ -97,3 +106,9 @@ def serve(c, ver="v3"):
     print(f"Press Ctrl+C to stop the server\n")
     run(f"bikeshed --allow-nonlocal-files --no-update serve spec/{ver}/index.bs build/{ver}/index.html")
 
+@task
+def experiment(c):
+    """
+    Experimental generation of data models, based on OpenAPI schema
+    """
+    scripts.openapi.test("spec/v3/openapi.yaml")

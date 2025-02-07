@@ -3,3 +3,4 @@ upload/
 build/**/*.svg
 .DS_Store
 scripts/__pycache__/*
+spec/**/*.generated.md
