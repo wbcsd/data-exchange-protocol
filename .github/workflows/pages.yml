@@ -33,7 +33,7 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v2
       - name: Install Bikeshed and Invoke
-        run: pip3 install bikeshed invoke && bikeshed update
+        run: pip3 install pyaml jsonref markdown invoke bikeshed && bikeshed update
       - name: Install Mermaid
         run: 	npm list -g @mermaid-js/mermaid-cli || npm install -g @mermaid-js/mermaid-cli
       - name: Build specs
