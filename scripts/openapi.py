@@ -89,7 +89,7 @@ def generate_type_description(schema, type_name, type, output):
             output.write(f"  <td><dfn>{name}</dfn>\n")
             output.write("  <td>\n")
             output.write("  <div class='json-schema-type'>")
-            if name in type['required']:
+            if 'required' in type and name in type['required']:
                 output.write("  <span class='json-schema-required'>required</span>\n")
             output.write(get_property_type_spec(property) + "</div>\n")
             output.write("  \n\n")
