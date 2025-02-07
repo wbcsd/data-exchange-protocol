@@ -53,7 +53,8 @@ paths:
               description: Link header to next result set. See Tech Specs section 6.6.1
               schema:
                 type: string
-              example: https://api.example.com/2/footprints?[...]
+                examples:
+                - "https://api.example.com/2/footprints?[...]"
           content:
             application/json:
               schema:
@@ -245,7 +246,8 @@ components:
             generated field by the software solution.
           type: string
           format: date-time
-          example: '2024-10-31T00:00:00Z'
+          examples:
+          - '2024-10-31T00:00:00Z'
         updated:
           description: >
             The date and time when the PCF was last updated. This is typically an automatically 
@@ -265,7 +267,8 @@ components:
           enum:
             - Active
             - Deprecated
-          example: Active
+          examples: 
+          - Active
         statusComment:
           type: string
           description: |
@@ -743,9 +746,8 @@ components:
               - PACT-3.0
           minItems: 1
           uniqueItems: true
-          example:
-          - ISO14067
-          - PACT-3.0
+          examples:
+          - [ISO14067, PACT-3.0]
         productOrSectorSpecificRules:
           description: |
             The product-specific or sector-specific rules applied for calculating or allocating GHG emissions. If no product or sector specific rules were followed, this set MUST be empty.
@@ -763,11 +765,12 @@ components:
             $ref: '#/components/schemas/ProductOrSectorSpecificRule'
           minItems: 1
           uniqueItems: true
-          example: 
-          - operator: PEF
-            ruleNames:
-            - "PEF 1.0"
-            - "PEF 2.0"
+          examples: 
+          -  
+            - operator: PEF
+              ruleNames:
+              - "PEF 1.0"
+              - "PEF 2.0"
         biogenicAccountingMethodology:
           description: |
             The standard followed to account for biogenic emissions and removals. If defined, the value SHOULD be one of the following:
@@ -790,7 +793,8 @@ components:
             - ISO
             - GHGP
             - Quantis
-          example: GHGP
+          examples: 
+          - GHGP
         boundaryProcessesDescription:
           description: |
             Advisement: OPTIONAL in 3.0.
@@ -869,7 +873,9 @@ components:
             - Sub-Saharan Africa
             - Western Asia
             - Western Europe
-          example: "Eastern Asia"
+          examples: 
+          - "Eastern Asia"
+          - "Southern Europe"
         geographyCountry:
           description: |
             If present, the value MUST conform to data type [=ISO3166CC=]. See [[#dt-carbonfootprint-scope]] for further details.
@@ -914,9 +920,10 @@ components:
           minItems: 1
           items:
             $ref: '#/components/schemas/EmissionFactorDatabases'
-          example:
-          - name: ecoinvent
-            version: "3.7"          
+          examples:
+          -
+            - name: ecoinvent
+              version: "3.7"          
         exemptedEmissionsPercent:
           description: |
             The percentage of emissions excluded from PCF, expressed as a decimal number. See [=PACT Methodology=].
@@ -1117,7 +1124,16 @@ components:
             of the operator.
           type: string
           minLength: 1
-
+      example: |
+          ```json
+          {
+            "operator": "PEF",
+            "ruleNames": [
+              "PEF 1.0",
+              "Other"
+            ]
+          }
+          ```
     EmissionFactorDatabases:
       title: EmissionFactorDatabases
       description: |
