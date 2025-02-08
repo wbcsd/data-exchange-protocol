@@ -648,17 +648,11 @@ further information to a <{ProductFootprint}>.
 
 ### OpenAPI Schema
 
-The data model and the REST API are defined by the corresponding OpenAPI specification at [https://specs.carbon-transparency.org/](https://specs.carbon-transparency.org/). All data types described below are based on this schema.
+The Data model and the REST API are defined by the OpenAPI specification at [https://specs.carbon-transparency.org/](https://specs.carbon-transparency.org/). All data types described below are based on this schema.
 
+## Basic Types
 
-<pre class=include>
-path: data-model.generated.md
-</pre>
-
-
-## Simple Types
-
-The following basic types are used:
+The following basic types are used in the data model:
 
 <table class="data">
 <thead>
@@ -674,14 +668,14 @@ The following basic types are used:
   ```
 <tr>
   <td><code>string&lt;uuid&gt;</code>
-  <td> String repesentation of a UUID, see RFC?? 
+  <td> String representation of a UUID, see RFC4122
 
   ```json
   "{91715e5e-fd0b-4d1c-8fab-76290c46e6ed}"
   ```
 <tr>
   <td><code>string&lt;urn&gt;</code>
-  <td> String repesentation of a URN, see RFC?? 
+  <td> String representation of a URN, see RFC8141 
   
   ```json
   "urn:gtin:5695872369587"
@@ -720,7 +714,7 @@ The following basic types are used:
   ```
 
 </table>
- 
+
  ## Qualifiers
  
 Types can have the following qualifiers:
@@ -743,6 +737,28 @@ Types can have the following qualifiers:
 </table>
 
 
+## Undefined Properties
+
+In a JSON object, a property is deemed 'undefined' if it is either not present in the object or explicitly set to `null`. For example:
+
+```json
+{
+  "property1": "value1",
+  "property2": null
+}
+```
+
+In this example, `property2` is considered 'undefined'. 
+Also, any property not present in the object, for example `property3` is also considered `undefined`.
+
+
+
+<pre class=include>
+path: data-model.generated.md
+</pre>
+
+
+
 # HTTP REST API # {#api}
 
 <pre class=include>
@@ -759,6 +775,18 @@ path: ../../LICENSE.md
 
 # Appendix B: Changelog # {#changelog}
 
+## Version 3.0.0-20250207 (Feb 7, 2025) ## {#changelog-3.0.0-20250207}
+
+Summary of changes:
+1. Removal of `ProductFootprint/productCategoryCpc` deprecated in 2.3 being superseded by `ProductFootprint/productClassifications`
+2. Removal of `CarbonFootprint/characterizationFactors` deprecated in 2.2 replaced by `CarbonFootprint/ipccCharacterizationFactors`
+3. Removal of `CarbonFootprint/crossSectoralStandardsUsed` deprecated in 2.3 replaced by `CarbonFootprint/crossSectoralStandards`
+4. Property <{ProductFootprint/comment}> now optional (ADR31).
+5. Property {<CarbonFootprint/boundaryProcessesDescription>} now optional (ADR31).
+6. Property <{CarbonFootprint/exemptedEmissionsDescription}> now optional (ADR31).
+7. Assurance/<{Assurance/providername}> now optional
+8. Remove `CarbonFootprint/packagingEmissionsIncluded`.
+9. DQR ratings `technologicalDQR`, `temporalDQR`, `geographicalDQR`, `completenessDQR`, `reliabilityDQR` now range between 1 and 5.
 
 ## Version 3.0.0-20250127 (Jan 27, 2025) ## {#changelog-3.0.0-20250127}
 
@@ -769,13 +797,13 @@ Summary of changes:
 
 Summary of changes:
 1. Updated references to the upcoming PACT Framework 3.0 
-2. Deprecation of property <{ProductFootprint/productCategoryCpc}> (ADR37)
-3. Property <{ProductFootprint/comment}> now optional (ADR31)
-4. Property <{CarbonFootprint/boundaryProcessesDescription}> now optional (ADR31)
-5. Property <{CarbonFootprint/exemptedEmissionsDescription}> now optional (ADR31)
-6. Deprecation of property <{CarbonFootprint/characterizationFactors}> (ADR28)
+2. Deprecation of property <{ProductFootprint/productCategoryCpc}> for 3.0 (ADR37)
+3. Property <{ProductFootprint/comment}> advised optional 3.0 (ADR31)
+4. Property <{CarbonFootprint/boundaryProcessesDescription}> advised optional 3.0 (ADR31)
+5. Property <{CarbonFootprint/exemptedEmissionsDescription}> advised optional 3.0 ADR31)
+6. Deprecation of property <{CarbonFootprint/characterizationFactors}> for 3.0 (ADR28)
 7. Removal of `crossSectoralStandardsUsed` which has been deprecated in 2.3 and is now superseeded by extensible crossSectoralStandards (ADR32).
-8. Assurance/<{Assurance/providername}> now optional, after being mistakenly made mandatory in version 2.x
+8. Assurance/<{Assurance/providername}> advised optional, after being mistakenly made mandatory in version 2.x
 9. Consistent Decimal typing for all fractional numbers (ADR39). The data type of the following fields has been changed from Number to Decimal: `primaryDataShare`, `exemptedEmissionsPercent`, `coveragePercent`, `technologicalDQR`, `temporalDQR`, `geographicalDQR`, `completenessDQR`, `reliabilityDQR`
 
 
