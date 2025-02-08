@@ -188,7 +188,6 @@ components:
       - version
       - created
       - status
-      - comment
       - companyName
       - companyIds
       - productDescription
@@ -382,8 +381,7 @@ components:
         productClassifications:
           description: |
             The non-empty set of [=ProductClassifications=] in [=URN=] format. Each of the values in the set can classify the product as part of distinct groupings and categorizations. See {#product-identifiers}. 
-            
-            Advisement: Supersedes productCategoryCpc deprecated in version 2.3.
+          note: Supersedes productCategoryCpc deprecated in 2.3
           summary: |
             A list of classification or category identifiers in URN format. Use well known urn's here, 
             or adhere to recommended urn:pact: format. This replaces the productCategoryCpc property.
@@ -392,16 +390,6 @@ components:
           uniqueItems: true
           items:
             $ref: '#/components/schemas/Urn'
-        productCategoryCpc:
-          description: |
-            Advisement: DEPRECATED in 3.0. Superseded by <{ProductFootprint/productClassifications}>.
-
-            The UN Central Product Classification (CPC) that the given product belongs to.
-          summary: |
-            The UN Central Product Classification Code (CPC) for the given product. The relevant 
-            CPC code may be identified here https://unstats.un.org/unsd/classifications/Econ/cpc 
-            Advisement: This property will become optional in v3
-          $ref: '#/components/schemas/NonEmptyString'
         productNameCompany:
           description: |
             The non-empty trade name of the product.
@@ -410,17 +398,15 @@ components:
           $ref: '#/components/schemas/NonEmptyString'
         comment:
           description: |
-            Advisement: OPTIONAL in 3.0.
-
             Additional information related to the product footprint.
 
             Whereas the property <{ProductFootprint/productDescription}> contains product-level information, <{ProductFootprint/comment}> SHOULD be used for information and instructions related to the calculation of the footprint, or other information which informs the ability to interpret, to audit or to verify the Product Footprint.
+          note: optional in 3.0, was mandatory in 2.x 
           summary: |
             Any additional information related to the PCF. Whereas the property productDescription 
             contains product-level information, comment should be used for information and instructions 
             related to the calculation of the PCF, or other information which informs the ability to interpret
             (e.g. LUC not included as unable to calculate LUC), to audit or to verify the PCF          
-            Advisement: This property will become OPTIONAL in version 3 of the Technical Specifications.
           type: string
         pcf:
           description: |
@@ -464,13 +450,11 @@ components:
       - fossilGhgEmissions
       - fossilCarbonContent
       - biogenicCarbonContent
-      - characterizationFactors
-      - ipccCharacterizationFactorsSources
-      - crossSectoralStandardsUsed
-      - boundaryProcessesDescription
+      - ipccCharacterizationFactors
+      - crossSectoralStandards
       - exemptedEmissionsPercent
-      - exemptedEmissionsDescription
       - packagingEmissionsIncluded
+      - productMassPerDeclaredUnit
       # oneOf:
       # - oneOf:
       #   - required:
@@ -513,19 +497,17 @@ components:
           $ref: '#/components/schemas/PositiveNonZeroDecimal'
         productMassPerDeclaredUnit:
           description: |
-            
-            Advisement: This property is optional in v2.3 but will be released in v3 as a mandatory attribute.
-
             The mass (in kg) of the product per the provided <{CarbonFootprint/declaredUnit|declared unit}>, excluding packaging.
             For example, if the declared unit is `piece`, this attribute MUST be populated with the mass of one piece (aka unit) of product.
             If the declared unit is `liter`, this attribute SHOULD be populated with the mass of 1 liter of product (i.e. the density of the product).
             If the declared unit is `kilogram`, this attribute SHOULD by definition be populated with `1`.
             If the product mass is not relevant (i.e. PCF is for an energy (kWh, MJ), logistics (ton.km) or service product), this attribute SHOULD be populated with `0`.          
+          note: mandatory in 3.0, optional in v2.x
           $ref: '#/components/schemas/Decimal'
-
         pCfExcludingBiogenic:
           description: |
             The product carbon footprint of the product <i>excluding</i> biogenic CO2 emissions. 
+
             TODO: The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg of CO2 equivalent per declared unit` (`kgCO2e / declaredUnit`), expressed as a [=decimal=] equal to or greater than zero.
           summary: |
             The PCF of the product excluding biogenic CO2 emissions.
@@ -534,9 +516,10 @@ components:
         pCfIncludingBiogenic:
           description: |
             If present, the product carbon footprint of the product <i>including all</i> biogenic emissions (CO2 and otherwise). 
-            TODO: The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg of CO2 equivalent per declared unit` (`kgCO2e / declaredUnit`), expressed as a [=decimal=].
 
             Note: the value of this property can be less than `0` (zero).
+
+            TODO: The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg of CO2 equivalent per declared unit` (`kgCO2e / declaredUnit`), expressed as a [=decimal=].
           summary: |
             The PCF of the product including ALL biogenic emissions (CO2 and otherwise).
           x-pact-unit: kgCO2e/declared unit
@@ -544,6 +527,7 @@ components:
         fossilGhgEmissions:
           description: |
             The emissions from fossil sources as a result of fuel combustion, from fugitive emissions, and from process emissions. 
+            
             TODO: The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg of CO2 equivalent per declared unit` (`kgCO2e / declaredUnit`), expressed as a [=decimal=] equal to or greater than zero.
           summary: |
             The emissions from fossil sources as a result of fuel combustion, from fugitive 
@@ -553,6 +537,7 @@ components:
         fossilCarbonContent:
           description: |
             The fossil carbon content of the product (mass of carbon). 
+            
             TODO: The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg Carbon per declared unit` (`kgC / declaredUnit`), expressed as a [=decimal=] equal to or greater than zero.
           summary: |
             The fossil carbon content of the product (mass of carbon).
@@ -561,6 +546,7 @@ components:
         biogenicCarbonContent:
           description: |
             The biogenic carbon content of the product (mass of carbon). 
+            
             TODO: The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg Carbon per declared unit` (`kgC / declaredUnit`), expressed as a [=decimal=] equal to or greater than zero.
           summary: |
             The biogenic carbon content of the product (mass of carbon).
@@ -570,8 +556,10 @@ components:
           description: |
             If present, emissions resulting from recent (i.e., previous 20 years) carbon stock loss due to land conversion directly on the area of land under consideration. 
             The value of this property MUST include direct land use change (dLUC) where available, otherwise statistical land use change (sLUC) can be used.
-            TODO: The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg of CO2 equivalent per declared unit` (`kgCO2e / declaredUnit`), expressed as a [=decimal=] equal to or greater than zero.
+            
             See [=PACT Methodology=] (Appendix B) for details.
+            
+            TODO: The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg of CO2 equivalent per declared unit` (`kgCO2e / declaredUnit`), expressed as a [=decimal=] equal to or greater than zero.
           summary: |
             The emissions from land use change (LUC) activities. Emissions resulting from 
             recent (i.e., previous 20 years) carbon stock loss due to land conversion directly 
@@ -583,6 +571,7 @@ components:
         landManagementGhgEmissions:
           description: |
             If present, GHG emissions and removals associated with land-management-related changes, including non-CO2 sources.
+
             TODO: The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg of CO2 equivalent per declared unit` (`kgCO2e / declaredUnit`), expressed as a [=decimal=].
           summary: |
             GHG emissions and removals associated with land-management-related changes, 
@@ -592,6 +581,7 @@ components:
         otherBiogenicGhgEmissions:
           description: |
             If present, all other biogenic GHG emissions associated with product manufacturing and transport that are not included in dLUC (<{CarbonFootprint/dLucGhgEmissions}>), iLUC (<{CarbonFootprint/iLucGhgEmissions}>), and land management (<{CarbonFootprint/landManagementGhgEmissions}>).
+
             TODO: The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg of CO2 equivalent per declared unit` (`kgCO2e / declaredUnit`), expressed as a [=decimal=] equal to or greater than zero.
           summary: |
             All other biogenic GHG emissions associated with product manufacturing and transport 
@@ -602,8 +592,9 @@ components:
         iLucGhgEmissions:
           description: |
             If present, emissions resulting from recent (i.e., previous 20 years) carbon stock loss due to land conversion on land not owned or controlled by the company or in its supply chain, induced by change in demand for products produced or sourced by the company.
-            TODO: The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg of CO2 equivalent per declared unit` (`kgCO2e / declaredUnit`), expressed as a [=decimal=] equal to or greater than zero.
             See [=PACT Methodology=] (Appendix B) for details.
+
+            TODO: The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg of CO2 equivalent per declared unit` (`kgCO2e / declaredUnit`), expressed as a [=decimal=] equal to or greater than zero.
           summary: |
             Emissions resulting from recent (i.e., previous 20 years) carbon stock loss due to 
             land conversion on land not owned or controlled by the company or in its supply 
@@ -613,6 +604,7 @@ components:
         biogenicCarbonWithdrawal:
           description: |
             If present, the Biogenic Carbon contained in the product converted to kilogram of CO2e. 
+
             TODO: The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kgCO2e / declaredUnit` expressed as a [=decimal=] equal to or <i>less than</i> zero.
           summary: |
             The Biogenic Carbon contained in the product converted to kilogram of CO2e.
@@ -621,35 +613,14 @@ components:
         aircraftGhgEmissions:
           description: |
             If present, the GHG emissions resulting from aircraft engine usage for the transport of the product, excluding radiative forcing. 
+
             TODO: The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg of CO2 equivalent per declared unit` (`kgCO2e / declaredUnit`), expressed as a [=decimal=] equal to or greater than zero.
           summary: |
             The GHG emissions resulting from aircraft engine usage for the transport of the
             product, excluding radiative forcing.
           x-pact-unit: kgCO2e/declared unit
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
-        characterizationFactors:
-          description: |
-            Advisement: DEPRECATED in 3.0. Superseded by <{CarbonFootprint/ipccCharacterizationFactorsSources}>.
-
-            The IPCC version of the GWP characterization factors used in the calculation of the PCF (see [=PACT Methodology=] Section 3.2.2). In case several characterization factors are used, indicate the earliest version used in your calculations, disregarding supplier provided PCFs. The value MUST be one of the following: `AR6`, `AR5`.
-          summary: |
-            The IPCC (Intergovernmental Panel of Climate Change) frequently releases (GWP) 
-            global warming potential values for climate gases related to CO2. These GWP 
-            values are released in Assessment Reports (AR), which are numbered. The AR 
-            number can be used to track the age and accuracy of the GWP values used in 
-            reporting. This field indicates the IPCC version of the GWP characterization 
-            factors used in the calculation of the PCF.
-
-            Advisement: This property is DEPRECATED and only kept to ensure backwards-compatibility. 
-            It will be removed in version 3 of these Technical Specifications. It does not replace the (also mandatory) property <{CarbonFootprint/ipccCharacterizationFactorsSources}>.
-          deprecated: true
-          comment: This property is deprecated and only kept to ensure backwards-compatibility. 
-            It will be removed in version 3. It is replaced by ipccCharacterizationFactors.
-          type: string
-          enum:
-            - AR6
-            - AR5
-        ipccCharacterizationFactorsSources:
+        ipccCharacterizationFactors:
           description: |
             The characterization factors from one or more IPCC Assessment Reports used in the calculation of the PCF (see [=PACT Methodology=] Section 3.2.2).
             It MUST be a non-empty set of strings with the format `AR$VERSION$`, where `$VERSION$` stands for the
@@ -660,19 +631,15 @@ components:
             <div class=example>["AR5", "AR6"]</div>
 
             Per the Methodology the latest available characterization factor version shall be used, i.e., `["AR6"]`. In the event this is not possible, include the set of all characterization factors used.
-
-            Advisement: Supersedes `characterizationFactors` deprecated in version 2.3.
-
+          note: supersedes `characterizationFactors` deprecated in 2.3.
           summary: |              
             The IPCC (Intergovernmental Panel of Climate Change) frequently releases (GWP) 
             global warming potential values for climate gases related to CO2. These GWP 
             values are released in Assessment Reports (AR), which are numbered. 
             
-
             The AR number can be used to track the age and accuracy of the GWP values used in 
             reporting. This field indicates the IPCC version of the GWP characterization 
             factors used in the calculation of the PCF.
-
 
             Per the PACT Methodology, the latest available characterization factor version shall 
             be used, i.e., [""AR6""]. In the event this is not possible, include the set 
@@ -683,26 +650,6 @@ components:
             pattern: '^AR\d+$'
           minItems: 1
           uniqueItems: true
-        crossSectoralStandardsUsed:
-          description: |
-            The cross sectoral standard(s) used as a basis for the PCF calculation. 
-            If multiple apply, list all.
-          summary: |
-            The cross sectoral standard(s) used as a basis for the PCF calculation. 
-            If multiple apply, list all.
-          type: array
-          items:
-            type: string
-            enum:
-              - GHG Protocol Product standard
-              - ISO Standard 14067
-              - ISO Standard 14044
-          minItems: 1
-          uniqueItems: true
-          deprecated: true
-          comment: This property is deprecated and only kept to ensure backwards-
-            compatibility. It will be removed in version 3. It does not replace the 
-            (also mandatory) property crossSectoralStandards.
         crossSectoralStandards:
           description: |
             The cross-sectoral standards applied for calculating or allocating [=GHG=] emissions.
@@ -727,8 +674,7 @@ components:
               :: for the Publicly Available Specification (PAS) 2050, "Specification for the assessment of the life cycle greenhouse gas emissions of goods and services". The use of this standard is permitted but not recommended.
 
             The enumeration of standards above CAN evolve in future revisions. A host system MUST accept ProductFootprints from later revisions with `crossSectoralStandards` containing values that are not defined in this specification.
-
-            Advisement: Supersedes `crossSectoralStandardsUsed` deprecated in version 2.3.
+          note: Supersedes `crossSectoralStandardsUsed` deprecated in version 2.3.
           summary: |
             The cross-sectoral standards applied for calculating or allocating GHG 
             emissions. If multiple apply, list all.
@@ -797,17 +743,15 @@ components:
           - GHGP
         boundaryProcessesDescription:
           description: |
-            Advisement: OPTIONAL in 3.0.
-
             The processes attributable to each lifecycle stage. 
             
             For example: electricity consumption included as an input in the production phase
+          note: optional in 3.0, was mandatory in 2.x
           summary: |  
             Brief description of the processes attributable to each life cycle stage included 
             in the PCF (e.g. electricity consumption for manufacturing), especially those 
             that significantly contribute manufacturing steps of the product (including 
             general description of used technologies).
-            Advisement: This property will become OPTIONAL in version 3 of the Technical Specifications.
           type: string
         referencePeriodStart:
           description: |
@@ -927,41 +871,29 @@ components:
         exemptedEmissionsPercent:
           description: |
             The percentage of emissions excluded from PCF, expressed as a decimal number. See [=PACT Methodology=].
-
-            Advisement: [=Decimal=] in 3.0, was Number in 2.x
           summary: |
             Percentage of emissions EXCLUDED from the cradle to gate PCF in total. 
             The percentage MUST be expressed as a decimal number, and SHOULD comply 
             with the PACT Methodology (a maximum of 5% of the cradle to gate PCF emissions 
             may be excluded) as well as any relevant sector specific guidelines 
             referring to exemption rules/cut-off criteria.
-            Advisement: The upper boundary of this property (currently `5`) will be removed in version 3 of the Technical Specifications.
-          $ref: '#/components/schemas/Percent'
+          note: string<decimal> in 3.0, was Number in 2.x
+          $ref: '#/components/schemas/Decimal'
           maximum: 5
         exemptedEmissionsDescription:
           description: |
-            Advisement: OPTIONAL in 3.0.
-
             Rationale behind exclusion of specific PCF emissions, CAN be the empty string if no emissions were excluded.
-
           summary: |
             If emissions exempted, rationale behind exclusion of specific PCF emissions.
-          Advisement: This property will become OPTIONAL in version 3 of the Technical Specifications.
+          note: optional in 3.0, was mandatory in 2.x
           type: string
-        packagingEmissionsIncluded:
-          description: |
-            A boolean flag indicating whether packaging emissions are included in the PCF (<{CarbonFootprint/pCfExcludingBiogenic}>, <{CarbonFootprint/pCfIncludingBiogenic}>).
-          summary: |
-            True or False to indicate whether packaging emissions are including in the PCF.
-          type: boolean
         packagingGhgEmissions:
           description: |
-            Emissions resulting from the packaging of the product.
+            Emissions resulting from the packaging of the product. If this property is not defined, then packaging emission are not included in the PCF calculation.
+
             TODO: If present, the value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg of CO2 equivalent per kilogram` (`kgCO2e / declared unit`), expressed as a [=decimal=] equal to or greater than zero.
-            The value MUST NOT be defined if <{CarbonFootprint/packagingEmissionsIncluded}> is `false`.
           summary: |
-            Emissions resulting from the packaging of the product. The value MUST NOT 
-            be defined if packagingEmissionsIncluded is False.
+            Emissions resulting from the packaging of the product. The value is undefined if packaging emissions are not included.
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
           x-pact-unit: kgCO2e/declared unit
         allocationRulesDescription:
@@ -987,12 +919,11 @@ components:
 
             For reference periods including the beginning of year 2025 or after, this property MUST be defined.
 
-            Advisement: [=Decimal=] in 3.0, was Number in 2.x
-
+          note: string<decimal> in 3.0, was Number in 2.x
           summary: |
             Share of primary data in the final PCF, calculated according to 
             the PACT Methodology.
-          $ref: '#/components/schemas/Percent'
+          $ref: '#/components/schemas/Decimal'
         dqi:
           description: |
             If present, the Data Quality Indicators (dqi) in accordance with the [=PACT Methodology=] Sections 4.2.1 and 4.2.3, Appendix B.
@@ -1005,9 +936,11 @@ components:
           $ref: '#/components/schemas/DataQualityIndicators'
         assurance:
           description: |
-            If present, the Assurance information in accordance with the [=PACT Methodology=].
+            The presence of the <{Assurance}> object indicates whether or not the <{CarbonFootprint}> has
+            been assured in line with [=PACT Methodology=] requirements (section 5)
           summary: |
-            If present, the Assurance information in accordance with the PACT Methodology.
+            The presence of the <{Assurance}> object indicates whether or not the <{CarbonFootprint}> has
+            been assured in line with [=PACT Methodology=] requirements (section 5)
           $ref: '#/components/schemas/Assurance'
 
     DataModelExtension:
@@ -1022,7 +955,7 @@ components:
         ```json
         {
           "specVersion": "2.0.0",
-          "dataSchema": "https://catalog.carbon-transparency.com/shipment/1.0.0/data-model.json",
+          "dataSchema": "https://reg.carbon-transparency.org/shipment/1.0.0/data-model.json",
           "data": {
             "shipmentId": "S1234567890",
             "consignmentId": "Cabc.def-ghi",
@@ -1059,34 +992,6 @@ components:
           description: |
             The value MUST be a JSON Object that conforms to the extension schema file 
             referenced by the dataSchema property.
-
-    NonEmptyString:
-      type: string
-      minLength: 1
-    Urn:
-      type: string
-      pattern: '^([uU][rR][nN]):'
-    PositiveNonZeroDecimal:
-      type: string
-      format: decimal
-      pattern: ^[+]?(\d*[1-9]\d*)(\.\d+)?|(0+\.\d*[1-9]\d*)$
-    PositiveOrZeroDecimal:
-      type: string
-      format: decimal
-      pattern: ^[+]?\d+(\.\d+)?$
-      comment: A positive or zero decimal number.
-    Decimal:
-      type: string
-      format: decimal
-      pattern: ^[+-]?\d+(\.\d+)?$
-    NegativeOrZeroDecimal:
-      type: string
-      format: decimal
-      pattern: ^(-\d+(\.\d+)?)|0+(\.0+)?$
-    NegativeNonZeroDecimal:
-      type: string
-      format: decimal
-      pattern: ^-((\d*[1-9]\d*)(\.\d+)?|(0+\.\d*[1-9]\d*))$
 
     ProductOrSectorSpecificRule:    
       title: ProductOrSectorSpecificRule
@@ -1159,12 +1064,6 @@ components:
             Version of the secondary emission factor databases
           $ref: '#/components/schemas/NonEmptyString'
 
-    Percent:
-      type: number
-      format: double
-      minimum: 0
-      maximum: 100
-
     DataQualityIndicators:
       description: | 
         Data type DataQualityIndicators contains the quantitative data quality indicators in conformance with PACT Methodology Section 4.2.3 and Appendix B.
@@ -1195,104 +1094,88 @@ components:
         coveragePercent:
           description: |
             Percentage of PCF included in the data quality assessment based on the `>5%` emissions threshold.
-            
-            Advisement: [=Decimal=] in 3.0, was Number in 2.x
-
+          note: string<decimal in 3.0, was Number in 2.x
           summary: |
             Percentage of PCF included in the data quality assessment based on 
             the >5% emissions threshold.
-          $ref: '#/components/schemas/Percent'
+          $ref: '#/components/schemas/Decimal'
         technologicalDQR:
           description: |
             Quantitative data quality rating (DQR) based on the data quality matrix (See [=PACT Methodology=] Table 9),
             scoring the technological representativeness of the sources used for PCF calculation based on
             weighted average of all inputs representing >5% of PCF emissions.
 
-            The value MUST be a [=decimal=] between `1` and `3` including.
+            The value MUST be between `1` and `5` inclusive.
 
-            Advisement: [=Decimal=] in 3.0, was Number in 2.x
-
+          note: string<decimal> in 3.0, was Number in 2.x
           summary: |
             Quantitative data quality rating (DQR) based on the data quality matrix
             (PACT Methodology Table 9), scoring the technological representativeness of the 
             sources used for PCF calculation based on weighted average of all inputs 
             representing >5% of PCF emissions.
-          $ref: '#/components/schemas/FloatBetween1And3'
+          $ref: '#/components/schemas/Decimal'
         temporalDQR:
           description: |
             Quantitative data quality rating (DQR) based on the data quality matrix (Table 9),
             scoring the temporal representativeness of the sources used for PCF calculation based on
             weighted average of all inputs representing >5% of PCF emissions.
 
-            The value MUST be between `1` and `3` inclusive.
-            
-            Advisement: [=Decimal=] in 3.0, was Number in 2.x
-
+            The value MUST be between `1` and `5` inclusive.
+          note: string<decimal> in 3.0, was Number in 2.x
           summary: |
             Quantitative data quality rating (DQR) based on the data quality matrix 
             (PACT Methodology Table 9), scoring the temporal representativeness of the sources 
             used for PCF calculation based on weighted average of all inputs 
             representing >5% of PCF emissions.
-          $ref: '#/components/schemas/FloatBetween1And3'
+          $ref: '#/components/schemas/Decimal'
         geographicalDQR:
           description: |
             Quantitative data quality rating (DQR) based on the data quality matrix (Table 9),
             scoring the geographical representativeness of the sources used for PCF calculation
             based on weighted average of all inputs representing >5% of PCF emissions.
 
-            The value MUST be between `1` and `3` inclusive.
-            
-            Advisement: [=Decimal=] in 3.0, was Number in 2.x
-          
+            The value MUST be between `1` and `5` inclusive.
+          note: string<decimal> in 3.0, was Number in 2.x
           summary: |
             Quantitative data quality rating (DQR) based on the data quality matrix 
             (PACT Methodology Table 9), scoring the geographical representativeness of the 
             sources used for PCF calculation based on weighted average of all inputs 
             representing >5% of PCF emissions.
-          $ref: '#/components/schemas/FloatBetween1And3'
+          $ref: '#/components/schemas/Decimal'
         completenessDQR:
           description: |
             Quantitative data quality rating (DQR) based on the data quality matrix (Table 9),
             scoring the completeness of the data collected for PCF calculation based on
             weighted average of all inputs representing >5% of PCF emissions.
 
-            The value MUST be between `1` and `3` inclusive.
-            
-            Advisement: [=Decimal=] in 3.0, was Number in 2.x
-
+            The value MUST be between `1` and `5` inclusive.
+          note: string<decimal> in 3.0, was Number in 2.x
           summary: |
             Quantitative data quality rating (DQR) based on the data quality matrix 
             (PACT Methodology Table 9), scoring the completeness of the data collected for 
             PCF calculation based on weighted average of all inputs representing 
             >5% of PCF emissions.
-          $ref: '#/components/schemas/FloatBetween1And3'
+          $ref: '#/components/schemas/Decimal'
         reliabilityDQR:
           description: |
             Quantitative data quality rating (DQR) based on the data quality matrix (Table 9),
             scoring the reliability of the data collected for PCF calculation based on
             weighted average of all inputs representing >5% of PCF emissions.
 
-            The value MUST be between `1` and `3` inclusive.
-            
-            Advisement: [=Decimal=] in 3.0, was Number in 2.x
+            The value MUST be between `1` and `5` inclusive.
+          note: string<decimal> in 3.0, was Number in 2.x
           summary: |
             Quantitative data quality rating (DQR) based on the data quality matrix 
             (PACT Methodology Table 9), scoring the reliability of the data collected for 
             PCF calculation based on weighted average of all inputs representing 
             >5% of PCF emissions.
-          $ref: '#/components/schemas/FloatBetween1And3'
-    FloatBetween1And3:
-      type: number
-      format: float
-      maximum: 3
-      minimum: 1
+          $ref: '#/components/schemas/Decimal'
 
     Assurance:
       title: Assurance
       description: |
         Data type `Assurance` contains the assurance in conformance with [=PACT Methodology=] chapter 5 and appendix B.
-
-        Advisement: the boolean property `assurance` has been REMOVED in version 3.0. The presence of the <{Assurance}> element indicates whether or not the <{CarbonFootprint}> has been assured in line with [=PACT Methodology=] requirements (section 5). 
+      note: the boolean property `assurance` has been removed in 3.0. 
       example: |
         Example value for the case that 42% of the product’s overall GHG emissions covered by the data quality assessment:
         ```json 
@@ -1307,14 +1190,7 @@ components:
         }
         ```
       type: object
-      required:
-      - assurance
-      - providerName
       properties:
-        assurance:
-          description: |
-            True or False to indicate whether the PCF has been assured in line with the PACT Methodology.
-          type: boolean
         coverage:
           description: |
             Level of granularity of the emissions data assured, with value equal to
@@ -1361,12 +1237,9 @@ components:
         providerName:
           description: |
             The non-empty name of the independent third party engaged to undertake the assurance.
-
-            Advisement: OPTIONAL in version 3.0.
-            
+          note: optional in version 3.0 was mandatory in 2.x
           summary: |
             Name of the independent third party engaged to undertake assurance
-            Advisement: Given this property was incorrectly and unintentionally published in V2 of the Technical Specifications as Mandatory, it will be reverted to Optional in version 3 of the Technical Specifications.
           type: string
         completedAt:
           description: |
@@ -1381,6 +1254,39 @@ components:
           description: |
             Any additional comments that will clarify the interpretation of the assurance.
           type: string
+
+    # -----------
+    # Simple types
+    NonEmptyString:
+      type: string
+      minLength: 1
+    UUID:
+      type: string
+      format: uuid
+    Urn:
+      type: string
+      pattern: '^([uU][rR][nN]):'
+    Decimal:
+      type: string
+      format: decimal
+      pattern: ^[+-]?\d+(\.\d+)?$
+    PositiveNonZeroDecimal:
+      type: string
+      format: decimal
+      pattern: ^[+]?(\d*[1-9]\d*)(\.\d+)?|(0+\.\d*[1-9]\d*)$
+    PositiveOrZeroDecimal:
+      type: string
+      format: decimal
+      pattern: ^[+]?\d+(\.\d+)?$
+      comment: A positive or zero decimal number.
+    NegativeOrZeroDecimal:
+      type: string
+      format: decimal
+      pattern: ^(-\d+(\.\d+)?)|0+(\.0+)?$
+    NegativeNonZeroDecimal:
+      type: string
+      format: decimal
+      pattern: ^-((\d*[1-9]\d*)(\.\d+)?|(0+\.\d*[1-9]\d*))$
 
     # -----------
     # Events
