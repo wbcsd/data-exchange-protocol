@@ -442,8 +442,9 @@ components:
       title: CarbonFootprint
       type: object
       required:
-      - declaredUnit
-      - unitaryProductAmount
+      - declaredUnitOfMeasurement
+      - declaredUnitAmount
+      - productMassPerDeclaredUnit
       - referencePeriodStart
       - referencePeriodEnd
       - pCfExcludingBiogenic
@@ -454,7 +455,6 @@ components:
       - crossSectoralStandards
       - exemptedEmissionsPercent
       - packagingEmissionsIncluded
-      - productMassPerDeclaredUnit
       # oneOf:
       # - oneOf:
       #   - required:
@@ -472,11 +472,17 @@ components:
       #     - required:
       #       - geographyCountrySubdivision
       properties:
-        declaredUnit:
+        declaredUnitOfMeasurement:
           description: |
-            The unit of analysis of the product. See Data Type {{DeclaredUnit}} for further information.
+            The unit of measurement of the product. Together with `declaredUnitAmount` 
+            this defines the 'declared unit' of the product. Emissions in this carbon 
+            footprint are expressed in kgCO2e per 'declared unit'. 
+
+            For example: a PCF for a 12 liter bottle of Ethanol states 2 kg of CO2e in 
+            emissions. In this case the declared unit is 12 liter Ethanol, thus the
+            `declaredUnitOfMeasurement` is 'liter', and the `declaredUnitAmount` is 12.
           summary: |
-            The unit with which the PCF was calculated 
+            The unit of measurement of the product. 
           type: string
           enum:
             - liter
@@ -486,49 +492,62 @@ components:
             - megajoule
             - ton kilometer
             - square meter
-        unitaryProductAmount:
+        declaredUnitAmount:
           description: |
-            The amount of <{CarbonFootprint/declaredUnit|Declared Units}> contained within the product to which the [[#carbonfootprint|PCF]] is referring to. The value MUST be strictly greater than `0`.
+            The amount of <{CarbonFootprint/declaredUnitOfMeasurement|units}> contained
+            within the product to which the [[#carbonfootprint|PCF]] is referring to. 
+            The value MUST be greater than `0`.
+
+            For example: if the product is a car door weighing 80kg, `declaredUnitAmount` 
+            will be `80` and `declaredUnitOfMeasurement` will be `kilogram`.
           summary: |
-            The amount of Declared Units contained within the product to which the PCF refers to. 
+            The amount of units contained within the product to which the PCF refers to. 
             This is not representing the total annual quantity supplied (e.g. if the product is 
             supplied in bulk in kg, which is the declared unit selected, please enter 1)   
           x-pact-unit: declared unit       
           $ref: '#/components/schemas/PositiveNonZeroDecimal'
         productMassPerDeclaredUnit:
           description: |
-            The mass (in kg) of the product per the provided <{CarbonFootprint/declaredUnit|declared unit}>, excluding packaging.
-            For example, if the declared unit is `piece`, this attribute MUST be populated with the mass of one piece (aka unit) of product.
-            If the declared unit is `liter`, this attribute SHOULD be populated with the mass of 1 liter of product (i.e. the density of the product).
-            If the declared unit is `kilogram`, this attribute SHOULD by definition be populated with `1`.
-            If the product mass is not relevant (i.e. PCF is for an energy (kWh, MJ), logistics (ton.km) or service product), this attribute SHOULD be populated with `0`.          
+            The mass (in kg) of the product excluding packaging. The 'declared unit' is
+            the `declaredUnitAmount` times `declaredUnitOfMeasurement`.
+
+            For example, if the declared unit is `piece`, this attribute MUST be populated 
+            with the mass of `declaredUnitAmount` pieces of the product.
+            
+            If the declared unit is `liter`, this attribute MUST be populated with the mass
+            of `declaredUnitAmount` liters of the product.
+
+            If the product mass is not relevant (i.e. PCF is for an energy (kWh, MJ), 
+            logistics (ton.km) or service related product), this attribute SHOULD be populated 
+            with `0`.          
           note: mandatory in 3.0, optional in v2.x
           $ref: '#/components/schemas/Decimal'
         pCfExcludingBiogenic:
           description: |
             The product carbon footprint of the product <i>excluding</i> biogenic CO2 emissions. 
 
-            TODO: The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg of CO2 equivalent per declared unit` (`kgCO2e / declaredUnit`), expressed as a [=decimal=] equal to or greater than zero.
+            Expressed in kgCO2e per declared unit, equal or greater than zero.
           summary: |
             The PCF of the product excluding biogenic CO2 emissions.
           x-pact-unit: kgCO2e/declared unit
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
         pCfIncludingBiogenic:
           description: |
-            If present, the product carbon footprint of the product <i>including all</i> biogenic emissions (CO2 and otherwise). 
+            If present, the product carbon footprint of the product <i>including all</i> 
+            biogenic emissions (CO2 and otherwise). 
 
-            Note: the value of this property can be less than `0` (zero).
-
-            TODO: The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg of CO2 equivalent per declared unit` (`kgCO2e / declaredUnit`), expressed as a [=decimal=].
+            Expressed in kgCO2e per declared unit. Note: this value can be less than zero, 
+            because of Withdrawals or removals.
           summary: |
             The PCF of the product including ALL biogenic emissions (CO2 and otherwise).
           x-pact-unit: kgCO2e/declared unit
           $ref: '#/components/schemas/Decimal'
         fossilGhgEmissions:
           description: |
-            The emissions from fossil sources as a result of fuel combustion, from fugitive emissions, and from process emissions. 
+            The emissions from fossil sources as a result of fuel combustion, from 
+            fugitive emissions, and from process emissions. 
             
-            TODO: The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg of CO2 equivalent per declared unit` (`kgCO2e / declaredUnit`), expressed as a [=decimal=] equal to or greater than zero.
+            Expressed in kgCO2e per declared unit. 
           summary: |
             The emissions from fossil sources as a result of fuel combustion, from fugitive 
             emissions, and from process emissions. 
@@ -537,8 +556,6 @@ components:
         fossilCarbonContent:
           description: |
             The fossil carbon content of the product (mass of carbon). 
-            
-            TODO: The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg Carbon per declared unit` (`kgC / declaredUnit`), expressed as a [=decimal=] equal to or greater than zero.
           summary: |
             The fossil carbon content of the product (mass of carbon).
           x-pact-unit: kgC/declared unit
@@ -546,8 +563,6 @@ components:
         biogenicCarbonContent:
           description: |
             The biogenic carbon content of the product (mass of carbon). 
-            
-            TODO: The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg Carbon per declared unit` (`kgC / declaredUnit`), expressed as a [=decimal=] equal to or greater than zero.
           summary: |
             The biogenic carbon content of the product (mass of carbon).
           x-pact-unit: kgC/declared unit
@@ -558,8 +573,6 @@ components:
             The value of this property MUST include direct land use change (dLUC) where available, otherwise statistical land use change (sLUC) can be used.
             
             See [=PACT Methodology=] (Appendix B) for details.
-            
-            TODO: The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg of CO2 equivalent per declared unit` (`kgCO2e / declaredUnit`), expressed as a [=decimal=] equal to or greater than zero.
           summary: |
             The emissions from land use change (LUC) activities. Emissions resulting from 
             recent (i.e., previous 20 years) carbon stock loss due to land conversion directly 
@@ -571,8 +584,8 @@ components:
         landManagementGhgEmissions:
           description: |
             If present, GHG emissions and removals associated with land-management-related changes, including non-CO2 sources.
-
-            TODO: The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg of CO2 equivalent per declared unit` (`kgCO2e / declaredUnit`), expressed as a [=decimal=].
+                        
+            Expressed in kgCO2e per declared unit.
           summary: |
             GHG emissions and removals associated with land-management-related changes, 
             including non-CO2 sources.
@@ -581,31 +594,34 @@ components:
         otherBiogenicGhgEmissions:
           description: |
             If present, all other biogenic GHG emissions associated with product manufacturing and transport that are not included in dLUC (<{CarbonFootprint/dLucGhgEmissions}>), iLUC (<{CarbonFootprint/iLucGhgEmissions}>), and land management (<{CarbonFootprint/landManagementGhgEmissions}>).
-
-            TODO: The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg of CO2 equivalent per declared unit` (`kgCO2e / declaredUnit`), expressed as a [=decimal=] equal to or greater than zero.
+            Expressed in kgCO2e per declared unit.
           summary: |
             All other biogenic GHG emissions associated with product manufacturing and transport 
             that are not included in dLUC (dLucGhgEmissions), iLUC (iLucGhgEmissions), and land 
             management (landManagementGhgEmissions). 
+                        
+            Emissions are expressed in kgCO2e per declared unit, equal or greater than zero.
           x-pact-unit: kgCO2e/declared unit
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
         iLucGhgEmissions:
           description: |
             If present, emissions resulting from recent (i.e., previous 20 years) carbon stock loss due to land conversion on land not owned or controlled by the company or in its supply chain, induced by change in demand for products produced or sourced by the company.
             See [=PACT Methodology=] (Appendix B) for details.
-
-            TODO: The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg of CO2 equivalent per declared unit` (`kgCO2e / declaredUnit`), expressed as a [=decimal=] equal to or greater than zero.
+            
+            Emissions are expressed in kgCO2e per declared unit, equal of greater than zero.
           summary: |
             Emissions resulting from recent (i.e., previous 20 years) carbon stock loss due to 
             land conversion on land not owned or controlled by the company or in its supply 
             chain, induced by change in demand for products produced or sourced by the company.
+
+            Emissions are expressed in kgCO2e per declared unit, equal or greater than zero.
           x-pact-unit: kgCO2e/declared unit
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
         biogenicCarbonWithdrawal:
           description: |
             If present, the Biogenic Carbon contained in the product converted to kilogram of CO2e. 
 
-            TODO: The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kgCO2e / declaredUnit` expressed as a [=decimal=] equal to or <i>less than</i> zero.
+            Withdrawals are expressed in kgCO2e per declared unit, equal to or less than zero.
           summary: |
             The Biogenic Carbon contained in the product converted to kilogram of CO2e.
           x-pact-unit: kgCO2e/declared unit
@@ -614,7 +630,7 @@ components:
           description: |
             If present, the GHG emissions resulting from aircraft engine usage for the transport of the product, excluding radiative forcing. 
 
-            TODO: The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg of CO2 equivalent per declared unit` (`kgCO2e / declaredUnit`), expressed as a [=decimal=] equal to or greater than zero.
+            Emissions are expressed in kgCO2e per declared unit, equal or greater than zero.
           summary: |
             The GHG emissions resulting from aircraft engine usage for the transport of the
             product, excluding radiative forcing.
@@ -891,7 +907,7 @@ components:
           description: |
             Emissions resulting from the packaging of the product. If this property is not defined, then packaging emission are not included in the PCF calculation.
 
-            TODO: If present, the value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg of CO2 equivalent per kilogram` (`kgCO2e / declared unit`), expressed as a [=decimal=] equal to or greater than zero.
+            Emissions are expressed in kgCO2e per declared unit, equal or greater than zero.
           summary: |
             Emissions resulting from the packaging of the product. The value is undefined if packaging emissions are not included.
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
