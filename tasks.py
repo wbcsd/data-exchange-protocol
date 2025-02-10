@@ -3,7 +3,9 @@ import glob
 import os
 import sys
 import subprocess
+import logging
 import scripts.openapi
+import scripts.excel
 from scripts.patchup import patchup, parse_bikeshed_file
 from scripts.build import Dependency, fileset
 from invoke import task
@@ -23,6 +25,9 @@ def run(cmd):
     print(cmd)
     os.system(cmd)
 
+# Set up logging
+logging.basicConfig(level=logging.INFO)
+
 # Set up a custom exception handler to print friendly errors to stderr
 def error_handler(exctype, value, traceback):
     print(f"Error: {value}", file=sys.stderr)
@@ -34,6 +39,12 @@ sys.excepthook = error_handler
 # any uncommitted changes.
 def is_repo_pristine(directory = None):
     return subprocess.check_output("git diff --stat", shell=True, cwd=directory).decode(encoding="utf-8") == ""
+
+def build_task(dependencies, task):
+    for dependency in dependencies:
+        if dependency.outdated():
+            dependency.makedir()
+            task(dependency.sources[0], dependency.target)
 
 # Build Bikeshed files, and patch up title and status based on metadata
 def build_bikeshed(dependencies):
@@ -63,13 +74,23 @@ def build(c):
     """ 
     Build the specifcation (all versions) from the source files.
     """
-    deps = [
+    build_task([
         Dependency("spec/v3/data-model.generated.md", ["spec/v3/openapi.yaml"]),
-        Dependency("spec/v2/data-model.generated.md", ["spec/v2/openapi.yaml"])
-    ]
-    for dep in deps:
-        if dep.outdated():
-            scripts.openapi.generate_data_model(dep.sources[0], dep.target)
+        Dependency("spec/v2/data-model.generated.md", ["spec/v2/openapi.yaml"])],
+        scripts.openapi.generate_data_model
+        )
+    build_task([
+        Dependency("build/v2/pact-simplified.xlsx", ["spec/v2/openapi.yaml"]),
+        Dependency("build/v3/pact-simplified.xlsx", ["spec/v3/openapi.yaml"])],
+        lambda source, target: scripts.excel.openapi_to_excel(source, target, "PACT Simplified Data Model", ["ProductFootprint"])
+        )
+    # deps = [
+    #     Dependency("spec/v3/data-model.generated.md", ["spec/v3/openapi.yaml"]),
+    #     Dependency("spec/v2/data-model.generated.md", ["spec/v2/openapi.yaml"])
+    # ]
+    # for dep in deps:
+    #     if dep.outdated():
+    #         scripts.openapi.generate_data_model(dep.sources[0], dep.target)
 
     build_bikeshed([
         Dependency("build/faq/index.html", ["spec/faq/index.bs"]),
