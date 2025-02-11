@@ -292,6 +292,11 @@ components:
             - Updated upstream data (i.e. upstream supplier updated their PCF based on process change)
           
             See [[#lifecycle]] for details.
+          summary:
+            A descriptive reasoning explaining the current status of the PCF, 
+            what was changed since the last version, etc. If the PCF was 
+            changed since a previous version, indicate all methodological and/or 
+            production process change(s) that occurred to result in the PCF change. 
         validityPeriodStart:
           description: |
             TODO: Create a separate paragraph on validity period and reference period
@@ -504,7 +509,7 @@ components:
             The amount of units contained within the product to which the PCF refers to. 
             This is not representing the total annual quantity supplied (e.g. if the product is 
             supplied in bulk in kg, which is the declared unit selected, please enter 1)   
-          x-pact-unit: declared unit       
+          x-unit: declared unit       
           $ref: '#/components/schemas/PositiveNonZeroDecimal'
         productMassPerDeclaredUnit:
           description: |
@@ -529,18 +534,28 @@ components:
             Expressed in kgCO2e per declared unit, equal or greater than zero.
           summary: |
             The PCF of the product excluding biogenic CO2 emissions.
-          x-pact-unit: kgCO2e/declared unit
+          x-unit: kgCO2e/declared unit
+          x-rule: M
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
         pCfIncludingBiogenic:
           description: |
             If present, the product carbon footprint of the product <i>including all</i> 
-            biogenic emissions (CO2 and otherwise). 
-
-            Expressed in kgCO2e per declared unit. Note: this value can be less than zero, 
+            biogenic emissions (CO2 and otherwise). This value can be less than zero, 
             because of Withdrawals or removals.
           summary: |
             The PCF of the product including ALL biogenic emissions (CO2 and otherwise).
-          x-pact-unit: kgCO2e/declared unit
+          x-unit: kgCO2e/declared unit
+          x-rule: M3, M2-2025
+          $ref: '#/components/schemas/Decimal'
+        pCfIncludingBiogenicBeforeCO2Withdrawal:
+          description: |
+            Total Carbon Footprint including biogenic emissions and removals (CO2 and 
+            otherwise) excluding Net Product Biogenic CO2 withdrawal. Note: this value 
+            can be less than zero, because of Withdrawals or removals.
+          summary: |
+            The PCF of the product including ALL biogenic emissions (CO2 and otherwise).
+          x-unit: kgCO2e/declared unit
+          x-rule: M3
           $ref: '#/components/schemas/Decimal'
         fossilGhgEmissions:
           description: |
@@ -551,21 +566,20 @@ components:
           summary: |
             The emissions from fossil sources as a result of fuel combustion, from fugitive 
             emissions, and from process emissions. 
-          x-pact-unit: kgCO2e/declared unit
+          x-unit: kgCO2e/declared unit
+          x-rule: M
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
         fossilCarbonContent:
           description: |
             The fossil carbon content of the product (mass of carbon). 
-          summary: |
-            The fossil carbon content of the product (mass of carbon).
-          x-pact-unit: kgC/declared unit
+          x-unit: kgC/declared unit
+          x-rule: M
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
         biogenicCarbonContent:
           description: |
             The biogenic carbon content of the product (mass of carbon). 
-          summary: |
-            The biogenic carbon content of the product (mass of carbon).
-          x-pact-unit: kgC/declared unit
+          x-unit: kgC/declared unit
+          x-rule: M
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
         dLucGhgEmissions:
           description: |
@@ -579,62 +593,116 @@ components:
             on the area of land under consideration. The value of this property MUST include 
             direct land use change (dLUC) where available, otherwise statistical land use 
             change (sLUC) can be used.
-          x-pact-unit: kgCO2e/declared unit
+          x-unit: kgCO2e/declared unit
+          x-rule: M2-2025
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
-        landManagementGhgEmissions:
+          obsolete: true
+        landUseGhgEmissions:
           description: |
-            If present, GHG emissions and removals associated with land-management-related changes, including non-CO2 sources.
-                        
-            Expressed in kgCO2e per declared unit.
-          summary: |
-            GHG emissions and removals associated with land-management-related changes, 
-            including non-CO2 sources.
-          x-pact-unit: kgCO2e/declared unit
-          $ref: '#/components/schemas/PositiveOrZeroDecimal'
-        otherBiogenicGhgEmissions:
-          description: |
-            If present, all other biogenic GHG emissions associated with product manufacturing and transport that are not included in dLUC (<{CarbonFootprint/dLucGhgEmissions}>), iLUC (<{CarbonFootprint/iLucGhgEmissions}>), and land management (<{CarbonFootprint/landManagementGhgEmissions}>).
-            Expressed in kgCO2e per declared unit.
-          summary: |
-            All other biogenic GHG emissions associated with product manufacturing and transport 
-            that are not included in dLUC (dLucGhgEmissions), iLUC (iLucGhgEmissions), and land 
-            management (landManagementGhgEmissions). 
-                        
-            Emissions are expressed in kgCO2e per declared unit, equal or greater than zero.
-          x-pact-unit: kgCO2e/declared unit
+            GHG emissions from land-use change, such as deforestation or conversion
+            from natural forest to plantation forest, that cause carbon stock loss. 
+          x-unit: kgCO2e/declared unit
+          x-rule: M3, M2-2025
+          x-comment: Replaces dLucGhgEmissions
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
         iLucGhgEmissions:
           description: |
-            If present, emissions resulting from recent (i.e., previous 20 years) carbon stock loss due to land conversion on land not owned or controlled by the company or in its supply chain, induced by change in demand for products produced or sourced by the company.
-            See [=PACT Methodology=] (Appendix B) for details.
-            
-            Emissions are expressed in kgCO2e per declared unit, equal of greater than zero.
-          summary: |
             Emissions resulting from recent (i.e., previous 20 years) carbon stock loss due to 
-            land conversion on land not owned or controlled by the company or in its supply 
+            land conversion on land not owned or controlled by the company or in its supply
             chain, induced by change in demand for products produced or sourced by the company.
 
-            Emissions are expressed in kgCO2e per declared unit, equal or greater than zero.
-          x-pact-unit: kgCO2e/declared unit
+            See [=PACT Methodology=] (Appendix B) for details.
+          x-unit: kgCO2e/declared unit          
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
+          obsolete: true
+        landUseCarbonLeakage:
+          description: |
+            Indirect land use change due to carbon stock losses from conversion of native 
+            ecosystems to agricultural land to replace food production.
+          x-unit: kgCO2e/declared unit
+          x-rule: M3
+          x-comment: Replaces iLucGhgEmissions
+          $ref: '#/components/schemas/PositiveOrZeroDecimal'
+        landManagementBiogenicCO2Emissions:
+          description: |
+            Biogenic CO2 emissions occurring due to recurring land management actions on 
+            land within the same land-use category.
+          x-unit: kgCO2e/declared unit
+          x-rule: M3
+          $ref: '#/components/schemas/PositiveOrZeroDecimal'
+        landManagementBiogenicCO2Removals:
+          description: |
+            CO2 removals resulting from a net increase in carbon stored in land-based carbon 
+            pools (e.g. reforestation and afforestation). Subject to traceability requirements.
+          x-unit: kgCO2e/declared unit
+          x-rule: M3
+          $ref: '#/components/schemas/NegativeOrZeroDecimal'
         biogenicCarbonWithdrawal:
           description: |
-            If present, the Biogenic Carbon contained in the product converted to kilogram of CO2e. 
-
-            Withdrawals are expressed in kgCO2e per declared unit, equal to or less than zero.
-          summary: |
-            The Biogenic Carbon contained in the product converted to kilogram of CO2e.
-          x-pact-unit: kgCO2e/declared unit
+            The biogenic carbon contained in the product. Withdrawals are expressed in
+            kgCO2e per declared unit, equal to or less than zero.
+          x-unit: kgCO2e/declared unit
+          x-rule: M2-2025
           $ref: '#/components/schemas/NegativeOrZeroDecimal'
+          obsolete: true
+        biogenicCO2Withdrawal:
+          description: |
+            Net CO2 uptake of biomass in the product. Withdrawals are expressed in 
+            kgCO2e per declared unit, equal to or less than zero.
+          x-unit: kgCO2e/declared unit
+          x-rule: M3, M2-2025
+          $ref: '#/components/schemas/NegativeOrZeroDecimal'
+          x-comment: Replaces biogenicCarbonWithdrawal
+        otherBiogenicGhgEmissions:
+          description: |
+            All other biogenic GHG emissions associated with product manufacturing and transport 
+            that are not included in dLUC (`dLucGhgEmissions`), iLUC (`iLucGhgEmissions`), and land 
+            management (`landManagementGhgEmissions`). 
+          x-unit: kgCO2e/declared unit
+          x-rule: M2-2025
+          $ref: '#/components/schemas/PositiveOrZeroDecimal'
+          obsolete: true
+        biogenicNonCO2Emissions:
+          description: |
+            Biogenic Non-CO2 emissions (e.g. CH4 & N2O) caused by combustion of biofuels 
+            and composting of biowaste, incl agricultural land management activities such 
+            as manure fertilization and  enteric emissions.
+          x-unit: kgCO2e/declared unit
+          x-rule: M3, M2-2025
+          x-comment: Replaces otherBiogenicGhgEmissions
+          $ref: '#/components/schemas/PositiveOrZeroDecimal'
+        landManagementGhgEmissions:
+          description: |
+            GHG emissions and removals associated with land-management-related changes, 
+            including non-CO2 sources.
+          x-unit: kgCO2e/declared unit
+          x-rule: M2-2025
+          $ref: '#/components/schemas/PositiveOrZeroDecimal'
+          obsolete: true
+        landManagementUnspecifiedGhgEmissions:
+          description:
+            Unspecified GHG emissions related to accommodate for the absence of more granular 
+            data on dLUC and or land management CO2 emissions.
+          x-unit: kgCO2e/declared unit
+          x-rule: M2-2025
+          $ref: '#/components/schemas/PositiveOrZeroDecimal'
+          x-comment: Replaces landManagementGhgEmissions
         aircraftGhgEmissions:
           description: |
-            If present, the GHG emissions resulting from aircraft engine usage for the transport of the product, excluding radiative forcing. 
-
-            Emissions are expressed in kgCO2e per declared unit, equal or greater than zero.
+            If present, the GHG emissions resulting from aircraft engine usage for the transport of the
+          x-unit: kgCO2e/declared unit
+          $ref: '#/components/schemas/PositiveOrZeroDecimal'
+        packagingGhgEmissions:
+          description: |
+            Emissions resulting from the packaging of the product. If this property is not defined, then packaging emission are not included in the PCF calculation.
           summary: |
-            The GHG emissions resulting from aircraft engine usage for the transport of the
-            product, excluding radiative forcing.
-          x-pact-unit: kgCO2e/declared unit
+            Emissions resulting from the packaging of the product. The value is undefined if packaging emissions are not included.
+          $ref: '#/components/schemas/PositiveOrZeroDecimal'
+          x-unit: kgCO2e/declared unit
+        landAreaOccupation:
+          description: |
+            Amount of agricultural land occupied in reporting year to produce product.
+          x-unit: m2/declared unit
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
         ipccCharacterizationFactors:
           description: |
@@ -653,13 +721,13 @@ components:
             global warming potential values for climate gases related to CO2. These GWP 
             values are released in Assessment Reports (AR), which are numbered. 
             
-            The AR number can be used to track the age and accuracy of the GWP values used in 
-            reporting. This field indicates the IPCC version of the GWP characterization 
+            The AR number can be used to track the age and accuracy of the GWP values used
+            in reporting. This field indicates the IPCC version of the GWP characterization 
             factors used in the calculation of the PCF.
 
-            Per the PACT Methodology, the latest available characterization factor version shall 
-            be used, i.e., [""AR6""]. In the event this is not possible, include the set 
-            of all characterization factors used.
+            Per the PACT Methodology, the latest available characterization factor version 
+            shall be used, i.e., [""AR6""]. In the event this is not possible, include the 
+            set of all characterization factors used.
           type: array
           items:
             type: string
@@ -903,15 +971,6 @@ components:
             If emissions exempted, rationale behind exclusion of specific PCF emissions.
           note: optional in 3.0, was mandatory in 2.x
           type: string
-        packagingGhgEmissions:
-          description: |
-            Emissions resulting from the packaging of the product. If this property is not defined, then packaging emission are not included in the PCF calculation.
-
-            Emissions are expressed in kgCO2e per declared unit, equal or greater than zero.
-          summary: |
-            Emissions resulting from the packaging of the product. The value is undefined if packaging emissions are not included.
-          $ref: '#/components/schemas/PositiveOrZeroDecimal'
-          x-pact-unit: kgCO2e/declared unit
         allocationRulesDescription:
           description: |
             If present, a description of any allocation rules applied and the rationale explaining how the selected approach aligns with [=PACT Methodology=] rules (see Section 3.3.1.4).
@@ -1290,19 +1349,23 @@ components:
       type: string
       format: decimal
       pattern: ^[+]?(\d*[1-9]\d*)(\.\d+)?|(0+\.\d*[1-9]\d*)$
+      comment: '> 0'
     PositiveOrZeroDecimal:
       type: string
       format: decimal
       pattern: ^[+]?\d+(\.\d+)?$
-      comment: A positive or zero decimal number.
+      comment: '>= 0'
     NegativeOrZeroDecimal:
       type: string
       format: decimal
       pattern: ^(-\d+(\.\d+)?)|0+(\.0+)?$
+      comment: '<= 0'
     NegativeNonZeroDecimal:
       type: string
       format: decimal
       pattern: ^-((\d*[1-9]\d*)(\.\d+)?|(0+\.\d*[1-9]\d*))$
+      comment: '< 0'
+
 
     # -----------
     # Events

@@ -58,6 +58,10 @@ dfn > code {
 .json-schema-required {
   color: rgba(160,0,0,0.9);
 }
+.json-schema-unit {
+  font-style: italic;
+  font-size: 0.9em;
+}
 .json-schema-enum code {
   background-color: rgba(100,100,100,0.03);
   color: #666;
