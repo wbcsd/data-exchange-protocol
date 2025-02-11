@@ -45,12 +45,11 @@ def is_repo_pristine(directory = None):
 
 # Generate html from markdown
 def render_markdown(input, output):
-    template = """
-<html>
-<head>
-<link href="assets/markdown.css" rel="stylesheet" />
-</head>
-<body>
+    template = """<html>
+    <head>
+    <link href="assets/markdown.css" rel="stylesheet" />
+    </head>
+    <body>
     """
     with open(input, "r") as input_file:
         html = template + markdown.markdown(input_file.read()) + "</body></html>"

@@ -1,10 +1,10 @@
-<img style="width:50%;margin-bottom:30px" src="./assets/logo.svg"/>  
+<img style="width:25%;margin-bottom:30px" src="./assets/logo.svg"/>  
 
 # PACT Technical Specifications
 
-The PACT Network (previously Pathfinder Network) concept is an open data exchange for carbon emissions, developed by the PACT intiative, part of  the World Business Council for Sustainable Development ([WBCSD](wbcsd.org)).
+The PACT Network (previously Pathfinder Network) concept is an open data exchange for carbon emissions, developed by the PACT intiative, part of  the World Business Council for Sustainable Development ([WBCSD](https://wbcsd.org)).
 
-The PACT Technical Specifications describe the PCF data model and PCF exchange API. For calculating the actual  emissions numbers, please refer to the latest PACT Methodology on https://carbon-transparency.org
+The PACT Technical Specifications describe the PCF data model and PCF exchange API. For calculating the actual  emissions numbers, please refer to the latest PACT Methodology on [https://carbon-transparency.org](https://carbon-transparency.org)
 
 All recent versions of the Technical Specifications are published here, including OpenAPI schemas and a Simplified Data Model in Excel format.
 For sources and to contribute, please visit the [WBCSD GitHub repository](https://github.com/wbcsd/data-exchange-protocol)
@@ -12,7 +12,8 @@ For sources and to contribute, please visit the [WBCSD GitHub repository](https:
 ## 3.0.0-pre (work-in-progress)
 [PACT Technical Specifications 3.0.0](v3/index.html) <br>
 [PACT OpenAPI 3.0.0](v3/openapi.yaml) <br>
-[PACT Simplified Data Model 3.0.0 (Excel)](v3/pact-simplified.xlsx)
+[PACT Simplified Data Model 3.0.0 (Excel)](v3/pact-simplified.xlsx) <br>
+[PACT Simplified Data Model 3.0.0 (Excel FOR COLLABORATION)](https://wbcsd.sharepoint.com/:x:/s/ClimateEnergy/EQzZ7GNDG0BLvjmGxtSB0mwBv6cee6Q-F6hRc6FXlaLhWw?e=HF9CUo)
 	
 <!--
 ## 2.3.1-pre (work-in-progress)
