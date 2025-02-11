@@ -85,6 +85,8 @@ def generate_type_description(schema, type_name, type, output):
         output.write("  <th>Description</th>\n")
         output.write("<tbody>\n")
         for name, property in type["properties"].items():
+            if property.get("obsolete"):
+                continue
             output.write("<tr>\n")
             output.write(f"  <td><dfn>{name}</dfn>\n")
             output.write("  <td>\n")
@@ -96,6 +98,11 @@ def generate_type_description(schema, type_name, type, output):
             output.write(property["description"].strip().replace("\n\n\n", "\n\n\n\n"))
             output.write(get_example_text(name, property))
             output.write("\n")
+            if property.get("x-unit"):
+                output.write(f"<div class='json-schema-unit'>{property['x-unit']}")
+                if property.get("comment"):
+                    output.write(f"<br>\n{property['comment']}")
+                output.write("</div>\n")
 
         output.write("</table>\n\n")
     if "allOf" in type:
@@ -165,5 +172,6 @@ def test(input):
     schema = jsonref.replace_refs(schema_unresolved, merge_props=True)
     print("===================\n")
     print(schema["components"]["schemas"]["ProductFootprint"]["properties"]["pcf"])
+    print(schema["components"]["schemas"]["ProductFootprint"]["properties"]["pcf"]["properties"]["pCfExcludingBiogenic"])
     #schema = jsonref.replace_refs(schema_unresolved, merge_props=True)
     #print(json.dumps(schema["components"]["schemas"]["ProductFootprint"], indent=2))
