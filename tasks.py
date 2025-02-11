@@ -1,15 +1,16 @@
 #!/usr/bin/env python3
-import glob
-import logging.config
 import os
 import sys
 import subprocess
 import logging
+import logging.config
+import markdown
 import scripts.openapi
 import scripts.excel
 from scripts.patchup import patchup, parse_bikeshed_file
 from scripts.build import Dependency, fileset
 from invoke import task
+
 
 # Tasks for building the bikeshed documentation and releasing the specification.
 # The tasks are implemented using python Invoke. For setting up your local
@@ -42,11 +43,31 @@ sys.excepthook = error_handler
 def is_repo_pristine(directory = None):
     return subprocess.check_output("git diff --stat", shell=True, cwd=directory).decode(encoding="utf-8") == ""
 
+# Generate html from markdown
+def render_markdown(input, output):
+    template = """
+<html>
+<head>
+<link href="assets/markdown.css" rel="stylesheet" />
+</head>
+<body>
+    """
+    with open(input, "r") as input_file:
+        html = template + markdown.markdown(input_file.read()) + "</body></html>"
+        with open(output, "w") as output_file:
+            output_file.write(html)
+
+# Copy a file
+def copy_file(input, output):
+    run(f"cp {input} {output}")
+
+# Generic build task
 def build_task(dependencies, task):
     for dependency in dependencies:
         if dependency.outdated():
             dependency.makedir()
             task(dependency.sources[0], dependency.target)
+
 
 # Build Bikeshed files, and patch up title and status based on metadata
 def build_bikeshed(dependencies):
@@ -86,17 +107,27 @@ def build(c):
         Dependency("build/v3/pact-simplified.xlsx", ["spec/v3/openapi.yaml"])],
         lambda source, target: scripts.excel.openapi_to_excel(source, target, "PACT Simplified Data Model", ["ProductFootprint"])
         )
-
     build_bikeshed([
         Dependency("build/faq/index.html", ["spec/faq/index.bs"]),
         Dependency("build/v1/index.html", ["spec/v1/index.bs", "spec/v1/examples/*", "LICENSE.md"]),
         Dependency("build/v2/index.html", ["spec/v2/index.bs", "spec/v2/examples/*", "LICENSE.md"]),
         Dependency("build/v3/index.html", ["spec/v3/index.md", "spec/v3/*.md", "spec/v3/examples/*", "LICENSE.md"])
         ])
-
     build_mermaid([
         Dependency(target, [source]) for source,target in fileset("./spec/**/*.mmd", "./build/**/*.svg")
         ])
+    build_task([
+        Dependency("build/index.html", ["index.md"])], 
+        render_markdown
+        )
+    build_task([
+        Dependency("build/assets/logo.svg", ["assets/logo.svg"]), 
+        Dependency("build/assets/markdown.css", ["assets/markdown.css"]), 
+        Dependency("build/v2/openapi.yaml", ["spec/v3/openapi.yaml"]), 
+        Dependency("build/v3/openapi.yaml", ["spec/v3/openapi.yaml"])], 
+        copy_file
+        )
+
 
 @task(help={"ver": "Major version to release, can be v2 or v3"})
 def release(c, ver="v2"):
