@@ -24,7 +24,7 @@ tags:
 servers: 
 - url: https://example.com
 paths:
-  /2/footprints:
+  /3/footprints:
     get:
       summary: Action ListFootprints
       description: >
@@ -54,7 +54,7 @@ paths:
               schema:
                 type: string
                 examples:
-                - "https://api.example.com/2/footprints?[...]"
+                - "https://api.example.com/3/footprints?[...]"
           content:
             application/json:
               schema:
@@ -76,7 +76,7 @@ paths:
           $ref: '#/components/schemas/InternalErrorResponse'
       security:
       - BearerAuth: []
-  /2/footprints/{id}:
+  /3/footprints/{id}:
     get:
       summary: Action GetFootprint
       description: ^
@@ -114,7 +114,7 @@ paths:
           $ref: '#/components/schemas/InternalErrorResponse'
       security:
       - BearerAuth: []
-  /2/events:
+  /3/events:
     post:
       summary: Action Event
       description: >
