@@ -145,6 +145,16 @@ def generate_excel(ws, schema, types):
         
         type_description = get_type_description(info)
         description = info.get("summary") or info.get("description") or "N/A"
+        print(f"Property {name} with description:")
+        paragraphs = description.split("\n")
+        description = ""
+        for paragraph in paragraphs:
+            if paragraph.strip() == "":
+                description += "\n\n"
+            else:
+                description += paragraph.strip() + " "
+        description = description.strip()
+        print(description)
         examples = info.get("examples", []) + ['','','']
         mandatory = name in parent.get("required", [])
         
