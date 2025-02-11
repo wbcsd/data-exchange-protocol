@@ -18,8 +18,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Install Bikeshed
-        run: pip3 install bikeshed && bikeshed update
+      - name: Install Python dependencies
+        run: pip3 install -r requirements.txt
 
       - name: Install Mermaid
         run: npm install -g @mermaid-js/mermaid-cli
