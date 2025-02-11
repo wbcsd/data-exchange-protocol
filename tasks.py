@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import glob
+import logging.config
 import os
 import sys
 import subprocess
@@ -33,6 +34,7 @@ def error_handler(exctype, value, traceback):
     print(f"Error: {value}", file=sys.stderr)
     exit(1)
 
+old_excepthook = sys.excepthook
 sys.excepthook = error_handler
 
 # Check if the git repository is pristine and does not contain
@@ -84,13 +86,6 @@ def build(c):
         Dependency("build/v3/pact-simplified.xlsx", ["spec/v3/openapi.yaml"])],
         lambda source, target: scripts.excel.openapi_to_excel(source, target, "PACT Simplified Data Model", ["ProductFootprint"])
         )
-    # deps = [
-    #     Dependency("spec/v3/data-model.generated.md", ["spec/v3/openapi.yaml"]),
-    #     Dependency("spec/v2/data-model.generated.md", ["spec/v2/openapi.yaml"])
-    # ]
-    # for dep in deps:
-    #     if dep.outdated():
-    #         scripts.openapi.generate_data_model(dep.sources[0], dep.target)
 
     build_bikeshed([
         Dependency("build/faq/index.html", ["spec/faq/index.bs"]),
@@ -126,6 +121,21 @@ def serve(c, ver="v3"):
     print(f"Open your browser at \033[4mhttp://localhost:8000/build/{ver}\033[0m")
     print(f"Press Ctrl+C to stop the server\n")
     run(f"bikeshed --allow-nonlocal-files --no-update serve spec/{ver}/index.bs build/{ver}/index.html")
+
+@task
+def validate(c):
+    """
+    Validate OpenAPI schema
+    """
+    run("openapi-spec-validator spec/v2/openapi.yaml")
+    run("openapi-spec-validator spec/v3/openapi.yaml")
+    # TODO: Add markdownlint and bikeshed validation
+
+@task
+def debug(c):
+    logging.info("Debugging")
+    logging.basicConfig(level=logging.DEBUG)
+    sys.excepthook = old_excepthook
 
 @task
 def experiment(c):
