@@ -9,7 +9,7 @@ In addition, for publishing a release:
   Update the Previous Version and TR links
 -->
 <pre class='metadata'>
-Text Macro: DATE 20250127
+Text Macro: DATE 20250211
 Text Macro: VERSION 3.0.0
 Text Macro: STATUS Draft
 Title: Technical Specifications for PCF Data Exchange
@@ -774,6 +774,31 @@ path: ../../LICENSE.md
 
 
 # Appendix B: Changelog # {#changelog}
+
+## Version 3.0.0-20250211 (Feb 11, 2025) ## {#changelog-3.0.0-20250211}
+
+Summary of changes:
+1. Addition of the following properties on biogenic emissions and withdrawals related to land-use (ADR-45):
+  - `pCfIncludingBiogenicBeforeCO2Withdrawal`
+  - `landUseGhgEmissions`
+  - `landUseCarbonLeakage`
+  - `landManagementBiogenicCO2Removals`
+  - `biogenicCO2Withdrawal`
+  - `otherBiogenicGhgEmissions`
+  - `biogenicNonCO2Emissions`
+  - `landManagementGhgEmissions`
+  - `landManagementUnspecifiedGhgEmissions`
+  - `landAreaOccupation`
+2. Removal of the following properties
+  - `iLucGhgEmissions`
+  - `dLucGhgEmissions`
+  - `landManagementGhgEmissions`
+  - `biogenicCarbonWithdrawal`
+  - `otherBiogenicGhgEmissions`
+3. Properties for clarification of unit of measuremnt and declared unit amount:
+   - `declaredUnitOfMeasurement` replaces `declaredUnit`
+   - `declaredUnitAmount` replaces `unitaryProductAmount`
+   -  added `productMassPerDeclaredUnit`
 
 ## Version 3.0.0-20250207 (Feb 7, 2025) ## {#changelog-3.0.0-20250207}
 
