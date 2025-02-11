@@ -509,7 +509,7 @@ components:
             The amount of Declared Units contained within the product to which the PCF refers to. 
             This is not representing the total annual quantity supplied (e.g. if the product is 
             supplied in bulk in kg, which is the declared unit selected, please enter 1)   
-          x-pact-unit: declared unit       
+          x-unit: declared unit       
           $ref: '#/components/schemas/PositiveNonZeroDecimal'
         productMassPerDeclaredUnit:
           description: |
@@ -529,7 +529,7 @@ components:
             TODO: The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg of CO2 equivalent per declared unit` (`kgCO2e / declaredUnit`), expressed as a [=decimal=] equal to or greater than zero.
           summary: |
             The PCF of the product excluding biogenic CO2 emissions.
-          x-pact-unit: kgCO2e/declared unit
+          x-unit: kgCO2e/declared unit
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
         pCfIncludingBiogenic:
           description: |
@@ -539,7 +539,7 @@ components:
             Note: the value of this property can be less than `0` (zero).
           summary: |
             The PCF of the product including ALL biogenic emissions (CO2 and otherwise).
-          x-pact-unit: kgCO2e/declared unit
+          x-unit: kgCO2e/declared unit
           $ref: '#/components/schemas/Decimal'
         fossilGhgEmissions:
           description: |
@@ -548,7 +548,7 @@ components:
           summary: |
             The emissions from fossil sources as a result of fuel combustion, from fugitive 
             emissions, and from process emissions. 
-          x-pact-unit: kgCO2e/declared unit
+          x-unit: kgCO2e/declared unit
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
         fossilCarbonContent:
           description: |
@@ -556,7 +556,7 @@ components:
             TODO: The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg Carbon per declared unit` (`kgC / declaredUnit`), expressed as a [=decimal=] equal to or greater than zero.
           summary: |
             The fossil carbon content of the product (mass of carbon).
-          x-pact-unit: kgC/declared unit
+          x-unit: kgC/declared unit
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
         biogenicCarbonContent:
           description: |
@@ -564,7 +564,7 @@ components:
             TODO: The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg Carbon per declared unit` (`kgC / declaredUnit`), expressed as a [=decimal=] equal to or greater than zero.
           summary: |
             The biogenic carbon content of the product (mass of carbon).
-          x-pact-unit: kgC/declared unit
+          x-unit: kgC/declared unit
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
         dLucGhgEmissions:
           description: |
@@ -578,7 +578,7 @@ components:
             on the area of land under consideration. The value of this property MUST include 
             direct land use change (dLUC) where available, otherwise statistical land use 
             change (sLUC) can be used.
-          x-pact-unit: kgCO2e/declared unit
+          x-unit: kgCO2e/declared unit
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
         landManagementGhgEmissions:
           description: |
@@ -587,7 +587,7 @@ components:
           summary: |
             GHG emissions and removals associated with land-management-related changes, 
             including non-CO2 sources.
-          x-pact-unit: kgCO2e/declared unit
+          x-unit: kgCO2e/declared unit
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
         otherBiogenicGhgEmissions:
           description: |
@@ -597,7 +597,7 @@ components:
             All other biogenic GHG emissions associated with product manufacturing and transport 
             that are not included in dLUC (dLucGhgEmissions), iLUC (iLucGhgEmissions), and land 
             management (landManagementGhgEmissions). 
-          x-pact-unit: kgCO2e/declared unit
+          x-unit: kgCO2e/declared unit
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
         iLucGhgEmissions:
           description: |
@@ -608,7 +608,7 @@ components:
             Emissions resulting from recent (i.e., previous 20 years) carbon stock loss due to 
             land conversion on land not owned or controlled by the company or in its supply 
             chain, induced by change in demand for products produced or sourced by the company.
-          x-pact-unit: kgCO2e/declared unit
+          x-unit: kgCO2e/declared unit
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
         biogenicCarbonWithdrawal:
           description: |
@@ -616,7 +616,7 @@ components:
             TODO: The value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kgCO2e / declaredUnit` expressed as a [=decimal=] equal to or <i>less than</i> zero.
           summary: |
             The Biogenic Carbon contained in the product converted to kilogram of CO2e.
-          x-pact-unit: kgCO2e/declared unit
+          x-unit: kgCO2e/declared unit
           $ref: '#/components/schemas/NegativeOrZeroDecimal'
         aircraftGhgEmissions:
           description: |
@@ -625,7 +625,7 @@ components:
           summary: |
             The GHG emissions resulting from aircraft engine usage for the transport of the
             product, excluding radiative forcing.
-          x-pact-unit: kgCO2e/declared unit
+          x-unit: kgCO2e/declared unit
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
         characterizationFactors:
           description: |
@@ -963,7 +963,7 @@ components:
             Emissions resulting from the packaging of the product. The value MUST NOT 
             be defined if packagingEmissionsIncluded is False.
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
-          x-pact-unit: kgCO2e/declared unit
+          x-unit: kgCO2e/declared unit
         allocationRulesDescription:
           description: |
             If present, a description of any allocation rules applied and the rationale explaining how the selected approach aligns with [=PACT Methodology=] rules (see Section 3.3.1.4).
