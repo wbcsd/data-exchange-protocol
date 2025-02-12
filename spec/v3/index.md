@@ -779,26 +779,26 @@ path: ../../LICENSE.md
 
 Summary of changes:
 1. Addition of the following properties on biogenic emissions and withdrawals related to land-use (ADR-45):
-  - `pCfIncludingBiogenicBeforeCO2Withdrawal`
-  - `landUseGhgEmissions`
-  - `landUseCarbonLeakage`
-  - `landManagementBiogenicCO2Removals`
-  - `biogenicCO2Withdrawal`
-  - `otherBiogenicGhgEmissions`
-  - `biogenicNonCO2Emissions`
-  - `landManagementGhgEmissions`
-  - `landManagementUnspecifiedGhgEmissions`
-  - `landAreaOccupation`
+    - `pCfIncludingBiogenicBeforeCO2Withdrawal`
+    - `landUseGhgEmissions`
+    - `landUseCarbonLeakage`
+    - `landManagementBiogenicCO2Removals`
+    - `biogenicCO2Withdrawal`
+    - `otherBiogenicGhgEmissions`
+    - `biogenicNonCO2Emissions`
+    - `landManagementGhgEmissions`
+    - `landManagementUnspecifiedGhgEmissions`
+    - `landAreaOccupation`
 2. Removal of the following properties
-  - `iLucGhgEmissions`
-  - `dLucGhgEmissions`
-  - `landManagementGhgEmissions`
-  - `biogenicCarbonWithdrawal`
-  - `otherBiogenicGhgEmissions`
-3. Properties for clarification of unit of measuremnt and declared unit amount:
-   - `declaredUnitOfMeasurement` replaces `declaredUnit`
-   - `declaredUnitAmount` replaces `unitaryProductAmount`
-   -  added `productMassPerDeclaredUnit`
+    - `iLucGhgEmissions`
+    - `dLucGhgEmissions`
+    - `landManagementGhgEmissions`
+    - `biogenicCarbonWithdrawal`
+    - `otherBiogenicGhgEmissions`
+3. Properties for clarification of unit of measuremnt and declared unit amount (ADR-36):
+    - `declaredUnitOfMeasurement` replaces `declaredUnit`
+    - `declaredUnitAmount` replaces `unitaryProductAmount`
+    -  added `productMassPerDeclaredUnit`
 
 ## Version 3.0.0-20250207 (Feb 7, 2025) ## {#changelog-3.0.0-20250207}
 
