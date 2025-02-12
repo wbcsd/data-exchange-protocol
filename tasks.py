@@ -123,6 +123,7 @@ def build(c):
         )
     build_task([
         Dependency("build/assets/logo.svg", ["assets/logo.svg"]), 
+        Dependency("build/assets/logo-dark.svg", ["assets/logo-dark.svg"]), 
         Dependency("build/assets/markdown.css", ["assets/markdown.css"]), 
         Dependency("build/v2/openapi.yaml", ["spec/v3/openapi.yaml"]), 
         Dependency("build/v3/openapi.yaml", ["spec/v3/openapi.yaml"])], 

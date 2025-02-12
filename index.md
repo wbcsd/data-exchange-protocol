@@ -1,4 +1,4 @@
-<img style="width:25%;margin-bottom:30px" src="./assets/logo.svg"/>  
+<div class="logo"></div>
 
 # PACT Technical Specifications
 
