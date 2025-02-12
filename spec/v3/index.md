@@ -758,9 +758,9 @@ Summary of changes:
 2. Removal of `CarbonFootprint/characterizationFactors` deprecated in 2.2 replaced by `CarbonFootprint/ipccCharacterizationFactors`
 3. Removal of `CarbonFootprint/crossSectoralStandardsUsed` deprecated in 2.3 replaced by `CarbonFootprint/crossSectoralStandards`
 4. Property <{ProductFootprint/comment}> now optional (ADR31).
-5. Property {<CarbonFootprint/boundaryProcessesDescription>} now optional (ADR31).
+5. Property <{CarbonFootprint/boundaryProcessesDescription>}> now optional (ADR31).
 6. Property <{CarbonFootprint/exemptedEmissionsDescription}> now optional (ADR31).
-7. Assurance/<{Assurance/providername}> now optional
+7. Assurance <{Assurance/providername}> now optional
 8. Remove `CarbonFootprint/packagingEmissionsIncluded`.
 9. DQR ratings `technologicalDQR`, `temporalDQR`, `geographicalDQR`, `completenessDQR`, `reliabilityDQR` now range between 1 and 5.
 
