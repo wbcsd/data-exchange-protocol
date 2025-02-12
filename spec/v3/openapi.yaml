@@ -266,37 +266,26 @@ components:
           - Active
         validityPeriodStart:
           description: |
-            TODO: Create a separate paragraph on validity period and reference period
-
-            The <dfn>validity period</dfn> is the time interval during which the 
+            The start date of the <dfn>validity period</dfn>: time interval during which the 
             ProductFootprint is declared as valid for use by a receiving [=data recipient=].
+            
+            If no validity period is specified, the ProductFootprint is valid for 3 years after
+            the <{CarbonFootprint/referencePeriodEnd}>
 
-            The validity period is OPTIONAL defined by the properties 
-            <{ProductFootprint/validityPeriodStart}> (including) and 
-            <{ProductFootprint/validityPeriodEnd}> (excluding).
-
-            If no validity period is specified, the ProductFootprint is valid for 
-            3 years starting with <{CarbonFootprint/referencePeriodEnd}>.
-
-            If a validity period is to be specified, then
-              1. the value of <{ProductFootprint/validityPeriodStart}> MUST be defined with value 
-                 greater than or equal to the value of <{CarbonFootprint/referencePeriodEnd}>.
-              2. the value of <{ProductFootprint/validityPeriodEnd}> MUST be defined with value
-
-                 1. strictly greater than <{ProductFootprint/validityPeriodStart}>, and
-                 2. less than or equal to <{CarbonFootprint/referencePeriodEnd}> + 3 years.
-
+            See [#validity-period] for more details.
           summary: |
             The start date and time of the validity period. The period of time between the 
             validityPeriodStart and validityPeriodEnd is defined as the "validity period", 
             and represents the time period during which the PCF is valid. Specifying the 
             validity period is optional. If this is not specified, then it is assumed the 
             PCF is valid for 3 years, beginning with the referencePeriodEnd. 
+
           type: string
           format: date-time
         validityPeriodEnd:
-          description: >
-            The end date and time of the validity period. See validityPeriodStart for more details.
+          description: |
+            The end date and time of the validity period. After this date the ProductFootprint
+            is not valid for use anymore. See [#validity-period] for more details.
           type: string
           format: date-time
         companyName:
