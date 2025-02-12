@@ -704,6 +704,10 @@ components:
             The amount of captured carbon (both biogenic and fossil) during CCU (Carbon Capture & Usage) in the production.
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
           x-unit: kgC/declared unit
+        ccuOrigin:
+          description: |
+            Information about the origin (fossil or biogenic) and path of the captured CO2 used in CCU, including the name and location of the capture facility. This information enhances transparency and traceability, enabling tracking of CO2 across the value chain.        
+          type: string
         ccuCalculationApproach:
           description: |
             The calculation approach for CCU: "Cut-off" or "Credit." See [=PACT Methodology=] for details.
