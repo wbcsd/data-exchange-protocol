@@ -139,6 +139,9 @@ The license can be found in [[#license]].
 : <dfn>Solution Provider</dfn>
 :: An entity providing technical solutions to companies by implementing and offering [=host systems=].
 
+: <dfn>Solution</dfn>
+:: Any PACT-conformant software host system is called a solution.
+
 : <dfn>UN geographic region</dfn>, <dfn>UN geographic subregion</dfn>
 :: See [https://unstats.un.org/unsd/methodology/m49/](https://unstats.un.org/unsd/methodology/m49/) for details.
 

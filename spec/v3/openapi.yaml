@@ -199,7 +199,7 @@ components:
         id:
           description: >
             A unique identifier that a system uses to refer to the entire dataset of the PCF. 
-            This is typically an automatically-generated number by the technology  solution to maintain 
+            This is typically an automatically-generated number by the solution to maintain 
             the required technical references to data within the system. 
           $ref: '#/components/schemas/UUID'
           examples:
@@ -217,7 +217,7 @@ components:
             A given PCF may change over time, due to updates to the calculation. 
             This field lists all id's that reflect "past versions" of the current PCF. 
             This is typically an automatically generated field of unique identifiers, 
-            maintained by the technology solution.
+            maintained by the solution.
 
             See [[#lifecycle]] for details.
           type: array
@@ -242,7 +242,7 @@ components:
         created:
           description: |
             The date and time when the PCF was created. This is typically an automatically 
-            generated field by the software solution.
+            generated field by the solution.
           type: string
           format: date-time
           examples:
