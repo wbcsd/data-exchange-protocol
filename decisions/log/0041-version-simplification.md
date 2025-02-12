@@ -36,6 +36,7 @@ The old PCF MUST have its `status` set to `Deprecated`.
 If a PCF becomes obsolete without being replaced, the `status` property of the PCF needs to be set to `Deprecated`.
 
 ### Properties to be become obsolete
+The `statusComment` property is now obsolete as, and has been been removed from 3.0.
 Starting PACT 4.x the properties `version` and `updated` will be made obsolete, anticipating a situation where no 2.x versions will be communicating with 4.x.
 
 

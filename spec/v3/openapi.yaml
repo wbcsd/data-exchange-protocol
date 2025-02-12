@@ -200,10 +200,8 @@ components:
           description: >
             A unique identifier that a system uses to refer to the entire dataset of the PCF. 
             This is typically an automatically-generated number by the technology  solution to maintain 
-            the required technical references to data within the system.
-            UUID v4 [RFC4122](https://tools.ietf.org/html/rfc4122).
-          type: string
-          format: uuid
+            the required technical references to data within the system. 
+          $ref: '#/components/schemas/UUID'
           examples:
           - "f4b1225a-bd44-4c8e-861d-079e4e1dfd69"
         specVersion:
@@ -230,17 +228,16 @@ components:
           - ["f4b1225a-bd44-4c8e-861d-079e4e1dfd69", 
              "079e425a-464f-528d-341d-4a944a1dfd70"]
         version:
-          description: >
-            The version number of the PCF; if changes are made to the PCF, 
-            this version number will increment.
+          description: |
+            OBSOLETE: the version number of the PCF. Starting 3.0, any change to a
+            PCF will generate a new ID, so this field is no longer needed.
+            MUST be 1.
+          note: Obsolete in 3.0
           type: integer
           format: int32
           minimum: 0
-          examples:
-          - 1
-          - 3303
         created:
-          description: >
+          description: |
             The date and time when the PCF was created. This is typically an automatically 
             generated field by the software solution.
           type: string
@@ -248,14 +245,13 @@ components:
           examples:
           - '2024-10-31T00:00:00Z'
         updated:
-          description: >
-            The date and time when the PCF was last updated. This is typically an automatically 
-            generated field by the software solution. If the data has never been updated, 
-            do not include this property.
+          description: |
+            OBSOLETE: the date and time when the PCF was last updated. Starting 3.0 
+            any change to a PCF will generate a new ProductFootprint, which is immutable.
           type: string
           format: date-time
         status:
-          description: >
+          description: |
             The status of the PCF. `Active` means that the PCF is the most recent version 
             and is the one that can be used CAN be used by a data recipients, e.g. for product 
             footprint calculations. `Deprecated` means that the PCF is no longer 
@@ -268,35 +264,6 @@ components:
             - Deprecated
           examples: 
           - Active
-        statusComment:
-          type: string
-          description: |
-            TODO: Move this description to #lifecycle
-
-            If defined, a descriptive reasoning explaining the current status of 
-            the PCF, what was changed since the last version, etc. If the PCF was 
-            changed since a previous version, indicate all methodological and/or 
-            production process change(s) that occurred to result in the PCF change. 
-            For example, include the relevant change(s) from the list below:
-
-            Methodological:
-            - Access to new Emission Factor data (database, supplier-specific, company-specific)
-            - Updated upstream data (i.e. upstream supplier updated their PCF based on methodology change)
-
-            Production Process:
-            - Change in process
-            - Change in feedstock
-            - Change from conventional to certified sustainable material
-            - Change in energy source
-            - Change in upstream supplier
-            - Updated upstream data (i.e. upstream supplier updated their PCF based on process change)
-          
-            See [[#lifecycle]] for details.
-          summary:
-            A descriptive reasoning explaining the current status of the PCF, 
-            what was changed since the last version, etc. If the PCF was 
-            changed since a previous version, indicate all methodological and/or 
-            production process change(s) that occurred to result in the PCF change. 
         validityPeriodStart:
           description: |
             TODO: Create a separate paragraph on validity period and reference period
@@ -1338,6 +1305,7 @@ components:
     UUID:
       type: string
       format: uuid
+      comment: '[RFC4122](https://tools.ietf.org/html/rfc4122)'
     Urn:
       type: string
       pattern: '^([uU][rR][nN]):'
