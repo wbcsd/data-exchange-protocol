@@ -75,6 +75,7 @@ dfn > code {
   display: inline-block;
 }
 </style>
+<link href="assets/markdown.css" rel="stylesheet" />
 """
 
 # Patch the already generated html file with adapted title and status.

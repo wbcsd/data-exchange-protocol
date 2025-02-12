@@ -2,6 +2,25 @@
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
+@media (prefers-color-scheme: dark) {
+	:root {
+	  --body-bg: black;
+	  --body-color: white;
+	  --link-color: #58a7f9;
+	}
+  }
+@media (prefers-color-scheme: light) {
+	:root {
+		--body-bg: white;
+		--body-color: black;
+		--link-color: #1d5cb5;
+	}
+}
+
+:root {
+	background-color: var(--body-bg);
+	color: var(--body-color)
+}
 
 html, body {
 	font-family: var(--markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", system-ui, "Ubuntu", "Droid Sans", sans-serif);
@@ -28,78 +47,6 @@ h1, h2, h3, h4, h5, h6 {
 	line-height: 1.25;
 }
 
-#code-csp-warning {
-	position: fixed;
-	top: 0;
-	right: 0;
-	color: white;
-	margin: 16px;
-	text-align: center;
-	font-size: 12px;
-	font-family: sans-serif;
-	background-color:#444444;
-	cursor: pointer;
-	padding: 6px;
-	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
-}
-
-#code-csp-warning:hover {
-	text-decoration: none;
-	background-color:#007acc;
-	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
-}
-
-body.scrollBeyondLastLine {
-	margin-bottom: calc(100vh - 22px);
-}
-
-body.showEditorSelection .code-line {
-	position: relative;
-}
-
-body.showEditorSelection :not(tr,ul,ol).code-active-line:before,
-body.showEditorSelection :not(tr,ul,ol).code-line:hover:before {
-	content: "";
-	display: block;
-	position: absolute;
-	top: 0;
-	left: -12px;
-	height: 100%;
-}
-
-.vscode-high-contrast.showEditorSelection  :not(tr,ul,ol).code-line .code-line:hover:before {
-	border-left: none;
-}
-
-body.showEditorSelection li.code-active-line:before,
-body.showEditorSelection li.code-line:hover:before {
-	left: -30px;
-}
-
-.vscode-light.showEditorSelection .code-active-line:before {
-	border-left: 3px solid rgba(0, 0, 0, 0.15);
-}
-
-.vscode-light.showEditorSelection .code-line:hover:before {
-	border-left: 3px solid rgba(0, 0, 0, 0.40);
-}
-
-.vscode-dark.showEditorSelection .code-active-line:before {
-	border-left: 3px solid rgba(255, 255, 255, 0.4);
-}
-
-.vscode-dark.showEditorSelection .code-line:hover:before {
-	border-left: 3px solid rgba(255, 255, 255, 0.60);
-}
-
-.vscode-high-contrast.showEditorSelection .code-active-line:before {
-	border-left: 3px solid rgba(255, 160, 0, 0.7);
-}
-
-.vscode-high-contrast.showEditorSelection .code-line:hover:before {
-	border-left: 3px solid rgba(255, 160, 0, 1);
-}
-
 /* Prevent `sub` and `sup` elements from affecting line height */
 sub,
 sup {
@@ -120,6 +67,7 @@ img, video {
 
 a {
 	text-decoration: none;
+	color: var(--link-color)
 }
 
 a:hover {
@@ -233,37 +181,4 @@ pre code {
 	color: var(--vscode-editor-foreground);
 	tab-size: 4;
 	background: none;
-}
-
-/** Theming */
-
-pre {
-	background-color: var(--vscode-textCodeBlock-background);
-	border: 1px solid var(--vscode-widget-border);
-}
-
-.vscode-high-contrast h1 {
-	border-color: rgb(0, 0, 0);
-}
-
-.vscode-light th {
-	border-color: rgba(0, 0, 0, 0.69);
-}
-
-.vscode-dark th {
-	border-color: rgba(255, 255, 255, 0.69);
-}
-
-.vscode-light h1,
-.vscode-light h2,
-.vscode-light hr,
-.vscode-light td {
-	border-color: rgba(0, 0, 0, 0.18);
-}
-
-.vscode-dark h1,
-.vscode-dark h2,
-.vscode-dark hr,
-.vscode-dark td {
-	border-color: rgba(255, 255, 255, 0.18);
 }
