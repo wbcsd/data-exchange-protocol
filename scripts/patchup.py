@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import datetime
 import sys
 import re
 
@@ -14,7 +15,7 @@ import re
 #
 #   Text Macro: DATE 20241021
 #   Text Macro: VERSION 2.3.0
-#   Text Macro: STATUS Release|Consultation|Draft
+#   Text Macro: STATUS LD|Draft|Release
 #
 
 # Parse the bikeshed file to extract the title, date, version and status.
@@ -84,7 +85,10 @@ def update_html_file(html_file, title, status):
         content = file.read()  
     content = re.sub(r'(<title>).*(</title>)', r'\1' + title + r'\2', content, count=1)
     content = re.sub(r'(<h1 .*>).*(</h1>)', r'\1' + title + r'\2', content, count=1)
-    content = re.sub(r'(<h2 .* id="profile-and-date">).*(</h2>)', r'\1' + status + r'\2', content, count=1)
+    subtitle = status
+    if status == "LD":
+        subtitle = "Living Document" 
+    content = re.sub(r'(<h2 .* id="profile-and-date">).*(</h2>)', r'\1' + subtitle + r'\2', content, count=1)
     # Patch some CSS as well. 
     content = re.sub(r'^\s*<body', CUSTOM_CSS + '<body', content, count=1, flags=re.MULTILINE)
     with open(html_file, 'w') as file:
@@ -96,10 +100,15 @@ def patchup(input, output):
     if title is None:
         raise "Title not found"
     
+    today = datetime.datetime.now().strftime('%Y%m%d')
     if status == "Release":
         title += f" (Version {version})"
+    elif status in ["LD"]:
+        # override with date of today
+        title += f" ({version}-{today})"
     elif status in ["Draft", "Consultation"]:
-        title += f" (Version {version}-{date})"
+        # todo: check and warn if date != today
+        title += f" ({version}-{date})"
     else:
         print("Unknown status")
         return

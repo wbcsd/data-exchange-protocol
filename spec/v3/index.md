@@ -2,7 +2,7 @@
 Before publishing, make sure to: 
  - Add an entry to Changelog
  - Update the DATE below
- - STATUS can be Draft|Consultation|Release
+ - STATUS can be LD|Draft|Consultation|Release
 In addition, for publishing a release:
   Set STATUS Release
   Update VERSION major.minor.patch
@@ -11,7 +11,7 @@ In addition, for publishing a release:
 <pre class='metadata'>
 Text Macro: DATE 20250212
 Text Macro: VERSION 3.0.0
-Text Macro: STATUS Draft
+Text Macro: STATUS LD
 Title: Technical Specifications for PCF Data Exchange
 TR: https://wbcsd.github.io/tr/2024/data-exchange-protocol-20241024/
 Previous Version: https://wbcsd.github.io/tr/2024/data-exchange-protocol-20240410/
