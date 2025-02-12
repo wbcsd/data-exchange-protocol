@@ -9,7 +9,7 @@ In addition, for publishing a release:
   Update the Previous Version and TR links
 -->
 <pre class='metadata'>
-Text Macro: DATE 20250211
+Text Macro: DATE 20250212
 Text Macro: VERSION 3.0.0
 Text Macro: STATUS Draft
 Title: Technical Specifications for PCF Data Exchange
@@ -724,6 +724,14 @@ path: ../../LICENSE.md
 
 
 # Appendix B: Changelog # {#changelog}
+
+## Version 3.0.0-20250212 (Feb 12, 2025) ## {#changelog-3.0.0-20250212}
+
+Summary of changes:
+1. Simplified version (ADR-41) included in [[#lifecycle]]. 
+2. Deprecation of `ProductFootprint.version` and `ProductFootprint.updated` properties.
+3. Removed `ProductFootprint.statusComment` property.
+4. Added paragraph on [[#validity-period]] to [[#lifecycle]]
 
 ## Version 3.0.0-20250211 (Feb 11, 2025) ## {#changelog-3.0.0-20250211}
 

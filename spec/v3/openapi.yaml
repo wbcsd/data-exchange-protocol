@@ -218,6 +218,8 @@ components:
             This field lists all id's that reflect "past versions" of the current PCF. 
             This is typically an automatically generated field of unique identifiers, 
             maintained by the technology solution.
+
+            See [[#lifecycle]] for details.
           type: array
           items:
             type: string
@@ -231,7 +233,8 @@ components:
           description: |
             OBSOLETE: the version number of the PCF. Starting 3.0, any change to a
             PCF will generate a new ID, so this field is no longer needed.
-            MUST be 1.
+
+            MUST be 1. See [[#lifecycle]] for details.
           note: Obsolete in 3.0
           type: integer
           format: int32
@@ -248,6 +251,8 @@ components:
           description: |
             OBSOLETE: the date and time when the PCF was last updated. Starting 3.0 
             any change to a PCF will generate a new ProductFootprint, which is immutable.
+            
+            See [[#lifecycle]] for details.
           type: string
           format: date-time
         status:
@@ -272,7 +277,7 @@ components:
             If no validity period is specified, the ProductFootprint is valid for 3 years after
             the <{CarbonFootprint/referencePeriodEnd}>
 
-            See [#validity-period] for more details.
+            See [[#validity-period]] for more details.
           summary: |
             The start date and time of the validity period. The period of time between the 
             validityPeriodStart and validityPeriodEnd is defined as the "validity period", 
@@ -285,7 +290,7 @@ components:
         validityPeriodEnd:
           description: |
             The end date and time of the validity period. After this date the ProductFootprint
-            is not valid for use anymore. See [#validity-period] for more details.
+            is not valid for use anymore. See [[#validity-period]] for more details.
           type: string
           format: date-time
         companyName:
