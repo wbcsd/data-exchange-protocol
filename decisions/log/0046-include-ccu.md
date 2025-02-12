@@ -51,8 +51,8 @@ The following table outlines the proposed new and modified attributes to be inco
 
 | Attribute | Description | Unit of Measurement |
 | --- | --- | --- |
-| `ccuCalculationApproach` | Indicates the chosen calculation approach for CCU: "Cut-off" or "Credit." This aligns with the two accounting methods presented in the proposal. | N/A |
-| `ccuCarbonContent` | Represents the amount of captured carbon (both biogenic and fossil) in the product. | kg C |
+| `ccuCarbonContent` | The amount of captured carbon (both biogenic and fossil) in the product. | kg C |
+| `ccuCalculationApproach` | The calculation approach for CCU: "Cut-off" or "Credit." This aligns with the two accounting methods presented in the proposal. | N/A |
 | `ccuCreditCertification` | (Only for Credit Approach) a URL to documentation verifying the certification from an external bookkeeping scheme. This attribute ensures the reliability and avoids double counting of credits within the crediting system. | N/A |
 
 ### Considerations
