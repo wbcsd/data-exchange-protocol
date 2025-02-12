@@ -62,6 +62,8 @@ def get_example_text(name, property):
     
     return text
 
+def sanitize(text):
+    return text.replace("<", "&lt;").replace(">", "&gt;")
 
 def generate_type_description(schema, type_name, type, output):
     title = type.get("title") or type_name
@@ -101,7 +103,7 @@ def generate_type_description(schema, type_name, type, output):
             if property.get("x-unit"):
                 output.write(f"<div class='json-schema-unit'>{property['x-unit']}")
                 if property.get("comment"):
-                    output.write(f"<br>\n{property['comment']}")
+                    output.write(f"<br>\n{sanitize(property['comment'])}")
                 output.write("</div>\n")
 
         output.write("</table>\n\n")
