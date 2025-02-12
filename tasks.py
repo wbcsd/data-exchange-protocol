@@ -90,6 +90,8 @@ def clean(c):
     Clean the build directory
     """
     c.run("rm -rf ./build")    
+    c.run("rm -f ./spec/v2/data-model.generated.md")
+    c.run("rm -f ./spec/v3/data-model.generated.md")
 
 @task
 def build(c):
