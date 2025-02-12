@@ -2,20 +2,22 @@
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
+ @media (prefers-color-scheme: light) {
+	:root {
+		--body-bg: white;
+		--body-color: black;
+		--link-color: #1d5cb5;
+		--logo-url: url(logo.svg);
+	}
+}
 @media (prefers-color-scheme: dark) {
 	:root {
 	  --body-bg: black;
 	  --body-color: white;
 	  --link-color: #58a7f9;
+	  --logo-url: url(logo-dark.svg);
 	}
   }
-@media (prefers-color-scheme: light) {
-	:root {
-		--body-bg: white;
-		--body-color: black;
-		--link-color: #1d5cb5;
-	}
-}
 
 :root {
 	background-color: var(--body-bg);
@@ -28,6 +30,13 @@ html, body {
 	padding: 0 26px;
 	line-height: var(--markdown-line-height, 22px);
 	word-wrap: break-word;
+}
+
+.logo {
+	background-image: var(--logo-url);
+	background-repeat: no-repeat;
+	background-size: 296px;
+	padding-top: 150px;
 }
 
 body {
