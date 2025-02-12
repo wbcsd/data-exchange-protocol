@@ -293,7 +293,7 @@ If a PCF becomes obsolete without being replaced, the `status` property of the P
 ### Properties to Become Obsolete
 
 Starting version 3.0, the `statusComment` is now obsolete and has been removed from the <{ProductFootprint}>.
-Starting with PACT 4.x, the properties `version` and `updated` will be removed.
+In future versions the deprecated properties `version` and `updated` will be removed.
 
 ### Implementation Guidelines
 
@@ -301,25 +301,24 @@ Starting with PACT 4.x, the properties `version` and `updated` will be removed.
 
 2. Version 3.x MAY choose NOT to store `version` and `updated` properties. In that case, any incoming minor change will be accepted if `incoming.updated` is later than `existing.created`. The PCF will be stored, making sure the `created` date/time is set to the incoming `updated` date/time.
 
-## Validity period of Footprints ## {#validity-period}
+## Validity Period ## {#validity-period}
 
 The <dfn>validity period</dfn> is the time interval during which the 
-ProductFootprint is declared as valid for use by a receiving [=data recipient=].
+ProductFootprint is declared as valid for use by a receiving [=data recipient=]. 
 
-The validity period is OPTIONAL defined by the properties 
-<{ProductFootprint/validityPeriodStart}> (including) and 
-<{ProductFootprint/validityPeriodEnd}> (excluding).
+The validity period is OPTIONAL defined by the properties <{ProductFootprint/validityPeriodStart}> (including) and <{ProductFootprint/validityPeriodEnd}> (excluding).
 
-If no validity period is specified, the ProductFootprint is valid for 
-3 years starting with <{CarbonFootprint/referencePeriodEnd}>.
+If a validity period is specified, it is restricted to a time window between <{CarbonFootprint/referencePeriodEnd}> and <{CarbonFootprint/referencePeriodEnd}> + 3 years:
 
-If a validity period is to be specified, then
+  - If specified, <{ProductFootprint/validityPeriodStart}> MUST be greater than or equal to  <{CarbonFootprint/referencePeriodEnd}>.
 
-1. the value of <{ProductFootprint/validityPeriodStart}> MUST be defined with value 
-    greater than or equal to the value of <{CarbonFootprint/referencePeriodEnd}>.
-2. the value of <{ProductFootprint/validityPeriodEnd}> MUST be defined with value
-    1. strictly greater than <{ProductFootprint/validityPeriodStart}>, and
-    2. less than or equal to <{CarbonFootprint/referencePeriodEnd}> + 3 years.
+  - If <{ProductFootprint/validityPeriodEnd}> is specified it MUST be less than or equal to {CarbonFootprint/referencePeriodEnd}> + 3 years.
+
+
+If *no validity period* is specified, the ProductFootprint is valid for 
+**3 years** starting with <{CarbonFootprint/referencePeriodEnd}>.
+
+
 
 
 
