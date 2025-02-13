@@ -943,14 +943,11 @@ components:
           summary: |
             Data Quality Indicators (dqi) in accordance with the PACT Methodology. 
           $ref: '#/components/schemas/DataQualityIndicators'
-        assurance:
+        verification:
           description: |
-            The presence of the <{Assurance}> object indicates whether or not the <{CarbonFootprint}> has
-            been assured in line with [=PACT Methodology=] requirements (section 5)
-          summary: |
-            The presence of the <{Assurance}> object indicates whether or not the <{CarbonFootprint}> has
-            been assured in line with [=PACT Methodology=] requirements (section 5)
-          $ref: '#/components/schemas/Assurance'
+            The presence of the <{Verification}> object indicates whether or not the <{CarbonFootprint}> has
+            been verified in line with [=PACT Methodology=] requirements
+          $ref: '#/components/schemas/Verification'
 
     DataModelExtension:
       title: DataModelExtension
@@ -1167,18 +1164,16 @@ components:
           note: string<decimal> in 3.0, was Number in 2.x
           $ref: '#/components/schemas/Decimal'
 
-    Assurance:
-      title: Assurance
+    Verification:
+      title: Verification
       description: |
-        Data type `Assurance` contains the assurance in conformance with [=PACT Methodology=] chapter 5 and appendix B.
-      note: the boolean property `assurance` has been removed in 3.0. 
+        Data type `Verification` contains the verification in conformance with [=PACT Methodology=] chapter 5 and appendix B.
+      note: Renamed from 'Assurance' in 3.0
       example: |
         Example value for the case that 42% of the product’s overall GHG emissions covered by the data quality assessment:
         ```json 
         {
-          "assurance": true,
           "coverage": "PCF system",
-          "level": "limited"
           "boundary": "Cradle-to-Gate"
           "providerName": "My Auditor",
           "completedAt": "2022-12-08T14:47:32Z"
@@ -1195,18 +1190,18 @@ components:
             - `PCF system` for PCF System
             - `product level` for product level
 
-            This property MAY be undefined only if the kind of assurance was not performed.
+            This property MAY be undefined only if the kind of verification was not performed.
           summary: |
             Level of granularity of the emissions data assured
           type: string
+          note: changed from v2.x
           enum:
-            - corporate level
-            - product line
-            - PCF system
+            - PCF calculation model
+            - PCF program
             - product level
         level:
           description: |
-            Level of assurance applicable to the PCF, with value equal to
+            Level of verification applicable to the PCF, with value equal to
             - `limited` for limited assurance
             - `reasonable` for reasonable assurance
 
@@ -1220,13 +1215,11 @@ components:
           obsolete: true
         boundary:
           description: |
-            Boundary of the assurance, with value equal to
+            Boundary of the verification, with value equal to
               - `Gate-to-Gate` for Gate-to-Gate
               - `Cradle-to-Gate` for Cradle-to-Gate.
-
-            This property MAY be undefined only if the kind of assurance was not performed.
           summary: |
-            Boundary of the assurance
+            Boundary of the verification
           type: string
           enum:
             - Gate-to-Gate
@@ -1234,14 +1227,12 @@ components:
           obsolete: true
         providerName:
           description: |
-            The non-empty name of the independent third party engaged to undertake the assurance.
+            The non-empty name of the independent third party engaged to undertake the verification.
           note: optional in version 3.0 was mandatory in 2.x
-          summary: |
-            Name of the independent third party engaged to undertake assurance
           type: string
         completedAt:
           description: |
-            The date at which the assurance was completed
+            The date at which the verification was completed
           type: string
           format: date-time
         standardName:
@@ -1250,7 +1241,7 @@ components:
           type: string
         comments:
           description: |
-            Any additional comments that will clarify the interpretation of the assurance.
+            Any additional comments that will clarify the interpretation of the verification.
           type: string
 
     # -----------
