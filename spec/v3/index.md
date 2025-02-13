@@ -369,7 +369,6 @@ In determining which URN namespace and corresponding syntax to use, the data own
 
     The following `$identifier-type$` values are recommended.
 
-    <figure id="pdf-product-id-urn-entities">
     <table class="data">
     <thead>
       <tr>
@@ -390,99 +389,78 @@ In determining which URN namespace and corresponding syntax to use, the data own
         <td> Specifies a product id created by the supplier, aka [=data owner=].
         <td>This is the equivalent of "vendor-assigned" as referenced in Tech Specs V2.
     </table>
-    </figure>
 
     This is a non-exhaustive list of `$identifier-type$`. This set MAY be extended in minor versions of the standard release. Organizations may contact PACT to propose additional `$identifier-type$` for consideration to be added as recommended industry-agnostic identifiers. 
 
     Organizations and industry initiatives are encouraged to define the relevant `$identifier-type$` for products within their industry separately. 
 
-## Examples of Product Identifiers ## {#product-identifier-examples}
+### Examples
 
 Below is a list of examples of <{ProductFootprint/productIds}> as used in the <{ProductFootprint}> data type clarifying the use of well-known and custom URN namespaces for identifying products. 
 
-<figure id="product-id-examples">
 <table class="data">
 <thead>
-  <tr>
-    <td>Product ID type
-    <td>Example
+<tr>
+  <td>Product ID type
+  <td>Example
 <tbody>
-  <tr>
-    <td>
-    Company-specific
-    
-    Identifiers using the `pact` namespace, created by a given company for the purposes of uniquely identifying their products
+<tr>
+  <td>
+  Company-specific
+  
+  <td>
+  Identifiers using the `pact` namespace, created by a given company for the purposes of uniquely identifying their products
 
-    <td><div class=example>
-    ```json
-    ["urn:pact:sample.com:product-id:44055-9c05bc35-68f8"]
-    ```</div>
-    <div class=example>
-    ```json
-    ["urn:pact:sample-buyer.com:buyer-id:103403453"]
-    ```</div>
-    <div class=example>
-    ```json
-    ["urn:pact:sample-supplier.com:supplier-id:1234"]
-    ```</div>
-  <tr>
-    <td>ISBN
+  ```json
+  ["urn:pact:sample.com:product-id:44055-9c05bc35-68f8"]
+  ["urn:pact:sample-buyer.com:buyer-id:103403453"]
+  ["urn:pact:sample-supplier.com:supplier-id:1234"]
+  ```
+<tr>
+  <td>ISBN
 
-    Well known ISBN standard, see [iana.org](https://www.iana.org/assignments/urn-formal/isbn)
-    <td><div class=example>
-    ```json
-    ["urn:isbn:978-951-0-18435-6"]
-    ```</div>
-  <tr>
-    <td>GTIN (widely used)
+  <td>
+  Well known ISBN standard, see [iana.org](https://www.iana.org/assignments/urn-formal/isbn)
 
-    GTIN is not an official IANA registered namespace, however in practice it is used to specify GTINs as a URN. See [gs1.org](https://www.gs1.org/standards/id-keys/gtin)
-    <td><div class=example>
-    ```json
-    ["urn:gtin:4712345060507"]
-    ```</div>
-  <tr>
-    <td>UUID
+  ```json
+  ["urn:isbn:978-951-0-18435-6"]
+  ```
+<tr>
+  <td>GTIN (widely used)
 
-    Globally Unique Identifiers. See [[RFC9562]]
-    <td><div class=example>
-    ```json
-    ["urn:uuid:69585GB6-56T9-6958-E526-6FDGZJHU1326"]
-    ```</div>
-  <tr>
-    <td>CAS Registry Number
+  <td>
+  GTIN is not an official IANA registered namespace, however in practice it is used to specify GTINs as a URN. See [gs1.org](https://www.gs1.org/standards/id-keys/gtin)
 
-    Unique identification number assigned to every chemical substance described in the open scientific literature See [cas.org](https://www.cas.org/cas-data/cas-registry)
-    <td><div class=example>
-    ```json
-    ["urn:pact:cas.org:substance-number:13463-67-7"]
-    ```</div>
-  <tr>
-    <td>InChI (International Chemical Identifier)
+  ```json
+  ["urn:gtin:4712345060507"]
+  ```
+<tr>
+  <td>UUID
 
-    InChI is a standard identifier for chemical databases that facilitates effective information management across chemistry. See [inchi-trust.org](https://www.inchi-trust.org/)
-    <td><div class=example>
-    ```json
-    ["urn:pact:inchi-trust.org:substance-id:$INCHI-ID$"]
-    ```</div>
-  <tr>
-    <td>Combined example of a substance
+  <td>
+  Globally Unique Identifiers. See [[RFC9562]]
 
-    Combined example of a substance (Titan Dioxide of supplier Sigmaaldrich)
-    <td><div class=example>
-    ```json
-    ["urn:pact:sigmaaldrich.com:supplier-id:14021",
-    "urn:pact:cas.org:substance-number:13463-67-7",
-    "urn:pact:iupac.org:substance-name:dioxotitanium",
-    "urn:pact:inchi-trust.org:substance-id:1S,/2O.Ti",
-    "urn:pact:inchi-trust.org:substance-key:
-    GWEVSGVZZGPLCZ-UHFFFAOYSA-N"]
-    ```</div>
+  ```json
+  ["urn:uuid:69585GB6-56T9-6958-E526-6FDGZJHU1326"]
+  ```
+<tr>
+  <td>Combined
+
+  <td>
+  Combined example of a substance (Titan Dioxide of supplier Sigmaaldrich)
+
+  ```json
+  ["urn:pact:sigmaaldrich.com:supplier-id:14021",
+  "urn:pact:cas.org:substance-number:13463-67-7",
+  "urn:pact:iupac.org:substance-name:dioxotitanium",
+  "urn:pact:inchi-trust.org:substance-id:1S,/2O.Ti",
+  "urn:pact:inchi-trust.org:substance-key:
+  GWEVSGVZZGPLCZ-UHFFFAOYSA-N"]
+  ```
 </table>
-</figure>
 
 
-## Examples of Product Classifications ## {#product-classification-urns}
+## Product Classification URN's ## {#product-classification-urns}
 
 Similar to [=ProductIds=] a ProductClassification MUST be a [=URN=] as specified in [[RFC8141]]: 
 
@@ -506,67 +484,79 @@ In determining which URN namespace and corresponding syntax to use, the data own
 
       - `$type$` defines the kind of product category or classification being specified. This brings clarity to the recipient to understand what kind of classification is provided. 
 
-
-
-## Product Classification Examples ## {#product-classification-examples}
+### Examples ### {#product-classification-examples}
 
 <table class="data">
 <thead>
 <tr>
-<td width="40%">Description
-<td>Example
+  <td>Description
+  <td>Example
 <tbody>
 <tr>
-  <td>Custom category
+  <td>CAS Registry Number
 
-  <td><div class=example>
+  <td>
+  Unique identification number assigned to every chemical substance described in the open scientific literature See [cas.org](https://www.cas.org/cas-data/cas-registry)
+
+  ```json
+  ["urn:pact:cas.org:substance-number:13463-67-7"]
+  ```
+<tr>
+  <td>InChI (International Chemical Identifier)
+
+  <td>
+  InChI is a standard identifier for chemical databases that facilitates effective information management across chemistry. See [inchi-trust.org](https://www.inchi-trust.org/)
+
+  ```json
+  ["urn:pact:inchi-trust.org:substance-id:$INCHI-ID$"]
+    ```
+<tr>
+  <td>Custom category
+  <td>
   ```json
   "urn:pact:catalog.company.com:category-id:550010"
   ```
-  </div>
 <tr>
   <td>UN Central Product Classification
 
+  <td>
   This is an international standard for 
   categorizing goods and services.
-  <td><div class=example>
   (for wheat)
+
   ```json
   "urn:cpc:0151"
   ```
-  </div>
 <tr>
   <td>UN Standard Products and Services Code
 
+  <td>
   UNSPSC is a global classification system 
   for products and services, often used in procurement.
-  <td><div class=example>
   (for desktop computers)
   ```json
   "urn:unspsc:43211507"
   ```
-  </div>
 <tr>
   <td>ECLASS
 
+  <td>
   ECLASS is a standard classification system for 
   products and services, widely used in industrial 
   and engineering contexts.
-  <td><div class=example>
+
   ```json
   "urn:eclass:28070000"
   ```
-  </div>
 <tr>
   <td>ISO
   
+  <td>
   Used for identifying ISO standards, which include many technical standards for materials and products.
 
-  <td><div class=example>
   ```json
   "urn:iso:std:iso:4217"
   ```
-  </div>
 </table>
 
 These namespaces allow systems and standards to consistently identify and categorize products, making them useful in a variety of domains like supply chain management, retail, industrial procurement, and publication. If you’re working with a specific product categorization system, you may find these URNs particularly relevant for classification or reference purposes.
