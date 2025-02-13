@@ -2,11 +2,12 @@
 
 # PACT Technical Specifications
 
-The PACT Network (previously Pathfinder Network) concept is an open data exchange for carbon emissions, developed by the PACT intiative, part of  the World Business Council for Sustainable Development ([WBCSD](https://wbcsd.org)).
+The PACT Network (previously Pathfinder Network) is an open and global network of interoperable solutions for the secure peer-to-peer exchange of accurate, primary and verified product emissions data - across all industries and value chains. PACT, Partnership for Carbon Transparency, is a project hosted by [WBCSD](https://wbcsd.org) (World Business Council for Sustainable Development), which co-chairs the [GHG Protocol](https://ghgprotocol.org).
 
-The PACT Technical Specifications describe the PCF data model and PCF exchange API. For calculating the actual  emissions numbers, please refer to the latest PACT Methodology on [https://carbon-transparency.org](https://carbon-transparency.org)
 
-All recent versions of the Technical Specifications are published here, including OpenAPI schemas and a Simplified Data Model in Excel format.
+The PACT Technical Specifications describe the PCF data model and PCF exchange API. For guidance on calculating a PCF, please refer to the latest PACT Methodology on [https://carbon-transparency.org](https://www.carbon-transparency.org/pact-methodology)
+
+All recent versions of the Technical Specifications are published here, including OpenAPI schema and a Simplified Data Model in Excel format.
 For sources and to contribute, please visit the [WBCSD GitHub repository](https://github.com/wbcsd/data-exchange-protocol)
 
 ## 3.0.0-pre (work-in-progress)
