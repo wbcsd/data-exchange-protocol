@@ -681,7 +681,7 @@ components:
           description: |
             (Only for Credit Approach) a URL to documentation verifying the certification from an external bookkeeping scheme. 
             This attribute ensures the reliability and avoids double counting of credits within the crediting system.
-          $ref: '#/components/schemas/Url' 
+          $ref: '#/components/schemas/Uri' 
         landAreaOccupation:
           description: |
             Amount of agricultural land occupied in reporting year to produce the product.
@@ -1275,7 +1275,11 @@ components:
       comment: '[RFC4122](https://tools.ietf.org/html/rfc4122)'
     Urn:
       type: string
+      format: urn
       pattern: '^([uU][rR][nN]):'
+    Uri:
+      type: string
+      format: uri
     Decimal:
       type: string
       format: decimal
