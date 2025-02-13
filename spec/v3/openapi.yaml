@@ -922,13 +922,14 @@ components:
           obsolete: true
         primaryDataShare:
           description: |
-            The share of primary data in percent. See the [=PACT Methodology=] Sections 4.2.1 and 4.2.2, Appendix B.
+            The share of primary data in percent. See the [=PACT Methodology=].
 
             For reference periods ending before the beginning of year 2025, at least property <{CarbonFootprint/primaryDataShare}> or propery <{CarbonFootprint/dqi}> MUST be defined.
 
             For reference periods including the beginning of year 2025 or after, this property MUST be defined.
 
           note: string<decimal> in 3.0, was Number in 2.x
+          x-rule: M2-2025, M3
           summary: |
             Share of primary data in the final PCF, calculated according to 
             the PACT Methodology.
@@ -940,6 +941,7 @@ components:
             For reference periods ending before the beginning of year 2025, at least property <{CarbonFootprint/primaryDataShare}> or propery <{CarbonFootprint/dqi}> MUST be defined.
 
             For reference periods including the beginning of year 2025 or after, this property MUST be defined.
+          x-rule: M2-2025, M3
           summary: |
             Data Quality Indicators (dqi) in accordance with the PACT Methodology. 
           $ref: '#/components/schemas/DataQualityIndicators'
@@ -1099,12 +1101,9 @@ components:
       title: DataQualityIndicators
       type: object
       required:
-      - coveragePercent
       - technologicalDQR
       - temporalDQR
       - geographicalDQR
-      - completenessDQR
-      - reliabilityDQR
       properties:
         coveragePercent:
           description: |
