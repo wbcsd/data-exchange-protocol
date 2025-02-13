@@ -202,7 +202,7 @@ def generate_excel(ws, schema, types):
         logging.debug(f"Writing type {name} at level {level}")
         if info.get("title") and name:
             # Append a row for the type itself and set background color to blue
-            ws.append([name + ": " + info["title"], "", "", "", "", "", "", "", "", ""])
+            ws.append([name + ": " + info["title"], info.get("x-rule"), info.get("summary"), "", "", "", "", "", ""])
             format(ws[ws.max_row], heading_style)
 
         for prop_name, prop_info in info.get("properties", {}).items():
