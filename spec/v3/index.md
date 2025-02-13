@@ -172,8 +172,6 @@ This chapter provides examples for inter-company business cases related to the e
 
 Exchanging PCF's asynchronously requires **both** the [=data owner=] **and** the [=data recipient=] to run a PACT conformant host system, **both** sides being able to initiate communication to each other.
 
-Refer to [[#api-action-events]] for detailed request and response formats.
-
 
 ### Requesting a PCF
 
@@ -195,6 +193,8 @@ In this case the data owner sends a `PublishedEvent` to the data recipient.
 
 1. The data owner authenticates with the data recipient and sends a `PublishedEvent` with the updated or created PCF.
 1. The data recipient should validate this incoming event and directly return a status code indicating succesful receipt (HTTP code 2xx) or an error (HTTP 4xx or 5xx). 
+
+Refer to [[#api-action-events]] for detailed request and response formats.
 
 
 ## Synchronous retrieval 
