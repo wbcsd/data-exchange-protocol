@@ -661,6 +661,27 @@ components:
             Emissions resulting from outbound logistics. MUST be undefined if outbound logistics emissions are not included.
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
           x-unit: kgCO2e/declared unit
+        ccuCarbonContent:
+          description: |
+            The amount of captured carbon (both biogenic and fossil) during CCU (Carbon Capture & Usage) in the production.
+          $ref: '#/components/schemas/PositiveOrZeroDecimal'
+          x-unit: kgC/declared unit
+        ccuOrigin:
+          description: |
+            Information about the origin (fossil or biogenic) and path of the captured CO2 used in CCU, including the name and location of the capture facility. This information enhances transparency and traceability, enabling tracking of CO2 across the value chain.        
+          type: string
+        ccuCalculationApproach:
+          description: |
+            The calculation approach for CCU: "Cut-off" or "Credit." See [=PACT Methodology=] for details.
+          type: string
+          enum:
+            - Cut-off
+            - Credit 
+        ccuCreditCertification:
+          description: |
+            (Only for Credit Approach) a URL to documentation verifying the certification from an external bookkeeping scheme. 
+            This attribute ensures the reliability and avoids double counting of credits within the crediting system.
+          $ref: '#/components/schemas/Url' 
         landAreaOccupation:
           description: |
             Amount of agricultural land occupied in reporting year to produce the product.
