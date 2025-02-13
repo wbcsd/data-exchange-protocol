@@ -52,7 +52,7 @@ Comments regarding this document are welcome. Please file issues directly on [Gi
 
 This document was published by [Partnership for Carbon Transparency (PACT)](https://www.carbon-transparency.com/) after an update to the [[!PACT-METHODOLOGY|PACT Methodology]]) was made.
 
-The technical specifications within this document are the result of consent processes by PACT members and the WBCSD.
+The technical specifications within this document are the result of consensus processes by PACT members and the WBCSD.
 
 PACT recommends the wide deployment of this specification.
 
@@ -87,7 +87,7 @@ While PACT encourages the implementation of the technical specifications by all 
 
 WBCSD would like to thank all PACT members, WBCSD staff, and others who shared their detailed and thoughtful input and contributed actively to the development of this document.
 
-WBCSD would also like to express special thanks to the companies participating in the pilot for testing the [=interoperable=] exchange of GHG emissions data across different solutions, as well as to those [=Solution Providers=] who have contributed to this document.
+PACT would also like to expressly thank the 40+ solutions which implemented V2 of the PACT Technical Specifications and became conformant during 2023 and 2024, resulting in significant learnings and feedback which is now incorporated in V3.
 
 
 ## License ## {#section-license}

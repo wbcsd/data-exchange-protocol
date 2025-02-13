@@ -11,7 +11,7 @@ ProductFootprints. The details on the exchange of ProductFootprints are
 specified in [[#api]].
 
 Conceptually, the data type <{ProductFootprint}> is modeled as a multi-purpose
-container for product-specific emissions factors which is supported by
+container for product-specific emission factors which is supported by
 extensibility through [=Data Model Extensions=].
 
 Data Model Extensions enable [=data owners=] to exchange additional information
