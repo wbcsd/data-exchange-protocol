@@ -13,8 +13,8 @@ For sources and to contribute, please visit the [WBCSD GitHub repository](https:
 [PACT Technical Specifications 3.0.0](v3/index.html) <br>
 [PACT OpenAPI 3.0.0](v3/openapi.yaml) <br>
 [PACT Simplified Data Model 3.0.0 (Excel)](v3/pact-simplified.xlsx) <br>
-[PACT Simplified Data Model 3.0.0 (Excel FOR COLLABORATION - V2)](https://wbcsd.sharepoint.com/:x:/s/ClimateEnergy/Ee4D_jIwDbtInq2x3RFp4-oBc3SnZWhfKvRN_uh5fdq5iw?e=5LfJgh)<br>
-~~[PACT Simplified Data Model 3.0.0 (Excel FOR COLLABORATION - OLD)](https://wbcsd.sharepoint.com/:x:/s/ClimateEnergy/EQzZ7GNDG0BLvjmGxtSB0mwBv6cee6Q-F6hRc6FXlaLhWw?e=HF9CUo)~~<br>
+[PACT Simplified Data Model 3.0.0 (Excel FOR COLLABORATION)](https://wbcsd.sharepoint.com/:x:/s/ClimateEnergy/Ee4D_jIwDbtInq2x3RFp4-oBc3SnZWhfKvRN_uh5fdq5iw?e=5LfJgh)<br>
+~~ OLD: [PACT Simplified Data Model 3.0.0 (Excel FOR COLLABORATION - OLD)](https://wbcsd.sharepoint.com/:x:/s/ClimateEnergy/EQzZ7GNDG0BLvjmGxtSB0mwBv6cee6Q-F6hRc6FXlaLhWw?e=HF9CUo)~~<br>
 
 	
 <!--
