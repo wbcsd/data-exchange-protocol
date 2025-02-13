@@ -7,6 +7,7 @@ import logging.config
 import markdown
 import scripts.openapi
 import scripts.excel
+from scripts.diff import schema_diff
 from scripts.patchup import patchup, parse_bikeshed_file
 from scripts.build import Dependency, fileset
 from invoke import task
@@ -170,9 +171,14 @@ def debug(c):
     logging.basicConfig(level=logging.DEBUG)
     sys.excepthook = old_excepthook
 
+
+@task
+def diff(c):
+    scripts.diff.schema_diff("spec/v2/openapi.yaml", "spec/v3/openapi.yaml")
+
 @task
 def experiment(c):
     """
     Experimental generation of data models, based on OpenAPI schema
     """
-    scripts.openapi.test("spec/v3/openapi.yaml")
+    # scripts.openapi.test("spec/v3/openapi.yaml")
