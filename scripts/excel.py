@@ -1,6 +1,7 @@
 import os
 import sys
 import yaml
+import re
 import jsonref
 import logging
 from openpyxl import Workbook
@@ -117,9 +118,12 @@ def generate_excel(ws, schema, types):
     def get_type_description(info):
         type_description = ""
         if info.get("type", "") == "array":
-            type_description = "list of " + get_type_description(info["items"])
+            type_description = "array: " + get_type_description(info["items"])
         if info.get("type", "") == "object":
-            type_description = "object"
+            if info.get("title"):
+                type_description = info.get("title")
+            else:
+                type_description = "object"
         type_description += " " + info.get("format", "")
         if info.get("comment"):
             type_description += " (" + info["comment"] + ")\n"
@@ -145,7 +149,6 @@ def generate_excel(ws, schema, types):
         
         type_description = get_type_description(info)
         description = info.get("summary") or info.get("description") or "N/A"
-        print(f"Property {name} with description:")
         paragraphs = description.split("\n")
         description = ""
         for paragraph in paragraphs:
@@ -154,8 +157,12 @@ def generate_excel(ws, schema, types):
             else:
                 description += paragraph.strip() + " "
         description = description.strip()
-        print(description)
+        
+        # experiment: change the word property to attribute, use regex for word boundary
+        description = re.sub(r'\bproperty\b', 'attribute', description)
+
         examples = info.get("examples", []) + ['','','']
+        print(examples)
         mandatory = name in parent.get("required", [])
         
         # Append a row to the worksheet
@@ -168,7 +175,7 @@ def generate_excel(ws, schema, types):
         ws.append(row(
             property = name,
             validation = rule,
-            comment = info.get("title", "") + info.get("x-comment", ""),
+            comment = info.get("title", "") + info.get("x-comment", "") + info.get("note", ""),
             description = description,
             unit = info.get("x-unit", "-"),
             accepted = type_description,
