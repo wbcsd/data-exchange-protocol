@@ -769,28 +769,8 @@ components:
               - "PCR-A"
         biogenicAccountingMethodology:
           description: |
-            The standard followed to account for biogenic emissions and removals. If defined, the value SHOULD be one of the following:
-
-              : `PEF`
-              :: for the EU [Product Environmental Footprint Guide](https://ec.europa.eu/environment/archives/eussd/pdf/footprint/PEF%20methodology%20final%20draft.pdf)
-              : `ISO`
-              :: For the ISO 14067 standard
-              : `GHGP`
-              :: For the Greenhouse Gas Protocol (GHGP) Land sector and Removals Guidance
-              : `Quantis`
-              :: For the Quantis [Accounting for Natural Climate Solutions](https://quantis.com/report/accounting-for-natural-climate-solutions-guidance/) Guidance
-
-            The enumeration of standards above will be evolved in future revisions. Account for this when implementing the validation of this property.
-          summary: |
-            Name of the standard followed to account for biogenic emissions and removals.
+            UNDER DISCUSSION
           type: string
-          enum:
-            - PEF
-            - ISO
-            - GHGP
-            - Quantis
-          examples: 
-          - GHGP
         boundaryProcessesDescription:
           description: |
             Brief description of the processes attributable to each life cycle stage included 
