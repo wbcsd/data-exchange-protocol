@@ -656,6 +656,11 @@ components:
             Emissions resulting from the packaging of the product. MUST be undefined if packaging emissions are not included.
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
           x-unit: kgCO2e/declared unit
+        outboundLogisticsGhgEmissions:
+          description: |
+            Emissions resulting from outbound logistics. MUST be undefined if outbound logistics emissions are not included.
+          $ref: '#/components/schemas/PositiveOrZeroDecimal'
+          x-unit: kgCO2e/declared unit
         landAreaOccupation:
           description: |
             Amount of agricultural land occupied in reporting year to produce the product.
