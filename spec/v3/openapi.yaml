@@ -180,6 +180,8 @@ components:
 
         Each `ProductFootprint` can and should be updated over time, for instance to
         incorporate new or refined data from [=data owners=] (see [[#lifecycle]]).
+      summary: |
+        The ProductFootprint represents the footprint of a product.
       type: object
       title: ProductFootprint
       required:
@@ -374,12 +376,27 @@ components:
             Any additional information related to the PCF. Whereas the property productDescription 
             contains product-level information, comment should be used for information and instructions 
             related to the calculation of the PCF, or other information which informs the ability to interpret
-            (e.g. LUC not included as unable to calculate LUC), to audit or to verify the PCF          
+            (e.g. LUC not included as unable to calculate LUC), to audit or to verify the PCF    
+
+            Also include information explaining the current status of the PCF, what was changed since the ast version, etc. If the PCF was changed since a previous version, indicate all methodological and/or production process change(s) that occurred to result in the PCF change. For example, include the relevant change(s) from the list below:
+
+            Methodological:
+             - Access to new Emission Factor data (database, supplier-specific, company-specific)
+             - Updated upstream data (i.e. upstream supplier updated their PCF based on methodology change)
+            Production Process:
+             - Change in process
+             - Change in feedstock
+             - Change from conventional to certified sustainable material
+             - Change in energy source
+             - Change in upstream supplier
+             - Updated upstream data (i.e. upstream supplier updated their PCF based on process change)
           type: string
         pcf:
           description: |
             The carbon footprint of the given product with value conforming to the data 
             type <{CarbonFootprint}>.
+          summary:
+            The carbon footprint of the given product.
           $ref: '#/components/schemas/CarbonFootprint'
         extensions: 
           type: array
@@ -415,7 +432,7 @@ components:
       - productMassPerDeclaredUnit
       - referencePeriodStart
       - referencePeriodEnd
-      - pCfExcludingBiogenic
+      #- pCfExcludingBiogenic
       - fossilGhgEmissions
       - fossilCarbonContent
       - biogenicCarbonContent
@@ -498,25 +515,31 @@ components:
           x-unit: kgCO2e/declared unit
           x-rule: M
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
-        pCfIncludingBiogenic:
+          obsolete: true
+        pcfExcludingBiogenicCO2Withdrawal:
           description: |
-            If present, the product carbon footprint of the product <i>including all</i> 
-            biogenic emissions (CO2 and otherwise). This value can be less than zero, 
-            because of Withdrawals or removals.
-          summary: |
-            The PCF of the product including ALL biogenic emissions (CO2 and otherwise).
+            The PCF of the product including:
+            - all emissions from fossil sources
+            - all biogenic and land management-related CH4,  N2O, non-biogenic CO2, HFCs and PFCs emissions
+            - land management CO2 removals
+            Excluding: 
+            - all biogenic CO2 withdrawals.
           x-unit: kgCO2e/declared unit
+          x-comment: | 
+            PCF (Excl. biogenic CO2 withdrawal) = fossilGhgEmissions + landUseChangeGhgEmissions + landManagementBiogenicCO2Emissions + biogenicNonCO2Emissions + landManagementBiogenicCO2Removals
           x-rule: M3, M2-2025
           $ref: '#/components/schemas/Decimal'
-        pCfIncludingBiogenicBeforeCO2Withdrawal:
+        pcfIncludingBiogenicCO2Withdrawal:
           description: |
-            Total Carbon Footprint including biogenic emissions and removals (CO2 and 
-            otherwise) excluding Net Product Biogenic CO2 withdrawal. Note: this value 
-            can be less than zero, because of Withdrawals or removals.
-          summary: |
-            The PCF of the product including ALL biogenic emissions (CO2 and otherwise).
+            The PCF of the product including: 
+            - all emissions from fossil sources
+            - all biogenic and land management-related CH4,  N2O, non-biogenic CO2, HFCs and PFCs emissions
+            - land management CO2 removals
+            - all biogenic CO2 withdrawals.          
           x-unit: kgCO2e/declared unit
-          x-rule: M3
+          x-comment: |
+            PCF (Incl. biogenic CO2 withdrawal) = FossilGHGEmissions + landUseChangeGHGEmissions + landManagementBiogenicCO2Emissions + biogenicNonCO2Emissions + landManagementBiogenicCO2Removals + biogenicCO2Withdrawal
+          x-rule: M3, M2-2025
           $ref: '#/components/schemas/Decimal'
         fossilGhgEmissions:
           description: |
@@ -558,7 +581,7 @@ components:
           x-rule: M2-2025
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
           obsolete: true
-        landUseGhgEmissions:
+        landUseChangeGhgEmissions:
           description: |
             GHG emissions from land-use change, such as deforestation or conversion
             from natural forest to plantation forest, that cause carbon stock loss. 
@@ -576,7 +599,7 @@ components:
           x-unit: kgCO2e/declared unit          
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
           obsolete: true
-        landUseCarbonLeakage:
+        landCarbonLeakage:
           description: |
             Indirect land use change due to carbon stock losses from conversion of native 
             ecosystems to agricultural land to replace food production.
@@ -628,7 +651,6 @@ components:
             such as manure fertilization and  enteric emissions.
           x-unit: kgCO2e/declared unit
           x-rule: M3, M2-2025
-          x-comment: Replaces otherBiogenicGhgEmissions
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
         landManagementGhgEmissions:
           description: |
@@ -638,14 +660,13 @@ components:
           x-rule: M2-2025
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
           obsolete: true
-        landManagementUnspecifiedGhgEmissions:
+        landManagementUnpecifiedGhgEmissions:
           description:
             Unspecified GHG emissions related to accommodate for the absence of more granular 
             data on dLUC and or land management CO2 emissions.
           x-unit: kgCO2e/declared unit
           x-rule: M2-2025
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
-          x-comment: Replaces landManagementGhgEmissions
         aircraftGhgEmissions:
           description: |
             If present, the GHG emissions resulting from aircraft engine usage for the transport of the product, excluding radiative forcing.            
