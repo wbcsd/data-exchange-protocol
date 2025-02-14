@@ -8,9 +8,9 @@ The PACT Technical Specifications describe the PCF data model and PCF exchange A
 
 This repository contains the technical specifications, including documentation for implementors of PACT conformant software.
 
-1. [Technical Specifications for PCF Data Exchange (Version 1.0.1)](spec/v1/index.bs)
-2. [Technical Specifications for PCF Data Exchange (Version 2.3.0)](spec/v2/index.bs)
-3. [Technical Specifications for PCF Data Exchange (Version 3.0.0)](spec/v3/index.bs)
+- [Technical Specifications for PCF Data Exchange (Version 3.0.0)](spec/v3/index.md) and [OpenAPI Schema](spec/v3/openapi.yaml)
+-  [Technical Specifications for PCF Data Exchange (Version 2.3.0)](spec/v2/index.bs) and [OpenAPI Schema](spec/v3/openapi.yaml)
+- [Technical Specifications for PCF Data Exchange (Version 1.0.1)](spec/v1/index.bs)
 
 The technical specification Version 3.0.0 is the current focus of work.
 
