@@ -660,10 +660,9 @@ components:
           x-rule: M2-2025
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
           obsolete: true
-        landManagementUnpecifiedGhgEmissions:
-          description:
-            Unspecified GHG emissions related to accommodate for the absence of more granular 
-            data on dLUC and or land management CO2 emissions.
+        uncertifiedLandManagementCO2Removals:
+          description: |
+            Uncertified land management CO2 removals.
           x-unit: kgCO2e/declared unit
           x-rule: M2-2025
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
