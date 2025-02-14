@@ -1208,7 +1208,9 @@ components:
     Verification:
       title: Verification
       description: |
-        Data type `Verification` contains the verification in conformance with [=PACT Methodology=] chapter 5 and appendix B.
+        Data type `Verification` contains the verification in conformance with [=PACT Methodology=].
+      summary: |
+        Contains the verification in conformance with PACT Methodology.
       note: Renamed from 'Assurance' in 3.0
       example: |
         Example value for the case that 42% of the product’s overall GHG emissions covered by the data quality assessment:
