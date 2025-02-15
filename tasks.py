@@ -174,7 +174,7 @@ def debug(c):
 
 @task
 def diff(c):
-    scripts.diff.schema_diff("spec/v2/openapi.yaml", "spec/v3/openapi.yaml")
+    scripts.schema.schema_diff("spec/v2/openapi.yaml", "spec/v3/openapi.yaml")
 
 @task
 def experiment(c):
@@ -182,3 +182,24 @@ def experiment(c):
     Experimental generation of data models, based on OpenAPI schema
     """
     # scripts.openapi.test("spec/v3/openapi.yaml")
+    # scripts.schema.validate_json_data("spec/v3/openapi.yaml", "spec/v3/examples/list-footprints-response.json")
+    scripts.schema.validate_json_data(
+        "spec/v3/openapi.yaml#paths/\/3\/footprints/get/responses/200/content/application\/json/schema", 
+        "spec/v3/examples/list-footprints-response.json"
+        )
+    scripts.schema.validate_json_data(
+        "spec/v3/openapi.yaml#paths/\/3\/footprints/get/responses/200/content/application\/json/schema", 
+        "spec/v3/examples/invalid-response-all-properties.json"
+        )
+    scripts.schema.validate_json_data(
+        "spec/v3/openapi.yaml#paths/\/3\/footprints\/{id}/get/responses/200/content/application\/json/schema", 
+        "spec/v3/examples/get-footprint-response.json"
+        )
+    scripts.schema.validate_json_data(
+        "spec/v3/openapi.yaml#components/schemas/RequestFulfilledEvent", 
+        "spec/v3/examples/pf-response-event.json"
+        )
+    scripts.schema.validate_json_data(
+        "spec/v3/openapi.yaml#paths/\/3\/footprints/get/responses/403/content/application\/json/schema", 
+        "spec/v3/examples/error-response-access-denied.json"
+        )

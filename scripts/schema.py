@@ -1,17 +1,56 @@
-import os
 import sys
 import yaml
+import logging
 import json
 import jsonref
+import jsonschema 
+import re
+
 
 # Show the difference between the two OpenAPI files. Only show the differences in the data model.
 # For a given type, create a list of properties which are new, removed, or changed.
 # For properties which are changed, show the old and new values.
 # For properties which are new, show the new value.
 
-def load_openapi_file(file_path):
-    with open(file_path, 'r') as file:
-        return yaml.safe_load(file)
+def load_openapi_file(path):
+#    with open(path, 'r') as file:
+#        return yaml.safe_load(file)
+    with open(path, encoding="utf-8") as file:
+        schema = yaml.safe_load(file)
+    schema = jsonref.replace_refs(schema, merge_props=True)
+    return schema
+
+
+def validate_json_data(schema_path, data_path):
+    # Split the schema into components and paths
+    # schema_path is a filename + '#' + internal path
+    # split those two parts
+    schema_path, schema_ref = schema_path.split('#')
+
+    # Load the schema from the file
+    schema = load_openapi_file(schema_path)
+
+    # Load the data from the file
+    logging.info(f"Validating {data_path} against {schema_path}#{schema_ref}")
+    with open(data_path, 'r') as file:
+        data = json.load(file)
+    
+    # Select the item from the schema
+    # ref_path is a path to the item in the schema
+    # split the path into parts using regex.
+
+    # Use regex to split ref_path into parts, handling escaped forward slashes
+    ref_path_parts = re.split(r'(?<!\\)/', schema_ref)
+    ref_path_parts = [part.replace('\\/', '/') for part in ref_path_parts]  # Unescape any escaped slashes
+
+    # Iterate over the parts and select the item from the schema
+    for part in ref_path_parts:
+        schema = schema[part]
+    #yaml.dump(schema, sys.stdout)
+    
+    # Validate the data against the schema
+    jsonschema.validate(instance=data, schema=schema)
+
 
 def get_data_models(openapi_spec):
     return openapi_spec.get('components', {}).get('schemas', {})

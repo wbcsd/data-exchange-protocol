@@ -26,23 +26,23 @@
             "productNameCompany": "Green Ethanol",
             "comment": "Should have information and instructions related to the calculation of the footprint, or other information which informs the ability to interpret, to audit or to verify the Product Footprint.",
             "pcf": {
-                "declaredUnit": "liter",
-                "unitaryProductAmount": "12.0",
-                "pCfExcludingBiogenic": "0.123",
-                "pCfIncludingBiogenic": "0.0",
+                "declaredUnitOfMeasurement": "liter",
+                "declaredUnitAmount": "1",
+                "productMassPerDeclaredUnit": "0.879",
+                "pcfExcludingBiogenicCO2Withdrawal": "1.63",
+                "pcfIncludingBiogenicCO2Withdrawal": "1.85",
                 "fossilGhgEmissions": "0.123",
                 "fossilCarbonContent": "1.721",
                 "biogenicCarbonContent": "0.0",
-                "dLucGhgEmissions": "0.011",
                 "landManagementGhgEmissions": "0.001",
                 "otherBiogenicGhgEmissions": "0.0",
-                "iLucGhgEmissions": "0.021",
                 "biogenicCarbonWithdrawal": "0.0",
                 "aircraftGhgEmissions": "0.0",
-                "characterizationFactors": "AR6",
-                "crossSectoralStandardsUsed": [
-                    "GHG Protocol Product standard"
-                ],
+                "ipccCharacterizationFactors": ["AR6"],
+                "crossSectoralStandards": [
+                    "GHGP-Product",
+                    "ISO14067"
+                  ],
                 "productOrSectorSpecificRules": [
                     {
                         "operator": "EPD International",
@@ -57,7 +57,7 @@
                 "referencePeriodEnd": "2022-01-01T00:00:00Z",
                 "geographyCountrySubdivision": "US-NY",
                 "geography_country": "US",
-                "geographyRegionOrSubregion": "North America",
+                "geographyRegionOrSubregion": "Northern America",
                 "secondaryEmissionFactorSources": [
                     {
                         "name": "Ecoinvent",
@@ -72,22 +72,16 @@
                 "uncertaintyAssessmentDescription": "Uncertainty assessment description",
                 "primaryDataShare": "10.4",
                 "dqi": {
-                    "coveragePercent": "100",
                     "technologicalDQR": "1.13",
                     "temporalDQR": "2.57",
-                    "geographicalDQR": "1",
-                    "completenessDQR": "2.6",
-                    "reliabilityDQR": "1.79"
+                    "geographicalDQR": "1"
                 },
-                "assurance": {
-                    "coverage": "product line",
-                    "level": "reasonable",
-                    "boundary": "Cradle-to-Gate",
+                "verification": {
+                    "coverage": "product level",
                     "providerName": "My Auditor",
                     "completedAt": "2022-12-08T14:47:32Z",
                     "standardName": "ISO ...",
-                    "comments": "This is a comment",
-                    "assurance": false
+                    "comments": "This is a comment"
                 }
             },
             "extensions": [

@@ -18,25 +18,23 @@
     "productNameCompany": "Green Ethanol",
     "comment": "",
     "pcf": {
-      "declaredUnit": "liter",
-      "unitaryProductAmount": "1",
-      "pCfExcludingBiogenic": "1.63",
-      "pCfIncludingBiogenic": "1.85",
+      "declaredUnitOfMeasurement": "liter",
+      "declaredUnitAmount": "1",
+      "productMassPerDeclaredUnit": "0.879",
+      "pcfExcludingBiogenicCO2Withdrawal": "1.63",
+      "pcfIncludingBiogenicCO2Withdrawal": "1.85",
       "fossilGhgEmissions": "1.5",
       "fossilCarbonContent": "0",
       "biogenicCarbonContent": "0.41",
-      "dLucGhgEmissions": "0.8",
       "landManagementGhgEmissions": "0.6",
       "otherBiogenicGhgEmissions": "0.4",
-      "iLucGhgEmissions": "0",
       "biogenicCarbonWithdrawal": "-1.5",
       "aircraftGhgEmissions": "0.2",
-      "characterizationFactors": "AR6",
-      "ipccCharacterizationFactorsSources": ["AR6"],
-      "crossSectoralStandardsUsed": [
-        "GHG Protocol Product standard",
-        "ISO Standard 14067"
-      ],
+      "ipccCharacterizationFactors": ["AR6"],
+      "crossSectoralStandards": [
+        "GHGP-Product",
+        "ISO14067"
+    ],
       "productOrSectorSpecificRules": [
         {
           "operator": "Other",
@@ -64,15 +62,11 @@
       "uncertaintyAssessmentDescription": "A model of corn production is involved in predicting emissions from the production of the corn feedstock. Emissions of N2O due to application of nitrogen fertilizers are based on a linear modeling of interactions of the fertilizer with the soil and plant systems. As these interactions are more complicated than the model assumes, there is uncertainty regarding the emissions resulting from this model",
       "primaryDataShare": "12.9",
       "dqi": {
-        "coveragePercent": "78",
         "technologicalDQR": "1.6",
         "temporalDQR": "2.6",
-        "geographicalDQR": "1.8",
-        "completenessDQR": "1.7",
-        "reliabilityDQR": "2.1"
+        "geographicalDQR": "1.8"
       },
-      "assurance": {
-        "assurance": false,
+      "verification": {
         "providerName": ""
       }
     },

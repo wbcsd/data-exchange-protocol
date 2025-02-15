@@ -1529,7 +1529,7 @@ components:
                 description: Error code identifier.
                 enum:
                   - BadRequest # 400
-                  - AccessDenied # 401
+                  - AccessDenied # 403
                   - TokenExpired # 401
                   - NotFound # NoSuchFootprint
                   - InternalError # 500
