@@ -7,7 +7,7 @@ info:
     name: WBCSD PACT Project
     url: https://github.com/wbcsd
     email: pact@wbcsd.org
-  description: >
+  description: |
     This document describes the technical specifications for the exchange of 
     Product Carbon Footprint (PCF) data between systems. The specification is 
     maintained by the WBCSD PACT project and intended to be used by organizations 
@@ -27,7 +27,7 @@ paths:
   /2/footprints:
     get:
       summary: Action ListFootprints
-      description: >
+      description: |
         Retrieve a list of Product Carbon Footprints (PCFs) that are available. 
         The list can be filtered by various criteria.
       operationId: listFootprints
@@ -79,7 +79,7 @@ paths:
   /2/footprints/{id}:
     get:
       summary: Action GetFootprint
-      description: ^
+      description: |
         Retrieve a single Product Carbon Footprint (PCF) by its unique identifier.
       operationId: getFootprintById
       tags: [footprint]
@@ -117,7 +117,7 @@ paths:
   /2/events:
     post:
       summary: Action Event
-      description: >
+      description: |
         Post an event to the system. The event will be processed by the system 
         and may trigger further actions.
       operationId: post_event
@@ -198,7 +198,7 @@ components:
       - pcf
       properties:
         id:
-          description: >
+          description: |
             A unique identifier that a system uses to refer to the entire dataset of the PCF. 
             This is typically an automatically-generated number by the technology  solution to maintain 
             the required technical references to data within the system.
@@ -208,7 +208,7 @@ components:
           examples:
           - "f4b1225a-bd44-4c8e-861d-079e4e1dfd69"
         specVersion:
-          description: >
+          description: |
             The version of the PACT Tech Specs that the data being shared complies with. 
             This is a string in the format of "major.minor.patch" (e.g. "3.0.0").
           type: string
@@ -216,7 +216,7 @@ components:
           examples:
           - "3.0.0"
         precedingPfIds:
-          description: >
+          description: |
             A given PCF may change over time, due to updates to the calculation. 
             This field lists all id's that reflect "past versions" of the current PCF. 
             This is typically an automatically generated field of unique identifiers, 
@@ -231,7 +231,7 @@ components:
           - ["f4b1225a-bd44-4c8e-861d-079e4e1dfd69", 
              "079e425a-464f-528d-341d-4a944a1dfd70"]
         version:
-          description: >
+          description: |
             The version number of the PCF; if changes are made to the PCF, 
             this version number will increment.
           type: integer
@@ -241,7 +241,7 @@ components:
           - 1
           - 3303
         created:
-          description: >
+          description: |
             The date and time when the PCF was created. This is typically an automatically 
             generated field by the software solution.
           type: string
@@ -249,14 +249,14 @@ components:
           examples:
           - '2024-10-31T00:00:00Z'
         updated:
-          description: >
+          description: |
             The date and time when the PCF was last updated. This is typically an automatically 
             generated field by the software solution. If the data has never been updated, 
             do not include this property.
           type: string
           format: date-time
         status:
-          description: >
+          description: |
             The status of the PCF. `Active` means that the PCF is the most recent version 
             and is the one that can be used CAN be used by a data recipients, e.g. for product 
             footprint calculations. `Deprecated` means that the PCF is no longer 
@@ -324,7 +324,7 @@ components:
           type: string
           format: date-time
         validityPeriodEnd:
-          description: >
+          description: |
             The end date and time of the validity period. See validityPeriodStart for more details.
           type: string
           format: date-time
@@ -1386,7 +1386,7 @@ components:
     # Events
     BaseEvent:
       title: BaseEvent
-      description: >
+      description: |
         Base class for all events, it follows the CloudEvents specification.
       type: object
       required:
