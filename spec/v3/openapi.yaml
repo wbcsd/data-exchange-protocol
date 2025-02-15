@@ -376,9 +376,13 @@ components:
             Any additional information related to the PCF. Whereas the property productDescription 
             contains product-level information, comment should be used for information and instructions 
             related to the calculation of the PCF, or other information which informs the ability to interpret
-            (e.g. LUC not included as unable to calculate LUC), to audit or to verify the PCF    
+            (e.g. LUC not included as unable to calculate LUC), to audit, or to verify the PCF.
 
-            Also include information explaining the current status of the PCF, what was changed since the ast version, etc. If the PCF was changed since a previous version, indicate all methodological and/or production process change(s) that occurred to result in the PCF change. For example, include the relevant change(s) from the list below:
+            Information explaining the current status of the PCF, what was changed since the last version, etc. If the PCF was changed since a previous version, indicate all methodological and/or production process change(s) that occurred to result in the PCF change. For example, include the relevant change(s) from the list below:
+
+            1. In case product or sector specific guidance used does not align with PACT Methodology's requirement, the areas of disalignment should be specified in the comment section (e.g. allocation rules, exemption rules, data quality metrics).
+
+            2. Information explaining the current status of the PCF, what was changed since the last version, etc. If the PCF was changed since a previous version, indicate all methodological and/or production process change(s) that occurred to result in the PCF change. E.g., include the relevant change(s) from the list below: 
 
             Methodological:
              - Access to new Emission Factor data (database, supplier-specific, company-specific)
@@ -390,6 +394,8 @@ components:
              - Change in energy source
              - Change in upstream supplier
              - Updated upstream data (i.e. upstream supplier updated their PCF based on process change)
+
+             3. Additional information on biogenic emissions & removals calculation  should be specified. This includes information on tools used for  calculations (e.g. Cool Farm Tool), and methodological choices made in calculation of biogenic emissions and removals (e.g. Statistical  or Direct Land use change calculation for DLUC calculations). 
           type: string
         pcf:
           description: |
