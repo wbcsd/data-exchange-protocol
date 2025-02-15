@@ -7,7 +7,7 @@ import logging.config
 import markdown
 import scripts.openapi
 import scripts.excel
-from scripts.diff import schema_diff
+from scripts.schema import schema_diff
 from scripts.patchup import patchup, parse_bikeshed_file
 from scripts.build import Dependency, fileset
 from invoke import task
