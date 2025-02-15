@@ -438,7 +438,8 @@ components:
       - productMassPerDeclaredUnit
       - referencePeriodStart
       - referencePeriodEnd
-      #- pCfExcludingBiogenic
+      - pcfExcludingBiogenicCO2Withdrawal
+      - pcfIncludingBiogenicCO2Withdrawal
       - fossilGhgEmissions
       - fossilCarbonContent
       - biogenicCarbonContent
