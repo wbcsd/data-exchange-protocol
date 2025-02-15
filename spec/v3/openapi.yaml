@@ -511,17 +511,17 @@ components:
             with `0`.          
           note: mandatory in 3.0, optional in v2.x
           $ref: '#/components/schemas/Decimal'
-        pCfExcludingBiogenic:
-          description: |
-            The product carbon footprint of the product <i>excluding</i> biogenic CO2 emissions. 
+        # pCfExcludingBiogenic:
+        #   description: |
+        #     The product carbon footprint of the product <i>excluding</i> biogenic CO2 emissions. 
 
-            Expressed in kgCO2e per declared unit, equal or greater than zero.
-          summary: |
-            The PCF of the product excluding biogenic CO2 emissions.
-          x-unit: kgCO2e/declared unit
-          x-rule: M
-          $ref: '#/components/schemas/PositiveOrZeroDecimal'
-          obsolete: true
+        #     Expressed in kgCO2e per declared unit, equal or greater than zero.
+        #   summary: |
+        #     The PCF of the product excluding biogenic CO2 emissions.
+        #   x-unit: kgCO2e/declared unit
+        #   x-rule: M
+        #   $ref: '#/components/schemas/PositiveOrZeroDecimal'
+        #   obsolete: true
         pcfExcludingBiogenicCO2Withdrawal:
           description: |
             The PCF of the product including:
@@ -571,22 +571,22 @@ components:
           x-unit: kgC/declared unit
           x-rule: M
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
-        dLucGhgEmissions:
-          description: |
-            If present, emissions resulting from recent (i.e., previous 20 years) carbon stock loss due to land conversion directly on the area of land under consideration. 
-            The value of this property MUST include direct land use change (dLUC) where available, otherwise statistical land use change (sLUC) can be used.
+        # dLucGhgEmissions:
+        #   description: |
+        #     If present, emissions resulting from recent (i.e., previous 20 years) carbon stock loss due to land conversion directly on the area of land under consideration. 
+        #     The value of this property MUST include direct land use change (dLUC) where available, otherwise statistical land use change (sLUC) can be used.
             
-            See [=PACT Methodology=] (Appendix B) for details.
-          summary: |
-            The emissions from land use change (LUC) activities. Emissions resulting from 
-            recent (i.e., previous 20 years) carbon stock loss due to land conversion directly 
-            on the area of land under consideration. The value of this property MUST include 
-            direct land use change (dLUC) where available, otherwise statistical land use 
-            change (sLUC) can be used.
-          x-unit: kgCO2e/declared unit
-          x-rule: M2-2025
-          $ref: '#/components/schemas/PositiveOrZeroDecimal'
-          obsolete: true
+        #     See [=PACT Methodology=] (Appendix B) for details.
+        #   summary: |
+        #     The emissions from land use change (LUC) activities. Emissions resulting from 
+        #     recent (i.e., previous 20 years) carbon stock loss due to land conversion directly 
+        #     on the area of land under consideration. The value of this property MUST include 
+        #     direct land use change (dLUC) where available, otherwise statistical land use 
+        #     change (sLUC) can be used.
+        #   x-unit: kgCO2e/declared unit
+        #   x-rule: M2-2025
+        #   $ref: '#/components/schemas/PositiveOrZeroDecimal'
+        #   obsolete: true
         landUseChangeGhgEmissions:
           description: |
             GHG emissions from land-use change, such as deforestation or conversion
@@ -595,16 +595,16 @@ components:
           x-rule: M3, M2-2025
           x-comment: Replaces dLucGhgEmissions
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
-        iLucGhgEmissions:
-          description: |
-            Emissions resulting from recent (i.e., previous 20 years) carbon stock loss due to 
-            land conversion on land not owned or controlled by the company or in its supply
-            chain, induced by change in demand for products produced or sourced by the company.
+        # iLucGhgEmissions:
+        #   description: |
+        #     Emissions resulting from recent (i.e., previous 20 years) carbon stock loss due to 
+        #     land conversion on land not owned or controlled by the company or in its supply
+        #     chain, induced by change in demand for products produced or sourced by the company.
 
-            See [=PACT Methodology=] (Appendix B) for details.
-          x-unit: kgCO2e/declared unit          
-          $ref: '#/components/schemas/PositiveOrZeroDecimal'
-          obsolete: true
+        #     See [=PACT Methodology=] (Appendix B) for details.
+        #   x-unit: kgCO2e/declared unit          
+        #   $ref: '#/components/schemas/PositiveOrZeroDecimal'
+        #   obsolete: true
         landCarbonLeakage:
           description: |
             Indirect land use change due to carbon stock losses from conversion of native 
@@ -625,14 +625,14 @@ components:
             pools (e.g. reforestation and afforestation). Subject to traceability requirements.
           x-unit: kgCO2e/declared unit
           $ref: '#/components/schemas/NegativeOrZeroDecimal'
-        biogenicCarbonWithdrawal:
-          description: |
-            The biogenic carbon contained in the product. Withdrawals are expressed in
-            kgCO2e per declared unit, equal to or less than zero.
-          x-unit: kgCO2e/declared unit
-          x-rule: M2-2025
-          $ref: '#/components/schemas/NegativeOrZeroDecimal'
-          obsolete: true
+        # biogenicCarbonWithdrawal:
+        #   description: |
+        #     The biogenic carbon contained in the product. Withdrawals are expressed in
+        #     kgCO2e per declared unit, equal to or less than zero.
+        #   x-unit: kgCO2e/declared unit
+        #   x-rule: M2-2025
+        #   $ref: '#/components/schemas/NegativeOrZeroDecimal'
+        #   obsolete: true
         biogenicCO2Withdrawal:
           description: |
             Net CO2 uptake of biomass in the product. Withdrawals are expressed in 
@@ -641,15 +641,15 @@ components:
           x-rule: M3, M2-2025
           $ref: '#/components/schemas/NegativeOrZeroDecimal'
           x-comment: Replaces biogenicCarbonWithdrawal
-        otherBiogenicGhgEmissions:
-          description: |
-            All other biogenic GHG emissions associated with product manufacturing and transport 
-            that are not included in dLUC (`dLucGhgEmissions`), iLUC (`iLucGhgEmissions`), and land 
-            management (`landManagementGhgEmissions`). 
-          x-unit: kgCO2e/declared unit
-          x-rule: M2-2025
-          $ref: '#/components/schemas/PositiveOrZeroDecimal'
-          obsolete: true
+        # otherBiogenicGhgEmissions:
+        #   description: |
+        #     All other biogenic GHG emissions associated with product manufacturing and transport 
+        #     that are not included in dLUC (`dLucGhgEmissions`), iLUC (`iLucGhgEmissions`), and land 
+        #     management (`landManagementGhgEmissions`). 
+        #   x-unit: kgCO2e/declared unit
+        #   x-rule: M2-2025
+        #   $ref: '#/components/schemas/PositiveOrZeroDecimal'
+        #   obsolete: true
         biogenicNonCO2Emissions:
           description: |
             Biogenic Non-CO2 emissions (e.g. CH4 & N2O) caused by combustion of biofuels 
@@ -658,14 +658,14 @@ components:
           x-unit: kgCO2e/declared unit
           x-rule: M3, M2-2025
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
-        landManagementGhgEmissions:
-          description: |
-            GHG emissions and removals associated with land-management-related changes, 
-            including non-CO2 sources.
-          x-unit: kgCO2e/declared unit
-          x-rule: M2-2025
-          $ref: '#/components/schemas/PositiveOrZeroDecimal'
-          obsolete: true
+        # landManagementGhgEmissions:
+        #   description: |
+        #     GHG emissions and removals associated with land-management-related changes, 
+        #     including non-CO2 sources.
+        #   x-unit: kgCO2e/declared unit
+        #   x-rule: M2-2025
+        #   $ref: '#/components/schemas/PositiveOrZeroDecimal'
+        #   obsolete: true
         uncertifiedLandManagementCO2Removals:
           description: |
             Uncertified land management CO2 removals.
@@ -962,11 +962,11 @@ components:
             including an explanation of the underlying reasons (way of allocating 
             all activities from your manufacturing steps to the declared unit).
           type: string
-        uncertaintyAssessmentDescription:
-          description: |
-            Results, key drivers, and a short qualitative description of the uncertainty assessment, if applicable.
-          type: string
-          obsolete: true
+        # uncertaintyAssessmentDescription:
+        #   description: |
+        #     Results, key drivers, and a short qualitative description of the uncertainty assessment, if applicable.
+        #   type: string
+        #   obsolete: true
         primaryDataShare:
           description: |
             The share of primary data in percent. See the [=PACT Methodology=].
@@ -1152,15 +1152,15 @@ components:
       - temporalDQR
       - geographicalDQR
       properties:
-        coveragePercent:
-          description: |
-            Percentage of PCF included in the data quality assessment based on the `>5%` emissions threshold.
-          note: string<decimal in 3.0, was Number in 2.x
-          summary: |
-            Percentage of PCF included in the data quality assessment based on 
-            the >5% emissions threshold.
-          $ref: '#/components/schemas/Decimal'
-          obsolete: true
+        # coveragePercent:
+        #   description: |
+        #     Percentage of PCF included in the data quality assessment based on the `>5%` emissions threshold.
+        #   note: string<decimal in 3.0, was Number in 2.x
+        #   summary: |
+        #     Percentage of PCF included in the data quality assessment based on 
+        #     the >5% emissions threshold.
+        #   $ref: '#/components/schemas/Decimal'
+        #   obsolete: true
         technologicalDQR:
           description: |
             Quantitative data quality rating (DQR) based on the data quality matrix (See [=PACT Methodology=]),
@@ -1189,26 +1189,26 @@ components:
             The value MUST be between `1` and `5` inclusive.
           note: string<decimal> in 3.0, was Number in 2.x
           $ref: '#/components/schemas/Decimal'
-        completenessDQR:
-          description: |
-            Quantitative data quality rating (DQR) based on the data quality matrix (See [=PACT Methodology=]),
-            scoring the completeness of the data collected for PCF calculation based on
-            weighted average of all inputs representing >5% of PCF emissions.
+        # completenessDQR:
+        #   description: |
+        #     Quantitative data quality rating (DQR) based on the data quality matrix (See [=PACT Methodology=]),
+        #     scoring the completeness of the data collected for PCF calculation based on
+        #     weighted average of all inputs representing >5% of PCF emissions.
 
-            The value MUST be between `1` and `5` inclusive.
-          note: string<decimal> in 3.0, was Number in 2.x
-          obsolete: true
-          $ref: '#/components/schemas/Decimal'
-        reliabilityDQR:
-          description: |
-            Quantitative data quality rating (DQR) based on the data quality matrix (See [=PACT Methodology=]),
-            scoring the reliability of the data collected for PCF calculation based on
-            weighted average of all inputs.
+        #     The value MUST be between `1` and `5` inclusive.
+        #   note: string<decimal> in 3.0, was Number in 2.x
+        #   obsolete: true
+        #   $ref: '#/components/schemas/Decimal'
+        # reliabilityDQR:
+        #   description: |
+        #     Quantitative data quality rating (DQR) based on the data quality matrix (See [=PACT Methodology=]),
+        #     scoring the reliability of the data collected for PCF calculation based on
+        #     weighted average of all inputs.
 
-            The value MUST be between `1` and `5` inclusive.
-          obsolete: true
-          note: string<decimal> in 3.0, was Number in 2.x
-          $ref: '#/components/schemas/Decimal'
+        #     The value MUST be between `1` and `5` inclusive.
+        #   obsolete: true
+        #   note: string<decimal> in 3.0, was Number in 2.x
+        #   $ref: '#/components/schemas/Decimal'
 
     Verification:
       title: Verification
@@ -1247,32 +1247,32 @@ components:
             - PCF calculation model
             - PCF program
             - product level
-        level:
-          description: |
-            Level of verification applicable to the PCF, with value equal to
-            - `limited` for limited assurance
-            - `reasonable` for reasonable assurance
+        # level:
+        #   description: |
+        #     Level of verification applicable to the PCF, with value equal to
+        #     - `limited` for limited assurance
+        #     - `reasonable` for reasonable assurance
 
-            This property MAY be undefined only if the kind of assurance was not performed.
-          summary: |
-            Level of assurance applicable to the PCF
-          type: string
-          enum:
-            - limited
-            - reasonable
-          obsolete: true
-        boundary:
-          description: |
-            Boundary of the verification, with value equal to
-              - `Gate-to-Gate` for Gate-to-Gate
-              - `Cradle-to-Gate` for Cradle-to-Gate.
-          summary: |
-            Boundary of the verification
-          type: string
-          enum:
-            - Gate-to-Gate
-            - Cradle-to-Gate
-          obsolete: true
+        #     This property MAY be undefined only if the kind of assurance was not performed.
+        #   summary: |
+        #     Level of assurance applicable to the PCF
+        #   type: string
+        #   enum:
+        #     - limited
+        #     - reasonable
+        #   obsolete: true
+        # boundary:
+        #   description: |
+        #     Boundary of the verification, with value equal to
+        #       - `Gate-to-Gate` for Gate-to-Gate
+        #       - `Cradle-to-Gate` for Cradle-to-Gate.
+        #   summary: |
+        #     Boundary of the verification
+        #   type: string
+        #   enum:
+        #     - Gate-to-Gate
+        #     - Cradle-to-Gate
+        #   obsolete: true
         providerName:
           description: |
             The non-empty name of the independent third party engaged to undertake the verification.
