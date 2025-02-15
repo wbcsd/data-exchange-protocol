@@ -159,109 +159,68 @@ A conforming [=host system=] is any algorithm realized as software and/or hardwa
 A conforming requesting [=data recipient=] is any algorithm realized as software and/or hardware that complies with the relevant normative statements in [[#api]].
 
 
-# Guidance and Business Cases # {#business-cases}
+# Exchanging Footprints # {#business-cases}
 
 Note: This chapter is non-normative.
 
-Due to the complexity and nature of global supply chains, achieving transparency in carbon emissions at the product level is a challenging task.
-As the [[!PACT-METHODOLOGY|PACT Methodology Version 3.0]] provides the methodological foundations for calculating product carbon footprints (PCFs),
-this specification focuses on enabling transparency through a peer-to-peer PCF data exchange by specifying necessary aspects for achieving interoperability, such as the [[#data-model|data model]] and [[#api|API]].
+Achieving transparency in carbon emissions at the product level is challenging due to the complexity of global supply chains. This specification focuses on enabling transparency through a peer-to-peer PCF data exchange by specifying necessary aspects for achieving interoperability, such as the [[#data-model|data model]] and [[#api|API]].
 
-However, these two aspects can be combined in various ways to achieve different business objectives.
-
-This chapter serves as a guidance to the technical specifications in general by providing examples for inter-company business cases related to the exchange of [=PCFs=].
-The different business cases are explained in a structured way, with business objectives presented through the lenses of interoperable data exchange processes enabled by the
-different aspects of this specification.
-
-For now, this chapter focuses on asynchronous event processing. It will be expanded with additional business cases over time.
+This chapter provides examples for inter-company business cases related to the exchange of [=PCFs=], focusing on both asynchronous event processing and synchronous API calls.
 
 
-## Asynchronous Event Processing ## {#business-cases-async-events}
+## Asynchronous Exchange ## {#business-cases-async-events}
 
-### The General Principles of Event Processing ### {#business-cases-async-events-principles}
+Exchanging PCF's asynchronously requires **both** the [=data owner=] **and** the [=data recipient=] to run a PACT conformant host system, **both** sides being able to initiate communication to each other.
 
-1. A host system should strive to accept an event unless for the following reasons
-    1. event processing is not support by the host system
-    2. the syntax in the event is not supported (e.g. when the event failed “syntax checks” of the request host system)
-2. Whenever a host system's `Event` endpoint returns an error response, no follow up response event (or error event) will be sent back to the original requester
-3. The requested host system will attempt to always send a response event to the requesting host
-    system, **but the requesting host system should not rely on this behavior and retry after an
-    appropriate amount of time by sending another new request event.**
 
-### Business Case 1: Requesting Product Footprints ### {#business-cases-async-events-1}
+### Requesting a PCF
 
-#### Context and Assumptions #### {#business-cases-async-events-1-context}
+Generally, the data recipient sends a `RequestCreatedEvent` event to the data owner. The data owner will try to fullfil this request and, after some time, send the a `RequestFullfilledEvent` event back to the recipient.
 
-- This business case is triggered by a data recipient if they wish to access a Product Footprint <strong>they could not yet access through the `ListFootprints` API</strong>.
-- The data recipient and data owner have a mutually agreed upon way to identify products.
+1. The data recipient authenticates with the data owner.
+2. The data recipient sends the `RequestCreatedEvent` event to the data owner, including criteria specifying which PCF it wants to receive, like product ID, reference period or geography.
+3. The data owner validates the incoming event, directly returning a HTTP 2xx success code if OK, or a 4xx status code indicating  error. 
+4. Asynchronously, the data owner will create a PCF or find an existing relevant PCF. 
+5. The data owner will authenticate with the data recipient and send either a `RequestFullfilledEvent` back with the PCF or a `RequestRejectedEvent` if it can not produce the PCF.
+6. TODO: something about retrying
 
-#### Workflow #### {#business-cases-async-events-1-workflow}
 
-A graphical representation of the workflow is given below. However, this flow is for illustrative
-purposes only and does not replace or otherwise alter the text below the diagram.
+### Sending an updated PCF
 
-Note: All requests to the `/events` endpoint require authentication (omitted from the diagram
-below). See [[#api-auth]] for details.
+At any time after a data owner has sent a PCF to the data recipient, the data owner can send an update, for example because a PCF was updated or deprecated, or a new PCF was published, see [#lifecycle].
 
-<figure>
-  <img src="diagrams/events.svg" height="100%" width="100%" >
-  <figcaption>Event processing workflow.</figcaption>
-</figure>
+In this case the data owner sends a `PublishedEvent` to the data recipient.
 
-1. The data recipient sends a `ProductFootprintFragment`  to the `Events Endpoint` of the data owner. The data recipient should always include 1 or more product ids in property `productIds`. The data recipient should limit each fragment to exactly 1 specific product (e.g. a specific type of apple instead of all apples that somebody is offering)
-    1. If the recipient is requesting a specific reference period, it should include the reference period accordingly
-        <div class="example">
-          ```json
-          {
-            "productIds": ["urn:pact:company:customcode:buyer-id:4321"],
-            "referencePeriodStart": "2023-01-01T00:00:00Z",
-            "referencePeriodEnd": "2024-01-01T00:00:00Z"
-          }
-          ```
-        </div>
-    2. If the recipient is requesting a specific geography, it should include the geographic scope accordingly
-        <div class="example">
-          ```json
-          {
-            "productIds": ["urn:pact:company:customcode:buyer-id:4321"],
-            "geographyCountry": "FR"
-          }
-          ```
-        </div>
-    3. If the recipient has another need that is not covered above, the data recipient should
-        express it as clearly as possible to the best of their ability and following the syntactic
-        rules of the data model
-        1. Note: it is possible that this request will not be commonly understood by the data owner's host system
+1. The data owner authenticates with the data recipient and sends a `PublishedEvent` with the updated or created PCF.
+1. The data recipient should validate this incoming event and directly return a status code indicating succesful receipt (HTTP code 2xx) or an error (HTTP 4xx or 5xx). 
 
-#### Cases #### {#business-cases-async-events-1-cases}
+Refer to [[#api-action-events]] for detailed request and response formats.
 
-- Case 0: The solution does not support this kind of processing
-    - Either because the event processing does not exit at all, or the product footprint fragment as it is submitted by the data recipient is not supported by the requested host system
-    - The `events` endpoint responds with HTTP error code `400` and with a body with error code `NotImplemented`
-- Case 1: A PCF does not exist (yet) or a partially matching PCF exists
-    - Accept the event (HTTP Code 200 returned by the events endpoint)
-    - In case of a partial match, the data owner needs to decide whether to calculate the PCF(s) or not.
-        - Note: the decision making and decision making protocol for this case is up to the discretion of each data owner
-    - In case the data owner decided or needs to calculate the PCF and the calculation succeeded,
-        - the host system makes the newly calculated footprints also available to the data recipient through `ListFootprints`
-        - the host system of the data owner sends back the 1 or more product footprints in a single event to the data requester
-    - In case the data owner decided to not make additional PCFs available
-        - the host system responds listing the (partially) matching PCFs
-    - If the product cannot be found or otherwise identified through the product footprint fragment
-        - the host system of the data owner responds with a PF Response Error Event with code `NoSuchFootprint`
-    - If the PCF calculation failed for other reasons
-        - the host system SHOULD send **`PF Response Error Event`** with error code `InternalError`
-- Case 2: The PCF(s) exists
-    - The host system accepts the event (Code 200)
-    - If the data recipient does not have access to the PCF yet
-        - the data owner decides on making the PCF available or not
-        - if the data owner made the matching PCF(s) available, their host system returns the PCFs to the data recipient
-        - otherwise, the host system of the data owner responds with a error event with error code `AccessDenied`
-    - If the data recipient has access to the PCF(s)
-        - the data owner responds by sending
-- Default / Backup Case:
-    - The host systems accepts the event (Code 200)
-    - The host system sends back a `PF Response Error Event` with code `BadRequest`
+
+## Synchronous retrieval 
+
+The synchronous part of te API allows for immediate retrieval of PCF's. Refer to [[#api-action-list]] and [[#api-action-get]] for detailed request and response formats.
+
+
+### Getting multiple PCF's
+
+The `ListFootprints` action allows for directly retrieving multiple PCF's. Starting from version 3.0, host systems
+must provide filtering on a minimum set of criteria.
+
+1. The data recipient authenticates with the data owner.
+2. The data recipient calls the `/footprints` endpoint, optionally providing a filter with search criteria and a limit to obtain a list of PCF's. 
+3. After validating the request, the data owner returns a 2xx status code and the list of {<ProductFootprint>} objects. On error the data owner returns a relevant HTTP error code. For details, see [#rest-api]
+
+
+### Getting a single PCF
+
+A data-recipient can directly obtain a given PCF by it's ID by calling `GetFootprint`.
+
+1. The data recipient authenticates with the data owner.
+2. The data recipient calls the `/footprints/{id}` endpoint, providing the PCF ID (in UUID format)
+3. If found, the data owner returns the PCF in <{ProductFootprint}> and HTTP status code 200. If not found an 401 (Not found) status code will be returned. 
+
+
 
 # Product Footprint Lifecycle # {#lifecycle}
 
