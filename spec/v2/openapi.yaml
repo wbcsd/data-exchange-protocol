@@ -1566,24 +1566,27 @@ components:
     ErrorResponse:
       description: Response with an error code and descripton. See Chapter "Error
         Codes" of the Tech Specs for more details.
-      type: object
-      properties:
-        code:
-          type: string
-          description: Error code identifier.
-          enum:
-            - BadRequest # 400
-            - AccessDenied # 401
-            - TokenExpired # 401
-            - NotFound # NoSuchFootprint
-            - InternalError # 500
-            - NotImplemented #501
-        message:
-          type: string
-          description: Human readable error message.
-      required:
-      - code
-      - message
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Error code identifier.
+                enum:
+                  - BadRequest # 400
+                  - AccessDenied # 401
+                  - TokenExpired # 401
+                  - NotFound # NoSuchFootprint
+                  - InternalError # 500
+                  - NotImplemented #501
+              message:
+                type: string
+                description: Human readable error message.
+            required:
+            - code
+            - message
     BadRequestResponse:
       description: Bad request.
       $ref: '#/components/schemas/ErrorResponse'
