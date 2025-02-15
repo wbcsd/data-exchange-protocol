@@ -9,7 +9,7 @@
     "pfs": [
       {
         "id": "91715e5e-fd0b-4d1c-8fab-76290c46e6ed",
-        "specVersion": "2.0.0",
+        "specVersion": "3.0.0",
         "version": 1,
         "created": "2022-03-01T09:32:20Z",
         "status": "Active",
@@ -80,7 +80,7 @@
         },
         "extensions": [
           {
-            "specVersion": "2.0.0",
+            "specVersion": "3.0.0",
             "dataSchema": "https://catalog.carbon-transparency.com/shipment/1.0.0/data-model.json",
             "data": {
               "shipmentId": "S1234567890",

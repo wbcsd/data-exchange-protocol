@@ -2,7 +2,7 @@
     "data": [
         {
             "id": "d9be4477-e351-45b3-acd9-e1da05e6f633",
-            "specVersion": "2.1.0",
+            "specVersion": "3.0.0",
             "precedingPfIds": [
                 "51131FB5-42A2-4267-A402-0ECFEFAD1619"
             ],
@@ -86,7 +86,7 @@
             },
             "extensions": [
                 {
-                    "specVersion": "2.0.0",
+                    "specVersion": "3.0.0",
                     "dataSchema": "https://catalog.carbon-transparency.com/shipment/1.0.0/data-model.json",
                     "data": {
                         "shipmentId": "S1234567890",
