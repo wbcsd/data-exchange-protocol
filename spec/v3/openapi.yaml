@@ -32,6 +32,14 @@ paths:
       operationId: listFootprints
       tags: [footprint]
       parameters:
+      - $ref: '#/components/parameters/productId'
+      - $ref: '#/components/parameters/companyId'
+      - $ref: '#/components/parameters/geography'
+      - $ref: '#/components/parameters/classification'
+      - $ref: '#/components/parameters/validOn'
+      - $ref: '#/components/parameters/validAfter'
+      - $ref: '#/components/parameters/validBefore'
+      - $ref: '#/components/parameters/status'
       - name: limit
         in: query
         schema:
@@ -44,6 +52,7 @@ paths:
         allowEmptyValue: true
         schema:
           type: string
+        deprecated: true
       responses:
         '200':
           description: Success
@@ -1209,7 +1218,6 @@ components:
       pattern: ^-((\d*[1-9]\d*)(\.\d+)?|(0+\.\d*[1-9]\d*))$
       comment: '< 0'
 
-
     # -----------
     # Events
     BaseEvent:
@@ -1446,3 +1454,75 @@ components:
           scopes:
             footprint:list: Ability to list footprints
             footprint:read: Ability to access individual footprints
+  parameters:
+    # -----------
+    # Parameters
+    productId:
+      name: productId
+      description: One or more product ID's. Will return all footprints which have a corresponding ID in their `productIds` attribute. Note that a footprint itself can also have multiple product IDs.
+      required: false
+      in: query
+      explode: true
+      schema: 
+        type: array
+        item: 
+          $ref: '#/components/schemas/URN'
+    companyId:
+      name: companyId
+      description: One or more company ID's. Will return all footprints which have a corresponding ID in their `companyId` attribute.
+      in: query
+      schema: 
+        type: array
+        item: 
+          $ref: '#/components/schemas/URN'
+    geography:
+      name: geography
+      description: One or more geographic specifiers. Values specified can denote `geographyRegion` or `geographyCountry` or `geographyCountrySubdivision`. Will return all footprints within the specified geography(s)
+      in: query
+      schema:
+        type: array
+        item: 
+          type: string
+    classification:
+      name: classification
+      description: One or more product classifications. Will return all footprints with corresponding values in the `productClassifications` attribute. Note that a footprint itself can have multiple classifications.
+      in: query
+      schema:
+        type: array
+        item: 
+          $ref: '#/components/schemas/URN'
+    validOn:
+      name: validOn
+      description: |
+        If present, MUST match all PCF's which where valid on the date specified: footprint.validityPeriodBegin <= validOn AND validFrom <= footprint.validityPeriodEnd
+      in: query
+      schema:
+        type: string
+        format: date-time
+    validAfter:
+      name: validAfter
+      description: |
+        if present, MUST match PCF's whith validAfter < footprint.validityPeriodBegin
+      in: query
+      schema:
+        type: string
+        format: date-time
+    validBefore:
+      name: validBefore
+      description: |
+        if present, MUST match PCF's whith validBefore > footprint.validityPeriodEnd
+      in: query
+      schema:
+        type: string
+        format: date-time
+    status:
+      name: status
+      description: |
+        if present, MUST be either be "Active" or "Deprecated"
+      in: query
+      schema:
+        type: string
+        enum:
+          - Active
+          - Deprecated
+
