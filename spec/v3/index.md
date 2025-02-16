@@ -37,6 +37,10 @@ Metadata Include: This version off
 Advisement: This document is a work in progress and should not be used for conformance testing. 
   Please refer to the [latest stable version of the Technical Specifications](https://wbcsd.github.io/tr/2024/data-exchange-protocol-20241024/) for this.
 
+<!--
+Advisement: this is the Draft Release of the PACT 3.0.0 Specifications, for consultation and feedback by the PACT Members. 
+  For an overview of changes since the last version (2.3), see the [Changelog](#changelog)
+-->
 Advisement: This document will change heavily preparing for the 3.0 draft for consultation, ETA Mid-Feb.
   All feedback is welcome.
 
