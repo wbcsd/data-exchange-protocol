@@ -193,7 +193,6 @@ components:
       - companyIds
       - productDescription
       - productIds
-      - productCategoryCpc
       - productNameCompany
       - pcf
       properties:
