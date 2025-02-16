@@ -720,10 +720,6 @@ components:
             It MUST be a non-empty set of strings with the format `AR$VERSION$`, where `$VERSION$` stands for the
             IPCC report version number and MUST be an integer.
 
-            Example values:
-            <div class=example>["AR6"]</div>
-            <div class=example>["AR5", "AR6"]</div>
-
             Per the Methodology the latest available characterization factor version shall be used, i.e., `["AR6"]`. In the event this is not possible, include the set of all characterization factors used.
           note: supersedes `characterizationFactors` deprecated in 2.3.
           summary: |              
@@ -744,6 +740,9 @@ components:
             pattern: '^AR\d+$'
           minItems: 1
           uniqueItems: true
+          examples:
+          - ["AR6"]
+          - ["AR5", "AR6"]
         crossSectoralStandards:
           description: |
             The cross-sectoral standards applied for calculating or allocating [=GHG=] emissions.
