@@ -444,7 +444,6 @@ components:
       - ipccCharacterizationFactors
       - crossSectoralStandards
       - exemptedEmissionsPercent
-      - packagingEmissionsIncluded
       # oneOf:
       # - oneOf:
       #   - required:
