@@ -63,7 +63,12 @@ def generate_excel(ws, schema, types):
     columns = dict(
         property    = dict(title = "Attribute", width = 30),
         validation  = dict(title = "Validation", width = 15),
-        description = dict(title = "User Friendly Description", width = 60, wrap_text = True),
+        description = dict(title = "User Friendly Description", width = 60, wrap_text = True, description="""
+M=Mandatory
+M2=Mandatory for any PCF calculated following PACT-2
+M3=Mandatory for any PCF calculated following PACT-3
+M2-2025=Mandatory for any PCF calculated in or after 2025 with PACT-2
+M3-2027=Mandatory for any PCF calculated in or after 2027 with PACT-3""".strip()),
         unit        = dict(title = "Unit", width = 17),
         comment     = dict(title = "Comment", width = 30),
         #link       = dict(title = "Link to Methodology", width = 15),
