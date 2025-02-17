@@ -20,7 +20,7 @@ See for more information https://backlog.carbon-transparency.org/Explore-the-pos
 Proposal to include 2 additional units of measurement into the data model for accounting for service-releated emissions.
 
 - **hour**: time in hours for Desk-based services
-- **Mbps**: amount of data used, transferred or stored, per time unit, for IT-related services.
+- **Mb s**: amount of data used, transferred or stored, per time unit, for IT-related services.
 
 ## Examples
 
@@ -39,20 +39,20 @@ In PCF format:
 
 ### IT-related services.
 
-A supplier of a data streaming service can issue a PCF stating that, using its product, the transfer of 1GB per hour will result in 0.2 kgCO2e. 
+A supplier of a data streaming service can issue a PCF stating that, using its product, the transfer of 8Mb per second will result in x 0.0000152kgCO2e. 
 
 The purchaser of this service can multiply with the **amount of data** actually streamed per unit of time *and* the **amount of time** to calculate the resulting emissions. 
 
-The Methodology WG confirms the use of **Mbps** for this metric. See also 
+The Methodology WG confirms the use of **Mb s** for this metric. See also 
 https://ghgprotocol.org/sites/default/files/ghgp/GHGP-ICTSG%20-%20ALL%20Chapters.pdf
 
 
 In PCF format:
 ```json
-"unitOfMeasurement": "Mbps"
+"unitOfMeasurement": "megabit second"
 "productDescription": "Streaming Service"
 "productAmount": "1"
-"pcfExcludingBiogenic": "0.0000055"
+"pcfExcludingBiogenic": "0.0000152"
 ```
 
 ## Rationale
