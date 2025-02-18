@@ -132,7 +132,7 @@ paths:
       tags: [event]
       requestBody:
         content:
-          application/json:
+          application/cloudevents+json:
             schema:
               oneOf:
               - $ref: '#/components/schemas/RequestCreatedEvent'

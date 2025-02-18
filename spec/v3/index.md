@@ -9,9 +9,9 @@ In addition, for publishing a release:
   Update the Previous Version and TR links
 -->
 <pre class='metadata'>
-Text Macro: DATE 20250212
+Text Macro: DATE 20250217
 Text Macro: VERSION 3.0.0
-Text Macro: STATUS LD
+Text Macro: STATUS Draft
 Title: Technical Specifications for PCF Data Exchange
 TR: https://wbcsd.github.io/tr/2024/data-exchange-protocol-20241024/
 Previous Version: https://wbcsd.github.io/tr/2024/data-exchange-protocol-20240410/
@@ -34,15 +34,16 @@ Metadata Include: This version off
 
 # Introduction # {#intro}
 
+Advisement: This is the Draft Release of the PACT 3.0.0 Specifications, for consultation and feedback by the PACT Members. 
+
 Advisement: This document is a work in progress and should not be used for conformance testing. 
   Please refer to the [latest stable version of the Technical Specifications](https://wbcsd.github.io/tr/2024/data-exchange-protocol-20241024/) for this.
 
-<!--
-Advisement: this is the Draft Release of the PACT 3.0.0 Specifications, for consultation and feedback by the PACT Members. 
   For an overview of changes since the last version (2.3), see the [Changelog](#changelog)
--->
+<!--
 Advisement: This document will change heavily preparing for the 3.0 draft for consultation, ETA Mid-Feb.
   All feedback is welcome.
+-->
 
 This document contains the necessary technical foundation for the [=PACT Network=], an open and global network for emission data exchange.
 
@@ -681,10 +682,72 @@ path: ../../LICENSE.md
 
 # Appendix B: Changelog # {#changelog}
 
+## Version 3.0.0-20250217 (Draft Feb 17, 2025) ## {#changelog-3.0.0-20250217}
+
+Summary of major changes since version 2.3:
+
+1. Simplified versioning (ADR-41) included in [[#lifecycle]]. 
+2. Simplified filtering for Sync and Async API (ADR-42)
+3. Add Biogenic Emissions and Removals (ADR-45)
+4. Include attributes for CCU (ADR-46) 
+5. Consistent typing of real numbers (ADR-39)
+6. Aditional units for service-related footprints (ADR-40)
+7. Clarification of unit of measurement and product amount (ADR-36)
+8. Common URN structure for product ids and classification id's (ADR-34)
+
+Data model changes:
+
+Properties added:
+  - <{CarbonFootprint/declaredUnitOfMeasurement}>
+  - <{CarbonFootprint/declaredUnitAmount}>
+  - <{CarbonFootprint/pcfExcludingBiogenicCO2Withdrawal}>
+  - <{CarbonFootprint/pcfIncludingBiogenicCO2Withdrawal}>
+  - <{CarbonFootprint/biogenicNonCO2Emissions}>
+  - <{CarbonFootprint/biogenicCO2Withdrawal}>
+  - <{CarbonFootprint/landUseChangeGhgEmissions}>
+  - <{CarbonFootprint/landCarbonLeakage}>
+  - <{CarbonFootprint/landManagementBiogenicCO2Emissions}>
+  - <{CarbonFootprint/landManagementBiogenicCO2Removals}>
+  - <{CarbonFootprint/uncertifiedLandManagementCO2Removals}>
+  - <{CarbonFootprint/landAreaOccupation}>
+  - <{CarbonFootprint/outboundLogisticsGhgEmissions}>
+  - <{CarbonFootprint/ipccCharacterizationFactors}>
+  - <{CarbonFootprint/ccuOrigin}>
+  - <{CarbonFootprint/ccuCarbonContent}>
+  - <{CarbonFootprint/ccuCreditCertification}>
+  - <{CarbonFootprint/ccuCalculationApproach}>
+  - <{CarbonFootprint/verification}>
+
+Properties removed:
+
+  - `ProductFootprint/productCategoryCpc`
+  - `ProductFootprint/statusComment`
+  - `CarbonFootprint/pCfIncludingBiogenic`
+  - `CarbonFootprint/pCfIncludingBiogenic`
+  - `CarbonFootprint/dLucGhgEmissions`
+  - `CarbonFootprint/packagingEmissionsIncluded`
+  - `CarbonFootprint/landManagementGhgEmissions`
+  - `CarbonFootprint/crossSectoralStandardsUsed`
+  - `CarbonFootprint/declaredUnit`
+  - `CarbonFootprint/biogenicCarbonWithdrawal`
+  - `CarbonFootprint/uncertaintyAssessmentDescription`
+  - `Assurance/assurance`
+  - `Assurance/level`
+  - `Assurance/boundary`
+  - `DataQualityIndicators/coveragePercent`
+  - `DataQualityIndicators/reliabilityDQR`
+  - `DataQualityIndicators/completenessDQR`
+
+Properties and types renamed:
+
+  - `Assurance` is now <{Verification}>
+  - `CarbonFootprint/assurance` renamed to <{CarbonFootprint/verification}>
+
+
 ## Version 3.0.0-20250212 (Feb 12, 2025) ## {#changelog-3.0.0-20250212}
 
 Summary of changes:
-1. Simplified version (ADR-41) included in [[#lifecycle]]. 
+1. Simplified versioning (ADR-41) included in [[#lifecycle]]. 
 2. Deprecation of `ProductFootprint.version` and `ProductFootprint.updated` properties.
 3. Removed `ProductFootprint.statusComment` property.
 4. Added paragraph on [[#validity-period]] to [[#lifecycle]]
