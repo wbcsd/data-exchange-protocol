@@ -669,9 +669,13 @@ path: data-model.generated.md
 # HTTP REST API # {#api}
 
 <pre class=include>
-path: rest-api.md
+path: rest-api.generated.md
 </pre>
 
+
+<pre class=include>
+path: rest-api.md
+</pre>
 
 # Appendix A: License # {#license}
 
