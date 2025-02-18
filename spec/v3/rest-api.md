@@ -432,12 +432,6 @@ The Action Events endpoint accepts CloudEvent events (see [[!CE]]) encoded in "S
 
 Support for Action Events is MANDATORY.
 
-If a [=host system=] does NOT implement the [=Action Events=] endpoint,
-
-1. it SHOULD respond with a conforming [=error response=] and HTTP [=error response code=].
-1. it SHOULD respond to authenticated Action Events calls with an [=error response=] with code [=NotImplemented=].
-2. it MUST respond with an error HTTP Status Code (4xx, 5xx).
-
 
 ### Request Syntax ### {#api-action-events-request}
 
