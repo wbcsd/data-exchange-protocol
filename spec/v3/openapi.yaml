@@ -1318,13 +1318,43 @@ components:
           description: The time the event occurred.
         data:
           type: object
-          description: data object
-          required:
-          - pf
+          description: Criteria sepeci object
           properties:
-            pf:
-              type: object
-              description: ProductFootprintFragment specifying the requested footprint(s).
+            productId: 
+              $ref: '#/components/parameters/productId'
+              type: array
+              item: 
+                $ref: '#/components/schemas/URN'
+            companyId:
+              $ref: '#/components/parameters/companyId'
+              type: array
+              item: 
+                $ref: '#/components/schemas/URN'
+            geography:
+              $ref: '#/components/parameters/geography'
+              type: array
+              item: string
+            classification:
+              $ref: '#/components/parameters/classification'
+              type: array
+              item: 
+                $ref: '#/components/schemas/URN'
+            validOn:
+              $ref: '#/components/parameters/validOn'
+              type: string
+              format: date-time
+            validAfter:
+              $ref: '#/components/parameters/validAfter'
+              type: string
+              format: date-time
+            validBefore:
+              $ref: '#/components/parameters/validBefore'
+              type: string
+              format: date-time
+            status:       
+              $ref: '#/components/parameters/status'
+              type: string
+              format: date-time
             comment:
               type: string
     RequestFulfilledEvent:
@@ -1460,7 +1490,6 @@ components:
     productId:
       name: productId
       description: One or more product ID's. Will return all footprints which have a corresponding ID in their `productIds` attribute. Note that a footprint itself can also have multiple product IDs.
-      required: false
       in: query
       explode: true
       schema: 
