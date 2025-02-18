@@ -30,6 +30,11 @@ def get_property_type_spec(property):
     
     if "obsolete" in property:
         text += "<span class='json-schema-obsolete'>obsolete</span>"
+    if "deprecated" in property:
+        text += "<span class='json-schema-obsolete'>deprecated</span>"
+
+    if "const" in property:
+        text += f" = `\"{property['const']}\"`"   
 
     if "enum" in property:
         text += "<div class='json-schema-enum'>"
@@ -62,6 +67,25 @@ def get_example_text(name, property):
     
     return text
 
+def write_property(output, type, name, property):
+    output.write("<tr>\n")
+    output.write(f"  <td><dfn>{name}</dfn>\n")
+    output.write("  <td>\n")
+    output.write("  <div class='json-schema-type'>")
+    if 'required' in type and name in type['required']:
+        output.write("  <span class='json-schema-required'>required</span>\n")
+    output.write(get_property_type_spec(property) + "</div>\n")
+    output.write("  \n\n")
+    output.write(property["description"].strip().replace("\n\n\n", "\n\n\n\n"))
+    output.write(get_example_text(name, property))
+    output.write("\n")
+    if property.get("x-unit"):
+        output.write(f"<div class='json-schema-unit'>{property['x-unit']}")
+        if property.get("comment"):
+            output.write(f"<br>\n{sanitize(property['comment'])}")
+        output.write("</div>\n")
+
+
 def sanitize(text):
     return text.replace("<", "&lt;").replace(">", "&gt;")
 
@@ -89,22 +113,7 @@ def generate_type_description(schema, type_name, type, output):
         for name, property in type["properties"].items():
             if property.get("obsolete"):
                 continue
-            output.write("<tr>\n")
-            output.write(f"  <td><dfn>{name}</dfn>\n")
-            output.write("  <td>\n")
-            output.write("  <div class='json-schema-type'>")
-            if 'required' in type and name in type['required']:
-                output.write("  <span class='json-schema-required'>required</span>\n")
-            output.write(get_property_type_spec(property) + "</div>\n")
-            output.write("  \n\n")
-            output.write(property["description"].strip().replace("\n\n\n", "\n\n\n\n"))
-            output.write(get_example_text(name, property))
-            output.write("\n")
-            if property.get("x-unit"):
-                output.write(f"<div class='json-schema-unit'>{property['x-unit']}")
-                if property.get("comment"):
-                    output.write(f"<br>\n{sanitize(property['comment'])}")
-                output.write("</div>\n")
+            write_property(output, type, name, property)
 
         output.write("</table>\n\n")
     if "allOf" in type:
@@ -165,6 +174,96 @@ def generate_data_model(input, output):
             print(name)
             # for name in ["ProductFootprint", "CarbonFootprint"]:
             generate_type_description(schema, name, type, file)
+
+def generate_operation(output, path, method, operation, variant = None):
+    output.write(f"## {operation['summary']}")
+    if variant:
+        output.write(f": {variant['title']}")
+    output.write("\n")
+    output.write(f"{variant and variant.get('description') or operation['description']}\n\n")
+    output.write(f"```HTTP\n{method.upper()} {path}\n```\n")
+    if operation.get("parameters"):
+        output.write("### Query Parameters\n")
+        output.write(f"<table class='data' dfn-for='{operation['operationId']}' dfn-type='element-attr'>\n")
+        output.write("<thead>\n")
+        output.write("<tr>\n")
+        output.write("  <th>Name</th>\n")
+        output.write("  <th>Description</th>\n")
+        output.write("<tbody>\n")
+        for param in operation["parameters"]:
+            #file.write(f"- **{param['name']}** ({param['in']}): {param['description']}\n")
+            output.write(f"<tr>\n  <td>**{param['name']}** ({param['in']})\n")
+            output.write(f"  <td>{param['description']}\n")
+    output.write("</table>\n\n")
+
+    if not variant:
+        variant = operation.get("requestBody")
+    if variant:
+        output.write("### Request Body\n")
+        output.write("`content-type: application/cloudevents+json`\n") 
+        output.write(f"<table class='data' dfn-for='{operation['operationId']}' dfn-type='element-attr'>\n")
+        output.write("<thead>\n")
+        output.write("<tr>\n")
+        output.write("  <th>Name</th>\n")
+        output.write("  <th>Description</th>\n")
+        output.write("<tbody>\n")
+        for name, property in variant["properties"].items():
+            write_property(output, variant, name, property)
+        output.write("</table>\n\n")
+
+    output.write("\n")
+    output.write("### Responses\n")
+    for status, response in operation["responses"].items():
+        output.write(f"- **{status}**: {response['description']}\n")
+        if response.get("content"):
+            for content_type, content in response["content"].items():
+                for name, property in content["schema"]["properties"].items():
+                    print(name)
+                    print(property)
+                    write_property(output, content['schema'], name, property)
+                    # output.write(f"  - **{name}**\n")
+    output.write("\n")
+
+def generate_rest_api(input, output):
+    # Load the schema from the file
+    with open(input, encoding="utf-8") as file:
+        schema_unresolved = yaml.safe_load(file)
+    schema = jsonref.replace_refs(schema_unresolved, merge_props=True)
+
+    # Generate the REST API in Bikeshed format
+    with open(output, "w", encoding="utf-8") as file:
+        # Write the introduction
+        file.write(schema["x-documentation"]["introduction"])
+        file.write("\n\n")
+
+        # Write the host system section
+        file.write(schema["x-documentation"]["host_system"])
+        file.write("\n\n")
+
+        # Write the authentication flow section
+        file.write(schema["x-documentation"]["authentication_flow"])
+        file.write("\n\n")
+
+        # Write the minimum requirements section
+        file.write(schema["x-documentation"]["minimum_requirements"])
+        file.write("\n\n")
+
+        # Generate the API overview
+        #file.write("## API Overview\n")
+        #file.write("This section includes all operations with parameter descriptions and response descriptions.\n\n")
+
+        for path, path_item in schema["paths"].items():
+            for method, operation in path_item.items():
+
+                if operation.get("requestBody"):
+                    if operation["requestBody"]["content"]["application/cloudevents+json"]["schema"].get("oneOf"):
+                        for request_object in operation["requestBody"]["content"]["application/cloudevents+json"]["schema"]["oneOf"]:
+                            generate_operation(file, path, method, operation, request_object)
+                else:
+                    generate_operation(file, path, method, operation)
+
+
+
 
 def test(input):
     with open(input, encoding="utf-8") as file:

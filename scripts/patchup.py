@@ -36,47 +36,9 @@ def parse_bikeshed_file(bikeshed_file):
     
     return title, date, version, status
 
-CUSTOM_CSS = """
-<style>
-pre, code, samp {
-  font-style: normal;
-}
-li {
-  margin: initial;
-  padding: initial;
-}
-dfn > code {
-  font-weight: normal;
-}
-[data-link-type=element]::before,
-[data-link-type=element]::after
-{
-  content: initial;
-}
-.json-schema-type {
-  font-family: monospace;
-}
-.json-schema-required {
-  color: rgba(160,0,0,0.9);
-}
-.json-schema-unit {
-  font-style: italic;
-  font-size: 0.9em;
-}
-.json-schema-enum code {
-  background-color: rgba(100,100,100,0.03);
-  color: #666;
-  font-size: 0.8em;
-  border: 1px solid rgba(100,100,100,0.9);
-  border-radius: 2px;
-  padding: 2px;
-  margin-top: 6px;
-  margin-left: 0px;
-  margin-right: 0px;
-  display: inline-block;
-}
-</style>
-<link href="assets/markdown.css" rel="stylesheet" />
+INCLUDE_HEADER = """
+<link href="../assets/custom.css" rel="stylesheet" />
+<link href="../assets/markdown.css" rel="stylesheet" />
 """
 
 # Patch the already generated html file with adapted title and status.
@@ -90,7 +52,7 @@ def update_html_file(html_file, title, status):
         subtitle = "Living Document" 
     content = re.sub(r'(<h2 .* id="profile-and-date">).*(</h2>)', r'\1' + subtitle + r'\2', content, count=1)
     # Patch some CSS as well. 
-    content = re.sub(r'^\s*<body', CUSTOM_CSS + '<body', content, count=1, flags=re.MULTILINE)
+    content = re.sub(r'^\s*<body', INCLUDE_HEADER + '<body', content, count=1, flags=re.MULTILINE)
     with open(html_file, 'w') as file:
         file.write(content)
 
