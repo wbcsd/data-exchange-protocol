@@ -480,6 +480,8 @@ components:
             - ton kilometer
             - square meter
             - piece
+            - hour
+            - megabit second
         declaredUnitAmount:
           description: |
             The amount of <{CarbonFootprint/declaredUnitOfMeasurement|units}> contained
