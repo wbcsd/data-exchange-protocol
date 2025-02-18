@@ -220,20 +220,39 @@ Lists [[#productfootprint|product footprints]] with [[#api-action-list-paginatio
 
 ### Filtering ### {#api-action-list-filtering}
 
-Filtering CAN be requested by a [=data recipient=] by setting a conforming [=Filter=] request parameter.
+Filtering on minimal set of criteria MUST be supported by [=Host systems=].
 
-Note: The filter statement syntax is described at the [=Filter=] request parameter.
+Note: This MUST be the same set of criteria that can be used with [=PF Request Event=]
 
-Support for [=Filter|filtering=] by a [=host system=] is OPTIONAL such that
+Note: Optional filtering specified in version 2.2+ (based on OData4) is NOW DEPRECATED. 
 
-1. if a [=host system=] does not implement Filtering, it MUST process the
-     request as if no [=Filter=] was provided
-2. If a [=host system=] implements Filtering, it CAN process the [=filter=]
-     statement on a best-effort basis:
-     1. it CAN ignore the filter statement or parts of the filter statement, or
-     2. it CAN refuse to process the specific filter statement if it does not support
-          the filter statement or parts of it. In this case, it MUST return
-          an [=error response=] with code [=NotImplemented=].
+
+: `productId` array(string) 
+:: If present, MUST be 1 or more product ID's. Will return all footprints which have a corresponding ID in their `productIds` attribute. Note that a footprint itself can also have multiple product IDs.
+: `companyId` array(string) 
+:: If present, MUST be 1 or more company ID's. Will return all footprints with corresponding id's in the `companyIds` attribute.
+: `geography` array(string) 
+:: if present, MUST be 1 or more geographic specifiers. Values specified can denote `geographicRegion` or `geographyCountry` or `geographyCountrySubdivision`. Will return all footprints within the specified geography(s)
+: `classification` array(string) 
+:: if present, MUST be 1 or more product classifications. Will return all footprints with corresponding values in the `productClassifications` attribute. Note that a footprint itself can have multiple classifications.
+: `validOn` (date-string) 
+:: if present, MUST match all PCF's which where valid on the date specified: footprint.validityPeriodBegin <= validOn AND validFrom <= footprint.validityPeriodEnd
+: `validAfter` (date-string) 
+:: if present, MUST match PCF's whith validAfter < footprint.validityPeriodBegin
+: `validBefore` (date-string) 
+:: if present, MUST match PCF's whith validBefore > footprint.validityPeriodEnd
+: `status` (string) 
+:: If Present, MUST be either be "Active" or "Deprecated"
+
+#### Extensions
+
+Implementors MAY offer additional criteria to filter on. In doing so, both the sync (ListFootprints) AND async (Events/ProductFootprintRequest.Created) methods MUST implement these criteria.
+
+Additional critera MUST be named x-<implementor>-<criterium>. For example, adding functionality to search for product footprints based on an invoice-id, an software provider could choose to use: 
+
+  `x-atq-invoice-id`
+
+This will enable queries like `.../footprint/?x-atq-invoice-id=12345&geography=FR`
 
 
 ### Pagination ### {#api-action-list-pagination}
@@ -266,7 +285,7 @@ Upon a [=host system=] returning a [=pagination link=]
 ### Request Syntax (HTTP/1.1) ### {#api-action-list-request}
 
 <pre highlight=http>
-GET <l>[=Subpath=]</l>/2/footprints?<l>[=Filter=]</l>&<l>[=Limit=]</l> HTTP/1.1
+GET <l>[=Subpath=]</l>/3/footprints?<l>[Criteria]</l><l>[=Limit=]</l> HTTP/1.1
 host: <l>[=Hostname=]</l>
 authorization: Bearer <l>[=BearerToken=]</l>
 </pre>
@@ -282,41 +301,8 @@ with request parameters:
 : <dfn>BearerToken</dfn>
 :: see [=Bearer Token=] of section [[#api-auth]]
 
-: <dfn>Filter</dfn>
-::
-    `Filter` is an OPTIONAL request parameter. If defined,
-        1. the name of the HTTP request parameter MUST be `$filter`
-        2. the value of the HTTP request parameter MUST conform to the `$filter` syntax as defined by the [ODatav4 specification](https://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html).
-
-    Additionally, the `$filter` statement MUST only include the following operators and properties:
-        - Logical operators `eq`, `lt`, `le`, `gt`, `ge` on properties <{ProductFootprint/created}>, <{ProductFootprint/updated}>, <{ProductFootprint/productCategoryCpc}>, <{CarbonFootprint/geographyCountry}>, <{CarbonFootprint/referencePeriodStart}>, <{CarbonFootprint/referencePeriodEnd}>.
-        - Logical operator `and`.
-        - Lambda operator `any` on collection-valued properties <{ProductFootprint/companyIds}>, <{ProductFootprint/productIds}>. The expression argument of the operator MUST only include the `eq` operator.
-
-    <div class=example>
-        Get footprints with CPC code "3342":
-
-        ```$filter=productCategoryCpc eq '3342'```
-    </div>
-
-    <div class=example>
-        Get footprints scoped for country:
-
-        ```$filter=pcf/geographyCountry eq 'DE'```
-    </div>
-
-    <div class=example id="example-filter-period">
-        Get footprints for 2023 reference period:
-
-        ```$filter=(pcf/referencePeriodStart ge '2023-01-01T00:00:00.000Z') and (pcf/referencePeriodEnd lt '2024-01-01T00:00:00.000Z') ```
-    </div>
-
-    <div class=example>
-        Get footprints for a specific product:
-
-        ```$filter=productIds/any(productId:(productId eq 'urn:...'))```
-    </div>
-
+: <dfn>Criteria</dfn>
+:: see [Filtering](#api-action-list-filtering) for the parameters which can be specified.
 
 : <dfn>Limit</dfn>
 ::
@@ -551,9 +537,12 @@ A host system SHOULD NOT retry sending a response event for more than 3 days.
 #### PF Request Event syntax #### {#api-action-events-case-2-request}
 
 The <dfn>PF Request Event</dfn> MUST be a CloudEvent event sent from a [=data recipient=] to a [=data owner=]
-containing a [=ProductFootprintFragment|Product Footprint fragment=] that references a single
-product. The data recipient CAN add additional properties to a fragment to further limit which PCF
-is requested, such as to select PCFs with specific scope(s) ([[#dt-carbonfootprint-scope]]).
+containing a set of criteria that reference the product for wich the PCF is being requested. 
+
+Note: The ProductFootprintFragment in version 2.x is OBSOLETE.
+
+Note: This MUST be the same set of criteria that can be used with [=Action ListFootprints=]
+
 
 Note: this specification does not yet specify the processing requirements of a host system upon
 receiving such an event. This means the host system can e.g. ignore 1 or more properties, it might
@@ -568,9 +557,16 @@ The [=PF Request Event=] is defined as a JSON-encoded CloudEvent event with the 
   "specversion": "1.0",
   "id": "<l>[=EventId=]</l>",
   "source": "//<l>[=EventHostname=]</l>/<l>[=EventSubpath=]</l>",
-  "time": "2022-05-31T17:31:00Z",
+  "time": "2025-01-31T17:31:00Z",
   "data": {
-    "pf": <l>[=ProductFootprintFragment=]</l>,
+    "productId": ["urn:pact:product-id:1234"]
+    "companyId": ["urn:companyId"]
+    "geography": ["DE"]
+    "classification": ["urn:cpc:9585"]
+    "validOn": "2025-02-01T00:00:00Z",
+    "validAfter": "2025-02-01T00:00:00Z",
+    "validBefore": "2025-02-01T00:00:00Z",
+    "status": "Active",
     "comment": <l>[=PFRequestComment=]</l>
   }
 }
@@ -578,18 +574,22 @@ The [=PF Request Event=] is defined as a JSON-encoded CloudEvent event with the 
 </pre>
 
 with
-
-: <dfn>ProductFootprintFragment</dfn>
-:: A JSON object with a subset of <{ProductFootprint}> properties, **including nested properties**. It is RECOMMENDED to include at least the [=ProductIds=] in the PF Request Event request body.
-    <div class=example>
-    Example `ProductFootprintFragment` for querying a PF via <strong>productId</strong> in the PF Request Event request body
-    ```json
-      {
-        "productIds": [
-            "urn:gtin:4712345060507"
-        ]
-      }
-    ```
+: `productId` array(string) 
+:: If present, MUST be 1 or more product ID's. Will return all footprints which have a corresponding ID in their `productIds` attribute. Note that a footprint itself can also have multiple product IDs.
+: `companyId` array(string) 
+:: If present, MUST be 1 or more company ID's. Will return all footprints with corresponding id's in the `companyIds` attribute.
+: `geography` array(string) 
+:: if present, MUST be 1 or more geographic specifiers. Values specified can denote `geographicRegion` or `geographyCountry` or `geographyCountrySubdivision`. Will return all footprints within the specified geography(s)
+: `classification` array(string) 
+:: if present, MUST be 1 or more product classifications. Will return all footprints with corresponding values in the `productClassifications` attribute. Note that a footprint itself can have multiple classifications.
+: `validOn` (date-string) 
+:: if present, MUST match all PCF's which where valid on the date specified: footprint.validityPeriodBegin <= validOn AND validFrom <= footprint.validityPeriodEnd
+: `validAfter` (date-string) 
+:: if present, MUST match PCF's whith validAfter < footprint.validityPeriodBegin
+: `validBefore` (date-string) 
+:: if present, MUST match PCF's whith validBefore > footprint.validityPeriodEnd
+: `status` (string) 
+:: If Present, MUST be either be "Active" or "Deprecated"
 : <dfn>PFRequestComment</dfn>
 :: The OPTIONAL comment by the [=data recipient=] to the [=data owner=] about the request.
      If defined, the [=PFRequestComment=] MUST be encoded as a JSON string.

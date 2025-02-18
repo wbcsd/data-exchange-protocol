@@ -209,7 +209,7 @@ The synchronous part of te API allows for immediate retrieval of PCF's. Refer to
 ### Getting multiple PCF's
 
 The `ListFootprints` action allows for directly retrieving multiple PCF's. Starting from version 3.0, host systems
-must provide filtering on a minimum set of criteria.
+must provide filtering on a minimum set of criteria. 
 
 1. The data recipient authenticates with the data owner.
 2. The data recipient calls the `/footprints` endpoint, optionally providing a filter with search criteria and a limit to obtain a list of PCF's. 
