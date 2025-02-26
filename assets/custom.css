@@ -14,7 +14,8 @@ dfn {
     font-weight: bold;
 }
 
-dfn>code {
+dfn>code,
+dt>code {
     font-weight: normal;
 }
 
