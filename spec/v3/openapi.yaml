@@ -28,7 +28,54 @@ paths:
       summary: Action ListFootprints
       description: |
         Retrieve a list of Product Carbon Footprints (PCFs) that are available. 
-        The list can be filtered by various criteria.
+        The list can be filtered by various criteria, and the result set can be
+        paginated.
+
+        ### Filtering
+
+        The [=host system=] MUST support filtering of the list of footprints by 
+        criteria below. Note that these are the same filters used by the
+        [[#action-events-productfootprint-request-created]] Event.
+
+        A host system MAY provide additional filter criteria. These MUST be named 
+        `x-....`.  For example, to add functionality to search for product 
+        footprints based on an invoice number, a software solution coould choose 
+        to support a parameter `x-atq-invoice-id`. 
+
+        This will enable queries like `/footprints/?x-atq-invoice-id=12345&geography=FR`
+
+        ### Pagination
+
+        1. The host system MAY return less ProductFootprints than requested through 
+           the [=Limit=] request parameter
+        2. The host system MUST return a `Link` header if there are additional 
+           ProductFootprints ready to be retrieved, such that
+            - The `Link` header conforms to [[!RFC8288]]
+            - The value of the `rel` parameter is equal to `next`
+            - the target IRI (RFC8288, section 3.1) of the `Link` header is absolute
+            - The value of `host` of the target IRI is equal to the value of the `host` 
+               request header from the original `ListFootprints` HTTP request
+
+        The target IRI from a pagination `link` header is called a <dfn>pagination link</dfn>.
+
+        Upon a [=host system=] returning a [=pagination link=]
+
+        1. a data recipient CAN call the pagination link more than once
+        2. upon each call, the host system
+            - MUST return the same set of Product Footprints upon successful authentication 
+              (i.e. a Bearer token authentication as defined in [[#api-auth]])
+            - MUST NOT return more product footprints than requested in case [=Limit=] was 
+               defined by a [=data recipient=]
+            - MUST return a `Link` header conforming with the previous description in case 
+               there are additional ProductFootprints available
+        3. If a response contains a second pagination link and the data recipient upon calling 
+           the second pagination link, the previous pagination link MAY no longer work: data 
+           recipients MUST NOT assume that previous pagination links continue to return results 
+           after advancing in the pagination process
+        4. a pagination link MUST be valid for at least 180 seconds after creation
+        5. a data recipient SHOULD retry calling the pagination link after the server returned
+           an error and SHOULD use a randomized exponential back-off strategy when retrying
+
       operationId: listFootprints
       tags: [footprint]
       parameters:
@@ -42,8 +89,9 @@ paths:
       - $ref: '#/components/parameters/status'
       - name: limit
         description: |
-          The maximum number of footprints to return. The [=host system=] MAY return fewer footprints,
-          but MUST return a Link header conforming to [[RFC8288]] if there are additional ProductFootprints ready to be retrieved. 
+          The maximum number of footprints to return. The [=host system=] MAY return fewer 
+          footprints, but MUST return a Link header conforming to [[RFC8288]] if there are 
+          additional ProductFootprints ready to be retrieved. 
         in: query
         schema:
           type: integer
