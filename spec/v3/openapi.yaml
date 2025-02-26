@@ -149,15 +149,6 @@ paths:
       responses:
         '200':
           description: Success
-          content:
-            application/json:
-              schema:
-                type: object
-                properties: 
-                  code: 
-                    type: string
-                  message: 
-                    type: string
         '400':
           $ref: '#/components/schemas/BadRequestResponse'
         '401':
