@@ -1173,6 +1173,52 @@ components:
             Any additional comments that will clarify the interpretation of the verification.
           type: string
 
+    FilterCriteria:
+      title: FilterCriteria
+      type: object
+      description: |
+        Criteria for filtering ProductFootprint requests.
+      properties:
+        productId: 
+          $ref: '#/components/parameters/productId'
+          type: array
+          item: 
+            $ref: '#/components/schemas/URN'
+        companyId:
+          $ref: '#/components/parameters/companyId'
+          type: array
+          item: 
+            $ref: '#/components/schemas/URN'
+        geography:
+          $ref: '#/components/parameters/geography'
+          type: array
+          item: string
+        classification:
+          $ref: '#/components/parameters/classification'
+          type: array
+          item: 
+            $ref: '#/components/schemas/URN'
+        validOn:
+          $ref: '#/components/parameters/validOn'
+          type: string
+          format: date-time
+        validAfter:
+          $ref: '#/components/parameters/validAfter'
+          type: string
+          format: date-time
+        validBefore:
+          $ref: '#/components/parameters/validBefore'
+          type: string
+          format: date-time
+        status:       
+          $ref: '#/components/parameters/status'
+          type: string
+          format: date-time
+        comment:
+          description: |
+            Free text comment.
+          type: string
+
     # -----------
     # Simple types
     NonEmptyString:
@@ -1336,46 +1382,8 @@ components:
           format: date-time
           description: The time the event occurred.
         data:
-          type: object
-          description: Criteria sepeci object
-          properties:
-            productId: 
-              $ref: '#/components/parameters/productId'
-              type: array
-              item: 
-                $ref: '#/components/schemas/URN'
-            companyId:
-              $ref: '#/components/parameters/companyId'
-              type: array
-              item: 
-                $ref: '#/components/schemas/URN'
-            geography:
-              $ref: '#/components/parameters/geography'
-              type: array
-              item: string
-            classification:
-              $ref: '#/components/parameters/classification'
-              type: array
-              item: 
-                $ref: '#/components/schemas/URN'
-            validOn:
-              $ref: '#/components/parameters/validOn'
-              type: string
-              format: date-time
-            validAfter:
-              $ref: '#/components/parameters/validAfter'
-              type: string
-              format: date-time
-            validBefore:
-              $ref: '#/components/parameters/validBefore'
-              type: string
-              format: date-time
-            status:       
-              $ref: '#/components/parameters/status'
-              type: string
-              format: date-time
-            comment:
-              type: string
+          $ref: '#/components/schemas/FilterCriteria'
+          
     RequestFulfilledEvent:
       title: ProductFootprint Request Fulfilled
       description: Notification that a ProductFootprint request has been fulfilled.
@@ -1464,51 +1472,70 @@ components:
               $ref: '#/components/schemas/ErrorResponse'
     # ---------------
     # Error Responses
-    ErrorResponse:
-      description: Response with an error code and descripton. See Chapter "Error
-        Codes" of the Tech Specs for more details.
+    Error:
+      title: Error
+      description: Object with error code and description, to be returned by the API methods 
+        in case of error. See Chapter "Error Handling" of the Tech Specs for more details.
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code identifier.
+          enum:
+            - BadRequest # 400
+            - AccessDenied # 403
+            - TokenExpired # 401
+            - NotFound # NoSuchFootprint
+            - InternalError # 500
+            - NotImplemented #501
+        message:
+          type: string
+          description: Human readable error message.
+      required:
+      - code
+      - message
+    BadRequestResponse:
+      description: Bad request.
       content:
         application/json:
           schema:
-            type: object
-            properties:
-              code:
-                type: string
-                description: Error code identifier.
-                enum:
-                  - BadRequest # 400
-                  - AccessDenied # 403
-                  - TokenExpired # 401
-                  - NotFound # NoSuchFootprint
-                  - InternalError # 500
-                  - NotImplemented #501
-              message:
-                type: string
-                description: Human readable error message.
-            required:
-            - code
-            - message
-    BadRequestResponse:
-      description: Bad request.
-      $ref: '#/components/schemas/ErrorResponse'
+            $ref: '#/components/schemas/Error'
     NotFoundResponse:
       description: Not found.
-      $ref: '#/components/schemas/ErrorResponse'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     UnauthorizedResponse: # 401
       description: Unauthorized.
-      $ref: '#/components/schemas/ErrorResponse'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     TokenExpiredResponse: # 401
       description: Token expired.
-      $ref: '#/components/schemas/ErrorResponse'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     ForbiddenResponse:
       description: Access Denied.
-      $ref: '#/components/schemas/ErrorResponse'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     NotImplementedResponse:
       description: Not implemented.
-      $ref: '#/components/schemas/ErrorResponse'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     InternalErrorResponse:
       description: Internal Error.
-      $ref: '#/components/schemas/ErrorResponse'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     BearerAuth:
       description: OAuth2 Client Credentials Grant (RFC6749 4.4)
@@ -1519,6 +1546,7 @@ components:
           scopes:
             footprint:list: Ability to list footprints
             footprint:read: Ability to access individual footprints
+
   parameters:
     # -----------
     # Parameters
