@@ -131,7 +131,7 @@ paths:
       - BearerAuth: []
   /3/events:
     post:
-      summary: Action Event
+      summary: Action Events
       description: |
         Post an event to the system. The event will be processed by the system 
         and may trigger further actions.
