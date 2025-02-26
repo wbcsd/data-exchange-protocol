@@ -7,6 +7,24 @@ import markdown
 
     
 def get_property_type_spec(property):
+    """
+    Generates a textual representation of a JSON schema property type.
+    Args:
+        property (dict): A dictionary representing the JSON schema property.
+    Returns:
+        str: A string describing the type of the property, including additional
+             information such as format, enum values, and deprecation status.
+    The function handles the following property types:
+    - object: Assumes the object is a reference to another type and uses its title.
+    - array: Recursively processes the items in the array.
+    - primitive types: Uses the type directly.
+    Additional property attributes handled:
+    - format: Appends the format to the type description.
+    - enum: Indicates that the property is an enumeration and lists the possible values.
+    - obsolete: Marks the property as obsolete.
+    - deprecated: Marks the property as deprecated.
+    - const: Indicates that the property has a constant value.
+    """
     text = ""
     if property["type"] == "object":
         # Assume that the object is a reference to another type.
@@ -46,6 +64,14 @@ def get_property_type_spec(property):
 
 
 def get_example_text(name, property):
+    """
+    Generates a formatted JSON example text for a given property.
+    Args:
+        name (str): The name of the property.
+        property (dict): The property dictionary which may contain an "examples" key.
+    Returns:
+        str: A formatted string containing the JSON example wrapped in a code block.
+    """
     text = ""
     example = None
     if "examples" in property:
@@ -67,9 +93,36 @@ def get_example_text(name, property):
     
     return text
 
+def write_defs_start(output, namespace=None, headers=['Name', 'Description']):
+    output.write(f"<table class='data' dfn-for='{namespace}' dfn-type='element-attr'>\n")
+    if headers:
+        output.write("<thead>\n")
+        output.write("<tr>\n")
+        for header in headers:
+            output.write(f"  <th>{header}</th>\n")
+        output.write("</tr>\n")
+        output.write("</thead>\n")
+    output.write("<tbody>\n")
+
+def write_defs_end(output):
+    output.write("</table>\n\n")
+
+
 def write_property(output, type, name, property):
+    """
+    Writes an HTML table row representing a property in a JSON schema.
+
+    Args:
+        output (io.TextIOWrapper): The output stream to write the HTML to.
+        type (dict): The JSON schema type definition containing the property.
+        name (str): The name of the property.
+        property (dict): The property definition from the JSON schema.
+
+    Returns:
+        None
+    """
     output.write("<tr>\n")
-    output.write(f"  <td><dfn>{name}</dfn>\n")
+    output.write(f"  <td><dfn>{name}</dfn></td>\n")
     output.write("  <td>\n")
     output.write("  <div class='json-schema-type'>")
     if 'required' in type and name in type['required']:
@@ -84,12 +137,30 @@ def write_property(output, type, name, property):
         if property.get("comment"):
             output.write(f"<br>\n{sanitize(property['comment'])}")
         output.write("</div>\n")
+    output.write("</td></tr>\n")
 
 
 def sanitize(text):
     return text.replace("<", "&lt;").replace(">", "&gt;")
 
-def generate_type_description(schema, type_name, type, output):
+
+def generate_type_description(output, schema, type_name, type):
+    """
+    Generates a markdown description for a given type schema and writes it to the provided output.
+    Args:
+        schema (dict): The entire schema containing the type definitions.
+        type_name (str): The name of the type being described.
+        type (dict): The type definition containing properties, descriptions, examples, etc.
+        output (TextIO): The output stream to write the markdown description to.
+    Writes:
+        A markdown formatted description of the type to the output stream, including sections for:
+        - Title
+        - Description
+        - Example
+        - Properties
+        - External Docs
+        - Examples
+    """
     title = type.get("title") or type_name
     output.write(f"## <dfn element>{title}</dfn>\n")
     if "description" in type:
@@ -102,35 +173,28 @@ def generate_type_description(schema, type_name, type, output):
         output.write(type['example'])
         output.write("\n</div>\n")
     if "properties" in type:
-        output.write("### Properties\n")
-        output.write("\n")
-        output.write(f"<table class='data' dfn-for='{title}' dfn-type='element-attr'>\n")
-        output.write("<thead>\n")
-        output.write("<tr>\n")
-        output.write("  <th>Name</th>\n")
-        output.write("  <th>Description</th>\n")
-        output.write("<tbody>\n")
+        output.write("### Properties\n\n")
+        write_defs_start(output, title)
         for name, property in type["properties"].items():
             if property.get("obsolete"):
                 continue
             write_property(output, type, name, property)
-
-        output.write("</table>\n\n")
+        write_defs_end(output)
     if "allOf" in type:
         output.write("### All Of\n")
         output.write("\n")
         for sub_type in type["allOf"]:
-            generate_type_description(schema, name, sub_type, output)
+            generate_type_description(output, schema, name, sub_type)
     if "oneOf" in type:
         output.write("### One Of\n")
         output.write("\n")
         for sub_type in type["oneOf"]:
-            generate_type_description(schema, name, sub_type, output)
+            generate_type_description(output, schema, name, sub_type)
     if "anyOf" in type:
         output.write("### Any Of\n")
         output.write("\n")
         for sub_type in type["anyOf"]:
-            generate_type_description(schema, name, sub_type, output)
+            generate_type_description(output, schema, name, sub_type)
     if "enum" in type:
         output.write("### Enum\n")
         output.write("\n")
@@ -156,24 +220,26 @@ def generate_type_description(schema, type_name, type, output):
             output.write(f"{example['description']}\n")
             output.write("\n")
      
-def generate_data_model(input, output):
+
+def generate_data_model(input_path, output_path):
     # Load the schema from the file
-    with open(input, encoding="utf-8") as file:
-        schema_unresolved = yaml.safe_load(file)
+    with open(input_path, encoding="utf-8") as input:
+        schema_unresolved = yaml.safe_load(input)
     schema = jsonref.replace_refs(schema_unresolved, merge_props=True)
 
     # Generate the data model in Bikeshed format
-    with open(output, "w", encoding="utf-8") as file:
+    with open(output_path, "w", encoding="utf-8") as output:
         for name,type in schema["components"]["schemas"].items():
             # Skip all types that are only used for requests or responses
-            if name.endswith("Event") or name.endswith("Request") or name.endswith("Response"):
+            if name.endswith("Event") or name.endswith("Request") or name.endswith("Response") and name != "ErrorResponse":
                 continue
             # Skip all types without a title
             if not "title" in type:
                 continue
             print(name)
             # for name in ["ProductFootprint", "CarbonFootprint"]:
-            generate_type_description(schema, name, type, file)
+            generate_type_description(output, schema, name, type)
+
 
 def generate_operation(output, path, method, operation, variant = None):
     output.write(f"## {operation['summary']}")
@@ -181,53 +247,55 @@ def generate_operation(output, path, method, operation, variant = None):
         output.write(f": {variant['title']}")
     output.write("\n")
     output.write(f"{variant and variant.get('description') or operation['description']}\n\n")
-    output.write(f"```HTTP\n{method.upper()} {path}\n```\n")
+    query = "?params=value&.." if operation.get("parameters") and (p["in"] == "query" for p in operation.get("parameters")) else ""
+    output.write(f"```HTTP\n{method.upper()} {path}{query}\n```\n")
     if operation.get("parameters"):
-        output.write("### Query Parameters\n")
-        output.write(f"<table class='data' dfn-for='{operation['operationId']}' dfn-type='element-attr'>\n")
-        output.write("<thead>\n")
-        output.write("<tr>\n")
-        output.write("  <th>Name</th>\n")
-        output.write("  <th>Description</th>\n")
-        output.write("<tbody>\n")
+        output.write("### Parameters\n")
+        write_defs_start(output, operation['operationId'])
         for param in operation["parameters"]:
             #file.write(f"- **{param['name']}** ({param['in']}): {param['description']}\n")
-            output.write(f"<tr>\n  <td>**{param['name']}** ({param['in']})\n")
+            output.write(f"<tr>\n  <td><dfn>{param['name']}</dfn> ({param['in']})\n")
             output.write(f"  <td>{param['description']}\n")
-    output.write("</table>\n\n")
+        write_defs_end(output)
 
     if not variant:
         variant = operation.get("requestBody")
     if variant:
         output.write("### Request Body\n")
         output.write("`content-type: application/cloudevents+json`\n") 
-        output.write(f"<table class='data' dfn-for='{operation['operationId']}' dfn-type='element-attr'>\n")
-        output.write("<thead>\n")
-        output.write("<tr>\n")
-        output.write("  <th>Name</th>\n")
-        output.write("  <th>Description</th>\n")
-        output.write("<tbody>\n")
+        write_defs_start(output, operation['operationId'])
         for name, property in variant["properties"].items():
             write_property(output, variant, name, property)
-        output.write("</table>\n\n")
+        write_defs_end(output)
 
     output.write("\n")
     output.write("### Responses\n")
+    output.write("`content-type: application/json`\n") 
+    write_defs_start(output, headers=['Status', 'Response'])
     for status, response in operation["responses"].items():
-        output.write(f"- **{status}**: {response['description']}\n")
-        if response.get("content"):
+        output.write(f"<tr>\n")
+        output.write(f"<td>**{status}**</td>\n")
+        output.write(f"<td>{response['description']}\n\n")
+        if status < "200" or status >= "300":
+            output.write("See [Error Handling](#error-handling) for details. Response body SHOULD contain a JSON <{Error}> object\n\n")
+        elif response.get("content"):
             for content_type, content in response["content"].items():
+                write_defs_start(output, headers=None)
                 for name, property in content["schema"]["properties"].items():
                     print(name)
-                    print(property)
                     write_property(output, content['schema'], name, property)
-                    # output.write(f"  - **{name}**\n")
+                write_defs_end(output)
+        else:
+            output.write("No content\n")
+        output.write("</td>\n</tr>\n")
+    write_defs_end(output)
     output.write("\n")
 
-def generate_rest_api(input, output):
+
+def generate_rest_api(input_path, output_path):
     # Load the schema from the file
-    with open(input, encoding="utf-8") as file:
-        schema_unresolved = yaml.safe_load(file)
+    with open(input_path, encoding="utf-8") as input:
+        schema_unresolved = yaml.safe_load(input)
     schema = jsonref.replace_refs(schema_unresolved, merge_props=True)
 
     # Generate the REST API in Bikeshed format
@@ -239,9 +307,9 @@ def generate_rest_api(input, output):
                 if operation.get("requestBody"):
                     if operation["requestBody"]["content"]["application/cloudevents+json"]["schema"].get("oneOf"):
                         for request_object in operation["requestBody"]["content"]["application/cloudevents+json"]["schema"]["oneOf"]:
-                            generate_operation(file, path, method, operation, request_object)
+                            generate_operation(output, path, method, operation, request_object)
                 else:
-                    generate_operation(file, path, method, operation)
+                    generate_operation(output, path, method, operation)
 
 
 
