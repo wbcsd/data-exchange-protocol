@@ -231,26 +231,7 @@ def generate_rest_api(input, output):
     schema = jsonref.replace_refs(schema_unresolved, merge_props=True)
 
     # Generate the REST API in Bikeshed format
-    with open(output, "w", encoding="utf-8") as file:
-        # Write the introduction
-        file.write(schema["x-documentation"]["introduction"])
-        file.write("\n\n")
-
-        # Write the host system section
-        file.write(schema["x-documentation"]["host_system"])
-        file.write("\n\n")
-
-        # Write the authentication flow section
-        file.write(schema["x-documentation"]["authentication_flow"])
-        file.write("\n\n")
-
-        # Write the minimum requirements section
-        file.write(schema["x-documentation"]["minimum_requirements"])
-        file.write("\n\n")
-
-        # Generate the API overview
-        #file.write("## API Overview\n")
-        #file.write("This section includes all operations with parameter descriptions and response descriptions.\n\n")
+    with open(output_path, "w", encoding="utf-8") as output:
 
         for path, path_item in schema["paths"].items():
             for method, operation in path_item.items():
