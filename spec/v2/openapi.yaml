@@ -153,8 +153,6 @@ paths:
           $ref: '#/components/schemas/NotFoundResponse'
         '500':
           $ref: '#/components/schemas/InternalErrorResponse'
-        '501':
-          $ref: '#/components/schemas/NotImplementedResponse'
       security:
       - BearerAuth: []
 components:

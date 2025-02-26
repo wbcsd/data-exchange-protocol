@@ -2802,6 +2802,13 @@ path: ../../LICENSE.md
 
 # Appendix B: Changelog # {#changelog}
 
+## Version 2.3.1 (Feb 24, 2024) ## {#changelog-2.3.1}
+
+Patch release. 
+
+Summary of changes:
+1. Removed confusing paragraph under [[#api-action-events]] about returning NotImplemented while implementing Action Event is mandatory. 
+
 ## Version 2.3.0 (Oct 24, 2024) ## {#changelog-2.3.0}
 
 Release.
