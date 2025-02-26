@@ -140,6 +140,34 @@ def write_property(output, type, name, property):
     output.write("</td></tr>\n")
 
 
+def write_parameter(output, name, parameter):
+    """
+    Writes an HTML table row representing a parameter in a JSON schema.
+
+    Args:
+        output (io.TextIOWrapper): The output stream to write the HTML to.
+        type (dict): The JSON schema type definition containing the parameter.
+        name (str): The name of the parameter.
+        parameter (dict): The parameter definition from the JSON schema.
+
+    Returns:
+        None
+    """
+    output.write("<tr>\n")
+    output.write(f"  <td><dfn>{name}</dfn> ({parameter['in']})</td>\n")
+    output.write("  <td>\n")
+    output.write("  <div class='json-schema-type'>")
+    if 'required' in parameter and parameter['required'] == True:
+        output.write("  <span class='json-schema-required'>required</span>\n")
+    output.write(get_property_type_spec(parameter['schema']) + "</div>\n")
+    output.write("  \n\n")
+    output.write(parameter["description"].strip().replace("\n\n\n", "\n\n\n\n"))
+    output.write(get_example_text(name, parameter))
+    output.write("\n")
+    output.write("</td></tr>\n")
+
+
+
 def sanitize(text):
     return text.replace("<", "&lt;").replace(">", "&gt;")
 
@@ -254,8 +282,9 @@ def generate_operation(output, path, method, operation, variant = None):
         write_defs_start(output, operation['operationId'])
         for param in operation["parameters"]:
             #file.write(f"- **{param['name']}** ({param['in']}): {param['description']}\n")
-            output.write(f"<tr>\n  <td><dfn>{param['name']}</dfn> ({param['in']})\n")
-            output.write(f"  <td>{param['description']}\n")
+            # output.write(f"<tr>\n  <td><dfn>{param['name']}</dfn> ({param['in']})\n")
+            # output.write(f"  <td>{param['description']}\n")
+            write_parameter(output, param['name'], param)
         write_defs_end(output)
 
     if not variant:
