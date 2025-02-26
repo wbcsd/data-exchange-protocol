@@ -9,6 +9,11 @@ li {
     padding: initial;
 }
 
+dfn {
+    font-style: normal;
+    font-weight: bold;
+}
+
 dfn>code {
     font-weight: normal;
 }

@@ -202,7 +202,7 @@ In this case the data owner sends a `PublishedEvent` to the data recipient.
 Refer to [[#api-action-events]] for detailed request and response formats.
 
 
-## Synchronous retrieval 
+## Synchronous Retrieval 
 
 The synchronous part of te API allows for immediate retrieval of PCFs. Refer to [[#api-action-list]] and [[#api-action-get]] for detailed request and response formats.
 
