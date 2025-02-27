@@ -274,9 +274,9 @@ def generate_operation(output, path, method, operation, variant = None):
     if variant:
         output.write(f": {variant['title']}")
     output.write("\n")
-    output.write(f"{variant and variant.get('description') or operation['description']}\n\n")
-    query = "?params=value&.." if operation.get("parameters") and (p["in"] == "query" for p in operation.get("parameters")) else ""
+    query = "?params=value&..." if operation.get("parameters") and (p["in"] == "query" for p in operation.get("parameters")) else ""
     output.write(f"```HTTP\n{method.upper()} {path}{query}\n```\n")
+    output.write(f"{variant and variant.get('description') or operation['description']}\n\n")
     if operation.get("parameters"):
         output.write("### Parameters\n")
         write_defs_start(output, operation['operationId'])
