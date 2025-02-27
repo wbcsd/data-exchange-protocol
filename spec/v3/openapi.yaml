@@ -27,9 +27,19 @@ paths:
     get:
       summary: Action ListFootprints
       description: |
-        Retrieve a list of Product Carbon Footprints (PCFs) that are available. 
-        The list can be filtered by various criteria, and the result set can be
-        paginated.
+        Retrieve a list of Product Carbon Footprints (PCFs) from the [=data owner=].
+        The [=data recipient=] can specify various criteria to filter the
+        list, and the [=data owner=] can paginate the result set, if necessary.
+
+        Host systems SHOULD implement an access management system and only 
+        return the product footprints for which the data owner granted access 
+        to the requesting data recipient.
+
+        If the host system has multiple versions of the same footprint with the 
+        same `id`, it MUST include only the latest version in the list of
+        footprints. The host system SHOULD include preceding footprints which have
+        been deprecated in the resulting list of footprints, except if the `status`
+        query parameter explicity requests only active footprints.
 
         ### Filtering
 
@@ -37,45 +47,44 @@ paths:
         criteria below. Note that these are the same filters used by the
         [[#action-events-productfootprint-request-created]] Event.
 
-        A host system MAY provide additional filter criteria. These MUST be named 
-        `x-....`.  For example, to add functionality to search for product 
-        footprints based on an invoice number, a software solution coould choose 
+        A host system MAY provide additional filter criteria for the data recipient
+        to use. These parameters MUST be prefixed with `x-<identifier>-`.  
+        
+        For example, to add functionality to search for product 
+        footprints based on an invoice number, a software solution could choose 
         to support a parameter `x-atq-invoice-id`. 
 
-        This will enable queries like `/footprints/?x-atq-invoice-id=12345&geography=FR`
+        ```http
+        /3/footprints/?geography=FR&x-atq-invoice-id=12345&limit=100
+        ```
 
         ### Pagination
 
-        1. The host system MAY return less ProductFootprints than requested through 
-           the [=Limit=] request parameter
-        2. The host system MUST return a `Link` header if there are additional 
+        1. The host system MUST NOT return more product footprints than requested in 
+           case [=Limit=] was defined by a [=data recipient=]
+        2. The host system MUST return an HTTP `Link` header if there are additional 
            ProductFootprints ready to be retrieved, such that
             - The `Link` header conforms to [[!RFC8288]]
             - The value of the `rel` parameter is equal to `next`
-            - the target IRI (RFC8288, section 3.1) of the `Link` header is absolute
-            - The value of `host` of the target IRI is equal to the value of the `host` 
+            - the target URI (RFC8288, section 3.1) of the `Link` header is absolute
+            - The value of `host` of the target URI is equal to the value of the `host` 
                request header from the original `ListFootprints` HTTP request
-
-        The target IRI from a pagination `link` header is called a <dfn>pagination link</dfn>.
-
-        Upon a [=host system=] returning a [=pagination link=]
-
-        1. a data recipient CAN call the pagination link more than once
-        2. upon each call, the host system
-            - MUST return the same set of Product Footprints upon successful authentication 
-              (i.e. a Bearer token authentication as defined in [[#api-auth]])
+        3. The target URI from the `Link` header is called a <dfn>pagination link</dfn>.
+        4. A pagination link MUST be valid for at least 180 seconds after creation
+        5. The data recipient CAN call the pagination link more than once
+        6. Upon each call, the host system
+            - MUST return the same set of Product Footprints
             - MUST NOT return more product footprints than requested in case [=Limit=] was 
-               defined by a [=data recipient=]
+              defined by a [=data recipient=]
             - MUST return a `Link` header conforming with the previous description in case 
-               there are additional ProductFootprints available
-        3. If a response contains a second pagination link and the data recipient upon calling 
-           the second pagination link, the previous pagination link MAY no longer work: data 
+              there are additional ProductFootprints available
+              ```http
+              link: <https://api.example.com/3/footprints?geography=FR&limit=10&offset=10>; rel="next"
+              ```
+        7. If a response contains a second pagination link and the data recipient has called 
+           that second pagination link, the previous pagination link MAY no longer work: data 
            recipients MUST NOT assume that previous pagination links continue to return results 
            after advancing in the pagination process
-        4. a pagination link MUST be valid for at least 180 seconds after creation
-        5. a data recipient SHOULD retry calling the pagination link after the server returned
-           an error and SHOULD use a randomized exponential back-off strategy when retrying
-
       operationId: listFootprints
       tags: [footprint]
       parameters:
@@ -106,7 +115,21 @@ paths:
         deprecated: true
       responses:
         '200':
-          description: Success
+          description: |
+            The host system succesfully returns a list of product footprints. This list 
+            MAY be incomplete, in which case the host system MUST return a Link header
+            conforming to [[RFC8288]].
+
+            The list MAY also be empty, but MUST NOT be larger than the limit, if defined.
+            If the list is empty, the host system MUST return an empty JSON array.
+            The list MUST NOT be NULL.
+
+            ```json
+            {
+              "data": []
+              "data": null // invalid
+            }
+            ```
           headers:
             link:
               description: Link header to next result set. See Tech Specs section 6.6.1
@@ -124,6 +147,7 @@ paths:
                   data:
                     description: List of <{ProductFootprint}> objects.
                     type: array
+                    minItems: 0
                     items:
                       $ref: '#/components/schemas/ProductFootprint'
         '400':
@@ -136,11 +160,29 @@ paths:
           $ref: '#/components/schemas/InternalErrorResponse'
       security:
       - BearerAuth: []
+      example: |
+        ```http 
+        HTTP/1.1 200 OK
+        content-type: application/json
+        link: <https://api.example.com/3/footprints?geography=FR&limit=10&offset=10>; rel="next"
+
+        {
+          "data": [ 
+            {"id": "079e425a-464f-528d-341d-4a944a1dfd70", ... },
+            {"id": "f4b1225a-bd44-4c8e-861d-079e4e1dfd69", ... }
+            ...
+          ]
+        }
+        ```
   /3/footprints/{id}:
     get:
       summary: Action GetFootprint
       description: |
         Retrieve a single Product Carbon Footprint (PCF) by its unique identifier.
+
+        Host systems SHOULD implement an access management system and only 
+        return the product footprints for which the data owner granted access 
+        to the requesting data recipient.
       operationId: getFootprintById
       tags: [footprint]
       parameters:
@@ -170,8 +212,10 @@ paths:
         '401':
           $ref: '#/components/schemas/UnauthorizedResponse'
         '403':
+          description: The data recipient is not allowed to access the requested ProductFootprint.
           $ref: '#/components/schemas/ForbiddenResponse'
         '404':
+          description: The requested ProductFootprint was not found.
           $ref: '#/components/schemas/NotFoundResponse'
         '500':
           $ref: '#/components/schemas/InternalErrorResponse'
@@ -182,7 +226,14 @@ paths:
       summary: Action Events
       description: |
         Post an event to the system. The event will be processed by the system 
-        and may trigger further actions.
+        and may trigger further actions. 
+        
+        The following events MUST be handled by the host system:
+        - RequestCreatedEvent
+        - RequestFulfilledEvent
+        - RequestRejectedEvent
+        - PublishedEvent
+
       operationId: post_event
       tags: [event]
       requestBody:
@@ -1555,7 +1606,7 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
     UnauthorizedResponse: # 401
-      description: Unauthorized.
+      description: The request is not authorized, the access token is invalid or has expired. 
       content:
         application/json:
           schema:
