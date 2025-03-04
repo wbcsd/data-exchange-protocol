@@ -73,9 +73,9 @@ As a consequence, after consulting with the Tech WG on 15/1/2025 a limited list 
 * `companyId` (string) can be 1 or more company ID's. Will return all footprints with corresponding id's in the `companyIds` attribute. Note that a footprint itself can also have multiple company IDs.
 * `geography` (string) can be 1 or more geographic specifiers. Values specified can denote `geographicRegion` or `geographyCountry` or `geographyCountrySubdivision`. Will return all footprints within the specified geography.
 * `classification` (string) can be 1 or more product classifications. Will return all footprints with corresponding values in the `productClassifications` attribute. Note that a footprint itself can have multiple classifications.
-* `validOn` (date-string) will match all PCF's which where valid on the date specified: footprint.validityPeriodBegin <= validOn AND validFrom <= footprint.validityPeriodEnd
-* `validAfter` (date-string) will match PCF's whith validAfter < footprint.validityPeriodBegin
-* `validBefore` (date-string) will match PCF's whith validBefore > footprint.validityPeriodEnd
+* `validOn` (date-string) will match all PCFs which where valid on the date specified: footprint.validityPeriodBegin <= validOn AND validFrom <= footprint.validityPeriodEnd
+* `validAfter` (date-string) will match PCFs whith validAfter < footprint.validityPeriodBegin
+* `validBefore` (date-string) will match PCFs whith validBefore > footprint.validityPeriodEnd
 * `status` (string) Can be "Active" or "Deprecated"
 * **MAYBE?**`pfId` (string) Search for a specific Product Footprint Id. Note that this is synonymous with calling `/footprints/{pfid}`
 

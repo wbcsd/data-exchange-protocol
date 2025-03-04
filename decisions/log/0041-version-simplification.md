@@ -46,7 +46,7 @@ Starting PACT 4.x the properties `version` and `updated` will be made obsolete.
 Any 3.x implementation of the PACT API does not need to implement any reasoning to distinguish between major and minor changes. 
 
 ### Backwards and forwards compatibility
-Changes originating in 3.x will be handled correctly by 2.x API's: any change involve a new ID and a link back to the old ID. So, in terms of 2.x, the change is a *major* one, which will deprecate previous PCF's. 
+Changes originating in 3.x will be handled correctly by 2.x API's: any change involve a new ID and a link back to the old ID. So, in terms of 2.x, the change is a *major* one, which will deprecate previous PCFs. 
 The one exception of a change originating in 3.x is the deprecation of an old PCF *without* it being replaced by a new one. In this case the ID will not change, but the status does (and be set to `Deprecated`).
 
 Major changes originating in 2.x will be be handled correctly by 3.x API's. 

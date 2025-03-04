@@ -175,7 +175,7 @@ This chapter provides examples for inter-company business cases related to the e
 
 ## Asynchronous Exchange ## {#business-cases-async-events}
 
-Exchanging PCF's asynchronously requires **both** the [=data owner=] **and** the [=data recipient=] to run a PACT conformant host system, **both** sides being able to initiate communication to each other.
+Exchanging PCFs asynchronously requires **both** the [=data owner=] **and** the [=data recipient=] to run a PACT conformant host system, **both** sides being able to initiate communication to each other.
 
 
 ### Requesting a PCF
@@ -204,16 +204,16 @@ Refer to [[#api-action-events]] for detailed request and response formats.
 
 ## Synchronous retrieval 
 
-The synchronous part of te API allows for immediate retrieval of PCF's. Refer to [[#api-action-list]] and [[#api-action-get]] for detailed request and response formats.
+The synchronous part of te API allows for immediate retrieval of PCFs. Refer to [[#api-action-list]] and [[#api-action-get]] for detailed request and response formats.
 
 
-### Getting multiple PCF's
+### Getting multiple PCFs
 
-The `ListFootprints` action allows for directly retrieving multiple PCF's. Starting from version 3.0, host systems
+The `ListFootprints` action allows for directly retrieving multiple PCFs. Starting from version 3.0, host systems
 must provide filtering on a minimum set of criteria. 
 
 1. The data recipient authenticates with the data owner.
-2. The data recipient calls the `/footprints` endpoint, optionally providing a filter with search criteria and a limit to obtain a list of PCF's. 
+2. The data recipient calls the `/footprints` endpoint, optionally providing a filter with search criteria and a limit to obtain a list of PCFs. 
 3. After validating the request, the data owner returns a 2xx status code and the list of {<ProductFootprint>} objects. On error the data owner returns a relevant HTTP error code. For details, see [#rest-api]
 
 
