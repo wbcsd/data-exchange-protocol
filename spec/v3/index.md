@@ -223,7 +223,7 @@ A data-recipient can directly obtain a given PCF by it's ID by calling `GetFootp
 
 1. The data recipient authenticates with the data owner.
 2. The data recipient calls the `/footprints/{id}` endpoint, providing the PCF ID (in UUID format)
-3. If found, the data owner returns the PCF in <{ProductFootprint}> and HTTP status code 200. If not found an 401 (Not found) status code will be returned. 
+3. If found, the data owner returns the PCF in <{ProductFootprint}> and HTTP status code 200. If not found a 404 (Not found) status code will be returned. 
 
 
 
