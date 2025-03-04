@@ -41,10 +41,38 @@ paths:
         been deprecated in the resulting list of footprints, except if the `status`
         query parameter explicity requests only active footprints.
 
+        ### Pagination
+
+        1. The host system MUST NOT return more product footprints than requested in 
+           case a <{listFootprints/limit}> parameter was specified by a [=data recipient=]
+        2. The host system MUST return an HTTP `Link` header if there are additional 
+           ProductFootprints ready to be retrieved, such that
+            - The `Link` header conforms to [[!RFC8288]]
+            - The value of the `rel` parameter is equal to `next`
+            - the target URI (RFC8288, section 3.1) of the `Link` header is absolute
+            - The value of `host` of the target URI is equal to the value of the `host` 
+               request header from the original `ListFootprints` HTTP request
+        3. The target URI from the `Link` header is called a <dfn>pagination link</dfn>.
+        4. A pagination link MUST be valid for at least 180 seconds after creation
+        5. The data recipient CAN call the pagination link more than once
+        6. Upon each call, the host system
+            - MUST return the same set of Product Footprints
+            - MUST NOT return more product footprints than requested in case <{listFootprints/limit}> was 
+              defined by a [=data recipient=]
+            - MUST return a `Link` header conforming with the previous description in case 
+              there are additional ProductFootprints available
+              ```http
+              link: <https://api.example.com/3/footprints?geography=FR&limit=10&offset=10>; rel="next"
+              ```
+        7. If a response contains a second pagination link and the data recipient has called 
+           that second pagination link, the previous pagination link MAY no longer work: data 
+           recipients MUST NOT assume that previous pagination links continue to return results 
+           after advancing in the pagination process
+
         ### Filtering
 
         The [=host system=] MUST support filtering of the list of footprints by 
-        criteria below. Note that these are the same filters used by the
+        criteria described under Parameters. Note that these are the same filters used by the
         [[#action-events-productfootprint-request-created]] Event.
 
         A host system MAY provide additional filter criteria for the data recipient
@@ -58,44 +86,9 @@ paths:
         /3/footprints/?geography=FR&x-atq-invoice-id=12345&limit=100
         ```
 
-        ### Pagination
-
-        1. The host system MUST NOT return more product footprints than requested in 
-           case [=Limit=] was defined by a [=data recipient=]
-        2. The host system MUST return an HTTP `Link` header if there are additional 
-           ProductFootprints ready to be retrieved, such that
-            - The `Link` header conforms to [[!RFC8288]]
-            - The value of the `rel` parameter is equal to `next`
-            - the target URI (RFC8288, section 3.1) of the `Link` header is absolute
-            - The value of `host` of the target URI is equal to the value of the `host` 
-               request header from the original `ListFootprints` HTTP request
-        3. The target URI from the `Link` header is called a <dfn>pagination link</dfn>.
-        4. A pagination link MUST be valid for at least 180 seconds after creation
-        5. The data recipient CAN call the pagination link more than once
-        6. Upon each call, the host system
-            - MUST return the same set of Product Footprints
-            - MUST NOT return more product footprints than requested in case [=Limit=] was 
-              defined by a [=data recipient=]
-            - MUST return a `Link` header conforming with the previous description in case 
-              there are additional ProductFootprints available
-              ```http
-              link: <https://api.example.com/3/footprints?geography=FR&limit=10&offset=10>; rel="next"
-              ```
-        7. If a response contains a second pagination link and the data recipient has called 
-           that second pagination link, the previous pagination link MAY no longer work: data 
-           recipients MUST NOT assume that previous pagination links continue to return results 
-           after advancing in the pagination process
       operationId: listFootprints
       tags: [footprint]
       parameters:
-      - $ref: '#/components/parameters/productId'
-      - $ref: '#/components/parameters/companyId'
-      - $ref: '#/components/parameters/geography'
-      - $ref: '#/components/parameters/classification'
-      - $ref: '#/components/parameters/validOn'
-      - $ref: '#/components/parameters/validAfter'
-      - $ref: '#/components/parameters/validBefore'
-      - $ref: '#/components/parameters/status'
       - name: limit
         description: |
           The maximum number of footprints to return. The [=host system=] MAY return fewer 
@@ -106,9 +99,18 @@ paths:
           type: integer
           format: uint
           minimum: 0
+      - $ref: '#/components/parameters/productId'
+      - $ref: '#/components/parameters/companyId'
+      - $ref: '#/components/parameters/geography'
+      - $ref: '#/components/parameters/classification'
+      - $ref: '#/components/parameters/validOn'
+      - $ref: '#/components/parameters/validAfter'
+      - $ref: '#/components/parameters/validBefore'
+      - $ref: '#/components/parameters/status'
       - name: '$filter'
         in: query
-        description: Syntax as defined by the ODatav4 specification
+        description: |
+          Syntax as defined by the ODatav4 specification. Note: this parameter has been deprecated in 3.0.0.
         allowEmptyValue: true
         schema:
           type: string
@@ -120,7 +122,7 @@ paths:
             MAY be incomplete, in which case the host system MUST return a Link header
             conforming to [[RFC8288]].
 
-            The list MAY also be empty, but MUST NOT be larger than the limit, if defined.
+            The list MAY also be empty, but MUST NOT be larger than the <{listFootprints/limit}>, if defined.
             If the list is empty, the host system MUST return an empty JSON array.
             The list MUST NOT be NULL.
 
@@ -160,7 +162,7 @@ paths:
           $ref: '#/components/schemas/InternalErrorResponse'
       security:
       - BearerAuth: []
-      example: |
+      x-example: |
         ```http 
         HTTP/1.1 200 OK
         content-type: application/json
