@@ -227,14 +227,30 @@ paths:
     post:
       summary: Action Events
       description: |
-        Post an event to the system. The event will be processed by the system 
-        and may trigger further actions. 
-        
+        The Action Events endpoint supports for the following use cases:
+
+        1. enabling a [=data owner=] to notify a [=data recipient=] on 
+           updates to 1 or more [[#dt-pf|Product Footprints]] (see [[#api-action-events-case-1]])
+        2. enabling a [=data recipient=] to request [[#dt-pf|product footprints]] 
+           from a [=data owner=] by sending an event to the [=data owner's=] [=Action Events=] 
+           endpoint (see [[#api-action-events-case-2]]).
+
+        The Action Events endpoint accepts CloudEvent events (see [[!CE]]) encoded 
+        in "Structured Content Mode" (see [[!CE-Structured-Content-Mode]].
+
         The following events MUST be handled by the host system:
         - RequestCreatedEvent
         - RequestFulfilledEvent
         - RequestRejectedEvent
         - PublishedEvent
+
+        A [=host system=] SHOULD only accept events after authentication (see [[#api-auth]]).
+
+        A host system MUST validate the event and return an HTTP 4xx status code if the
+        event is invalid. 
+
+        Upon accepting the event, the [=host system=] MUST return an HTTP 200 status code
+        and SHOULD return an empty response body. 
 
       operationId: post_event
       tags: [event]
@@ -1364,49 +1380,9 @@ components:
     # -----------
     # Events
     BaseEvent:
-      title: BaseEvent
       description: |
         Base class for all events, it follows the CloudEvents specification.
       type: object
-      required:
-      - specversion
-      - id
-      - source
-      - time
-      properties:
-        specversion:
-          type: string
-          description: CloudEvents version.
-        id:
-          type: string
-          description: Event identifier. Must be able to uniquely identify the event by source and id.
-        source:
-          type: string
-          description: The domain and endpoint of the application from which the event originates.
-        time:
-          type: string
-          format: date-time
-          description: The time the event occurred.
-    # -----------
-    # Published
-    PublishedEvent:
-      title: ProductFootprint Published
-      description: Notification that a ProductFootprint has been published (either new or updated).
-      type: object
-      examples:
-      - | 
-        ```
-        {
-          "type": "org.wbcsd.pathfinder.ProductFootprint.Published.v1",
-          "specversion": "1.0",
-          "id": "EventId",
-          "source": "//EventHostname/EventSubpath",
-          "time": "2022-05-31T17:31:00Z",
-          "data": {
-            "pfIds": PfIds
-          }
-        }
-        ```
       required:
       - type
       - specversion
@@ -1417,23 +1393,54 @@ components:
       properties:
         type:
           type: string
-          const: org.wbcsd.pathfinder.ProductFootprint.Published.v1
           description: Event type identifier.
         specversion:
           type: string
-          const: 1.0
           description: CloudEvents version.
         id:
           type: string
           description: Event identifier. Must be able to uniquely identify the event by source and id.
         source:
           type: string
-          format: uri
           description: The domain and endpoint of the application from which the event originates.
         time:
           type: string
           format: date-time
           description: The time the event occurred.
+        data:
+          type: object
+          description: The event payload.
+
+    PublishedEvent:
+      $ref: '#/components/schemas/BaseEvent'
+      title: ProductFootprint Published
+      description: |
+        Notification that a ProductFootprint has been published (either new or updated).
+        This event is triggered by the [=data owner=] and send to relevant [=data recipients=].
+      type: object
+      examples:
+      - | 
+        ```http
+        HTTP POST /events
+        Content-Type: application/cloudevents+json
+
+        {
+          "type": "org.wbcsd.pathfinder.ProductFootprint.Published.v1",
+          "specversion": "1.0",
+          "id": "EventId",
+          "source": "//EventHostname/EventSubpath",
+          "time": "2022-05-31T17:31:00Z",
+          "data": {
+            "pfIds": ["079e425a-464f-528d-341d-4a944a1dfd70"]
+          }
+        }
+        ```
+      properties:
+        $ref: '#/components/schemas/BaseEvent/properties'
+        type:
+          type: string
+          const: org.wbcsd.pathfinder.ProductFootprint.Published.v1
+          description: Event type identifier.
         data:
           type: object
           description: |
@@ -1451,71 +1458,75 @@ components:
               items:
                 type: string
                 format: uuid
+    
     RequestCreatedEvent:
+      $ref: '#/components/schemas/BaseEvent'
       title: ProductFootprint Request Created
       description: A data recipient request the data owner a ProductFootprint.
       type: object
-      required:
-      - type
-      - specversion
-      - id
-      - source
-      - time
-      - data
       properties:
+        $ref: '#/components/schemas/BaseEvent/properties'
         type:
           type: string
           const: org.wbcsd.pathfinder.ProductFootprintRequest.Created.v1
           description: Event type identifier.
-        specversion:
-          type: string
-          const: 1.0
-          description: CloudEvents version.
-        id:
-          type: string
-          description: Event identifier. Must be able to uniquely identify the event by source and id.
-        source:
-          type: string
-          format: uri
-          description: The domain and endpoint of the application from which the event originates.
-        time:
-          type: string
-          format: date-time
-          description: The time the event occurred.
         data:
-          $ref: '#/components/schemas/FilterCriteria'
+          type: object
+          description: |
+            Criteria for filtering ProductFootprint requests.
+          properties:
+            productId: 
+              $ref: '#/components/parameters/productId'
+              type: array
+              items: 
+                $ref: '#/components/schemas/Urn'
+            companyId:
+              $ref: '#/components/parameters/companyId'
+              type: array
+              items: 
+                $ref: '#/components/schemas/Urn'
+            geography:
+              $ref: '#/components/parameters/geography'
+              type: array
+              items:
+                $ref: '#/components/schemas/NonEmptyString'
+            classification:
+              $ref: '#/components/parameters/classification'
+              type: array
+              items: 
+                $ref: '#/components/schemas/Urn'
+            validOn:
+              $ref: '#/components/parameters/validOn'
+              type: string
+              format: date-time
+            validAfter:
+              $ref: '#/components/parameters/validAfter'
+              type: string
+              format: date-time
+            validBefore:
+              $ref: '#/components/parameters/validBefore'
+              type: string
+              format: date-time
+            status:       
+              $ref: '#/components/parameters/status'
+              type: string
+              format: date-time
+            comment:
+              description: |
+                Free text comment.
+              type: string
           
     RequestFulfilledEvent:
+      $ref: '#/components/schemas/BaseEvent'
       title: ProductFootprint Request Fulfilled
       description: Notification that a ProductFootprint request has been fulfilled.
       type: object
-      required:
-      - type
-      - specversion
-      - id
-      - source
-      - time
-      - data
       properties:
+        $ref: '#/components/schemas/BaseEvent/properties'
         type:
           type: string
           const: org.wbcsd.pathfinder.ProductFootprintRequest.Fulfilled.v1
           description: Event type identifier.
-        specversion:
-          type: string
-          const: 1.0
-          description: CloudEvents version.
-        id:
-          type: string
-          description: Event identifier. Must be able to uniquely identify the event by source and id.
-        source:
-          type: string
-          format: uri
-          description: The domain and endpoint of the application from which the event originates.
-        time:
-          type: string
-          format: date-time
-          description: The time the event occurred.
         data:
           type: object
           description: data object
@@ -1524,42 +1535,25 @@ components:
             - pfs
           properties:
             requestEventId:
+              description: The ID of the request event that has been fulfilled.
               type: string
             pfs:
+              description: The list of ProductFootprints that have been returned.
               type: array
               items:
                 $ref: '#/components/schemas/ProductFootprint'
+
     RequestRejectedEvent:
+      $ref: '#/components/schemas/BaseEvent'
       title: ProductFootprint Request Rejected
       description: Notification that a request for a ProductFootprint can not be fulfilled.
       type: object
-      required:
-      - type
-      - specversion
-      - id
-      - source
-      - time
-      - data
       properties:
+        $ref: '#/components/schemas/BaseEvent/properties'
         type:
           type: string
           const: org.wbcsd.pathfinder.ProductFootprintRequest.Rejected.v1
           description: Event type identifier.
-        specversion:
-          type: string
-          const: 1.0
-          description: CloudEvents version.
-        id:
-          type: string
-          description: Event identifier. Must be able to uniquely identify the event by source and id.
-        source:
-          type: string
-          format: uri
-          description: The domain and endpoint of the application from which the event originates.
-        time:
-          type: string
-          format: date-time
-          description: The time the event occurred.
         data:
           type: object
           description: data object
@@ -1568,9 +1562,11 @@ components:
             - error
           properties:
             requestEventId:
+              description: The ID of the request event that has been fulfilled.
               type: string
             error:
-              $ref: '#/components/schemas/ErrorResponse'
+              $ref: '#/components/schemas/Error'
+              
     # ---------------
     # Error Responses
     Error:
