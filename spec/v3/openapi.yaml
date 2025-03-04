@@ -1582,7 +1582,7 @@ components:
             - BadRequest # 400
             - AccessDenied # 403
             - TokenExpired # 401
-            - NotFound # NoSuchFootprint
+            - NotFound # 404 NoSuchFootprint
             - InternalError # 500
             - NotImplemented #501
         message:
@@ -1591,6 +1591,13 @@ components:
       required:
       - code
       - message
+      example: |
+        ```json
+        { 
+          "code": "NotFound",
+          "message": "The requested footprint could not be found." 
+        }
+        ```
     BadRequestResponse:
       description: Bad request.
       content:
@@ -1633,6 +1640,7 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+
   securitySchemes:
     BearerAuth:
       description: OAuth2 Client Credentials Grant (RFC6749 4.4)
