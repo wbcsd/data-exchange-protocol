@@ -105,10 +105,10 @@ def write_defs_start(output, namespace=None, headers=['Name', 'Description']):
     output.write("<tbody>\n")
 
 def write_defs_end(output):
-    output.write("</table>\n\n")
+    output.write("</table>\n")
 
 
-def write_property(output, type, name, property):
+def write_property(output, type, name, property, recursive=False):
     """
     Writes an HTML table row representing a property in a JSON schema.
 
@@ -138,6 +138,10 @@ def write_property(output, type, name, property):
             output.write(f"<br>\n{sanitize(property['comment'])}")
         output.write("</div>\n")
     output.write("</td></tr>\n")
+    if recursive and property["type"] == "object" and "properties" in property and not "title" in property:
+        for sub_name, sub_property in property["properties"].items():
+            write_property(output, property, name + "." + sub_name, sub_property)
+
 
 
 def write_parameter(output, name, parameter):
@@ -208,32 +212,6 @@ def generate_type_description(output, schema, type_name, type):
                 continue
             write_property(output, type, name, property)
         write_defs_end(output)
-    if "allOf" in type:
-        output.write("### All Of\n")
-        output.write("\n")
-        for sub_type in type["allOf"]:
-            generate_type_description(output, schema, name, sub_type)
-    if "oneOf" in type:
-        output.write("### One Of\n")
-        output.write("\n")
-        for sub_type in type["oneOf"]:
-            generate_type_description(output, schema, name, sub_type)
-    if "anyOf" in type:
-        output.write("### Any Of\n")
-        output.write("\n")
-        for sub_type in type["anyOf"]:
-            generate_type_description(output, schema, name, sub_type)
-    if "enum" in type:
-        output.write("### Enum\n")
-        output.write("\n")
-        for value in type["enum"]:
-            output.write(f"* {value}\n")
-        output.write("\n")
-    # if "example" in type:
-    #     output.write("### Example\n")
-    #     output.write("\n")
-    #     output.write(f"```json\n{json.dumps(type['example'], indent=2)}\n```\n")
-    #     output.write("\n")
     if "x-externalDocs" in type:
         output.write("### External Docs\n")
         output.write("\n")
@@ -259,7 +237,7 @@ def generate_data_model(input_path, output_path):
     with open(output_path, "w", encoding="utf-8") as output:
         for name,type in schema["components"]["schemas"].items():
             # Skip all types that are only used for requests or responses
-            if name.endswith("Event") or name.endswith("Request") or name.endswith("Response") and name != "ErrorResponse":
+            if name.endswith("Event") or name.endswith("Request") or name.endswith("Response"):
                 continue
             # Skip all types without a title
             if not "title" in type:
@@ -269,14 +247,12 @@ def generate_data_model(input_path, output_path):
             generate_type_description(output, schema, name, type)
 
 
-def generate_operation(output, path, method, operation, variant = None):
+def generate_operation(output, path, method, operation):
     output.write(f"## {operation['summary']}")
-    if variant:
-        output.write(f": {variant['title']}")
     output.write("\n")
     query = "?params=value&..." if operation.get("parameters") and (p["in"] == "query" for p in operation.get("parameters")) else ""
     output.write(f"```HTTP\n{method.upper()} {path}{query}\n```\n")
-    output.write(f"{variant and variant.get('description') or operation['description']}\n\n")
+    output.write(f"{operation['description']}\n\n")
     if operation.get("parameters"):
         output.write("### Parameters\n")
         write_defs_start(output, operation['operationId'])
@@ -287,15 +263,28 @@ def generate_operation(output, path, method, operation, variant = None):
             write_parameter(output, param['name'], param)
         write_defs_end(output)
 
-    if not variant:
-        variant = operation.get("requestBody")
-    if variant:
-        output.write("### Request Body\n")
-        output.write("`content-type: application/cloudevents+json`\n") 
-        write_defs_start(output, operation['operationId'])
-        for name, property in variant["properties"].items():
-            write_property(output, variant, name, property)
-        write_defs_end(output)
+    if  operation.get("requestBody"):
+        for content_type, content in operation["requestBody"]["content"].items():
+            if "oneOf" in content["schema"]:
+                for variant in content["schema"]["oneOf"]:
+                    output.write(f"### {variant['title']}\n\n")
+                    output.write(variant["description"])
+                    output.write("\n\n**Request Body**\n\n")
+                    output.write(f"`content-type: {content_type}`\n")
+                    write_defs_start(output, operation['operationId'])
+                    for name, property in variant["properties"].items():
+                        write_property(output, variant, name, property, recursive=True)
+                    write_defs_end(output)
+                    if "examples" in variant:
+                        output.write(variant['examples'][0])
+            else:
+                output.write("\n\n**Request Body**\n\n")
+                output.write(f"`content-type: {content_type}`\n")
+                write_defs_start(output, operation['operationId'])
+                for name, property in content["schema"]["properties"].items():
+                    write_property(output, variant, name, property)
+                write_defs_end(output)
+
 
     output.write("\n")
     output.write("### Responses\n")
@@ -332,13 +321,7 @@ def generate_rest_api(input_path, output_path):
 
         for path, path_item in schema["paths"].items():
             for method, operation in path_item.items():
-
-                if operation.get("requestBody"):
-                    if operation["requestBody"]["content"]["application/cloudevents+json"]["schema"].get("oneOf"):
-                        for request_object in operation["requestBody"]["content"]["application/cloudevents+json"]["schema"]["oneOf"]:
-                            generate_operation(output, path, method, operation, request_object)
-                else:
-                    generate_operation(output, path, method, operation)
+                generate_operation(output, path, method, operation)
 
 
 

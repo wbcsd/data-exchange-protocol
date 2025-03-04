@@ -12,11 +12,19 @@ import urllib.parse
 # For properties which are new, show the new value.
 
 def load_openapi_file(path):
-#    with open(path, 'r') as file:
-#        return yaml.safe_load(file)
     with open(path, encoding="utf-8") as file:
         schema = yaml.safe_load(file)
-    schema = jsonref.replace_refs(schema, merge_props=True)
+    schema = jsonref.replace_refs(schema, merge_props=True, proxies=False)
+    return schema
+
+def dump_schema(schema):
+    return yaml.safe_dump(schema)
+
+def navigate_to(schema, path):
+    # Iterate over the parts and select the item from the schema
+    for part in path.split('/'):
+        part = urllib.parse.unquote(part)
+        schema = schema[part]
     return schema
 
 
@@ -45,11 +53,8 @@ def validate_json_data(schema_path, data_path):
     with open(data_path, 'r') as file:
         data = json.load(file)
     
-    # Iterate over the parts and select the item from the schema
-    for part in schema_internal_path.split('/'):
-        part = urllib.parse.unquote(part)
-        schema = schema[part]
-    
+    # Get the relevant part in the schema
+    schema = navigate_to(schema, schema_internal_path)
     # Validate the data against the schema
     jsonschema.validate(instance=data, schema=schema)
 
@@ -108,7 +113,6 @@ def schema_diff(old_file_path, new_file_path):
     
     differences = compare_data_models(old_models, new_models)
     
-    #print(json.dumps(differences, indent=2))
     print(yaml.dump(differences, default_flow_style=False))
 
     def summary(diffs, level = 0):
@@ -140,4 +144,4 @@ if __name__ == "__main__":
     old_file_path = sys.argv[1]
     new_file_path = sys.argv[2]
     
-    main(old_file_path, new_file_path)
+    schema_diff(old_file_path, new_file_path)
