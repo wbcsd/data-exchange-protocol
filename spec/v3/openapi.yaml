@@ -1183,6 +1183,7 @@ components:
             - 3.9.1
 
     DataQualityIndicators:
+      title: DataQualityIndicators
       description: | 
         Data type DataQualityIndicators contains the quantitative data quality indicators in conformance with PACT Methodology Section 4.2.3 and Appendix B.
 
@@ -1199,7 +1200,6 @@ components:
           "reliabilityDQR": "2.0"
         }
         ```        
-      title: DataQualityIndicators
       type: object
       required:
       - technologicalDQR
@@ -1256,17 +1256,13 @@ components:
       properties:
         coverage:
           description: |
-            Level of granularity of the emissions data assured, with value equal to
-            - `corporate level` for corporate level
-            - `product line` for product line
-            - `PCF system` for PCF System
-            - `product level` for product level
+            Level of granularity of the emissions data assured. 
 
             This property MAY be undefined only if the kind of verification was not performed.
           summary: |
             Level of granularity of the emissions data assured
           type: string
-          note: changed from v2.x
+          note: values changed from v2.x
           enum:
             - PCF calculation model
             - PCF program
@@ -1291,7 +1287,6 @@ components:
           type: string
 
     FilterCriteria:
-      title: FilterCriteria
       type: object
       description: |
         Criteria for filtering ProductFootprint requests.
@@ -1299,22 +1294,23 @@ components:
         productId: 
           $ref: '#/components/parameters/productId'
           type: array
-          item: 
-            $ref: '#/components/schemas/URN'
+          items: 
+            $ref: '#/components/schemas/Urn'
         companyId:
           $ref: '#/components/parameters/companyId'
           type: array
-          item: 
-            $ref: '#/components/schemas/URN'
+          items: 
+            $ref: '#/components/schemas/Urn'
         geography:
           $ref: '#/components/parameters/geography'
           type: array
-          item: string
+          items:
+            $ref: '#/components/schemas/NonEmptyString'
         classification:
           $ref: '#/components/parameters/classification'
           type: array
-          item: 
-            $ref: '#/components/schemas/URN'
+          items: 
+            $ref: '#/components/schemas/Urn'
         validOn:
           $ref: '#/components/parameters/validOn'
           type: string
@@ -1653,8 +1649,6 @@ components:
             footprint:read: Ability to access individual footprints
 
   parameters:
-    # -----------
-    # Parameters
     productId:
       name: productId
       description: One or more product ID's. Will return all footprints which have a corresponding ID in their `productIds` attribute. Note that a footprint itself can also have multiple product IDs.
@@ -1662,32 +1656,35 @@ components:
       explode: true
       schema: 
         type: array
-        item: 
-          $ref: '#/components/schemas/URN'
+        items: 
+          $ref: '#/components/schemas/Urn'
     companyId:
       name: companyId
       description: One or more company ID's. Will return all footprints which have a corresponding ID in their `companyId` attribute.
       in: query
+      explode: true
       schema: 
         type: array
-        item: 
-          $ref: '#/components/schemas/URN'
+        items: 
+          $ref: '#/components/schemas/Urn'
     geography:
       name: geography
-      description: One or more geographic specifiers. Values specified can denote `geographyRegion` or `geographyCountry` or `geographyCountrySubdivision`. Will return all footprints within the specified geography(s)
+      description: One or more geographic specifiers. Values specified can denote `geographyRegion` or `geographyCountry` or `geographyCountrySubdivision`. Will return all footprints within the specified geography(s). 
       in: query
+      explode: true
       schema:
         type: array
-        item: 
+        items: 
           type: string
     classification:
       name: classification
       description: One or more product classifications. Will return all footprints with corresponding values in the `productClassifications` attribute. Note that a footprint itself can have multiple classifications.
       in: query
+      explode: true
       schema:
         type: array
-        item: 
-          $ref: '#/components/schemas/URN'
+        items: 
+          $ref: '#/components/schemas/Urn'
     validOn:
       name: validOn
       description: |
