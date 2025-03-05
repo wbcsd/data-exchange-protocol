@@ -1,3 +1,8 @@
+h4 {
+    font-size: 1.1em;
+    color: var(--heading-text);
+}
+
 pre,
 code,
 samp {
