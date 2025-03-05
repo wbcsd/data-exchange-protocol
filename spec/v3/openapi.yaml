@@ -1377,7 +1377,7 @@ components:
 
     PublishedEvent:
       $ref: '#/components/schemas/BaseEvent'
-      title: ProductFootprint Published
+      title: ProductFootprint Published Event
       description: |
         Notification that a ProductFootprint has been published (either new or updated).
         This event is triggered by the [=data owner=] and send to relevant [=data recipients=].
@@ -1432,7 +1432,7 @@ components:
     
     RequestCreatedEvent:
       $ref: '#/components/schemas/BaseEvent'
-      title: ProductFootprint Request Created
+      title: Request Created Event
       description: |
         A data recipient request a ProductFootprint from the data owner. The data recipient
         MUST provide the criteria in the data object to enable the data owner to either
@@ -1521,7 +1521,7 @@ components:
           
     RequestFulfilledEvent:
       $ref: '#/components/schemas/BaseEvent'
-      title: ProductFootprint Request Fulfilled
+      title: Request Fulfilled Event
       description: | 
         Notification that the request for PCF(s) has been fulfilled by the data owner. 
         This notification will be sent by the data owner back to the data recipient in 
@@ -1596,8 +1596,33 @@ components:
 
     RequestRejectedEvent:
       $ref: '#/components/schemas/BaseEvent'
-      title: ProductFootprint Request Rejected
-      description: Notification that a request for a ProductFootprint can not be fulfilled.
+      title: Request Rejected Event
+      description: |
+        Notification that a request for a ProductFootprint can not be fulfilled.
+        The RequestRejectedEvent is an event sent back from the data owner to 
+        the data recipient upon NOT successfully fulfilling the preceeding 
+        RequestCreatedEvent sent by the data recipient.
+
+        ```http
+        HTTP POST /3/events
+        Content-Type: application/cloudevents+json
+        Authorizaton: Bearer xxxxxxxxxxxxx
+        
+        {
+          "type": "org.wbcsd.pact.ProductFootprint.RequestFulfilledEvent.3",
+          "specversion": "1.0",
+          "id": "505e5d-4f9b-4b3b-9c05bc35-68f8",
+          "source": "//api.example.com/3/events",
+          "time": "2025-03-05T17:31:00Z",
+          "data": {  
+            "requestEventId": "1934405d-4f9b-4b3b-9c05bc35-68f8",
+            "error": {
+              "code": "NotFound",
+              "message": "The requested footprint could not be found."
+            }
+          }
+        }
+        ```
       type: object
       properties:
         $ref: '#/components/schemas/BaseEvent/properties'
@@ -1613,7 +1638,7 @@ components:
             - error
           properties:
             requestEventId:
-              description: The ID of the request event that has been fulfilled.
+              description: The ID of the RequestCreateEvent that has been rejected.
               type: string
             error:
               $ref: '#/components/schemas/Error'
