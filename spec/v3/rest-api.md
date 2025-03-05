@@ -236,11 +236,11 @@ Note: Optional filtering specified in version 2.2+ (based on OData4) is NOW DEPR
 : `classification` array(string) 
 :: if present, MUST be 1 or more product classifications. Will return all footprints with corresponding values in the `productClassifications` attribute. Note that a footprint itself can have multiple classifications.
 : `validOn` (date-string) 
-:: if present, MUST match all PCF's which where valid on the date specified: footprint.validityPeriodBegin <= validOn AND validFrom <= footprint.validityPeriodEnd
+:: if present, MUST match all PCFs which where valid on the date specified: footprint.validityPeriodBegin <= validOn AND validFrom <= footprint.validityPeriodEnd
 : `validAfter` (date-string) 
-:: if present, MUST match PCF's whith validAfter < footprint.validityPeriodBegin
+:: if present, MUST match PCFs whith validAfter < footprint.validityPeriodBegin
 : `validBefore` (date-string) 
-:: if present, MUST match PCF's whith validBefore > footprint.validityPeriodEnd
+:: if present, MUST match PCFs whith validBefore > footprint.validityPeriodEnd
 : `status` (string) 
 :: If Present, MUST be either be "Active" or "Deprecated"
 
@@ -577,11 +577,11 @@ with
 : `classification` array(string) 
 :: if present, MUST be 1 or more product classifications. Will return all footprints with corresponding values in the `productClassifications` attribute. Note that a footprint itself can have multiple classifications.
 : `validOn` (date-string) 
-:: if present, MUST match all PCF's which where valid on the date specified: footprint.validityPeriodBegin <= validOn AND validFrom <= footprint.validityPeriodEnd
+:: if present, MUST match all PCFs which where valid on the date specified: footprint.validityPeriodBegin <= validOn AND validFrom <= footprint.validityPeriodEnd
 : `validAfter` (date-string) 
-:: if present, MUST match PCF's whith validAfter < footprint.validityPeriodBegin
+:: if present, MUST match PCFs whith validAfter < footprint.validityPeriodBegin
 : `validBefore` (date-string) 
-:: if present, MUST match PCF's whith validBefore > footprint.validityPeriodEnd
+:: if present, MUST match PCFs whith validBefore > footprint.validityPeriodEnd
 : `status` (string) 
 :: If Present, MUST be either be "Active" or "Deprecated"
 : <dfn>PFRequestComment</dfn>

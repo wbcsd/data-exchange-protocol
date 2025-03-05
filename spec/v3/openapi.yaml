@@ -902,7 +902,7 @@ components:
           description: |
             If present, a description of any allocation rules applied and the rationale explaining how the selected approach aligns with [=PACT Methodology=] rules (see Section 3.3.1.4).
           summary: |
-            Description of the allocation rules applied to the PCF's foreground data 
+            Description of the allocation rules applied to the PCFs foreground data 
             including an explanation of the underlying reasons (way of allocating 
             all activities from your manufacturing steps to the declared unit).
           type: string
@@ -1521,7 +1521,7 @@ components:
     validOn:
       name: validOn
       description: |
-        If present, MUST match all PCF's which where valid on the date specified: footprint.validityPeriodBegin <= validOn AND validFrom <= footprint.validityPeriodEnd
+        If present, MUST match all PCFs which where valid on the date specified: footprint.validityPeriodBegin <= validOn AND validFrom <= footprint.validityPeriodEnd
       in: query
       schema:
         type: string
@@ -1529,7 +1529,7 @@ components:
     validAfter:
       name: validAfter
       description: |
-        if present, MUST match PCF's whith validAfter < footprint.validityPeriodBegin
+        if present, MUST match PCFs whith validAfter < footprint.validityPeriodBegin
       in: query
       schema:
         type: string
@@ -1537,7 +1537,7 @@ components:
     validBefore:
       name: validBefore
       description: |
-        if present, MUST match PCF's whith validBefore > footprint.validityPeriodEnd
+        if present, MUST match PCFs whith validBefore > footprint.validityPeriodEnd
       in: query
       schema:
         type: string
