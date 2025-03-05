@@ -2,8 +2,8 @@ sequenceDiagram
     participant D as Data Recipient
     participant H as Data Owner
 
-    Note over D, H: Data Recipient requests a new<br/> or updated PCF from Host System
-    D->>H: POST [SubPath]/2/events
+    Note over D, H: Data Recipient requests one <br/> or more PCFs from data owner
+    D->>H: POST [data-owner]/3/events <br/>RequestCreated Event
     Activate H
     break Does not accept event
         H->>D: Returns with HTTP Code 400
@@ -12,14 +12,12 @@ sequenceDiagram
     H->>D: Returns with HTTP Code 200
     Deactivate H
 
-    Note over D, H: Host system now processes<br/> the request as specified in<br/>Business Case 1
+    Note over D, H: Data owner now processes<br/> the request.
+    H->>H: Data owner decides on processing<br/>potentially involving skilled personnel
 
-    alt PCFs do not exist / partial match
-        H->>H: Host system decides on processing<br/>potentially involving skilled personnel
-        H->>D: Sends event with either PCFs or error body
-    else 1 or more matching PCFs exist
-        Note over H: Sends matching PCFs as<br/>an event
-        H->>D: Sends event containing matching PCFs
-    else Default case
-        H->>D: Sends event with an error body
+    Note over D, H: Data owner sends an event back <br/>to the recipient
+    alt PCFs have been created or found
+        H->>D: POST [data-recipient]/3/events <br/>RequestFulfilledEvent
+    else No PCFs could be found or created
+        H->>D: POST [data-recipient]/3/events <br/>RequestRejectedEvent
     end
