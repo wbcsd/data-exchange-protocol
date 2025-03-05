@@ -4,7 +4,7 @@
 The current CarbonFootprint type in the OpenAPI specification includes three separate properties to denote geographic information: `geographyRegion`, `geographyCountry`, and `geographyCountrySubdivision`. This separation can lead to redundancy and complexity in the data model. To simplify the model and improve clarity, we propose combining these properties into a single geography property.
 
 ## Proposal
-For object type `CarbonFootprint`, combine the properties `geographicRegion`, `geographyCountry`, and `geographyCountrySubdivision` on into a single `geography` property:
+For object type `CarbonFootprint`, combine the properties `geographyRegion`, `geographyCountry`, and `geographyCountrySubdivision` on into a single `geography` property:
 
 This new property will be a string that can denote a region, country, or country subdivision and MUST be in one of the following formats:
  - Country: [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2). Two-letter country codes (e.g., `"US"` for the United States, `"DE"` for Germany).
