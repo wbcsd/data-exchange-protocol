@@ -188,6 +188,9 @@ def experiment(c):
     """
     # scripts.openapi.test("spec/v3/openapi.yaml")
     # scripts.schema.validate_json_data("spec/v3/openapi.yaml", "spec/v3/examples/list-footprints-response.json")
+    # schexma = scripts.schema.load_openapi_file("spec/v3/openapi.yaml")
+    # schema = scripts.schema.navigate_to(schema, "components/schemas/RequestCreatedEvent")
+    # print(scripts.schema.dump_schema(schema))
     scripts.schema.validate_json_data(
         "spec/v3/openapi.yaml#paths/%2F3%2Ffootprints/get/responses/200/content/application%2Fjson/schema", 
         "spec/v3/examples/list-footprints-response.json"
