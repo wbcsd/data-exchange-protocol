@@ -54,7 +54,7 @@ Western Europe: 155
 ``` 
 geography: "FR"    // France
 geography: "035"   // South-eastern Asia
-geography: "DE-BA" // Germany - Bayern
+geography: "DE-BY" // Germany - Bayern
 geography: "001"   // World
 geography: "484"   // Mexico
 ```
