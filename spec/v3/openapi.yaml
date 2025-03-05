@@ -1429,7 +1429,7 @@ components:
         Authorizaton: Bearer xxxxxxxxxxxxx
 
         {
-          "type": "org.wbcsd.pathfinder.ProductFootprint.Published.v1",
+          "type": "org.wbcsd.pact.ProductFootprint.PublishedEvent.3",
           "specversion": "1.0",
           "id": "1934405d-4f9b-4b3b-9c05bc35-68f8",
           "source": "//api.example.com/3/events",
@@ -1443,7 +1443,7 @@ components:
         $ref: '#/components/schemas/BaseEvent/properties'
         type:
           type: string
-          const: org.wbcsd.pathfinder.ProductFootprint.Published.v1
+          const: org.wbcsd.pact.ProductFootprint.PublishedEvent.3
           description: Event type identifier.
         data:
           type: object
@@ -1508,7 +1508,7 @@ components:
         $ref: '#/components/schemas/BaseEvent/properties'
         type:
           type: string
-          const: org.wbcsd.pathfinder.ProductFootprintRequest.Created.v1
+          const: org.wbcsd.pact.ProductFootprint.RequestCreatedEvent.3
           description: Event type identifier.
         data:
           type: object
@@ -1610,7 +1610,7 @@ components:
         $ref: '#/components/schemas/BaseEvent/properties'
         type:
           type: string
-          const: org.wbcsd.pathfinder.ProductFootprintRequest.Fulfilled.v1
+          const: org.wbcsd.pact.ProductFootprint.RequestFulfilledEvent.3
           description: Event type identifier.
         data:
           type: object
