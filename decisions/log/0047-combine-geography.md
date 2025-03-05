@@ -1,17 +1,17 @@
 # 47 Combine geography attributes into one.  
 
 ## Context
-The current CarbonFootprint type in the OpenAPI specification includes three separate properties to denote geographic information: `geographicRegion`, `geographyCountry`, and `geographyCountrySubdivision`. This separation can lead to redundancy and complexity in the data model. To simplify the model and improve clarity, we propose combining these properties into a single geography property.
+The current CarbonFootprint type in the OpenAPI specification includes three separate properties to denote geographic information: `geographyRegion`, `geographyCountry`, and `geographyCountrySubdivision`. This separation can lead to redundancy and complexity in the data model. To simplify the model and improve clarity, we propose combining these properties into a single geography property.
 
 ## Proposal
 For object type `CarbonFootprint`, combine the properties `geographicRegion`, `geographyCountry`, and `geographyCountrySubdivision` on into a single `geography` property:
 
 This new property will be a string that can denote a region, country, or country subdivision and MUST be in one of the following formats:
- - Country: ISO 3166-1 alpha-2. Two-letter country codes (e.g., `"US"` for the United States, `"DE"` for Germany).
- - ISO 3166-2: Codes for the principal subdivisions (e.g., states or provinces) of all countries coded in ISO 3166-1 (e.g., `"US-CA"` for California, United States).
- - UN M49: Standard for area codes used by the United Nations for statistical purposes (e.g., `"150"` for Europe, `"001"` for the World).
+ - Country: [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2). Two-letter country codes (e.g., `"US"` for the United States, `"DE"` for Germany).
+ - Country and subdivision: [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2): Codes for the principal subdivisions (e.g., states or provinces) of all countries coded in ISO 3166-1 (e.g., `"US-CA"` for California, United States).
+ - [UN M49](https://en.wikipedia.org/wiki/UN_M49): Standard for area codes used by the United Nations for statistical purposes (e.g., `"150"` for Europe, `"001"` for the World).
 
-As a consequency, the existing `geographyRegion`, `geographyCountry`, and `geographyCountrySubdivision` properties will be removed.
+As a consequence, the existing `geographyRegion`, `geographyCountry`, and `geographyCountrySubdivision` properties will be removed.
 
 ### Broadening M49 Regions and mapping to M49 Codes
 
