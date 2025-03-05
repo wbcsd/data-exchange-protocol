@@ -120,16 +120,28 @@ paths:
           description: |
             The host system succesfully returns a list of product footprints. This list 
             MAY be incomplete, in which case the host system MUST return a Link header
-            conforming to [[RFC8288]].
+            conforming to [[RFC8288]]. The list MUST NOT be larger than the <{listFootprints/limit}>,
+            if specified.
 
-            The list MAY also be empty, but MUST NOT be larger than the <{listFootprints/limit}>, if defined.
-            If the list is empty, the host system MUST return an empty JSON array.
-            The list MUST NOT be NULL.
+            ```http
+            link: <https://api.example.com/3/footprints?geography=FR&limit=10&offset=10>; rel="next"
+            content-type: application/json
+
+            {
+              "data": [ 
+                {"id": "079e425a-464f-528d-341d-4a944a1dfd70", ... },
+                {"id": "f4b1225a-bd44-4c8e-861d-079e4e1dfd69", ... }
+                ...
+              ]
+            }
+            ```
+
+            The list MAY also be empty. If the list is empty, the host system MUST return an empty 
+            JSON array. The list MUST NOT be NULL.
 
             ```json
             {
-              "data": []
-              "data": null // invalid
+              "data": [] // MUST NOT be null
             }
             ```
           headers:
