@@ -236,7 +236,10 @@ paths:
            endpoint (see [[#api-action-events-case-2]]).
 
         The Action Events endpoint accepts CloudEvent events (see [[!CE]]) encoded 
-        in "Structured Content Mode" (see [[!CE-Structured-Content-Mode]].
+        in "Structured Content Mode" (see [[!CE-Structured-Content-Mode]]. 
+
+        The CloudEvents are encoded in the "application/cloudevents+json" media type and
+        MUST be sent as an HTTP POST request body to the Action Events endpoint.
 
         The following events MUST be handled by the host system:
         - RequestCreatedEvent
@@ -1181,7 +1184,6 @@ components:
           $ref: '#/components/schemas/NonEmptyString'
           examples:
             - 3.9.1
-
     DataQualityIndicators:
       title: DataQualityIndicators
       description: | 
@@ -1285,7 +1287,6 @@ components:
           description: |
             Any additional comments that will clarify the interpretation of the verification.
           type: string
-
     FilterCriteria:
       type: object
       description: |
@@ -1413,18 +1414,25 @@ components:
       description: |
         Notification that a ProductFootprint has been published (either new or updated).
         This event is triggered by the [=data owner=] and send to relevant [=data recipients=].
+
+        The data object of the [=PublishedEvent=] contains the list of Product Footprint 
+        *IDs* that have been published or updated by the data owner.
+        
+        The data recipient can retrieve the *actual* Product Footprints by calling the 
+        [=GetFootprint=] action on the data owner's systems.
       type: object
       examples:
       - | 
         ```http
-        HTTP POST /events
+        HTTP POST /3/events
         Content-Type: application/cloudevents+json
+        Authorizaton: Bearer xxxxxxxxxxxxx
 
         {
           "type": "org.wbcsd.pathfinder.ProductFootprint.Published.v1",
           "specversion": "1.0",
-          "id": "EventId",
-          "source": "//EventHostname/EventSubpath",
+          "id": "1934405d-4f9b-4b3b-9c05bc35-68f8",
+          "source": "//api.example.com/3/events",
           "time": "2022-05-31T17:31:00Z",
           "data": {
             "pfIds": ["079e425a-464f-528d-341d-4a944a1dfd70"]
@@ -1458,7 +1466,43 @@ components:
     RequestCreatedEvent:
       $ref: '#/components/schemas/BaseEvent'
       title: ProductFootprint Request Created
-      description: A data recipient request the data owner a ProductFootprint.
+      description: |
+        A data recipient request a ProductFootprint from the data owner. The data recipient
+        MUST provide the criteria in the data object to enable the data owner to either
+        find an existing relevant PCF or create a new one.
+
+        Criteria to provide can be product id, geography, company identifier, validity 
+        period, etc.
+
+        The data owner MUST validate the input parameters, including these criteria. 
+        
+        If the data owner can *immediately* determine that it will not be able to 
+        handle this request it MUST respond with an appropriate `4xxx` error response, 
+        otherwise it MUST respond directly with a `200` (Success) or `202` (Accepted). 
+
+        In the latter case, the data owner MUST send a follow up event to the data 
+        recipient at some time in the future. This follow up event MUST be either a 
+        `RequestFulfilledEvent` or `RequestRejectedEvent`.
+      examples:
+      - |
+        ```http
+        HTTP POST /3/events
+        Content-Type: application/cloudevents+json
+        Authorizaton: Bearer xxxxxxxxxxxxx
+
+        {
+          "type": "org.wbcsd.pact.ProductFootprint.RequestCreatedEvent.3",
+          "specversion": "1.0",
+          "id": "1934405d-4f9b-4b3b-9c05bc35-68f8",
+          "source": "//api.example.com/3/events",
+          "time": "2025-03-05T17:31:00Z",
+          "data": {  
+            "productId": ["urn:pact:sample.com:product-id:44055-9c05bc35-68f8"],
+            "geography": ["DE"],
+            "validAfter": "2025-01-01T00:00:00Z"
+          }
+        }
+        ```
       type: object
       properties:
         $ref: '#/components/schemas/BaseEvent/properties'
@@ -1515,8 +1559,53 @@ components:
     RequestFulfilledEvent:
       $ref: '#/components/schemas/BaseEvent'
       title: ProductFootprint Request Fulfilled
-      description: Notification that a ProductFootprint request has been fulfilled.
+      description: | 
+        Notification that the request for PCF(s) has been fulfilled by the data owner. 
+        This notification will be sent by the data owner back to the data recipient in 
+        response to a ProductFootprintRequest.Created event, see [=RequestCreatedEvent=].
+
+        The data object contains the original requestEventId and the resulting list of 
+        ProductFootprints which conform to the set of criteria specified by the data 
+        recipient in the preceding RequestCreated event. This list MUST be non-empty, 
+        as the RequestFulfilled event indicates success.
+
+        If there are no product footprints to return, the data owner MUST send a
+        [=RequestRejectedEvent=] instead.
       type: object
+      examples:
+      - |
+        ```http
+        HTTP POST /3/events
+        Content-Type: application/cloudevents+json
+        Authorizaton: Bearer xxxxxxxxxxxxx
+
+        {
+          "type": "org.wbcsd.pact.ProductFootprint.RequestFulfilledEvent.3",
+          "specversion": "1.0",
+          "id": "505e5d-4f9b-4b3b-9c05bc35-68f8",
+          "source": "//api.example.com/3/events",
+          "time": "2025-03-05T17:31:00Z",
+          "data": {  
+            "requestEventId": "1934405d-4f9b-4b3b-9c05bc35-68f8",
+            "pfs": [
+              { 
+                /* ProductFootprint object */
+                "id": "079e425a-464f-528d-341d-4a944a1dfd70",
+                "specVersion": "3.0",
+                "productIds": ["urn:pact:sample.com:product-id:44055-9c05bc35-68f8"], 
+                ...
+                "pcf": {
+                  ...
+                }
+              }, 
+              { 
+                "id": "079e425a-464f-528d-341d-4a944a1dfd71",
+                ...
+              }
+            ]
+          }
+        }
+        ```
       properties:
         $ref: '#/components/schemas/BaseEvent/properties'
         type:
@@ -1534,8 +1623,11 @@ components:
               description: The ID of the request event that has been fulfilled.
               type: string
             pfs:
-              description: The list of ProductFootprints that have been returned.
+              description: |
+                The list of ProductFootprints resulting from the original 
+                that have been returned. This list MUST be non-empty.
               type: array
+              minItems: 1
               items:
                 $ref: '#/components/schemas/ProductFootprint'
 
