@@ -1299,51 +1299,6 @@ components:
           description: |
             Any additional comments that will clarify the interpretation of the verification.
           type: string
-    FilterCriteria:
-      type: object
-      description: |
-        Criteria for filtering ProductFootprint requests.
-      properties:
-        productId: 
-          $ref: '#/components/parameters/productId'
-          type: array
-          items: 
-            $ref: '#/components/schemas/Urn'
-        companyId:
-          $ref: '#/components/parameters/companyId'
-          type: array
-          items: 
-            $ref: '#/components/schemas/Urn'
-        geography:
-          $ref: '#/components/parameters/geography'
-          type: array
-          items:
-            $ref: '#/components/schemas/NonEmptyString'
-        classification:
-          $ref: '#/components/parameters/classification'
-          type: array
-          items: 
-            $ref: '#/components/schemas/Urn'
-        validOn:
-          $ref: '#/components/parameters/validOn'
-          type: string
-          format: date-time
-        validAfter:
-          $ref: '#/components/parameters/validAfter'
-          type: string
-          format: date-time
-        validBefore:
-          $ref: '#/components/parameters/validBefore'
-          type: string
-          format: date-time
-        status:       
-          $ref: '#/components/parameters/status'
-          type: string
-          format: date-time
-        comment:
-          description: |
-            Free text comment.
-          type: string
 
     # -----------
     # Simple types
@@ -1528,41 +1483,37 @@ components:
             Criteria for filtering ProductFootprint requests.
           properties:
             productId: 
-              $ref: '#/components/parameters/productId'
-              type: array
-              items: 
-                $ref: '#/components/schemas/Urn'
+              description:
+                $ref: '#/components/parameters/productId/description'
+              $ref: '#/components/parameters/productId/schema'
             companyId:
-              $ref: '#/components/parameters/companyId'
-              type: array
-              items: 
-                $ref: '#/components/schemas/Urn'
+              description: 
+                $ref: '#/components/parameters/companyId/description'
+              $ref: '#/components/parameters/companyId/schema'
             geography:
-              $ref: '#/components/parameters/geography'
-              type: array
-              items:
-                $ref: '#/components/schemas/NonEmptyString'
+              description: 
+                $ref: '#/components/parameters/geography/description'
+              $ref: '#/components/parameters/geography/schema'
             classification:
-              $ref: '#/components/parameters/classification'
-              type: array
-              items: 
-                $ref: '#/components/schemas/Urn'
+              description:
+                $ref: '#/components/parameters/classification/description'
+              $ref: '#/components/parameters/classification/schema'
             validOn:
-              $ref: '#/components/parameters/validOn'
-              type: string
-              format: date-time
+              description:
+                $ref: '#/components/parameters/validOn/description'
+              $ref: '#/components/parameters/validOn/schema'
             validAfter:
-              $ref: '#/components/parameters/validAfter'
-              type: string
-              format: date-time
+              description:
+                $ref: '#/components/parameters/validAfter/description'
+              $ref: '#/components/parameters/validAfter/schema'
             validBefore:
-              $ref: '#/components/parameters/validBefore'
-              type: string
-              format: date-time
+              description:
+                $ref: '#/components/parameters/validBefore/description'
+              $ref: '#/components/parameters/validBefore/schema'
             status:       
-              $ref: '#/components/parameters/status'
-              type: string
-              format: date-time
+              description:
+                $ref: '#/components/parameters/status/description'
+              $ref: '#/components/parameters/status/schema'
             comment:
               description: |
                 Free text comment.
