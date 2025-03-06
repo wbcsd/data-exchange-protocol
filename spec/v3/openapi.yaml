@@ -176,21 +176,6 @@ paths:
           $ref: '#/components/schemas/InternalErrorResponse'
       security:
       - BearerAuth: []
-      x-example: |
-        ```http 
-        HTTP/1.1 200 OK
-        content-type: application/json
-        link: <https://api.example.com/3/footprints?geography=FR&limit=10&offset=10>; rel="next"
-        ````
-        ```json
-        {
-          "data": [ 
-            {"id": "079e425a-464f-528d-341d-4a944a1dfd70", ... },
-            {"id": "f4b1225a-bd44-4c8e-861d-079e4e1dfd69", ... }
-            ...
-          ]
-        }
-        ```
   /3/footprints/{id}:
     get:
       summary: Action GetFootprint
@@ -209,7 +194,7 @@ paths:
         Host systems SHOULD implement an access management system and only 
         return the product footprints for which the data owner granted access 
         to the requesting data recipient.
-        
+
         If it determines that a data recipient is not allowed to access the requested
         ProductFootprint, the host system MUST return a 403 Forbidden response.
 
