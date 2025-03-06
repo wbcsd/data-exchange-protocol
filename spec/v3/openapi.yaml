@@ -124,9 +124,11 @@ paths:
             if specified.
 
             ```http
+            HTTP/1.1 200 OK
             link: <https://api.example.com/3/footprints?geography=FR&limit=10&offset=10>; rel="next"
             content-type: application/json
-
+            ```
+            ```json
             {
               "data": [ 
                 {"id": "079e425a-464f-528d-341d-4a944a1dfd70", ... },
@@ -179,7 +181,8 @@ paths:
         HTTP/1.1 200 OK
         content-type: application/json
         link: <https://api.example.com/3/footprints?geography=FR&limit=10&offset=10>; rel="next"
-
+        ````
+        ```json
         {
           "data": [ 
             {"id": "079e425a-464f-528d-341d-4a944a1dfd70", ... },
@@ -194,9 +197,22 @@ paths:
       description: |
         Retrieve a single Product Carbon Footprint (PCF) by its unique identifier.
 
+        If the host system has multiple versions of the same footprint with the
+        same `id`, it MUST include only the latest version in the list of footprints.
+
+        If the requested ProductFootprint is deprecated, the host system SHOULD
+        return the deprecated ProductFootprint.
+
+        If the requested ProductFootprint is not found, the host system MUST return
+        an 404 Not Found response.
+        
         Host systems SHOULD implement an access management system and only 
         return the product footprints for which the data owner granted access 
         to the requesting data recipient.
+        
+        If it determines that a data recipient is not allowed to access the requested
+        ProductFootprint, the host system MUST return a 403 Forbidden response.
+
       operationId: getFootprintById
       tags: [footprint]
       parameters:
@@ -209,7 +225,23 @@ paths:
           format: uuid
       responses:
         '200':
-          description: Success
+          description: |
+            Indicates success: the product footprint was found and returned 
+            by the host system.
+
+            Example response body:
+
+            ```json
+            {
+              "data": {
+                "id": "079e425a-464f-528d-341d-4a944a1dfd70",
+                "productIds": ["urn:pact:sample.com:product-id:44055-9c05bc35-68f8"]},
+                "productNameCompany": "Sample Product",
+                ...
+              }
+            }
+            ```
+
           content:
             application/json:
               schema:
@@ -280,15 +312,20 @@ paths:
               - $ref: '#/components/schemas/PublishedEvent'
       responses:
         '200':
-          description: Success
+          description: |
+            
+            Indicates success: the event was accepted by the host system. The response
+            body will be empty.
+            
+            In case of a `RequestCreatedEvent` the [=data recipient=] will be notified 
+            at some time in the future by the host system of the results of the request,
+            with a `RequestFulfilledEvent` or a `RequestRejectedEvent`.
         '400':
           $ref: '#/components/schemas/BadRequestResponse'
         '401':
           $ref: '#/components/schemas/UnauthorizedResponse'
         '403':
           $ref: '#/components/schemas/ForbiddenResponse'
-        '404':
-          $ref: '#/components/schemas/NotFoundResponse'
         '500':
           $ref: '#/components/schemas/InternalErrorResponse'
       security:
