@@ -740,7 +740,12 @@ The following section briefly describes some of the additional functionality whi
 
 ## Error Handling ## {#api-error-handling}
 
-TODO: Error handling.
+The actions [=GetFootprint=], [=ListFootprints=] and [=Events=] MUST return an appropriate HTTP status code and MUST include a JSON <{Error}> object with information on the error.
+
+Because authentication can be performed by a different host the <{Auth}> action does NOT need to include the <{Error}> object. Instead it follows the OAuth specification [[!rfc6750]]. See [[#api-auth]]
+
+Error responses are specified in detail such that data recipients can understand the cause of the error, and so that potentially host systems can react on and resolve errors automatically.
+
 
 ## Authentication Flow ## {#api-auth}
 
