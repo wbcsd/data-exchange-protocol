@@ -737,8 +737,6 @@ The following section briefly describes some of the additional functionality whi
 
 The actions [=GetFootprint=], [=ListFootprints=] and [=Events=] MUST return an appropriate HTTP status code and MUST include a JSON <{Error}> object with information on the error.
 
-Because authentication can be performed by a different host the <{Auth}> action does NOT need to include the <{Error}> object. Instead it follows the OAuth specification [[!rfc6750]]. See [[#api-auth]]
-
 Error responses are specified in detail such that data recipients can understand the cause of the error, and so that potentially host systems can react on and resolve errors automatically.
 
 Error responses from [=Action Auth=] follow the OAuth specification [[!rfc6750]]. See [[#api-auth]]
@@ -746,6 +744,71 @@ Error responses from [=Action Auth=] follow the OAuth specification [[!rfc6750]]
 
 ## Authentication Flow ## {#api-auth}
 
+The API requires authentication using the OAuth 2.0 client credentials flow. Clients must obtain an access token before making requests to protected endpoints.
+
+### Obtaining an Access Token
+
+Clients should retrieve the token endpoint dynamically via the OpenID Connect discovery mechanism. The OpenID configuration can typically be found at:
+
+```
+<base-url>/.well-known/openid-configuration
+```
+
+Alternatively, clients can obtain a token directly by making a request to:
+
+```
+POST <base-url>/auth
+```
+
+with the following request parameters:
+
+ * `grant_type`: Must be set to `client_credentials`.
+ * `client_id`: The client’s unique identifier.
+ * `client_secret`: The client’s secret key.
+
+Example request:
+
+```http
+POST <base-url>/auth
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=client_credentials&client_id=your-client-id&client_secret=your-client-secret
+```
+
+### Token Response
+
+A successful response returns an access token in the following format:
+
+```json
+{
+  "access_token": "<token>",
+  "token_type": "Bearer",
+  "expires_in": 3600
+}
+```
+
+### Using the Access Token
+
+Once obtained, the access token must be included in the Authorization header of API requests, following the OAuth 2.0 Bearer Token Usage standard (RFC 6750):
+
+```http
+GET <base-url>/protected-resource
+Authorization: Bearer <access_token>
+```
+
+The host system MUST check the Access Token and return an 401 when it has expired or is invaliud. 
+
+[=Access tokens=] SHOULD expire. In this case, data recipients MUST retrieve a new [=access token=]
+as described in this section.
+
+For more details, refer to:
+
+OpenID Connect Discovery Specification
+
+OAuth 2.0 Bearer Token Usage (RFC 6750)
+
+
+<!--
 A [=host system=] requires a [=data recipient=] to first authenticate before successfully calling an Action (such as [=Action ListFootprints=] or [=Action Events=]). The [=data recipient=] MUST perform the <dfn>authentication flow</dfn>:
 
 1. data recipient attempting to perform the OpenId Connect-based flow, by
@@ -767,9 +830,7 @@ Once the [=authentication flow=] is complete, the [=data recipient=] can call th
     value for a [[!rfc6750]] <dfn>Bearer token</dfn>
   - presenting the Bearer token for subsequent call(s) to the host system in accordance with
     [[!rfc6750]] Section 2.1
-
-[=Access tokens=] SHOULD expire. In this case, data recipients MUST retrieve a new [=access token=]
-as described in this section.
+-->
 
 
 <pre class=include>
