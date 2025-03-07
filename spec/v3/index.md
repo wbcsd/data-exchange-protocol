@@ -741,6 +741,8 @@ Because authentication can be performed by a different host the <{Auth}> action 
 
 Error responses are specified in detail such that data recipients can understand the cause of the error, and so that potentially host systems can react on and resolve errors automatically.
 
+Error responses from [=Action Auth=] follow the OAuth specification [[!rfc6750]]. See [[#api-auth]]
+
 
 ## Authentication Flow ## {#api-auth}
 
