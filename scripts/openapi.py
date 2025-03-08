@@ -294,17 +294,15 @@ def generate_operation(output, path, method, operation):
         output.write(f"<tr>\n")
         output.write(f"<td>**{status}**</td>\n")
         output.write(f"<td>{response['description']}\n\n")
-        if status < "200" or status >= "300":
-            output.write("See [Error Handling](#error-handling) for details. Response body SHOULD contain a JSON <{Error}> object\n\n")
-        elif response.get("content"):
+        if not "content" in response:
+            output.write("No content\n")
+        elif status >= "200" and status < "300":
             for content_type, content in response["content"].items():
                 write_defs_start(output, headers=None)
                 for name, property in content["schema"]["properties"].items():
                     print(name)
                     write_property(output, content['schema'], name, property)
                 write_defs_end(output)
-        else:
-            output.write("No content\n")
         output.write("</td>\n</tr>\n")
     write_defs_end(output)
     output.write("\n")
