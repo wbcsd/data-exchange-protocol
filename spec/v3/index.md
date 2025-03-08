@@ -746,18 +746,25 @@ Error responses from [=Action Auth=] follow the OAuth specification [[!rfc6750]]
 
 The API requires authentication using the OAuth 2.0 client credentials flow. Clients must obtain an access token before making requests to protected endpoints.
 
+[=Host systems=] MUST implement this action in conformance with [[!rfc6749]] Section 4.4.
+
+
 ### Obtaining an Access Token
 
-Clients should retrieve the token endpoint dynamically via the OpenID Connect discovery mechanism. The OpenID configuration can typically be found at:
+Clients SHOULD retrieve the token endpoint dynamically via the OpenID Connect discovery mechanism. The OpenID configuration can  be found at:
 
 ```
-<base-url>/.well-known/openid-configuration
+$auth-base-url$/.well-known/openid-configuration
 ```
 
-Alternatively, clients can obtain a token directly by making a request to:
+If provided by the host system, this document contains the `token_endpoint` to be used by the client. 
+
+If no OpenID configuration is provided by the host system, clients MUST assume `$auth-base-url$/auth/token` to be the token endpoint.
+
+After determining the token endpoint, clients MUST obtain by making a request to:
 
 ```
-POST <base-url>/auth
+POST $token-endpoint$
 ```
 
 with the following request parameters:
@@ -769,7 +776,8 @@ with the following request parameters:
 Example request:
 
 ```http
-POST <base-url>/auth
+POST /auth/token
+Host: id.example.com
 Content-Type: application/x-www-form-urlencoded
 
 grant_type=client_credentials&client_id=your-client-id&client_secret=your-client-secret
@@ -786,6 +794,16 @@ A successful response returns an access token in the following format:
   "expires_in": 3600
 }
 ```
+
+If the client cannot be authenticated, the [=host system=] MUST respond with a 400 or 401 status code, and provide details on the error:
+
+```json
+{
+  "error": "invalid_client",
+  "error_description": "Authentication failed"
+}
+
+For details and possible values for `error` see [[!RFC6749]] section 5.2
 
 ### Using the Access Token
 
