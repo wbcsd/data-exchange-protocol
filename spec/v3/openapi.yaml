@@ -1556,7 +1556,9 @@ components:
         The data object contains the original requestEventId and the resulting list of 
         ProductFootprints which conform to the set of criteria specified by the data 
         recipient in the preceding RequestCreated event. This list MUST be non-empty, 
-        as the RequestFulfilled event indicates success.
+        as the RequestFulfilled event indicates success. The data owner MUST send 
+        a single RequestFulfilled event back to the data recipient per corresponding 
+        RequestCreated event.
 
         If there are no product footprints to return, the data owner MUST send a
         [=RequestRejectedEvent=] instead.
