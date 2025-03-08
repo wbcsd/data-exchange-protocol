@@ -1676,7 +1676,9 @@ components:
     Error:
       title: Error
       description: Object with error code and description, to be returned by the API methods 
-        in case of error. See Chapter "Error Handling" of the Tech Specs for more details.
+        in case of error.
+
+        See [[#api-error-handling]] for details.
       type: object
       properties:
         code:
@@ -1703,43 +1705,64 @@ components:
         }
         ```
     BadRequestResponse:
-      description: Bad request.
+      description: |
+        Bad request.
+
+        Response body MUST contain a JSON <{Error}> object
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
     NotFoundResponse:
-      description: Not found.
+      description: |
+        Not found.
+
+        Response body MUST contain a JSON <{Error}> object
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
     UnauthorizedResponse: # 401
-      description: The request is not authorized, the access token is invalid or has expired. 
+      description: |
+        The request is not authorized, the access token is invalid or has expired. 
+
+        Response body MUST contain a JSON <{Error}> object
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
     TokenExpiredResponse: # 401
-      description: Token expired.
+      description: |
+        Token expired.
+
+        Response body MUST contain a JSON <{Error}> object
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
     ForbiddenResponse:
-      description: Access Denied.
+      description: |
+        Access Denied.
+
+        Response body MUST contain a JSON <{Error}> object
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
     NotImplementedResponse:
-      description: Not implemented.
+      description: | 
+        Not implemented.
+
+        Response body MUST contain a JSON <{Error}> object
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
     InternalErrorResponse:
-      description: Internal Error.
+      description: | 
+        Internal Error.
+
+        Response body MUST contain a JSON <{Error}> object
       content:
         application/json:
           schema:
