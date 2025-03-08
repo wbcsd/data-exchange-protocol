@@ -120,8 +120,8 @@ paths:
           description: |
             The host system succesfully returns a list of product footprints. This list 
             MAY be incomplete, in which case the host system MUST return a Link header
-            conforming to [[RFC8288]]. The list MUST NOT be larger than the <{listFootprints/limit}>,
-            if specified.
+            conforming to [[RFC8288], also see [[#pagination]]. The list MUST NOT be 
+            larger than the <{listFootprints/limit}>, if specified. 
 
             ```http
             HTTP/1.1 200 OK
@@ -148,7 +148,7 @@ paths:
             ```
           headers:
             link:
-              description: Link header to next result set. See Tech Specs section 6.6.1
+              description: Link header to next result set. See [[#pagination]].
               schema:
                 type: string
                 examples:
@@ -243,10 +243,16 @@ paths:
         '401':
           $ref: '#/components/schemas/UnauthorizedResponse'
         '403':
-          description: The data recipient is not allowed to access the requested ProductFootprint.
+          description: | 
+            The data recipient is not allowed to access the requested ProductFootprint.
+
+            Response body MUST contain a JSON <{Error}> object
           $ref: '#/components/schemas/ForbiddenResponse'
         '404':
-          description: The requested ProductFootprint was not found.
+          description: |
+            The requested ProductFootprint was not found.
+
+            Response body MUST contain a JSON <{Error}> object
           $ref: '#/components/schemas/NotFoundResponse'
         '500':
           $ref: '#/components/schemas/InternalErrorResponse'
@@ -275,8 +281,6 @@ paths:
         - RequestFulfilledEvent
         - RequestRejectedEvent
         - PublishedEvent
-
-        A [=host system=] SHOULD only accept events after authentication (see [[#api-auth]]).
 
         A host system MUST validate the event and return an HTTP 4xx status code if the
         event is invalid. 
