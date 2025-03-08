@@ -697,21 +697,18 @@ A [=host system=] MUST implement the following actions:
  - [=Action GetFootprint=]
  - [=Action Events=]
 
-A [=host system=] MUST offer its actions under https method only. 
+The host system MUST make its footprints available to the data recipient through BOTH [=Action ListFootprints=] AND [=Action Event=]. 
+
+A [=host system=] MUST offer its actions over HTTPS only. 
 
 A [=host system=] MUST authenticate any client prior to using the above actions. 
 
-A [=host system=] MUST offer all actions except [=Action Authenticate] under the same [=BaseUrl=].
+A [=host system=] MUST offer all actions except [=Action Authenticate=] under the same [=BaseUrl=], e.g. `https://api.example.org/`. Note that for version 3 these actions can be found under `$base-url$/3/...`
 
-A [=host system=] SHOULD offer an [=OpenId Provider Configuration Document=] as specified in [[!OPENID-CONNECT]] for the client to obtain the token endpoint ([=Action Authenticate=].
+A [=host system=] SHOULD offer an [=OpenId Provider Configuration Document=] for the client to obtain the token endpoint for [=Action Authenticate=].
 
-A [=host system=] MAY offer the [=OpenId Provider Configuration Document=] and [=Action Authenticate=] under a `[=AuthBaseUrl=]` different from [=BaseUrl=].
+A [=host system=] MAY offer the [=OpenId Provider Configuration Document=] and/or [=Action Authenticate=] under a [=AuthBaseUrl=] different from [=BaseUrl=], e.g. `https://id.example.org` (see [[#api-auth]])
 
-The host system MUST make its footprints available to the data recipient through both [=Action ListFootprints=] AND [=Action Event=]. 
-
-If a host system does not offer an [=OpenId Provider Configuration Document=], [=data recipients=] MUST assume that [=Action Authenticate=] is offered under [=AuthBaseUrl=]`/auth/token` (see [[#api-auth]]).
-
-In case of succesful retrieval or creation of the PCF(s), The host system of the data owner MUST send back the 1 or more product footprints in a single event message to the data requester.
 
 
 ## Out of scope ## {#api-host-system-out-of-scope}
@@ -818,13 +815,6 @@ The host system MUST check the Access Token and return an 401 when it has expire
 
 [=Access tokens=] SHOULD expire. In this case, data recipients MUST retrieve a new [=access token=]
 as described in this section.
-
-For more details, refer to:
-
-OpenID Connect Discovery Specification
-
-OAuth 2.0 Bearer Token Usage (RFC 6750)
-
 
 <!--
 A [=host system=] requires a [=data recipient=] to first authenticate before successfully calling an Action (such as [=Action ListFootprints=] or [=Action Events=]). The [=data recipient=] MUST perform the <dfn>authentication flow</dfn>:
