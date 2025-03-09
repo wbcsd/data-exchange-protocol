@@ -1,9 +1,7 @@
-import os
-import sys
 import yaml
 import json
 import jsonref
-import markdown
+import logging
 
     
 def get_property_type_spec(property):
@@ -242,7 +240,7 @@ def generate_data_model(input_path, output_path):
             # Skip all types without a title
             if not "title" in type:
                 continue
-            print(name)
+            logging.debug(name)
             # for name in ["ProductFootprint", "CarbonFootprint"]:
             generate_type_description(output, schema, name, type)
 
@@ -300,7 +298,7 @@ def generate_operation(output, path, method, operation):
             for content_type, content in response["content"].items():
                 write_defs_start(output, headers=None)
                 for name, property in content["schema"]["properties"].items():
-                    print(name)
+                    logging.debug(name)
                     write_property(output, content['schema'], name, property)
                 write_defs_end(output)
         output.write("</td>\n</tr>\n")
