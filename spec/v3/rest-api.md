@@ -162,7 +162,7 @@ This will enable queries like `.../footprint/?x-atq-invoice-id=12345&geography=F
 
 1. The host system MAY return less ProductFootprints than requested through the [=Limit=] request parameter
 2. The host system MUST return a `Link` header if there are additional ProductFootprints ready to be retrieved, such that
-   1. The `Link` header conforms to [[!RFC8288]]
+   1. The `Link` header conforms to [[!rfc8288]]
    2. The value of the `rel` parameter is equal to `next`
    3. the target IRI (RFC8288, section 3.1) of the `Link` header is absolute
    4. The value of `host` of the target IRI is equal to the value of the `host` request header from the original `ListFootprints` HTTP request

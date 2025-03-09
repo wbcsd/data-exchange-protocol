@@ -43,37 +43,37 @@ paths:
 
         ### Pagination
 
-        1. The host system MUST NOT return more product footprints than requested in 
-           case a <{listFootprints/limit}> parameter was specified by a [=data recipient=]
-        2. The host system MUST return an HTTP `Link` header if there are additional 
-           ProductFootprints ready to be retrieved, such that
-            - The `Link` header conforms to [[!RFC8288]]
-            - The value of the `rel` parameter is equal to `next`
-            - the target URI (RFC8288, section 3.1) of the `Link` header is absolute
-            - The value of `host` of the target URI is equal to the value of the `host` 
-               request header from the original `ListFootprints` HTTP request
-        3. The target URI from the `Link` header is called a <dfn>pagination link</dfn>.
-        4. A pagination link MUST be valid for at least 180 seconds after creation
-        5. The data recipient CAN call the pagination link more than once
-        6. Upon each call, the host system
-            - MUST return the same set of Product Footprints
-            - MUST NOT return more product footprints than requested in case <{listFootprints/limit}> was 
-              defined by a [=data recipient=]
-            - MUST return a `Link` header conforming with the previous description in case 
-              there are additional ProductFootprints available
-              ```http
-              link: <https://api.example.com/3/footprints?geography=FR&limit=10&offset=10>; rel="next"
-              ```
-        7. If a response contains a second pagination link and the data recipient has called 
-           that second pagination link, the previous pagination link MAY no longer work: data 
-           recipients MUST NOT assume that previous pagination links continue to return results 
-           after advancing in the pagination process
+         1. The host system MUST NOT return more product footprints than requested in 
+            case a <{listFootprints/limit}> parameter was specified by a [=data recipient=]
+         2. The host system MUST return an HTTP `Link` header if there are additional 
+            ProductFootprints ready to be retrieved, such that
+              - The `Link` header conforms to [[!RFC8288]]
+              - The value of the `rel` parameter is equal to `next`
+              - the target URI (RFC8288, section 3.1) of the `Link` header is absolute
+              - The value of `host` of the target URI is equal to the value of the `host` 
+                request header from the original `ListFootprints` HTTP request
+         3. The target URI from the `Link` header is called a <dfn>pagination link</dfn>.
+         4. A pagination link MUST be valid for at least 180 seconds after creation
+         5. The data recipient CAN call the pagination link more than once
+         6. Upon each call, the host system
+              - MUST return the same set of Product Footprints
+              - MUST NOT return more product footprints than requested in case 
+                <{listFootprints/limit}> was defined by a [=data recipient=]
+              - MUST return a `Link` header conforming with the previous description in case 
+                there are additional ProductFootprints available
+                ```http
+                link: <https://api.example.com/3/footprints?geography=FR&limit=10&offset=10>; rel="next"
+                ```
+         7. If a response contains a second pagination link and the data recipient has called 
+            that second pagination link, the previous pagination link MAY no longer work: data 
+            recipients MUST NOT assume that previous pagination links continue to return results 
+            after advancing in the pagination process
 
         ### Filtering
 
         The [=host system=] MUST support filtering of the list of footprints by 
-        criteria described under Parameters. Note that these are the same filters used by the
-        [[#action-events-productfootprint-request-created]] Event.
+        criteria described under Parameters. Note that these are the same filters 
+        used by the [[#request-created-event]] Event.
 
         A host system MAY provide additional filter criteria for the data recipient
         to use. These parameters MUST be prefixed with `x-<identifier>-`.  
@@ -92,7 +92,7 @@ paths:
       - name: limit
         description: |
           The maximum number of footprints to return. The [=host system=] MAY return fewer 
-          footprints, but MUST return a Link header conforming to [[RFC8288]] if there are 
+          footprints, but MUST return a Link header conforming to [[!RFC8288]] if there are 
           additional ProductFootprints ready to be retrieved. 
         in: query
         schema:
@@ -264,11 +264,12 @@ paths:
       description: |
         The Action Events endpoint supports for the following use cases:
 
-        1. enabling a [=data owner=] to notify a [=data recipient=] on 
-           updates to 1 or more [[#dt-pf|Product Footprints]] (see [[#api-action-events-case-1]])
-        2. enabling a [=data recipient=] to request [[#dt-pf|product footprints]] 
-           from a [=data owner=] by sending an event to the [=data owner's=] [=Action Events=] 
-           endpoint (see [[#api-action-events-case-2]]).
+         1. enabling a [=data recipient=] to request Product Footprints
+            from a [=data owner=] by sending a `RequestCreatedEvent`, to
+            which the data owner can answer by sending `RequestFulfilledEvent`
+            or a `RequestRejectedEvent`.
+         2. enabling a [=data owner=] to notify a [=data recipient=] on 
+            updates to 1 or more Product Footprints: `PublishedEvent`
 
         The Action Events endpoint accepts CloudEvent events (see [[!CE]]) encoded 
         in "Structured Content Mode" (see [[!CE-Structured-Content-Mode]]. 
@@ -277,10 +278,10 @@ paths:
         MUST be sent as an HTTP POST request body to the Action Events endpoint.
 
         The following events MUST be handled by the host system:
-        - RequestCreatedEvent
-        - RequestFulfilledEvent
-        - RequestRejectedEvent
-        - PublishedEvent
+        - [`RequestCreatedEvent`](#request-created-event)
+        - [`RequestFulfilledEvent`](#request-fulfilled-event)
+        - [`RequestRejectedEvent`](#request-rejected-event)
+        - [`PublishedEvent`](#productfootprint-published-event)
 
         A host system MUST validate the event and return an HTTP 4xx status code if the
         event is invalid. 
@@ -680,8 +681,10 @@ components:
             - all emissions from fossil sources
             - all biogenic and land management-related CH4,  N2O, non-biogenic CO2, HFCs and PFCs emissions
             - land management CO2 removals
+
             Excluding: 
             - all biogenic CO2 withdrawals.
+
           x-unit: kgCO2e/declared unit
           x-comment: | 
             PCF (Excl. biogenic CO2 withdrawal) = fossilGhgEmissions + landUseChangeGhgEmissions + landManagementBiogenicCO2Emissions + biogenicNonCO2Emissions + landManagementBiogenicCO2Removals
@@ -693,7 +696,8 @@ components:
             - all emissions from fossil sources
             - all biogenic and land management-related CH4,  N2O, non-biogenic CO2, HFCs and PFCs emissions
             - land management CO2 removals
-            - all biogenic CO2 withdrawals.          
+            - all biogenic CO2 withdrawals.
+
           x-unit: kgCO2e/declared unit
           x-comment: |
             PCF (Incl. biogenic CO2 withdrawal) = FossilGHGEmissions + landUseChangeGHGEmissions + landManagementBiogenicCO2Emissions + biogenicNonCO2Emissions + landManagementBiogenicCO2Removals + biogenicCO2Withdrawal

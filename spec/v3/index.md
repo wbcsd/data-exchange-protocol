@@ -39,7 +39,7 @@ Advisement: This is the Draft Release of the PACT 3.0.0 Specifications, for cons
 Advisement: This document is a work in progress and should not be used for conformance testing. 
   Please refer to the [latest stable version of the Technical Specifications](https://wbcsd.github.io/tr/2024/data-exchange-protocol-20241024/) for this.
 
-  For an overview of changes since the last version (2.3), see the [Changelog](#changelog)
+  For an overview of changes since the last version (2.3), see the [[#changelog]].
 <!--
 Advisement: This document will change heavily preparing for the 3.0 draft for consultation, ETA Mid-Feb.
   All feedback is welcome.
@@ -168,7 +168,7 @@ A conforming requesting [=data recipient=] is any algorithm realized as software
 
 Note: This chapter is non-normative.
 
-Achieving transparency in carbon emissions at the product level is challenging due to the complexity of global supply chains. This specification focuses on enabling transparency through a peer-to-peer PCF data exchange by specifying necessary aspects for achieving interoperability, such as the [[#data-model|data model]] and [[#api|API]].
+Achieving transparency in carbon emissions at the product level is challenging due to the complexity of global supply chains. This specification focuses on enabling transparency through a peer-to-peer PCF data exchange by specifying necessary aspects for achieving interoperability, such as the [Data Model](#data-model) and [API](#api).
 
 This chapter provides examples for inter-company business cases related to the exchange of [=PCFs=], focusing on both asynchronous event processing and synchronous API calls.
 
@@ -199,12 +199,12 @@ In this case the data owner sends a `PublishedEvent` to the data recipient.
 1. The data owner authenticates with the data recipient and sends a `PublishedEvent` with the updated or created PCF.
 1. The data recipient should validate this incoming event and directly return a status code indicating succesful receipt (HTTP code 2xx) or an error (HTTP 4xx or 5xx). 
 
-Refer to [[#api-action-events]] for detailed request and response formats.
+Refer to [[#action-events]] for detailed request and response formats.
 
 
 ## Synchronous Retrieval 
 
-The synchronous part of te API allows for immediate retrieval of PCFs. Refer to [[#api-action-list]] and [[#api-action-get]] for detailed request and response formats.
+The synchronous part of te API allows for immediate retrieval of PCF's. Refer to [[#action-listfootprints]] and [[#action-getfootprint]] for detailed request and response formats.
 
 
 ### Getting multiple PCFs
@@ -473,10 +473,11 @@ In determining which URN namespace and corresponding syntax to use, the data own
 
   ```json
   ["urn:pact:inchi-trust.org:substance-id:$INCHI-ID$"]
-    ```
+  ```
 <tr>
   <td>Custom category
   <td>
+
   ```json
   "urn:pact:catalog.company.com:category-id:550010"
   ```
@@ -799,8 +800,9 @@ If the client cannot be authenticated, the [=host system=] MUST respond with a 4
   "error": "invalid_client",
   "error_description": "Authentication failed"
 }
+```
 
-For details and possible values for `error` see [[!RFC6749]] section 5.2
+For details and possible values for `error` see [[!rfc6749]] section 5.2
 
 ### Using the Access Token
 
