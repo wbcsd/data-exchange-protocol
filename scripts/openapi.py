@@ -131,7 +131,7 @@ def write_property(output, type, name, property, recursive=False):
     output.write(get_example_text(name, property))
     output.write("\n")
     if property.get("x-unit"):
-        output.write(f"<div class='json-schema-unit'>{property['x-unit']}")
+        output.write(f"\n<div class='json-schema-unit'>{property['x-unit']}")
         if property.get("comment"):
             output.write(f"<br>\n{sanitize(property['comment'])}")
         output.write("</div>\n")
@@ -251,6 +251,7 @@ def generate_operation(output, path, method, operation):
     query = "?params=value&..." if "parameters" in operation and any(p["in"] == "query" for p in operation["parameters"]) else ""
     output.write(f"```HTTP\n{method.upper()} {path}{query}\n```\n")
     output.write(f"{operation['description']}\n\n")
+    logging.info(operation['description'])
     if operation.get("parameters"):
         output.write("### Parameters\n")
         write_defs_start(output, operation['operationId'])
