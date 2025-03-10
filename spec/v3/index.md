@@ -1184,7 +1184,7 @@ Summary of changes:
 
 Summary of changes:
 1. fixed [[#api-action-list-example]], [[#api-action-events-example]],
-    [[#api-action-get-example]], and [[#business-cases-async-events-1-workflow]] by removing spurious
+    [[#api-action-get-example]], and [[#business-cases-async-events]] by removing spurious
     `geographicScope` object
 
 ## Version 2.2.1-20240507 (May 7, 2024) ## {#changelog-2.2.1-20240507}
@@ -1210,7 +1210,7 @@ Summary of changes:
 
 1. removal of notes referring to the transition from v1 to v2
 2. fixed the incomplete `assurance` example and moved it to the appropriate section
-3. addition of missing examples in the [[#business-cases-async-events-1-workflow]] section
+3. addition of missing examples in the [[#business-cases-async-events]] section
 4. addition of advisement to <{CarbonFootprint/exemptedEmissionsPercent}> stating that the upper boundary will be removed in version 3
 5. clarification of how to handle error codes in [=ListResponseBody=] and [=GetResponseBody=]
 
@@ -1290,7 +1290,7 @@ This version fixes 5 definition incorrectness
 
 1. property <{CarbonFootprint/fossilCarbonContent}>: was incorrectly
     defined with unit `kg of CO2e / declaredUnit`. The unit is now defined as `kg / declaredUnit`
-2. fix to the `referencePeriod` <a href=#example-filter-period>Filter Example</a>
+2. fix to the `referencePeriod` <a href="#filtering">Filter Example</a>
 3. fixed typo in the definition of <{CarbonFootprint/referencePeriodEnd}>
 4. fixed definition of <{CarbonFootprint/landManagementGhgEmissions}>: previously, it was incorrectly defined as a non-negative decimal
 5. fixed definition of <{CarbonFootprint/biogenicCarbonWithdrawal}>: previously, it was incorrectly defined as a non-negative decimal
@@ -1298,8 +1298,8 @@ This version fixes 5 definition incorrectness
 
 In addition, this version:
 
-1. clarifies in [[#api-action-list]] the semantics of the [=Filter=] processing being OPTIONAL by introducing section [[#api-action-list-filtering]]
-2. clarifies that a [=host system=] must return HTTP error status codes if it does not implement the events endpoint (see [[#api-action-events]])
+1. clarifies in [[#action-listfootprints]] the semantics of the [=Filter=] processing being OPTIONAL by introducing section [[#filtering]]
+2. clarifies that a [=host system=] must return HTTP error status codes if it does not implement the events endpoint (see [[#action-events]])
 3. clarified the [=PCF=] term definition
 4. fixed linking to semantic versioning document
 5. reworded <{CarbonFootprint/referencePeriodStart}> and <{CarbonFootprint/referencePeriodEnd}>
@@ -1345,7 +1345,7 @@ Summary of the major changes and concepts added with this version:
 
 1. update to Pathfinder Framework Version 2.0, including data model changes which are not backwards-compatible, including
     1. addition of data type <{DataQualityIndicators}> and <{Assurance}> to <{CarbonFootprint}>
-2. event-based communication between [=host systems=] ([[#api-action-events]])
+2. event-based communication between [=host systems=] ([[#action-events]])
 3. support for data model extensions ([[#datamodelextension]])
 4. life cycle management of a <{ProductFootprint}> ([[#lifecycle]])
 
@@ -1391,9 +1391,9 @@ Overview of the changes to the data model compared with the data model version 1
         - Additional operators: `eq`, `lt`, `le`, `gt`, `and`, `any`
         - Additional properties: <{ProductFootprint/created}>, <{ProductFootprint/updated}>, <{ProductFootprint/productCategoryCpc}>, <{CarbonFootprint/geographyCountry}>, <{CarbonFootprint/referencePeriodStart}>, <{CarbonFootprint/referencePeriodEnd}>, <{ProductFootprint/companyIds}>, <{ProductFootprint/productIds}>.
     3. Addition of alternative [=Action ListFootprints=] response `HttpStatusCode` 202, and pull-based request/response semantics
-    4. pagination is now mandatory. See [[#api-action-list-pagination]]
+    4. pagination is now mandatory. See [[#pagination]]
 
-- [=Action Events=]: section [[#api-action-events]] added
+- [=Action Events=]: section [[#action-events]] added
 
 ## Version 1.0.1 ## {#changelog-1.0.1}
 
@@ -1403,14 +1403,14 @@ The following changes have been applied for version 1.0.1
 2. Fix to the JSON representation specification in `crosssectoralstandardset-json`
 3. Change to the minimum size of the set <{CarbonFootprint/productOrSectorSpecificRules}> from `0` to `1`, aligning with the overall specification.
 4. Removal of unreferenced data type `Boolean` from the data model section
-5. Rewording, simplified wording of chapter [[#api-action-auth]]
+5. Rewording, simplified wording of chapter [[#api-auth]]
 6. Addition of an authentication flow specification in chapter [[#api-auth]]
-7. Improved wording of request parameter `Filter` in section [[#api-action-list-request]]
-8. Improved wording in section [[#api-error-responses]], specifically
+7. Improved wording of request parameter `Filter` in section [[#action-listfootprints]]
+8. Improved wording in section [[#api-error-handling]], specifically
     - addition of [=error response=] definition
     - improved specification of the [=error response=] JSON representation
     - consolidated specification of overall [=error response=] representation as a HTTP Response
-    - improvements to previous subsection "List of error codes", plus merging into overall section [[#api-error-responses]]
+    - improvements to previous subsection "List of error codes", plus merging into overall section [[#api-error-handling]]
     - addition of list of example situations when an [=error response=] is returned
 9. Addition of Section [[#api-error-response-example]]
 10. Addition of term [=interoperable=] to section [[#terminology]], plus linking to in respective sections
