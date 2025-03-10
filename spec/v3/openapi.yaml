@@ -436,7 +436,7 @@ components:
           - Active
         validityPeriodStart:
           description: |
-            The start date of the <dfn>validity period</dfn>: time interval during which the 
+            The start date of the validity period: the time interval during which the 
             ProductFootprint is declared as valid for use by a receiving [=data recipient=].
             
             If no validity period is specified, the ProductFootprint is valid for 3 years after

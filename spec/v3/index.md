@@ -247,7 +247,7 @@ A change to a Product Footprint is defined as a change to one or more properties
 
 After creation of a <{ProductFootprint}> this footprint MUST NOT be changed, EXCEPT for changing its <{ProductFootprint/status}> property to `Deprecated`
 
-A <{ProductFootprint}> with <{ProductFootprint/status}> `Deprecated` MUST NOT be [=changed=] anymore.
+A <{ProductFootprint}> with <{ProductFootprint/status}> `Deprecated` MUST NOT be changed anymore.
 
 ### Updating PCFs
 
@@ -693,10 +693,10 @@ Interoperable data exchange between a data owner and a data recipient can be ach
 
 A [=host system=] MUST implement the following actions:
 
- - [=Action Authenticate=]
- - [=Action ListFootprints=]
- - [=Action GetFootprint=]
- - [=Action Events=]
+ - [Action Authenticate](#api-auth)
+ - [Action ListFootprints](#action-listfootprints)
+ - [Action GetFootprint=](#action-getfootprint)
+ - [Action Events](#action-events)
 
 The host system MUST make its footprints available to the data recipient through BOTH [=Action ListFootprints=] AND [=Action Event=]. 
 
@@ -733,11 +733,11 @@ The following section briefly describes some of the additional functionality whi
 
 ## Error Handling ## {#api-error-handling}
 
-The actions [=GetFootprint=], [=ListFootprints=] and [=Events=] MUST return an appropriate HTTP status code and MUST include a JSON <{Error}> object with information on the error.
+[he actions [GetFootprint](#action-getfootprint), [ListFootprints](#action-listfootprints) and [Events](#action-events) MUST return an appropriate HTTP status code and MUST include a JSON <{Error}> object with information on the error.
 
 Error responses are specified in detail such that data recipients can understand the cause of the error, and so that potentially host systems can react on and resolve errors automatically.
 
-Error responses from [=Action Auth=] follow the OAuth specification [[!rfc6750]]. See [[#api-auth]]
+Error responses from [Action Auth](#api-auth) follow the OAuth specification [[!rfc6750]]. See [[#api-auth]]
 
 
 ## Authentication Flow ## {#api-auth}
