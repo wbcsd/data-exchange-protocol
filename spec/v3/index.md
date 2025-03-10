@@ -854,6 +854,165 @@ path: rest-api.md
 </pre>
 -->
 
+## Examples ## {#api-examples}
+
+<div class=note>Non-normative</div>
+
+### Example Action ListFootprints ### {#api-action-list-example}
+
+
+<div class="example">
+
+Request:
+
+```http
+GET /3/footprints?limit=10 HTTP/2
+host: api.example.org
+authorization: Bearer [BearerToken]
+```
+
+Response:
+ 
+```http
+HTTP/1.1 200 OK
+date: Mon, 23 May 2022 19:33:16 GMT
+content-type: application/json
+content-length: 1831
+link: &lt;https://api.example.org/3/footprints?limit=10&amp;offset=10&gt;; rel="next"
+```
+<pre class=include-code>
+path: examples/list-footprints-response.json
+highlight: json
+</pre>
+
+Example response body when no footprints available: 
+```http
+{
+  "data": []
+}
+```
+
+</div>
+
+### Example Action GetFootprint ### {#api-action-get-example}
+
+<div class="example">
+
+Request:
+
+```http
+GET /3/footprint/91715e5e-fd0b-4d1c-8fab-76290c46e6ed HTTP/2
+host: api.example.org
+authorization: Bearer [BearerToken]
+```
+
+Response:
+
+```http
+HTTP/1.1 200 OK
+date: Mon, 23 May 2022 19:33:16 GMT
+content-type: application/json
+```
+<pre class=include-code>
+path: examples/get-footprint-response.json
+highlight: json
+</pre>
+
+</div>
+
+### Example Error Response ### {#api-error-response-example}
+
+<div class=example>
+
+Example request:
+
+```http
+GET /2/footprints HTTP/2
+host: api.example.org
+```
+
+Example response:
+
+```http
+HTTP/1.1 403 Forbidden
+date: Mon, 23 May 2022 19:33:16 GMT
+content-type: application/json
+content-length: 44
+```
+<pre class=include-code>
+path: examples/error-response-access-denied.json
+highlight: json
+</pre>
+
+</div>
+
+### Example Action Events ### {#api-action-events-example}
+
+Example **ProductFootprint.RequestCreated**
+
+<div class="example">
+
+Request:
+
+```http
+POST /3/events HTTP/1.1
+host: api.example.org
+authorization: Bearer [BearerToken]
+content-type: application/cloudevents+json; charset=UTF-8
+```
+```json
+{
+  "type": "org.wbcsd.pact.ProductFootprint.RequestCreated.3",
+  "specversion": "1.0",
+  "id": "848dcf00-2c18-400d-bcb8-11e45bbf7ebd",
+  "source": "//api.recipient.org/3/events",
+  "time": "2024-11-06T16:23:00Z",
+  "data": {
+      "productId": ["urn:gtin:4712345060507"],
+      "geography": ["DE"],
+      "comment": "Please provide current PCF value."
+  }
+}
+```
+
+Response:
+
+```http
+HTTP/1.1 200 OK
+content-length: 0
+```
+
+</div>
+
+Example **ProductFootprint.RequestFulfilled**
+
+<div class="example">
+
+Request:
+
+```http
+POST /3/events HTTP/1.1
+host: api.recipient.org
+authorization: Bearer [BearerToken]
+content-type: application/cloudevents+json; charset=UTF-8
+```
+<pre class=include-code>
+path: examples/pf-response-event.json
+highlight: json
+</pre>
+
+Response: 
+
+```http
+HTTP/1.1 200 OK
+content-length: 0
+```
+
+</div>
+
+
+
+
 # Appendix A: License # {#license}
 
 <pre class=include>
