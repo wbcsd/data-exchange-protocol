@@ -1,5 +1,5 @@
 {
-  "type": "org.wbcsd.pact.ProductFootprint.RequestFulfilled.3",
+  "type": "org.wbcsd.pact.ProductFootprint.RequestFulfilledEvent.3",
   "specversion": "1.0",
   "id": "5afe8fbf-0ea9-477c-a1df-2d3c95f7eec0",
   "source": "//api.example.org/events",
