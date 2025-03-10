@@ -688,7 +688,7 @@ A [=host system=] MUST implement the following actions:
 
  - [Action Authenticate](#api-auth)
  - [Action ListFootprints](#action-listfootprints)
- - [Action GetFootprint=](#action-getfootprint)
+ - [Action GetFootprint](#action-getfootprint)
  - [Action Events](#action-events)
 
 The host system MUST make its footprints available to the data recipient through BOTH [=Action ListFootprints=] AND [=Action Event=]. 
