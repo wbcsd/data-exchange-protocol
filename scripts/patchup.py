@@ -37,8 +37,8 @@ def parse_bikeshed_file(bikeshed_file):
     return title, date, version, status
 
 INCLUDE_HEADER = """
-<link href="../assets/custom.css" rel="stylesheet" />
 <link href="../assets/markdown.css" rel="stylesheet" />
+<link href="../assets/custom.css" rel="stylesheet" />
 """
 
 # Patch the already generated html file with adapted title and status.
