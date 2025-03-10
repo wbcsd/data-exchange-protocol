@@ -119,7 +119,7 @@ paths:
           description: |
             The host system succesfully returns a list of product footprints. This list 
             MAY be incomplete, in which case the host system MUST return a Link header
-            conforming to [[RFC8288], also see [[#pagination]]. The list MUST NOT be 
+            conforming to [[!RFC8288]], also see [[#pagination]]. The list MUST NOT be 
             larger than the <{listFootprints/limit}>, if specified. 
 
             ```http
@@ -492,8 +492,8 @@ components:
           type: string
         productIds:
           description: |
-            The non-empty set of [=ProductIds=] in [=URN=] format. Each of the values in the set is 
-            supposed to uniquely identify the product. See {#product-identifiers} for syntax and 
+            The non-empty set of Product IDs in [[!RFC8141|URN]] format. Each of the values in the set is 
+            supposed to uniquely identify the product. See [[#product-identifier-urns]] for syntax and
             examples.
           summary: |
             All relevant product identifiers to identify the product for which the provided 
@@ -505,7 +505,9 @@ components:
             $ref: '#/components/schemas/Urn'
         productClassifications:
           description: |
-            The non-empty set of [=ProductClassifications=] in [=URN=] format. Each of the values in the set can classify the product as part of distinct groupings and categorizations. See {#product-identifiers}. 
+            The non-empty set of Product Classifications in [[!RFC8141|URN]] format. Each of the values 
+            in the set can classify the product as part of distinct groupings and categorizations. 
+            See [[#product-classification-urns]].
           note: Replaces productCategoryCpc deprecated in 2.3
           summary: |
             A list of classification or category identifiers in URN format. Use well known urn's here, 

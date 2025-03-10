@@ -301,7 +301,7 @@ This will not eliminate the need for a mapping process but will ease mapping ide
 
 We recognize there are existing relevant namespaces and corresponding URN syntax specifications. These can either be IANA-registered namespaces (like `urn:ISBN`) or widely used standards like `urn:gtin`. When product identification based on one or more of these standards is applicable, the corresponding namespaces should be used.
 
-Similar to product identifiers, product classifiers [=ProductClassifications=] contain URN's, using well-known namespaces when applicable, or a custom `pact` namespace if needed.
+Similar to product identifiers, [product classifiers](#product-classification-urns) contain URN's, using well-known namespaces when applicable, or a custom `pact` namespace if needed.
 
 
 ## Product Identifier URN’s ## {#product-identifier-urns}
@@ -426,7 +426,7 @@ Below is a list of examples of <{ProductFootprint/productIds}> as used in the <{
 
 ## Product Classification URN's ## {#product-classification-urns}
 
-Similar to [=ProductIds=] a ProductClassification MUST be a [=URN=] as specified in [[RFC8141]]: 
+Similar to [=ProductIds=] a ProductClassification MUST be a URN as specified in [[RFC8141]]: 
 
 ```
 urn:namespace:namespace-specific-string
