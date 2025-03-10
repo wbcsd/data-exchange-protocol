@@ -854,11 +854,11 @@ path: rest-api.md
 </pre>
 -->
 
-# Examples ## {#api-examples}
+# Examples # {#api-examples}
 
 <div class=note>Non-normative</div>
 
-### Example Action ListFootprints ### {#api-action-list-example}
+## Example Action ListFootprints ## {#api-action-list-example}
 
 
 <div class="example">
@@ -886,6 +886,7 @@ highlight: json
 </pre>
 
 Example response body when no footprints available: 
+
 ```http
 {
   "data": []
@@ -894,7 +895,7 @@ Example response body when no footprints available:
 
 </div>
 
-### Example Action GetFootprint ### {#api-action-get-example}
+## Example Action GetFootprint ## {#api-action-get-example}
 
 <div class="example">
 
@@ -920,7 +921,7 @@ highlight: json
 
 </div>
 
-### Example Error Response ### {#api-error-response-example}
+## Example Error Response ## {#api-error-response-example}
 
 <div class=example>
 
@@ -947,7 +948,7 @@ highlight: json
 
 </div>
 
-### Example Action Events ### {#api-action-events-example}
+## Example Action Events ## {#api-action-events-example}
 
 Example **ProductFootprint.RequestCreated**
 
@@ -1010,9 +1011,6 @@ content-length: 0
 ```
 
 </div>
-
-
-
 
 # Appendix A: License # {#license}
 
