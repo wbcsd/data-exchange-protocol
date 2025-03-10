@@ -86,7 +86,6 @@ paths:
         /3/footprints/?geography=FR&x-atq-invoice-id=12345&limit=100
         ```
 
-      operationId: listFootprints
       tags: [footprint]
       parameters:
       - name: limit
@@ -198,7 +197,6 @@ paths:
         If it determines that a data recipient is not allowed to access the requested
         ProductFootprint, the host system MUST return a 403 Forbidden response.
 
-      operationId: getFootprintById
       tags: [footprint]
       parameters:
       - name: id
@@ -289,7 +287,6 @@ paths:
         Upon accepting the event, the [=host system=] MUST return an HTTP 200 status code
         and SHOULD return an empty response body. 
 
-      operationId: post_event
       tags: [event]
       requestBody:
         content:
