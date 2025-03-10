@@ -679,17 +679,10 @@ The scope of the HTTP API is minimal by design. Additional features will be adde
 
 ## <dfn>Host System</dfn> ## {#api-host-system}
 
-A host system serves the needs of a single or multiple [=data owners=]. Additionally, a host system can also serve the needs of [=data recipients=] if it retrieves data from host systems by calling the HTTP REST API ([[#api]]).
+A host system serves the needs of a single or multiple [=data owners=]. Additionally, a host system can also serve the needs of [=data recipients=] if it retrieves data from other host systems by calling their API.
 
-<!--
-Interoperable data exchange between a data owner and a data recipient can be achieved by
-
-1. the data owner offering <{ProductFootprint}> data through a host system that implements the [[#api|HTTP REST API]], and
-2. the data recipient making [[#api-auth|authenticated calls]] to retrieve ProductFootprint data; e.g. by calling the [=Action ListFootprints=].
-
-
-## Minimum requirements ## {#api-requirements}
--->
+In other words, any host system which implements the API endpoints as described in this specification can play 
+the role of [=data owner=] as well as of [=data recipient=], thus mirroring real-world supply chains, also see [[#business-cases]]
 
 A [=host system=] MUST implement the following actions:
 
