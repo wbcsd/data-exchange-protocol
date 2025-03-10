@@ -92,7 +92,10 @@ def get_example_text(name, property):
     return text
 
 def write_defs_start(output, namespace=None, headers=['Name', 'Description']):
-    output.write(f"<table class='data' dfn-for='{namespace}' dfn-type='element-attr'>\n")
+    if namespace:
+        output.write(f"<table class='data' dfn-for='{namespace}' dfn-type='element-attr'>\n")
+    else:
+        output.write("<table class='data'>\n")
     if headers:
         output.write("<thead>\n")
         output.write("<tr>\n")
@@ -106,7 +109,7 @@ def write_defs_end(output):
     output.write("</table>\n")
 
 
-def write_property(output, type, name, property, recursive=False):
+def write_property(output, type, name, property, termdef=True, recursive=False):
     """
     Writes an HTML table row representing a property in a JSON schema.
 
@@ -120,7 +123,10 @@ def write_property(output, type, name, property, recursive=False):
         None
     """
     output.write("<tr>\n")
-    output.write(f"  <td><dfn>{name}</dfn></td>\n")
+    if termdef:
+        output.write(f"  <td><dfn>{name}</dfn></td>\n")
+    else:
+        output.write(f"  <td>`{name}`</td>\n")
     output.write("  <td>\n")
     output.write("  <div class='json-schema-type'>")
     if 'required' in type and name in type['required']:
@@ -138,7 +144,7 @@ def write_property(output, type, name, property, recursive=False):
     output.write("</td></tr>\n")
     if recursive and property["type"] == "object" and "properties" in property and not "title" in property:
         for sub_name, sub_property in property["properties"].items():
-            write_property(output, property, name + "." + sub_name, sub_property)
+            write_property(output, property, name + "." + sub_name, sub_property, termdef)
 
 
 
@@ -251,10 +257,10 @@ def generate_operation(output, path, method, operation):
     query = "?params=value&..." if "parameters" in operation and any(p["in"] == "query" for p in operation["parameters"]) else ""
     output.write(f"```HTTP\n{method.upper()} {path}{query}\n```\n")
     output.write(f"{operation['description']}\n\n")
-    logging.info(operation['description'])
+    logging.debug(operation['description'])
     if operation.get("parameters"):
         output.write("### Parameters\n")
-        write_defs_start(output, operation['operationId'])
+        write_defs_start(output)
         for param in operation["parameters"]:
             #file.write(f"- **{param['name']}** ({param['in']}): {param['description']}\n")
             # output.write(f"<tr>\n  <td><dfn>{param['name']}</dfn> ({param['in']})\n")
@@ -270,18 +276,18 @@ def generate_operation(output, path, method, operation):
                     output.write(variant["description"])
                     output.write("\n\n**Request Body**\n\n")
                     output.write(f"`content-type: {content_type}`\n")
-                    write_defs_start(output, operation['operationId'])
+                    write_defs_start(output)
                     for name, property in variant["properties"].items():
-                        write_property(output, variant, name, property, recursive=True)
+                        write_property(output, variant, name, property, termdef=False, recursive=True)
                     write_defs_end(output)
                     if "examples" in variant:
                         output.write(variant['examples'][0])
             else:
                 output.write("\n\n**Request Body**\n\n")
                 output.write(f"`content-type: {content_type}`\n")
-                write_defs_start(output, operation['operationId'])
+                write_defs_start(output)
                 for name, property in content["schema"]["properties"].items():
-                    write_property(output, variant, name, property)
+                    write_property(output, variant, name, property, termdef=False)
                 write_defs_end(output)
 
 
@@ -300,7 +306,7 @@ def generate_operation(output, path, method, operation):
                 write_defs_start(output, headers=None)
                 for name, property in content["schema"]["properties"].items():
                     logging.debug(name)
-                    write_property(output, content['schema'], name, property)
+                    write_property(output, content['schema'], name, property, termdef=False)
                 write_defs_end(output)
         output.write("</td>\n</tr>\n")
     write_defs_end(output)
