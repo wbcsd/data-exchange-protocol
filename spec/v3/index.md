@@ -610,7 +610,7 @@ The following basic types are used in the data model:
   <td> Dates MUST be formatted according to ISO8601
 
   ```json
-  "2024-04-23T18:25:43.511Z"
+  "2025-04-23T18:25:43.511Z"
   ```
 
 <tr>
@@ -854,7 +854,7 @@ path: rest-api.md
 </pre>
 -->
 
-## Examples ## {#api-examples}
+# Examples ## {#api-examples}
 
 <div class=note>Non-normative</div>
 
@@ -875,7 +875,7 @@ Response:
  
 ```http
 HTTP/1.1 200 OK
-date: Mon, 23 May 2022 19:33:16 GMT
+date: Mon, 23 May 2025 19:33:16 GMT
 content-type: application/json
 content-length: 1831
 link: &lt;https://api.example.org/3/footprints?limit=10&amp;offset=10&gt;; rel="next"
@@ -901,7 +901,7 @@ Example response body when no footprints available:
 Request:
 
 ```http
-GET /3/footprint/91715e5e-fd0b-4d1c-8fab-76290c46e6ed HTTP/2
+GET /3/footprints/91715e5e-fd0b-4d1c-8fab-76290c46e6ed HTTP/2
 host: api.example.org
 authorization: Bearer [BearerToken]
 ```
@@ -910,7 +910,7 @@ Response:
 
 ```http
 HTTP/1.1 200 OK
-date: Mon, 23 May 2022 19:33:16 GMT
+date: Mon, 23 May 2025 19:33:16 GMT
 content-type: application/json
 ```
 <pre class=include-code>
@@ -927,15 +927,16 @@ highlight: json
 Example request:
 
 ```http
-GET /2/footprints HTTP/2
+GET /2/footprints/91715e5e-fd0b-4d1c-8fab-76290c46e6ed HTTP/2
 host: api.example.org
+authorization: Bearer [BearerToken]
 ```
 
 Example response:
 
 ```http
 HTTP/1.1 403 Forbidden
-date: Mon, 23 May 2022 19:33:16 GMT
+date: Mon, 23 May 2025 19:33:16 GMT
 content-type: application/json
 content-length: 44
 ```

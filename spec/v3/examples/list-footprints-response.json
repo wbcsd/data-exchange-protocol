@@ -4,9 +4,9 @@
       "id": "91715e5e-fd0b-4d1c-8fab-76290c46e6ed",
       "specVersion": "3.0.0",
       "version": 1,
-      "created": "2024-03-01T09:32:20Z",
+      "created": "2025-03-01T09:32:20Z",
       "status": "Active",
-      "validityPeriodStart": "2024-03-01T09:32:20Z",
+      "validityPeriodStart": "2025-03-01T09:32:20Z",
       "validityPeriodEnd": "2026-12-31T00:00:00Z",
       "companyName": "My Corp",
       "companyIds": [
@@ -47,8 +47,8 @@
         ],
         "biogenicAccountingMethodology": "GHPG",
         "boundaryProcessesDescription": "1) Material acquisition and preprocessing, including growth of corn 2) Production: fuel consumption, electricity consumption, water consumption, process-generated direct emissions 3) Distribution and storage: transportation of the finished product from manufacturing site to storage site",
-        "referencePeriodStart": "2023-01-01T00:00:00Z",
-        "referencePeriodEnd": "2025-01-01T00:00:00Z",
+        "referencePeriodStart": "2024-01-01T00:00:00Z",
+        "referencePeriodEnd": "2026-01-01T00:00:00Z",
         "geographyRegionOrSubregion": "Western Europe",
         "secondaryEmissionFactorSources": [
           {

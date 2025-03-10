@@ -7,11 +7,11 @@
                 "51131FB5-42A2-4267-A402-0ECFEFAD1619"
             ],
             "version": 0,
-            "created": "2022-12-08T14:47:32Z",
-            "updated": "2023-1-08T14:47:32Z",
+            "created": "2025-12-08T14:47:32Z",
+            "updated": "2025-1-08T14:47:32Z",
             "status": "Active",
-            "validityPeriodStart": "2022-12-08T14:47:32Z",
-            "validityPeriodEnd": "2023-12-08T14:47:32Z",
+            "validityPeriodStart": "2024-12-08T14:47:32Z",
+            "validityPeriodEnd": "2026-12-08T14:47:32Z",
             "companyName": "My Corp",
             "companyIds": [
                 "urn:uuid:51131FB5-42A2-4267-A402-0ECFEFAD1619",
@@ -52,8 +52,8 @@
                 ],
                 "biogenicAccountingMethodology": "ISO",
                 "boundaryProcessesDescription": "End-of-life included",
-                "referencePeriodStart": "2021-01-01T00:00:00Z",
-                "referencePeriodEnd": "2022-01-01T00:00:00Z",
+                "referencePeriodStart": "2025-01-01T00:00:00Z",
+                "referencePeriodEnd": "2026-01-01T00:00:00Z",
                 "geographyCountrySubdivision": "US-NY",
                 "geographyCountry": "US",
                 "geographyRegionOrSubregion": "Northern America",
@@ -76,7 +76,7 @@
                 "verification": {
                     "coverage": "product level",
                     "providerName": "My Auditor",
-                    "completedAt": "2022-12-08T14:47:32Z",
+                    "completedAt": "2024-12-08T14:47:32Z",
                     "standardName": "ISO ...",
                     "comments": "This is a comment"
                 }
