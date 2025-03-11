@@ -53,10 +53,10 @@ def get_property_type_spec(property):
         text += f" = `\"{property['const']}\"`"   
 
     if "enum" in property:
-        text += "<div class='json-schema-enum'>"
+        text += "<div class='json-schema-enum'>\n"
         for enum in property["enum"]:
-            text += f" `\"{enum}\"`"    
-        text += "</div>"
+            text += f"`\"{enum}\"` "
+        text += "\n</div>"
 
     return text
 
@@ -100,13 +100,13 @@ def write_defs_start(output, namespace=None, headers=['Name', 'Description']):
         output.write("<thead>\n")
         output.write("<tr>\n")
         for header in headers:
-            output.write(f"  <th>{header}</th>\n")
+            output.write(f"<th>{header}</th>\n")
         output.write("</tr>\n")
         output.write("</thead>\n")
     output.write("<tbody>\n")
 
 def write_defs_end(output):
-    output.write("</table>\n")
+    output.write("</table>\n\n")
 
 
 def write_property(output, type, name, property, termdef=True, recursive=False):
@@ -124,15 +124,15 @@ def write_property(output, type, name, property, termdef=True, recursive=False):
     """
     output.write("<tr>\n")
     if termdef:
-        output.write(f"  <td><dfn>{name}</dfn></td>\n")
+        output.write(f"<td><dfn>{name}</dfn></td>\n")
     else:
-        output.write(f"  <td>`{name}`</td>\n")
-    output.write("  <td>\n")
-    output.write("  <div class='json-schema-type'>")
+        output.write(f"<td>`{name}`</td>\n")
+    output.write("<td>\n")
+    output.write("<div class='json-schema-type'>")
     if 'required' in type and name in type['required']:
-        output.write("  <span class='json-schema-required'>required</span>\n")
+        output.write("<span class='json-schema-required'>required</span> ")
     output.write(get_property_type_spec(property) + "</div>\n")
-    output.write("  \n\n")
+    output.write("\n\n")
     output.write(property["description"].strip().replace("\n\n\n", "\n\n\n\n"))
     output.write(get_example_text(name, property))
     output.write("\n")
@@ -162,13 +162,13 @@ def write_parameter(output, name, parameter):
         None
     """
     output.write("<tr>\n")
-    output.write(f"  <td><dfn>{name}</dfn> ({parameter['in']})</td>\n")
-    output.write("  <td>\n")
-    output.write("  <div class='json-schema-type'>")
+    output.write(f"<td><dfn>{name}</dfn> ({parameter['in']})</td>\n")
+    output.write("<td>\n")
+    output.write("<div class='json-schema-type'>")
     if 'required' in parameter and parameter['required'] == True:
-        output.write("  <span class='json-schema-required'>required</span>\n")
+        output.write("<span class='json-schema-required'>required</span> ")
     output.write(get_property_type_spec(parameter['schema']) + "</div>\n")
-    output.write("  \n\n")
+    output.write("\n\n")
     output.write(parameter["description"].strip().replace("\n\n\n", "\n\n\n\n"))
     output.write(get_example_text(name, parameter))
     output.write("\n")
@@ -207,7 +207,7 @@ def generate_type_description(output, schema, type_name, type):
     if "example" in type:
         output.write('<div class="example">\n')
         output.write(type['example'])
-        output.write("\n</div>\n")
+        output.write("\n</div>\n\n")
     if "properties" in type:
         output.write("### Properties\n\n")
         write_defs_start(output, title)
