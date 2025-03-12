@@ -252,7 +252,7 @@ def generate_data_model(input_path, output_path):
 
 
 def generate_operation(output, path, method, operation):
-    output.write(f"## {operation['summary']}")
+    output.write(f"## <dfn>{operation['summary']}</dfn>")
     output.write("\n")
     query = "?params=value&..." if "parameters" in operation and any(p["in"] == "query" for p in operation["parameters"]) else ""
     output.write(f"```HTTP\n{method.upper()} {path}{query}\n```\n")
