@@ -682,7 +682,7 @@ The scope of the HTTP API is minimal by design. Additional features will be adde
 A host system serves the needs of a single or multiple [=data owners=]. Additionally, a host system can also serve the needs of [=data recipients=] if it retrieves data from other host systems by calling their API.
 
 In other words, any host system which implements the API endpoints as described in this specification can play 
-the role of [=data owner=] as well as of [=data recipient=], thus mirroring real-world supply chains, also see [[#business-cases]]
+the role of [=data owner=] as well as of [=data recipient=], thus mirroring real-world supply chains. See [[#business-cases]] for more details.
 
 A [=host system=] MUST implement the following actions:
 
@@ -691,7 +691,7 @@ A [=host system=] MUST implement the following actions:
  - [Action GetFootprint](#action-getfootprint)
  - [Action Events](#action-events)
 
-The host system MUST make its footprints available to the data recipient through BOTH [=Action ListFootprints=] AND [=Action Event=]. 
+The host system MUST make its footprints available to the data recipient through BOTH [=Action ListFootprints=] AND [=Action Events=]. 
 
 A [=host system=] MUST offer its actions over HTTPS only. 
 
@@ -726,11 +726,11 @@ The following section briefly describes some of the additional functionality whi
 
 ## Error Handling ## {#api-error-handling}
 
-[he actions [GetFootprint](#action-getfootprint), [ListFootprints](#action-listfootprints) and [Events](#action-events) MUST return an appropriate HTTP status code and MUST include a JSON <{Error}> object with information on the error.
+The actions [GetFootprint](#action-getfootprint), [ListFootprints](#action-listfootprints) and [Events](#action-events) MUST return an appropriate HTTP status code and MUST include a JSON <{Error}> object with information on the error.
 
-Error responses are specified in detail such that data recipients can understand the cause of the error, and so that potentially host systems can react on and resolve errors automatically.
+Error responses are specified in detail such that data recipients can understand the cause of the error, and so that potentially host systems can act on and resolve errors automatically.
 
-Error responses from [Action Auth](#api-auth) follow the OAuth specification [[!rfc6750]]. See [[#api-auth]]
+Error responses from [Action Authenticate](#api-auth) follow the OAuth specification [[!rfc6750]]. See [[#api-auth]]
 
 
 ## Authentication Flow ## {#api-auth}
@@ -752,10 +752,10 @@ If provided by the host system, this document contains the `token_endpoint` to b
 
 If no OpenID configuration is provided by the host system, clients MUST assume `$auth-base-url$/auth/token` to be the token endpoint.
 
-After determining the token endpoint, clients MUST obtain by making a request to:
+After determining the token endpoint, clients MUST obtain an access token by making a request to:
 
-```
-POST $token-endpoint$
+```http
+POST $token-endpoint$ 
 ```
 
 with the following request parameters:
@@ -806,46 +806,16 @@ GET <base-url>/protected-resource
 Authorization: Bearer <access_token>
 ```
 
-The host system MUST check the Access Token and return an 401 when it has expired or is invaliud. 
+The host system MUST check the Access Token and return a 401 when it has expired or is invalid. 
 
-[=Access tokens=] SHOULD expire. In this case, data recipients MUST retrieve a new [=access token=]
+Access tokens SHOULD expire. In this case, data recipients MUST retrieve a new [access token](#obtaining-an-access-token)
 as described in this section.
-
-<!--
-A [=host system=] requires a [=data recipient=] to first authenticate before successfully calling an Action (such as [=Action ListFootprints=] or [=Action Events=]). The [=data recipient=] MUST perform the <dfn>authentication flow</dfn>:
-
-1. data recipient attempting to perform the OpenId Connect-based flow, by
-    1. retrieving and validating the [=OpenId Provider Configuration Document=] of the host system (see [[!OPENID-CONNECT]]), and then
-    2. using as [=AuthEndpoint=] the value of the `token_endpoint` property of the [=OpenId Provider Configuration Document=]
-2. otherwise, data recipient using [=AuthHostname=]`/`[=AuthSubpath=]`/auth/token` as the [=AuthEndpoint=] in the next step.
-3. data recipient retrieving the [=access token=] from [=AuthEndpoint=] (see [[#api-action-auth-request]]).
-
-Note: The [=authentication flow=] is defined such that a Version [VERSION] data recipient can authenticate against host versions irrespective of their support for OpenID-Connect.
-
-<figure>
-  <img src="diagrams/authentication-flow.svg" height="100%" width="100%" >
-  <figcaption>Authentication flow.</figcaption>
-</figure>
-
-
-Once the [=authentication flow=] is complete, the [=data recipient=] can call the other actions of the [=host system=]
-  - using the value of `access_token` of the response of the [=Action Authenticate=] call as the
-    value for a [[!rfc6750]] <dfn>Bearer token</dfn>
-  - presenting the Bearer token for subsequent call(s) to the host system in accordance with
-    [[!rfc6750]] Section 2.1
--->
 
 
 <pre class=include>
 path: rest-api.generated.md
 </pre>
 
-
-<!--
-<pre class=include>
-path: rest-api.md
-</pre>
--->
 
 # Examples # {#api-examples}
 

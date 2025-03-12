@@ -49,7 +49,7 @@ paths:
             ProductFootprints ready to be retrieved, such that
               - The `Link` header conforms to [[!RFC8288]]
               - The value of the `rel` parameter is equal to `next`
-              - the target URI (RFC8288, section 3.1) of the `Link` header is absolute
+              - the target URI of the `Link` header is absolute
               - The value of `host` of the target URI is equal to the value of the `host` 
                 request header from the original `ListFootprints` HTTP request
          3. The target URI from the `Link` header is called a <dfn>pagination link</dfn>.
@@ -67,7 +67,7 @@ paths:
          7. If a response contains a second pagination link and the data recipient has called 
             that second pagination link, the previous pagination link MAY no longer work: data 
             recipients MUST NOT assume that previous pagination links continue to return results 
-            after advancing in the pagination process
+            after advancing in the pagination process.
 
         ### Filtering
 
@@ -185,10 +185,10 @@ paths:
         same `id`, it MUST include only the latest version in the list of footprints.
 
         If the requested ProductFootprint is deprecated, the host system SHOULD
-        return the deprecated ProductFootprint.
+        return the deprecated ProductFootprint, if it is still available.
 
         If the requested ProductFootprint is not found, the host system MUST return
-        an 404 Not Found response.
+        a 404 Not Found response.
         
         Host systems SHOULD implement an access management system and only 
         return the product footprints for which the data owner granted access 
@@ -260,7 +260,7 @@ paths:
     post:
       summary: Action Events
       description: |
-        The Action Events endpoint supports for the following use cases:
+        The Action Events endpoint supports the following use cases:
 
          1. enabling a [=data recipient=] to request Product Footprints
             from a [=data owner=] by sending a `RequestCreatedEvent`, to
@@ -270,7 +270,7 @@ paths:
             updates to 1 or more Product Footprints: `PublishedEvent`
 
         The Action Events endpoint accepts CloudEvent events (see [[!CE]]) encoded 
-        in "Structured Content Mode" (see [[!CE-Structured-Content-Mode]]. 
+        in "Structured Content Mode" (see [[!CE-Structured-Content-Mode]]). 
 
         The CloudEvents are encoded in the "application/cloudevents+json" media type and
         MUST be sent as an HTTP POST request body to the Action Events endpoint.
@@ -376,7 +376,7 @@ components:
         precedingPfIds:
           description: |
             A given PCF may change over time, due to updates to the calculation. 
-            This is a list of ID's that reflect "past versions" of the current PCF,
+            This is a list of IDs that reflect "past versions" of the current PCF,
             maintained by the solution. 
 
             See [[#lifecycle]] for details.
@@ -1463,17 +1463,15 @@ components:
       $ref: '#/components/schemas/BaseEvent'
       title: Request Created Event
       description: |
-        A data recipient request a ProductFootprint from the data owner. The data recipient
+        A data recipient requests a ProductFootprint from the data owner. The data recipient
         MUST provide the criteria in the data object to enable the data owner to either
         find an existing relevant PCF or create a new one.
 
         Criteria to provide can be product id, geography, company identifier, validity 
         period, etc.
 
-        The data owner MUST validate the input parameters, including these criteria. 
-        
         If the data owner can *immediately* determine that it will not be able to 
-        handle this request it MUST respond with an appropriate `4xxx` error response, 
+        handle this request it MUST respond with an appropriate `4xx` error response, 
         otherwise it MUST respond directly with a `200` (Success) or `202` (Accepted). 
 
         In the latter case, the data owner MUST send a follow up event to the data 
@@ -1773,7 +1771,7 @@ components:
 
   securitySchemes:
     BearerAuth:
-      description: OAuth2 Client Credentials Grant (RFC6749 4.4)
+      description: OAuth2 Client Credentials Grant ([[!RFC6749]] 4.4)
       type: oauth2
       flows:
         clientCredentials:
@@ -1785,7 +1783,7 @@ components:
   parameters:
     productId:
       name: productId
-      description: One or more product ID's. Will return all footprints which have a corresponding ID in their `productIds` attribute. Note that a footprint itself can also have multiple product IDs.
+      description: One or more product IDs. Will return all footprints which have a corresponding ID in their `productIds` attribute. Note that a footprint itself can also have multiple product IDs.
       in: query
       explode: true
       schema: 
@@ -1794,7 +1792,7 @@ components:
           $ref: '#/components/schemas/Urn'
     companyId:
       name: companyId
-      description: One or more company ID's. Will return all footprints which have a corresponding ID in their `companyId` attribute.
+      description: One or more company IDs. Will return all footprints which have a corresponding ID in their `companyId` attribute.
       in: query
       explode: true
       schema: 
@@ -1822,7 +1820,7 @@ components:
     validOn:
       name: validOn
       description: |
-        If present, MUST match all PCFs which where valid on the date specified: footprint.validityPeriodBegin <= validOn AND validFrom <= footprint.validityPeriodEnd
+        If present, MUST match all PCFs which were valid on the date specified: footprint.validityPeriodBegin <= validOn AND validFrom <= footprint.validityPeriodEnd
       in: query
       schema:
         type: string
@@ -1830,7 +1828,7 @@ components:
     validAfter:
       name: validAfter
       description: |
-        if present, MUST match PCFs whith validAfter < footprint.validityPeriodBegin
+        If present, MUST match PCFs with validAfter < footprint.validityPeriodBegin
       in: query
       schema:
         type: string
@@ -1838,7 +1836,7 @@ components:
     validBefore:
       name: validBefore
       description: |
-        if present, MUST match PCFs whith validBefore > footprint.validityPeriodEnd
+        If present, MUST match PCFs with validBefore > footprint.validityPeriodEnd
       in: query
       schema:
         type: string
@@ -1846,7 +1844,7 @@ components:
     status:
       name: status
       description: |
-        if present, MUST be either be "Active" or "Deprecated"
+        If present, MUST be "Active" or "Deprecated". If not specified, will return footprints regardless of status. 
       in: query
       schema:
         type: string
