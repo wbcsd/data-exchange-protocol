@@ -1420,7 +1420,8 @@ components:
       examples:
       - | 
         ```http
-        HTTP POST /3/events
+        POST /3/events HTTP/1.1
+        Host: api.example.com
         Content-Type: application/cloudevents+json
         Authorizaton: Bearer xxxxxxxxxxxxx
 
@@ -1480,7 +1481,8 @@ components:
       examples:
       - |
         ```http
-        HTTP POST /3/events
+        POST /3/events HTTP/1.1
+        Host: api.example.com
         Content-Type: application/cloudevents+json
         Authorizaton: Bearer xxxxxxxxxxxxx
 
@@ -1567,7 +1569,8 @@ components:
       examples:
       - |
         ```http
-        HTTP POST /3/events
+        POST /3/events HTTP/1.1
+        Host: api.example.com
         Content-Type: application/cloudevents+json
         Authorizaton: Bearer xxxxxxxxxxxxx
 
@@ -1633,7 +1636,8 @@ components:
         RequestCreatedEvent sent by the data recipient.
 
         ```http
-        HTTP POST /3/events
+        POST /3/events HTTP/1.1
+        Host: api.example.com
         Content-Type: application/cloudevents+json
         Authorizaton: Bearer xxxxxxxxxxxxx
         
