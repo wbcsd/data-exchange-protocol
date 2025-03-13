@@ -932,9 +932,6 @@ components:
             is considered to be representative. Specifically, this start date
             represents the earliest date from which activity data was collected
             to include in the PCF calculation. 
-
-            See the [=PACT Methodology=] section 6.1.2.1 for further details. 
-            Can also be referred to as 'reporting period'.
           summary: |
             The start date and time of the earliest activity data used to calculate the 
             PCF. This start date can be considered the start of the period over which 
@@ -946,10 +943,7 @@ components:
             The end (excluding) of the time boundary for which the PCF value is
             considered to be representative. Specifically, this end date
             represents the latest date from which activity data was collected
-            to include in the PCF calculation. Can al
-
-            See the [=PACT Methodology=] section 6.1.2.1 for further details. 
-            Can also be referred to as 'reporting period'.
+            to include in the PCF calculation.
           summary: |
             The end date and time of the latest activity data used to calculate the PCF. 
             This end date can be considered the end of the period over which the given 
