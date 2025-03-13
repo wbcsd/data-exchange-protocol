@@ -304,9 +304,6 @@ paths:
             Indicates success: the event was accepted by the host system. The response
             body will be empty.
             
-            In case of a `RequestCreatedEvent` the [=data recipient=] will be notified 
-            at some time in the future by the host system of the results of the request,
-            with a `RequestFulfilledEvent` or a `RequestRejectedEvent`.
         '400':
           $ref: '#/components/schemas/BadRequestResponse'
         '401':
@@ -1411,6 +1408,10 @@ components:
         Notification that a ProductFootprint has been published (either new or updated).
         This event is triggered by the [=data owner=] and send to relevant [=data recipients=].
 
+        If the [=data recipient=] cannot be reached by the [=data owner=], the data owner 
+        SHOULD retry to send the event at a later time, using an exponential backoff
+        strategy. It SHOULD abandon sending the event after 72 hours. 
+
         The data object of the [=PublishedEvent=] contains the list of Product Footprint 
         *IDs* that have been published or updated by the data owner.
         
@@ -1469,15 +1470,20 @@ components:
         find an existing relevant PCF or create a new one.
 
         Criteria to provide can be product id, geography, company identifier, validity 
-        period, etc.
+        period, etc, see below for details.
 
         If the data owner can *immediately* determine that it will not be able to 
         handle this request it MUST respond with an appropriate `4xx` error response, 
-        otherwise it MUST respond directly with a `200` (Success) or `202` (Accepted). 
+        otherwise it MUST respond directly with a `200` (Success), indicating it will
+        be able to handle the request.
 
-        In the latter case, the data owner MUST send a follow up event to the data 
+        In the latter case, the data owner MUST send a follow-up event back to the data 
         recipient at some time in the future. This follow up event MUST be either a 
         `RequestFulfilledEvent` or `RequestRejectedEvent`.
+
+        If the [=data recipient=] cannot be reached by the [=data owner=], the data owner 
+        SHOULD retry to send the event at a later time, using an exponential backoff
+        strategy. It SHOULD abandon sending the event after 72 hours. 
       examples:
       - |
         ```http

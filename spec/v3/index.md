@@ -187,7 +187,6 @@ Generally, the data recipient sends a `RequestCreatedEvent` event to the data ow
 3. The data owner validates the incoming event, directly returning a HTTP 2xx success code if OK, or a 4xx status code indicating  error. 
 4. Asynchronously, the data owner will create a PCF or find an existing relevant PCF. 
 5. The data owner will authenticate with the data recipient and send either a `RequestFullfilledEvent` back with the PCF or a `RequestRejectedEvent` if it can not produce the PCF.
-6. TODO: something about retrying
 
 
 ### Sending an updated PCF
