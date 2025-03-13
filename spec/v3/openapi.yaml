@@ -1474,10 +1474,6 @@ components:
         In the latter case, the data owner MUST send a follow-up event back to the data 
         recipient at some time in the future. This follow up event MUST be either a 
         `RequestFulfilledEvent` or `RequestRejectedEvent`.
-
-        If the [=data recipient=] cannot be reached by the [=data owner=], the data owner 
-        SHOULD retry to send the event at a later time, using an exponential backoff
-        strategy. It SHOULD abandon sending the event after 72 hours. 
       examples:
       - |
         ```http
@@ -1565,6 +1561,10 @@ components:
 
         If there are no product footprints to return, the data owner MUST send a
         [=RequestRejectedEvent=] instead.
+
+        If the [=data recipient=] cannot be reached by the [=data owner=], the data owner 
+        SHOULD retry to send the event at a later time, using an exponential backoff
+        strategy. It SHOULD abandon sending the event after 72 hours. 
       type: object
       examples:
       - |
@@ -1635,6 +1635,12 @@ components:
         the data recipient upon NOT successfully fulfilling the preceeding 
         RequestCreatedEvent sent by the data recipient.
 
+        If the [=data recipient=] cannot be reached by the [=data owner=], the data owner 
+        SHOULD retry to send the event at a later time, using an exponential backoff
+        strategy. It SHOULD abandon sending the event after 72 hours. 
+
+      examples:
+      - |
         ```http
         POST /3/events HTTP/1.1
         Host: api.example.com
