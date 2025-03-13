@@ -242,7 +242,7 @@ Starting with Version 3.0, any change to a Product Footprint will result in a ne
 
 ## Change Definition and Handling ## {#lifecycle-handling}
 
-A change to a Product Footprint is defined as a change to one or more properties of a <{ProductFootprint}>, including a change of properties from being undefined or to no longer being defined.
+A change to a Product Footprint is defined as a change to one or more properties of a <{ProductFootprint}>, including a change of properties from being undefined to defined or vice-versa.
 
 After creation of a <{ProductFootprint}> this footprint MUST NOT be changed, EXCEPT for changing its <{ProductFootprint/status}> property to `Deprecated`
 
