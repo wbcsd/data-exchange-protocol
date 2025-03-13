@@ -1397,7 +1397,7 @@ components:
 
     PublishedEvent:
       $ref: '#/components/schemas/BaseEvent'
-      title: ProductFootprint Published Event
+      title: Published Event
       description: |
         Notification that a ProductFootprint has been published (either new or updated).
         This event is triggered by the [=data owner=] and send to relevant [=data recipients=].

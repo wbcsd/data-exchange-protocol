@@ -9,7 +9,7 @@ In addition, for publishing a release:
   Update the Previous Version and TR links
 -->
 <pre class='metadata'>
-Text Macro: DATE 20250310
+Text Macro: DATE 20250313
 Text Macro: VERSION 3.0.0
 Text Macro: STATUS Draft
 Title: Technical Specifications for PCF Data Exchange
@@ -982,6 +982,17 @@ path: ../../LICENSE.md
 
 
 # Appendix B: Changelog # {#changelog}
+
+## Version 3.0.0-20250313 (Draft Mar 13, 2025) ## {#changelog-3.0.0-20250313}
+
+Summary of major changes:
+
+1. Description of API methods and responses is now generated from the OpenAPI specification.
+2. [Host system requirements](#api-host-system) condensed.
+3. [Error handling](#api-error-handling) added.
+3. Simplified [Authentication section](#api-auth)
+4. Added information on retry strategy for [RequestFulfilledEvent](#request-fulfilled-event), [RequestRejectedEvent](#request-rejected-event), [PublishedEvent](#published-event)
+5. Clarity on [definition of change](#lifecycle-handling)
 
 ## Version 3.0.0-20250217 (Draft Feb 17, 2025) ## {#changelog-3.0.0-20250217}
 
