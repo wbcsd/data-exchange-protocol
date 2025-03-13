@@ -245,9 +245,12 @@ Starting with Version 3.0, any change to a Product Footprint will result in a ne
 
 A change to a Product Footprint is defined as a change to one or more properties of a <{ProductFootprint}>, including a change of properties from being undefined or to no longer being defined.
 
-After creation of a <{ProductFootprint}> this footprint MUST NOT be changed, EXCEPT for changing its <{ProductFootprint/status}> property to `Deprecated`
+After the creation of a <{ProductFootprint}> this footprint MUST NOT be changed, EXCEPT for deprecating it. To deprecate the footprint, the data owner:
 
-A <{ProductFootprint}> with <{ProductFootprint/status}> `Deprecated` MUST NOT be [=changed=] anymore.
+ - MUST change the <{ProductFootprint/status}> property to `Deprecated` 
+ - MAY change the <{ProductFootprint/comment}> property to include additional information about  deprecation.
+
+After a <{ProductFootprint}> has been deprecated it MUST NOT be changed anymore.
 
 ### Updating PCFs
 
