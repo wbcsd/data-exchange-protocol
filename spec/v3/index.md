@@ -890,7 +890,7 @@ highlight: json
 Example request:
 
 ```http
-GET /2/footprints/91715e5e-fd0b-4d1c-8fab-76290c46e6ed HTTP/2
+GET /3/footprints/91715e5e-fd0b-4d1c-8fab-76290c46e6ed HTTP/2
 host: api.example.org
 authorization: Bearer [BearerToken]
 ```
