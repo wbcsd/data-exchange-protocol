@@ -1,19 +1,8 @@
-/*
-html,body {
-    font-family: var(--markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", system-ui, "Ubuntu", "Droid Sans", sans-serif)
-}
-
-h1,h2,h3,h4,h5,h6 {
-    font-weight: 500;
-    color: var(--heading-text, #333);
-}
-*/
-h1 {
-    border-bottom-width: 0;
-}
 h4 {
     font-size: 1.1em;
+    color: var(--heading-text);
 }
+
 pre,
 code,
 samp {

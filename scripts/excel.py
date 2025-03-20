@@ -99,7 +99,7 @@ M3-2027=Mandatory for any PCF calculated in or after 2027 with PACT-3""".strip()
     bold_style      = dict(font = fontname, bold = True)
     obsolete_style  = dict(font = fontname, strike = True, fgcolor = "95261F")
 
-    logging.info(f"Columns: {columns}")
+    logging.debug(f"Columns: {columns}")
 
     # Append the title and header rows
     ws.append(["PACT Simplified Tech Specs" + status, "", "", "", "", "", "", "", "", "", ""])
@@ -167,7 +167,7 @@ M3-2027=Mandatory for any PCF calculated in or after 2027 with PACT-3""".strip()
         description = re.sub(r'\bproperty\b', 'attribute', description)
 
         examples = info.get("examples", []) + ['','','']
-        print(examples)
+        logging.debug(examples)
         mandatory = name in parent.get("required", [])
         
         # Append a row to the worksheet

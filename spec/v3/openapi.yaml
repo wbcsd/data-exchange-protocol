@@ -27,11 +27,77 @@ paths:
     get:
       summary: Action ListFootprints
       description: |
-        Retrieve a list of Product Carbon Footprints (PCFs) that are available. 
-        The list can be filtered by various criteria.
-      operationId: listFootprints
+        Retrieve a list of Product Carbon Footprints (PCFs) from the [=data owner=].
+        The [=data recipient=] can specify various criteria to filter the
+        list, and the [=data owner=] can paginate the result set, if necessary.
+
+        Host systems SHOULD implement an access management system and only 
+        return the product footprints for which the data owner granted access 
+        to the requesting data recipient.
+
+        If the host system has multiple versions of the same footprint with the 
+        same `id`, it MUST include only the latest version in the list of
+        footprints. The host system SHOULD include preceding footprints which have
+        been deprecated in the resulting list of footprints, except if the `status`
+        query parameter explicity requests only active footprints.
+
+        ### Pagination
+
+         1. The host system MUST NOT return more product footprints than requested in 
+            case a <{listFootprints/limit}> parameter was specified by a [=data recipient=]
+         2. The host system MUST return an HTTP `Link` header if there are additional 
+            ProductFootprints ready to be retrieved, such that
+              - The `Link` header conforms to [[!RFC8288]]
+              - The value of the `rel` parameter is equal to `next`
+              - the target URI of the `Link` header is absolute
+              - The value of `host` of the target URI is equal to the value of the `host` 
+                request header from the original `ListFootprints` HTTP request
+         3. The target URI from the `Link` header is called a <dfn>pagination link</dfn>.
+         4. A pagination link MUST be valid for at least 180 seconds after creation
+         5. The data recipient CAN call the pagination link more than once
+         6. Upon each call, the host system
+              - MUST return the same set of Product Footprints
+              - MUST NOT return more product footprints than requested in case 
+                <{listFootprints/limit}> was defined by a [=data recipient=]
+              - MUST return a `Link` header conforming with the previous description in case 
+                there are additional ProductFootprints available
+                ```http
+                link: <https://api.example.com/3/footprints?geography=FR&limit=10&offset=10>; rel="next"
+                ```
+         7. If a response contains a second pagination link and the data recipient has called 
+            that second pagination link, the previous pagination link MAY no longer work: data 
+            recipients MUST NOT assume that previous pagination links continue to return results 
+            after advancing in the pagination process.
+
+        ### Filtering
+
+        The [=host system=] MUST support filtering of the list of footprints by 
+        criteria described under Parameters. Note that these are the same filters 
+        used by the [[#request-created-event]] Event.
+
+        A host system MAY provide additional filter criteria for the data recipient
+        to use. These parameters MUST be prefixed with `x-<identifier>-`.  
+        
+        For example, to add functionality to search for product 
+        footprints based on an invoice number, a software solution could choose 
+        to support a parameter `x-atq-invoice-id`. 
+
+        ```http
+        /3/footprints/?geography=FR&x-atq-invoice-id=12345&limit=100
+        ```
+
       tags: [footprint]
       parameters:
+      - name: limit
+        description: |
+          The maximum number of footprints to return. The [=host system=] MAY return fewer 
+          footprints, but MUST return a Link header conforming to [[!RFC8288]] if there are 
+          additional ProductFootprints ready to be retrieved. 
+        in: query
+        schema:
+          type: integer
+          format: uint
+          minimum: 0
       - $ref: '#/components/parameters/productId'
       - $ref: '#/components/parameters/companyId'
       - $ref: '#/components/parameters/geography'
@@ -40,25 +106,48 @@ paths:
       - $ref: '#/components/parameters/validAfter'
       - $ref: '#/components/parameters/validBefore'
       - $ref: '#/components/parameters/status'
-      - name: limit
-        in: query
-        schema:
-          type: integer
-          format: uint
-          minimum: 0
       - name: '$filter'
         in: query
-        description: Syntax as defined by the ODatav4 specification
+        description: |
+          Syntax as defined by the ODatav4 specification. Note: this parameter has been deprecated in 3.0.0.
         allowEmptyValue: true
         schema:
           type: string
         deprecated: true
       responses:
         '200':
-          description: Success
+          description: |
+            The host system succesfully returns a list of product footprints. This list 
+            MAY be incomplete, in which case the host system MUST return a Link header
+            conforming to [[!RFC8288]], also see [[#pagination]]. The list MUST NOT be 
+            larger than the <{listFootprints/limit}>, if specified. 
+
+            ```http
+            HTTP/1.1 200 OK
+            link: <https://api.example.com/3/footprints?geography=FR&limit=10&offset=10>; rel="next"
+            content-type: application/json
+            ```
+            ```json
+            {
+              "data": [ 
+                {"id": "079e425a-464f-528d-341d-4a944a1dfd70", ... },
+                {"id": "f4b1225a-bd44-4c8e-861d-079e4e1dfd69", ... }
+                ...
+              ]
+            }
+            ```
+
+            The list MAY also be empty. If the list is empty, the host system MUST return an empty 
+            JSON array. The list MUST NOT be NULL.
+
+            ```json
+            {
+              "data": [] // MUST NOT be null
+            }
+            ```
           headers:
             link:
-              description: Link header to next result set. See Tech Specs section 6.6.1
+              description: Link header to next result set. See [[#pagination]].
               schema:
                 type: string
                 examples:
@@ -71,7 +160,9 @@ paths:
                 - data
                 properties:
                   data:
+                    description: List of <{ProductFootprint}> objects.
                     type: array
+                    minItems: 0
                     items:
                       $ref: '#/components/schemas/ProductFootprint'
         '400':
@@ -89,10 +180,27 @@ paths:
       summary: Action GetFootprint
       description: |
         Retrieve a single Product Carbon Footprint (PCF) by its unique identifier.
-      operationId: getFootprintById
+
+        If the host system has multiple versions of the same footprint with the
+        same `id`, it MUST include only the latest version in the list of footprints.
+
+        If the requested ProductFootprint is deprecated, the host system SHOULD
+        return the deprecated ProductFootprint, if it is still available.
+
+        If the requested ProductFootprint is not found, the host system MUST return
+        a 404 Not Found response.
+        
+        Host systems SHOULD implement an access management system and only 
+        return the product footprints for which the data owner granted access 
+        to the requesting data recipient.
+
+        If it determines that a data recipient is not allowed to access the requested
+        ProductFootprint, the host system MUST return a 403 Forbidden response.
+
       tags: [footprint]
       parameters:
       - name: id
+        description: The value of property id of a product footprint a data recipient intends to retrieve.
         in: path
         required: true
         schema:
@@ -100,7 +208,23 @@ paths:
           format: uuid
       responses:
         '200':
-          description: Success
+          description: |
+            Indicates success: the product footprint was found and returned 
+            by the host system.
+
+            Example response body:
+
+            ```json
+            {
+              "data": {
+                "id": "079e425a-464f-528d-341d-4a944a1dfd70",
+                "productIds": ["urn:pact:sample.com:product-id:44055-9c05bc35-68f8"]},
+                "productNameCompany": "Sample Product",
+                ...
+              }
+            }
+            ```
+
           content:
             application/json:
               schema:
@@ -109,14 +233,24 @@ paths:
                 - data
                 properties:
                   data:
+                    description: |
+                      The product footprint requested, see <{ProductFootprint}>.
                     $ref: '#/components/schemas/ProductFootprint'
         '400':
           $ref: '#/components/schemas/BadRequestResponse'
         '401':
           $ref: '#/components/schemas/UnauthorizedResponse'
         '403':
+          description: | 
+            The data recipient is not allowed to access the requested ProductFootprint.
+
+            Response body MUST contain a JSON <{Error}> object
           $ref: '#/components/schemas/ForbiddenResponse'
         '404':
+          description: |
+            The requested ProductFootprint was not found.
+
+            Response body MUST contain a JSON <{Error}> object
           $ref: '#/components/schemas/NotFoundResponse'
         '500':
           $ref: '#/components/schemas/InternalErrorResponse'
@@ -124,11 +258,35 @@ paths:
       - BearerAuth: []
   /3/events:
     post:
-      summary: Action Event
+      summary: Action Events
       description: |
-        Post an event to the system. The event will be processed by the system 
-        and may trigger further actions.
-      operationId: post_event
+        The Action Events endpoint supports the following use cases:
+
+         1. enabling a [=data recipient=] to request Product Footprints
+            from a [=data owner=] by sending a `RequestCreatedEvent`, to
+            which the data owner can answer by sending `RequestFulfilledEvent`
+            or a `RequestRejectedEvent`.
+         2. enabling a [=data owner=] to notify a [=data recipient=] on 
+            updates to 1 or more Product Footprints: `PublishedEvent`
+
+        The Action Events endpoint accepts CloudEvent events (see [[!CE]]) encoded 
+        in "Structured Content Mode" (see [[!CE-Structured-Content-Mode]]). 
+
+        The CloudEvents are encoded in the "application/cloudevents+json" media type and
+        MUST be sent as an HTTP POST request body to the Action Events endpoint.
+
+        The following events MUST be handled by the host system:
+        - [`RequestCreatedEvent`](#request-created-event)
+        - [`RequestFulfilledEvent`](#request-fulfilled-event)
+        - [`RequestRejectedEvent`](#request-rejected-event)
+        - [`PublishedEvent`](#productfootprint-published-event)
+
+        A host system MUST validate the event and return an HTTP 4xx status code if the
+        event is invalid. 
+
+        Upon accepting the event, the [=host system=] MUST return an HTTP 200 status code
+        and SHOULD return an empty response body. 
+
       tags: [event]
       requestBody:
         content:
@@ -141,24 +299,17 @@ paths:
               - $ref: '#/components/schemas/PublishedEvent'
       responses:
         '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: object
-                properties: 
-                  code: 
-                    type: string
-                  message: 
-                    type: string
+          description: |
+            
+            Indicates success: the event was accepted by the host system. The response
+            body will be empty.
+            
         '400':
           $ref: '#/components/schemas/BadRequestResponse'
         '401':
           $ref: '#/components/schemas/UnauthorizedResponse'
         '403':
           $ref: '#/components/schemas/ForbiddenResponse'
-        '404':
-          $ref: '#/components/schemas/NotFoundResponse'
         '500':
           $ref: '#/components/schemas/InternalErrorResponse'
       security:
@@ -222,7 +373,7 @@ components:
         precedingPfIds:
           description: |
             A given PCF may change over time, due to updates to the calculation. 
-            This is a list of ID's that reflect "past versions" of the current PCF,
+            This is a list of IDs that reflect "past versions" of the current PCF,
             maintained by the solution. 
 
             See [[#lifecycle]] for details.
@@ -282,7 +433,7 @@ components:
           - Active
         validityPeriodStart:
           description: |
-            The start date of the <dfn>validity period</dfn>: time interval during which the 
+            The start date of the validity period: the time interval during which the 
             ProductFootprint is declared as valid for use by a receiving [=data recipient=].
             
             If no validity period is specified, the ProductFootprint is valid for 3 years after
@@ -338,8 +489,8 @@ components:
           type: string
         productIds:
           description: |
-            The non-empty set of [=ProductIds=] in [=URN=] format. Each of the values in the set is 
-            supposed to uniquely identify the product. See {#product-identifiers} for syntax and 
+            The non-empty set of Product IDs in [[!RFC8141|URN]] format. Each of the values in the set is 
+            supposed to uniquely identify the product. See [[#product-identifier-urns]] for syntax and
             examples.
           summary: |
             All relevant product identifiers to identify the product for which the provided 
@@ -351,7 +502,9 @@ components:
             $ref: '#/components/schemas/Urn'
         productClassifications:
           description: |
-            The non-empty set of [=ProductClassifications=] in [=URN=] format. Each of the values in the set can classify the product as part of distinct groupings and categorizations. See {#product-identifiers}. 
+            The non-empty set of Product Classifications in [[!RFC8141|URN]] format. Each of the values 
+            in the set can classify the product as part of distinct groupings and categorizations. 
+            See [[#product-classification-urns]].
           note: Replaces productCategoryCpc deprecated in 2.3
           summary: |
             A list of classification or category identifiers in URN format. Use well known urn's here, 
@@ -524,8 +677,10 @@ components:
             - all emissions from fossil sources
             - all biogenic and land management-related CH4,  N2O, non-biogenic CO2, HFCs and PFCs emissions
             - land management CO2 removals
+
             Excluding: 
             - all biogenic CO2 withdrawals.
+
           x-unit: kgCO2e/declared unit
           x-comment: | 
             PCF (Excl. biogenic CO2 withdrawal) = fossilGhgEmissions + landUseChangeGhgEmissions + landManagementBiogenicCO2Emissions + biogenicNonCO2Emissions + landManagementBiogenicCO2Removals
@@ -537,7 +692,8 @@ components:
             - all emissions from fossil sources
             - all biogenic and land management-related CH4,  N2O, non-biogenic CO2, HFCs and PFCs emissions
             - land management CO2 removals
-            - all biogenic CO2 withdrawals.          
+            - all biogenic CO2 withdrawals.
+
           x-unit: kgCO2e/declared unit
           x-comment: |
             PCF (Incl. biogenic CO2 withdrawal) = FossilGHGEmissions + landUseChangeGHGEmissions + landManagementBiogenicCO2Emissions + biogenicNonCO2Emissions + landManagementBiogenicCO2Removals + biogenicCO2Withdrawal
@@ -776,9 +932,6 @@ components:
             is considered to be representative. Specifically, this start date
             represents the earliest date from which activity data was collected
             to include in the PCF calculation. 
-
-            See the [=PACT Methodology=] section 6.1.2.1 for further details. 
-            Can also be referred to as 'reporting period'.
           summary: |
             The start date and time of the earliest activity data used to calculate the 
             PCF. This start date can be considered the start of the period over which 
@@ -790,10 +943,7 @@ components:
             The end (excluding) of the time boundary for which the PCF value is
             considered to be representative. Specifically, this end date
             represents the latest date from which activity data was collected
-            to include in the PCF calculation. Can al
-
-            See the [=PACT Methodology=] section 6.1.2.1 for further details. 
-            Can also be referred to as 'reporting period'.
+            to include in the PCF calculation.
           summary: |
             The end date and time of the latest activity data used to calculate the PCF. 
             This end date can be considered the end of the period over which the given 
@@ -1066,8 +1216,8 @@ components:
           $ref: '#/components/schemas/NonEmptyString'
           examples:
             - 3.9.1
-
     DataQualityIndicators:
+      title: DataQualityIndicators
       description: | 
         Data type DataQualityIndicators contains the quantitative data quality indicators in conformance with PACT Methodology Section 4.2.3 and Appendix B.
 
@@ -1084,7 +1234,6 @@ components:
           "reliabilityDQR": "2.0"
         }
         ```        
-      title: DataQualityIndicators
       type: object
       required:
       - technologicalDQR
@@ -1141,17 +1290,13 @@ components:
       properties:
         coverage:
           description: |
-            Level of granularity of the emissions data assured, with value equal to
-            - `corporate level` for corporate level
-            - `product line` for product line
-            - `PCF system` for PCF System
-            - `product level` for product level
+            Level of granularity of the emissions data assured. 
 
             This property MAY be undefined only if the kind of verification was not performed.
           summary: |
             Level of granularity of the emissions data assured
           type: string
-          note: changed from v2.x
+          note: values changed from v2.x
           enum:
             - PCF calculation model
             - PCF program
@@ -1219,36 +1364,10 @@ components:
     # -----------
     # Events
     BaseEvent:
-      title: BaseEvent
       description: |
         Base class for all events, it follows the CloudEvents specification.
       type: object
       required:
-      - specversion
-      - id
-      - source
-      - time
-      properties:
-        specversion:
-          type: string
-          description: CloudEvents version.
-        id:
-          type: string
-          description: Event identifier. Must be able to uniquely identify the event by source and id.
-        source:
-          type: string
-          description: The domain and endpoint of the application from which the event originates.
-        time:
-          type: string
-          format: date-time
-          description: The time the event occurred.
-    # -----------
-    # Published
-    PublishedEvent:
-      title: ProductFootprint Published
-      description: Notification that a ProductFootprint has been published (either new or updated).
-      type: object
-      required:
       - type
       - specversion
       - id
@@ -1258,7 +1377,6 @@ components:
       properties:
         type:
           type: string
-          const: org.wbcsd.pathfinder.ProductFootprint.Published.v1
           description: Event type identifier.
         specversion:
           type: string
@@ -1268,7 +1386,6 @@ components:
           description: Event identifier. Must be able to uniquely identify the event by source and id.
         source:
           type: string
-          format: uri
           description: The domain and endpoint of the application from which the event originates.
         time:
           type: string
@@ -1276,108 +1393,220 @@ components:
           description: The time the event occurred.
         data:
           type: object
-          description: data object
+          description: The event payload.
+
+    PublishedEvent:
+      $ref: '#/components/schemas/BaseEvent'
+      title: Published Event
+      description: |
+        Notification that a ProductFootprint has been published (either new or updated).
+        This event is triggered by the [=data owner=] and send to relevant [=data recipients=].
+
+        If the [=data recipient=] cannot be reached by the [=data owner=], the data owner 
+        SHOULD retry to send the event at a later time, using an exponential backoff
+        strategy. It SHOULD abandon sending the event after 72 hours. 
+
+        The data object of the [=PublishedEvent=] contains the list of Product Footprint 
+        *IDs* that have been published or updated by the data owner.
+        
+        The data recipient can retrieve the *actual* Product Footprints by calling the 
+        [=GetFootprint=] action on the data owner's systems.
+      type: object
+      examples:
+      - | 
+        ```http
+        POST /3/events HTTP/1.1
+        Host: api.example.com
+        Content-Type: application/cloudevents+json
+        Authorizaton: Bearer xxxxxxxxxxxxx
+
+        {
+          "type": "org.wbcsd.pact.ProductFootprint.PublishedEvent.3",
+          "specversion": "1.0",
+          "id": "1934405d-4f9b-4b3b-9c05bc35-68f8",
+          "source": "//api.example.com/3/events",
+          "time": "2022-05-31T17:31:00Z",
+          "data": {
+            "pfIds": ["079e425a-464f-528d-341d-4a944a1dfd70"]
+          }
+        }
+        ```
+      properties:
+        $ref: '#/components/schemas/BaseEvent/properties'
+        type:
+          type: string
+          const: org.wbcsd.pact.ProductFootprint.PublishedEvent.3
+          description: Event type identifier.
+        data:
+          type: object
+          description: |
+            Object containing the list of Product Footprint Ids that have been published or updated by the data owner.
+            
+            ```
+            "data": { 
+              "pfIds": [ "uuid1", "uuid2", ... ] 
+            }
+            ```
           properties:
             pfIds:
               type: array
-              description: The list of Product Ids that have been published or updated by the data owner.
+              description: The list of Product Footprint Ids that have been published or updated by the data owner.
               items:
                 type: string
                 format: uuid
+    
     RequestCreatedEvent:
-      title: ProductFootprint Request Created
-      description: A data recipient request the data owner a ProductFootprint.
+      $ref: '#/components/schemas/BaseEvent'
+      title: Request Created Event
+      description: |
+        A data recipient requests a ProductFootprint from the data owner. The data recipient
+        MUST provide the criteria in the data object to enable the data owner to either
+        find an existing relevant PCF or create a new one.
+
+        Criteria to provide can be product id, geography, company identifier, validity 
+        period, etc, see below for details.
+
+        If the data owner can *immediately* determine that it will not be able to 
+        handle this request it MUST respond with an appropriate `4xx` error response, 
+        otherwise it MUST respond directly with a `200` (Success), indicating it will
+        be able to handle the request.
+
+        In the latter case, the data owner MUST send a follow-up event back to the data 
+        recipient at some time in the future. This follow up event MUST be either a 
+        `RequestFulfilledEvent` or `RequestRejectedEvent`.
+      examples:
+      - |
+        ```http
+        POST /3/events HTTP/1.1
+        Host: api.example.com
+        Content-Type: application/cloudevents+json
+        Authorizaton: Bearer xxxxxxxxxxxxx
+
+        {
+          "type": "org.wbcsd.pact.ProductFootprint.RequestCreatedEvent.3",
+          "specversion": "1.0",
+          "id": "1934405d-4f9b-4b3b-9c05bc35-68f8",
+          "source": "//api.example.com/3/events",
+          "time": "2025-03-05T17:31:00Z",
+          "data": {  
+            "productId": ["urn:pact:sample.com:product-id:44055-9c05bc35-68f8"],
+            "geography": ["DE"],
+            "validAfter": "2025-01-01T00:00:00Z"
+          }
+        }
+        ```
       type: object
-      required:
-      - type
-      - specversion
-      - id
-      - source
-      - time
-      - data
       properties:
+        $ref: '#/components/schemas/BaseEvent/properties'
         type:
           type: string
-          const: org.wbcsd.pathfinder.ProductFootprintRequest.Created.v1
+          const: org.wbcsd.pact.ProductFootprint.RequestCreatedEvent.3
           description: Event type identifier.
-        specversion:
-          type: string
-          description: CloudEvents version.
-        id:
-          type: string
-          description: Event identifier. Must be able to uniquely identify the event by source and id.
-        source:
-          type: string
-          format: uri
-          description: The domain and endpoint of the application from which the event originates.
-        time:
-          type: string
-          format: date-time
-          description: The time the event occurred.
         data:
           type: object
-          description: Criteria sepeci object
+          description: |
+            Criteria for filtering ProductFootprint requests.
           properties:
             productId: 
-              $ref: '#/components/parameters/productId'
-              type: array
-              item: 
-                $ref: '#/components/schemas/URN'
+              description:
+                $ref: '#/components/parameters/productId/description'
+              $ref: '#/components/parameters/productId/schema'
             companyId:
-              $ref: '#/components/parameters/companyId'
-              type: array
-              item: 
-                $ref: '#/components/schemas/URN'
+              description: 
+                $ref: '#/components/parameters/companyId/description'
+              $ref: '#/components/parameters/companyId/schema'
             geography:
-              $ref: '#/components/parameters/geography'
-              type: array
-              item: string
+              description: 
+                $ref: '#/components/parameters/geography/description'
+              $ref: '#/components/parameters/geography/schema'
             classification:
-              $ref: '#/components/parameters/classification'
-              type: array
-              item: 
-                $ref: '#/components/schemas/URN'
+              description:
+                $ref: '#/components/parameters/classification/description'
+              $ref: '#/components/parameters/classification/schema'
             validOn:
-              $ref: '#/components/parameters/validOn'
-              type: string
-              format: date-time
+              description:
+                $ref: '#/components/parameters/validOn/description'
+              $ref: '#/components/parameters/validOn/schema'
             validAfter:
-              $ref: '#/components/parameters/validAfter'
-              type: string
-              format: date-time
+              description:
+                $ref: '#/components/parameters/validAfter/description'
+              $ref: '#/components/parameters/validAfter/schema'
             validBefore:
-              $ref: '#/components/parameters/validBefore'
-              type: string
-              format: date-time
+              description:
+                $ref: '#/components/parameters/validBefore/description'
+              $ref: '#/components/parameters/validBefore/schema'
             status:       
-              $ref: '#/components/parameters/status'
-              type: string
-              format: date-time
+              description:
+                $ref: '#/components/parameters/status/description'
+              $ref: '#/components/parameters/status/schema'
             comment:
+              description: |
+                Free text comment.
               type: string
+          
     RequestFulfilledEvent:
-      title: ProductFootprint Request Fulfilled
-      description: Notification that a ProductFootprint request has been fulfilled.
+      $ref: '#/components/schemas/BaseEvent'
+      title: Request Fulfilled Event
+      description: | 
+        Notification that the request for PCF(s) has been fulfilled by the data owner. 
+        This notification will be sent by the data owner back to the data recipient in 
+        response to a ProductFootprintRequest.Created event, see [=RequestCreatedEvent=].
+
+        The data object contains the original requestEventId and the resulting list of 
+        ProductFootprints which conform to the set of criteria specified by the data 
+        recipient in the preceding RequestCreated event. This list MUST be non-empty, 
+        as the RequestFulfilled event indicates success. The data owner MUST send 
+        a single RequestFulfilled event back to the data recipient per corresponding 
+        RequestCreated event.
+
+        If there are no product footprints to return, the data owner MUST send a
+        [=RequestRejectedEvent=] instead.
+
+        If the [=data recipient=] cannot be reached by the [=data owner=], the data owner 
+        SHOULD retry to send the event at a later time, using an exponential backoff
+        strategy. It SHOULD abandon sending the event after 72 hours. 
       type: object
+      examples:
+      - |
+        ```http
+        POST /3/events HTTP/1.1
+        Host: api.example.com
+        Content-Type: application/cloudevents+json
+        Authorizaton: Bearer xxxxxxxxxxxxx
+
+        {
+          "type": "org.wbcsd.pact.ProductFootprint.RequestFulfilledEvent.3",
+          "specversion": "1.0",
+          "id": "505e5d-4f9b-4b3b-9c05bc35-68f8",
+          "source": "//api.example.com/3/events",
+          "time": "2025-03-05T17:31:00Z",
+          "data": {  
+            "requestEventId": "1934405d-4f9b-4b3b-9c05bc35-68f8",
+            "pfs": [
+              { 
+                /* ProductFootprint object */
+                "id": "079e425a-464f-528d-341d-4a944a1dfd70",
+                "specVersion": "3.0",
+                "productIds": ["urn:pact:sample.com:product-id:44055-9c05bc35-68f8"], 
+                ...
+                "pcf": {
+                  ...
+                }
+              }, 
+              { 
+                "id": "079e425a-464f-528d-341d-4a944a1dfd71",
+                ...
+              }
+            ]
+          }
+        }
+        ```
       properties:
+        $ref: '#/components/schemas/BaseEvent/properties'
         type:
           type: string
-          const: org.wbcsd.pathfinder.ProductFootprintRequest.Fulfilled.v1
+          const: org.wbcsd.pact.ProductFootprint.RequestFulfilledEvent.3
           description: Event type identifier.
-        specversion:
-          type: string
-          description: CloudEvents version.
-        id:
-          type: string
-          description: Event identifier. Must be able to uniquely identify the event by source and id.
-        source:
-          type: string
-          format: uri
-          description: The domain and endpoint of the application from which the event originates.
-        time:
-          type: string
-          format: date-time
-          description: The time the event occurred.
         data:
           type: object
           description: data object
@@ -1386,34 +1615,60 @@ components:
             - pfs
           properties:
             requestEventId:
+              description: The ID of the request event that has been fulfilled.
               type: string
             pfs:
+              description: |
+                The list of ProductFootprints resulting from the original 
+                that have been returned. This list MUST be non-empty.
               type: array
+              minItems: 1
               items:
                 $ref: '#/components/schemas/ProductFootprint'
+
     RequestRejectedEvent:
-      title: ProductFootprint Request Rejected
-      description: Notification that a request for a ProductFootprint can not be fulfilled.
+      $ref: '#/components/schemas/BaseEvent'
+      title: Request Rejected Event
+      description: |
+        Notification that a request for a ProductFootprint can not be fulfilled.
+        The RequestRejectedEvent is an event sent back from the data owner to 
+        the data recipient upon NOT successfully fulfilling the preceeding 
+        RequestCreatedEvent sent by the data recipient.
+
+        If the [=data recipient=] cannot be reached by the [=data owner=], the data owner 
+        SHOULD retry to send the event at a later time, using an exponential backoff
+        strategy. It SHOULD abandon sending the event after 72 hours. 
+
+      examples:
+      - |
+        ```http
+        POST /3/events HTTP/1.1
+        Host: api.example.com
+        Content-Type: application/cloudevents+json
+        Authorizaton: Bearer xxxxxxxxxxxxx
+        
+        {
+          "type": "org.wbcsd.pact.ProductFootprint.RequestRejectedEvent.3",
+          "specversion": "1.0",
+          "id": "505e5d-4f9b-4b3b-9c05bc35-68f8",
+          "source": "//api.example.com/3/events",
+          "time": "2025-03-05T17:31:00Z",
+          "data": {  
+            "requestEventId": "1934405d-4f9b-4b3b-9c05bc35-68f8",
+            "error": {
+              "code": "NotFound",
+              "message": "The requested footprint could not be found."
+            }
+          }
+        }
+        ```
       type: object
       properties:
+        $ref: '#/components/schemas/BaseEvent/properties'
         type:
           type: string
-          const: org.wbcsd.pathfinder.ProductFootprintRequest.Rejected.v1
+          const: org.wbcsd.pact.ProductFootprint.RequestRejectedEvent.3
           description: Event type identifier.
-        specversion:
-          type: string
-          description: CloudEvents version.
-        id:
-          type: string
-          description: Event identifier. Must be able to uniquely identify the event by source and id.
-        source:
-          type: string
-          format: uri
-          description: The domain and endpoint of the application from which the event originates.
-        time:
-          type: string
-          format: date-time
-          description: The time the event occurred.
         data:
           type: object
           description: data object
@@ -1422,59 +1677,111 @@ components:
             - error
           properties:
             requestEventId:
+              description: The ID of the RequestCreateEvent that has been rejected.
               type: string
             error:
-              $ref: '#/components/schemas/ErrorResponse'
+              $ref: '#/components/schemas/Error'
+              
     # ---------------
     # Error Responses
-    ErrorResponse:
-      description: Response with an error code and descripton. See Chapter "Error
-        Codes" of the Tech Specs for more details.
+    Error:
+      title: Error
+      description: Object with error code and description, to be returned by the API methods 
+        in case of error.
+
+        See [[#api-error-handling]] for details.
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code identifier.
+          enum:
+            - BadRequest # 400
+            - AccessDenied # 403
+            - TokenExpired # 401
+            - NotFound # 404 NoSuchFootprint
+            - InternalError # 500
+            - NotImplemented #501
+        message:
+          type: string
+          description: Human readable error message.
+      required:
+      - code
+      - message
+      example: |
+        ```json
+        { 
+          "code": "NotFound",
+          "message": "The requested footprint could not be found." 
+        }
+        ```
+    BadRequestResponse:
+      description: |
+        Bad request.
+
+        Response body MUST contain a JSON <{Error}> object
       content:
         application/json:
           schema:
-            type: object
-            properties:
-              code:
-                type: string
-                description: Error code identifier.
-                enum:
-                  - BadRequest # 400
-                  - AccessDenied # 403
-                  - TokenExpired # 401
-                  - NotFound # NoSuchFootprint
-                  - InternalError # 500
-                  - NotImplemented #501
-              message:
-                type: string
-                description: Human readable error message.
-            required:
-            - code
-            - message
-    BadRequestResponse:
-      description: Bad request.
-      $ref: '#/components/schemas/ErrorResponse'
+            $ref: '#/components/schemas/Error'
     NotFoundResponse:
-      description: Not found.
-      $ref: '#/components/schemas/ErrorResponse'
+      description: |
+        Not found.
+
+        Response body MUST contain a JSON <{Error}> object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     UnauthorizedResponse: # 401
-      description: Unauthorized.
-      $ref: '#/components/schemas/ErrorResponse'
+      description: |
+        The request is not authorized, the access token is invalid or has expired. 
+
+        Response body MUST contain a JSON <{Error}> object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     TokenExpiredResponse: # 401
-      description: Token expired.
-      $ref: '#/components/schemas/ErrorResponse'
+      description: |
+        Token expired.
+
+        Response body MUST contain a JSON <{Error}> object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     ForbiddenResponse:
-      description: Access Denied.
-      $ref: '#/components/schemas/ErrorResponse'
+      description: |
+        Access Denied.
+
+        Response body MUST contain a JSON <{Error}> object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     NotImplementedResponse:
-      description: Not implemented.
-      $ref: '#/components/schemas/ErrorResponse'
+      description: | 
+        Not implemented.
+
+        Response body MUST contain a JSON <{Error}> object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     InternalErrorResponse:
-      description: Internal Error.
-      $ref: '#/components/schemas/ErrorResponse'
+      description: | 
+        Internal Error.
+
+        Response body MUST contain a JSON <{Error}> object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
   securitySchemes:
     BearerAuth:
-      description: OAuth2 Client Credentials Grant (RFC6749 4.4)
+      description: OAuth2 Client Credentials Grant ([[!RFC6749]] 4.4)
       type: oauth2
       flows:
         clientCredentials:
@@ -1482,46 +1789,48 @@ components:
           scopes:
             footprint:list: Ability to list footprints
             footprint:read: Ability to access individual footprints
+
   parameters:
-    # -----------
-    # Parameters
     productId:
       name: productId
-      description: One or more product ID's. Will return all footprints which have a corresponding ID in their `productIds` attribute. Note that a footprint itself can also have multiple product IDs.
+      description: One or more product IDs. Will return all footprints which have a corresponding ID in their `productIds` attribute. Note that a footprint itself can also have multiple product IDs.
       in: query
       explode: true
       schema: 
         type: array
-        item: 
-          $ref: '#/components/schemas/URN'
+        items: 
+          $ref: '#/components/schemas/Urn'
     companyId:
       name: companyId
-      description: One or more company ID's. Will return all footprints which have a corresponding ID in their `companyId` attribute.
+      description: One or more company IDs. Will return all footprints which have a corresponding ID in their `companyId` attribute.
       in: query
+      explode: true
       schema: 
         type: array
-        item: 
-          $ref: '#/components/schemas/URN'
+        items: 
+          $ref: '#/components/schemas/Urn'
     geography:
       name: geography
-      description: One or more geographic specifiers. Values specified can denote `geographyRegion` or `geographyCountry` or `geographyCountrySubdivision`. Will return all footprints within the specified geography(s)
+      description: One or more geographic specifiers. Values specified can denote `geographyRegion` or `geographyCountry` or `geographyCountrySubdivision`. Will return all footprints within the specified geography(s). 
       in: query
+      explode: true
       schema:
         type: array
-        item: 
+        items: 
           type: string
     classification:
       name: classification
       description: One or more product classifications. Will return all footprints with corresponding values in the `productClassifications` attribute. Note that a footprint itself can have multiple classifications.
       in: query
+      explode: true
       schema:
         type: array
-        item: 
-          $ref: '#/components/schemas/URN'
+        items: 
+          $ref: '#/components/schemas/Urn'
     validOn:
       name: validOn
       description: |
-        If present, MUST match all PCFs which where valid on the date specified: footprint.validityPeriodBegin <= validOn AND validFrom <= footprint.validityPeriodEnd
+        If present, MUST match all PCFs which were valid on the date specified: footprint.validityPeriodBegin <= validOn AND validFrom <= footprint.validityPeriodEnd
       in: query
       schema:
         type: string
@@ -1529,7 +1838,7 @@ components:
     validAfter:
       name: validAfter
       description: |
-        if present, MUST match PCFs whith validAfter < footprint.validityPeriodBegin
+        If present, MUST match PCFs with validAfter < footprint.validityPeriodBegin
       in: query
       schema:
         type: string
@@ -1537,7 +1846,7 @@ components:
     validBefore:
       name: validBefore
       description: |
-        if present, MUST match PCFs whith validBefore > footprint.validityPeriodEnd
+        If present, MUST match PCFs with validBefore > footprint.validityPeriodEnd
       in: query
       schema:
         type: string
@@ -1545,7 +1854,7 @@ components:
     status:
       name: status
       description: |
-        if present, MUST be either be "Active" or "Deprecated"
+        If present, MUST be "Active" or "Deprecated". If not specified, will return footprints regardless of status. 
       in: query
       schema:
         type: string

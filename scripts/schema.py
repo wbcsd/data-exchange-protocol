@@ -4,8 +4,7 @@ import logging
 import json
 import jsonref
 import jsonschema 
-import re
-
+import urllib.parse
 
 # Show the difference between the two OpenAPI files. Only show the differences in the data model.
 # For a given type, create a list of properties which are new, removed, or changed.
@@ -13,41 +12,49 @@ import re
 # For properties which are new, show the new value.
 
 def load_openapi_file(path):
-#    with open(path, 'r') as file:
-#        return yaml.safe_load(file)
     with open(path, encoding="utf-8") as file:
         schema = yaml.safe_load(file)
-    schema = jsonref.replace_refs(schema, merge_props=True)
+    schema = jsonref.replace_refs(schema, merge_props=True, proxies=False)
+    return schema
+
+def dump_schema(schema):
+    return yaml.safe_dump(schema)
+
+def navigate_to(schema, path):
+    # Iterate over the parts and select the item from the schema
+    for part in path.split('/'):
+        part = urllib.parse.unquote(part)
+        schema = schema[part]
     return schema
 
 
 def validate_json_data(schema_path, data_path):
-    # Split the schema into components and paths
-    # schema_path is a filename + '#' + internal path
-    # split those two parts
-    schema_path, schema_ref = schema_path.split('#')
+    """
+    Validates JSON data against a specified schema.
+    Args:
+        schema_path (str): The path to the schema file, including an internal path separated by '#'.
+        data_path (str): The path to the JSON data file to be validated.
+    Raises:
+        jsonschema.exceptions.ValidationError: If the JSON data does not conform to the schema.
+        FileNotFoundError: If the schema or data file cannot be found.
+        json.JSONDecodeError: If the data file contains invalid JSON.
+    Example:
+        validate_json_data('schema.yaml#/components/schemas/ExampleSchema', 'data.json')
+    """
+
+    # Split the schema into file and internal path filename + '#' + internal path
+    schema_path, schema_internal_path = schema_path.split('#')
 
     # Load the schema from the file
     schema = load_openapi_file(schema_path)
 
-    # Load the data from the file
-    logging.info(f"Validating {data_path} against {schema_path}#{schema_ref}")
+    # Load the data to be validated from the file
+    logging.info(f"Validating {data_path} against {schema_path}#{schema_internal_path}")
     with open(data_path, 'r') as file:
         data = json.load(file)
     
-    # Select the item from the schema
-    # ref_path is a path to the item in the schema
-    # split the path into parts using regex.
-
-    # Use regex to split ref_path into parts, handling escaped forward slashes
-    ref_path_parts = re.split(r'(?<!\\)/', schema_ref)
-    ref_path_parts = [part.replace('\\/', '/') for part in ref_path_parts]  # Unescape any escaped slashes
-
-    # Iterate over the parts and select the item from the schema
-    for part in ref_path_parts:
-        schema = schema[part]
-    #yaml.dump(schema, sys.stdout)
-    
+    # Get the relevant part in the schema
+    schema = navigate_to(schema, schema_internal_path)
     # Validate the data against the schema
     jsonschema.validate(instance=data, schema=schema)
 
@@ -106,7 +113,6 @@ def schema_diff(old_file_path, new_file_path):
     
     differences = compare_data_models(old_models, new_models)
     
-    #print(json.dumps(differences, indent=2))
     print(yaml.dump(differences, default_flow_style=False))
 
     def summary(diffs, level = 0):
@@ -138,4 +144,4 @@ if __name__ == "__main__":
     old_file_path = sys.argv[1]
     new_file_path = sys.argv[2]
     
-    main(old_file_path, new_file_path)
+    schema_diff(old_file_path, new_file_path)

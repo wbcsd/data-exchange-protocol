@@ -9,7 +9,7 @@ In addition, for publishing a release:
   Update the Previous Version and TR links
 -->
 <pre class='metadata'>
-Text Macro: DATE 20250217
+Text Macro: DATE 20250313
 Text Macro: VERSION 3.0.0
 Text Macro: STATUS Draft
 Title: Technical Specifications for PCF Data Exchange
@@ -39,7 +39,7 @@ Advisement: This is the Draft Release of the PACT 3.0.0 Specifications, for cons
 Advisement: This document is a work in progress and should not be used for conformance testing. 
   Please refer to the [latest stable version of the Technical Specifications](https://wbcsd.github.io/tr/2024/data-exchange-protocol-20241024/) for this.
 
-  For an overview of changes since the last version (2.3), see the [Changelog](#changelog)
+  For an overview of changes since the last version (2.3), see the [[#changelog]].
 <!--
 Advisement: This document will change heavily preparing for the 3.0 draft for consultation, ETA Mid-Feb.
   All feedback is welcome.
@@ -168,7 +168,7 @@ A conforming requesting [=data recipient=] is any algorithm realized as software
 
 Note: This chapter is non-normative.
 
-Achieving transparency in carbon emissions at the product level is challenging due to the complexity of global supply chains. This specification focuses on enabling transparency through a peer-to-peer PCF data exchange by specifying necessary aspects for achieving interoperability, such as the [[#data-model|data model]] and [[#api|API]].
+Achieving transparency in carbon emissions at the product level is challenging due to the complexity of global supply chains. This specification focuses on enabling transparency through a peer-to-peer PCF data exchange by specifying necessary aspects for achieving interoperability, such as the [Data Model](#data-model) and [API](#api).
 
 This chapter provides examples for inter-company business cases related to the exchange of [=PCFs=], focusing on both asynchronous event processing and synchronous API calls.
 
@@ -187,7 +187,6 @@ Generally, the data recipient sends a `RequestCreatedEvent` event to the data ow
 3. The data owner validates the incoming event, directly returning a HTTP 2xx success code if OK, or a 4xx status code indicating  error. 
 4. Asynchronously, the data owner will create a PCF or find an existing relevant PCF. 
 5. The data owner will authenticate with the data recipient and send either a `RequestFullfilledEvent` back with the PCF or a `RequestRejectedEvent` if it can not produce the PCF.
-6. TODO: something about retrying
 
 
 ### Sending an updated PCF
@@ -199,12 +198,12 @@ In this case the data owner sends a `PublishedEvent` to the data recipient.
 1. The data owner authenticates with the data recipient and sends a `PublishedEvent` with the updated or created PCF.
 1. The data recipient should validate this incoming event and directly return a status code indicating succesful receipt (HTTP code 2xx) or an error (HTTP 4xx or 5xx). 
 
-Refer to [[#api-action-events]] for detailed request and response formats.
+Refer to [[#action-events]] for detailed request and response formats.
 
 
-## Synchronous retrieval 
+## Synchronous Retrieval 
 
-The synchronous part of te API allows for immediate retrieval of PCFs. Refer to [[#api-action-list]] and [[#api-action-get]] for detailed request and response formats.
+The synchronous part of te API allows for immediate retrieval of PCF's. Refer to [[#action-listfootprints]] and [[#action-getfootprint]] for detailed request and response formats.
 
 
 ### Getting multiple PCFs
@@ -243,11 +242,11 @@ Starting with Version 3.0, any change to a Product Footprint will result in a ne
 
 ## Change Definition and Handling ## {#lifecycle-handling}
 
-A change to a Product Footprint is defined as a change to one or more properties of a <{ProductFootprint}>, including a change of properties from being undefined or to no longer being defined.
+A change to a Product Footprint is defined as a change to one or more properties of a <{ProductFootprint}>, including a change of properties from being undefined to defined or vice-versa.
 
 After creation of a <{ProductFootprint}> this footprint MUST NOT be changed, EXCEPT for changing its <{ProductFootprint/status}> property to `Deprecated`
 
-A <{ProductFootprint}> with <{ProductFootprint/status}> `Deprecated` MUST NOT be [=changed=] anymore.
+A <{ProductFootprint}> with <{ProductFootprint/status}> `Deprecated` MUST NOT be changed anymore.
 
 ### Updating PCFs
 
@@ -301,7 +300,7 @@ This will not eliminate the need for a mapping process but will ease mapping ide
 
 We recognize there are existing relevant namespaces and corresponding URN syntax specifications. These can either be IANA-registered namespaces (like `urn:ISBN`) or widely used standards like `urn:gtin`. When product identification based on one or more of these standards is applicable, the corresponding namespaces should be used.
 
-Similar to product identifiers, product classifiers [=ProductClassifications=] contain URN's, using well-known namespaces when applicable, or a custom `pact` namespace if needed.
+Similar to product identifiers, [product classifiers](#product-classification-urns) contain URN's, using well-known namespaces when applicable, or a custom `pact` namespace if needed.
 
 
 ## Product Identifier URN’s ## {#product-identifier-urns}
@@ -426,7 +425,7 @@ Below is a list of examples of <{ProductFootprint/productIds}> as used in the <{
 
 ## Product Classification URN's ## {#product-classification-urns}
 
-Similar to [=ProductIds=] a ProductClassification MUST be a [=URN=] as specified in [[RFC8141]]: 
+Similar to [=ProductIds=] a ProductClassification MUST be a URN as specified in [[RFC8141]]: 
 
 ```
 urn:namespace:namespace-specific-string
@@ -473,10 +472,11 @@ In determining which URN namespace and corresponding syntax to use, the data own
 
   ```json
   ["urn:pact:inchi-trust.org:substance-id:$INCHI-ID$"]
-    ```
+  ```
 <tr>
   <td>Custom category
   <td>
+
   ```json
   "urn:pact:catalog.company.com:category-id:550010"
   ```
@@ -609,7 +609,7 @@ The following basic types are used in the data model:
   <td> Dates MUST be formatted according to ISO8601
 
   ```json
-  "2024-04-23T18:25:43.511Z"
+  "2025-04-23T18:25:43.511Z"
   ```
 
 <tr>
@@ -668,10 +668,311 @@ path: data-model.generated.md
 
 # HTTP REST API # {#api}
 
+## Introduction ## {#api-intro}
+
+This section defines an [[!rfc9112|HTTP]]-based API for the [=interoperable=] exchange of [[#productfootprint|Product Footprint]] data between [=host systems=].
+
+The scope of the HTTP API is minimal by design. Additional features will be added in future versions of this specification.
+
+
+
+## <dfn>Host System</dfn> ## {#api-host-system}
+
+A host system serves the needs of a single or multiple [=data owners=]. Additionally, a host system can also serve the needs of [=data recipients=] if it retrieves data from other host systems by calling their API.
+
+In other words, any host system which implements the API endpoints as described in this specification can play 
+the role of [=data owner=] as well as of [=data recipient=], thus mirroring real-world supply chains. See [[#business-cases]] for more details.
+
+A [=host system=] MUST implement the following actions:
+
+ - [Action Authenticate](#api-auth)
+ - [Action ListFootprints](#action-listfootprints)
+ - [Action GetFootprint](#action-getfootprint)
+ - [Action Events](#action-events)
+
+The host system MUST make its footprints available to the data recipient through BOTH [=Action ListFootprints=] AND [=Action Events=]. 
+
+A [=host system=] MUST offer its actions over HTTPS only. 
+
+A [=host system=] MUST authenticate any client prior to using the above actions. 
+
+A [=host system=] MUST offer all actions except [=Action Authenticate=] under the same [=BaseUrl=], e.g. `https://api.example.org/`. Note that for version 3 these actions can be found under `$base-url$/3/...`
+
+A [=host system=] SHOULD offer an [=OpenId Provider Configuration Document=] for the client to obtain the token endpoint for [=Action Authenticate=].
+
+A [=host system=] MAY offer the [=OpenId Provider Configuration Document=] and/or [=Action Authenticate=] under a [=AuthBaseUrl=] different from [=BaseUrl=], e.g. `https://id.example.org` (see [[#api-auth]])
+
+
+
+## Out of scope ## {#api-host-system-out-of-scope}
+
+<div class=note>Non-normative</div>
+
+This standard focuses on the necessary definitions to enable interoperable data exchange between data owners and data recipients. This is mediated through a host system which implements the HTTP REST API defined in this document.
+
+Within the [=PACT=] Project, conforming host systems are called solutions.
+
+Solutions add further functionality on top of this standard in order to enable meaningful and interoperable data exchanges.
+
+The following section briefly describes some of the additional functionality which is beyond the scope of this document:
+
+<ol type="a">
+  <li>Footprint calculation according to the PACT Methodology</li>
+  <li>Authentication and access management: the act of deciding and setting which product footprint may be accessed by each data recipient</li>
+  <li>Credentials management: the overall functionality to generate access credentials for data recipients, to exchange these credentials with data recipients, to rotate or revoke such credentials, etc.</li>
+  <li>Logging: creation and storage of access logs and audit trails related to data exchange, authentication processes, etc.</li>
+</ol>
+
+## Error Handling ## {#api-error-handling}
+
+The actions [GetFootprint](#action-getfootprint), [ListFootprints](#action-listfootprints) and [Events](#action-events) MUST return an appropriate HTTP status code and MUST include a JSON <{Error}> object with information on the error.
+
+Error responses are specified in detail such that data recipients can understand the cause of the error, and so that potentially host systems can act on and resolve errors automatically.
+
+Error responses from [Action Authenticate](#api-auth) follow the OAuth specification [[!rfc6750]]. See [[#api-auth]]
+
+
+## Authentication Flow ## {#api-auth}
+
+The API requires authentication using the OAuth 2.0 client credentials flow. Clients must obtain an access token before making requests to protected endpoints.
+
+[=Host systems=] MUST implement this action in conformance with [[!rfc6749]] Section 4.4.
+
+
+### Obtaining an Access Token
+
+Clients SHOULD retrieve the token endpoint dynamically via the OpenID Connect discovery mechanism. The OpenID configuration can  be found at:
+
+```
+$auth-base-url$/.well-known/openid-configuration
+```
+
+If provided by the host system, this document contains the `token_endpoint` to be used by the client. 
+
+If no OpenID configuration is provided by the host system, clients MUST assume `$auth-base-url$/auth/token` to be the token endpoint.
+
+After determining the token endpoint, clients MUST obtain an access token by making a request to:
+
+```http
+POST $token-endpoint$ 
+```
+
+with the following request parameters:
+
+ * `grant_type`: Must be set to `client_credentials`.
+ * `client_id`: The client’s unique identifier.
+ * `client_secret`: The client’s secret key.
+
+Example request:
+
+```http
+POST /auth/token
+Host: id.example.com
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=client_credentials&client_id=your-client-id&client_secret=your-client-secret
+```
+
+### Token Response
+
+A successful response returns an access token in the following format:
+
+```json
+{
+  "access_token": "<token>",
+  "token_type": "Bearer",
+  "expires_in": 3600
+}
+```
+
+If the client cannot be authenticated, the [=host system=] MUST respond with a 400 or 401 status code, and provide details on the error:
+
+```json
+{
+  "error": "invalid_client",
+  "error_description": "Authentication failed"
+}
+```
+
+For details and possible values for `error` see [[!rfc6749]] section 5.2
+
+### Using the Access Token
+
+Once obtained, the access token must be included in the Authorization header of API requests, following the OAuth 2.0 Bearer Token Usage standard (RFC 6750):
+
+```http
+GET <base-url>/protected-resource
+Authorization: Bearer <access_token>
+```
+
+The host system MUST check the Access Token and return a 401 when it has expired or is invalid. 
+
+Access tokens SHOULD expire. In this case, data recipients MUST retrieve a new [access token](#obtaining-an-access-token)
+as described in this section.
+
+
 <pre class=include>
-path: rest-api.md
+path: rest-api.generated.md
 </pre>
 
+
+# Examples # {#api-examples}
+
+<div class=note>Non-normative</div>
+
+## Example Action ListFootprints ## {#api-action-list-example}
+
+
+<div class="example">
+
+Request:
+
+```http
+GET /3/footprints?limit=10 HTTP/2
+host: api.example.org
+authorization: Bearer [BearerToken]
+```
+
+Response:
+ 
+```http
+HTTP/1.1 200 OK
+date: Mon, 23 May 2025 19:33:16 GMT
+content-type: application/json
+content-length: 1831
+link: &lt;https://api.example.org/3/footprints?limit=10&amp;offset=10&gt;; rel="next"
+```
+<pre class=include-code>
+path: examples/list-footprints-response.json
+highlight: json
+</pre>
+
+Example response body when no footprints available: 
+
+```http
+{
+  "data": []
+}
+```
+
+</div>
+
+## Example Action GetFootprint ## {#api-action-get-example}
+
+<div class="example">
+
+Request:
+
+```http
+GET /3/footprints/91715e5e-fd0b-4d1c-8fab-76290c46e6ed HTTP/2
+host: api.example.org
+authorization: Bearer [BearerToken]
+```
+
+Response:
+
+```http
+HTTP/1.1 200 OK
+date: Mon, 23 May 2025 19:33:16 GMT
+content-type: application/json
+```
+<pre class=include-code>
+path: examples/get-footprint-response.json
+highlight: json
+</pre>
+
+</div>
+
+## Example Error Response ## {#api-error-response-example}
+
+<div class=example>
+
+Example request:
+
+```http
+GET /3/footprints/91715e5e-fd0b-4d1c-8fab-76290c46e6ed HTTP/2
+host: api.example.org
+authorization: Bearer [BearerToken]
+```
+
+Example response:
+
+```http
+HTTP/1.1 403 Forbidden
+date: Mon, 23 May 2025 19:33:16 GMT
+content-type: application/json
+content-length: 44
+```
+<pre class=include-code>
+path: examples/error-response-access-denied.json
+highlight: json
+</pre>
+
+</div>
+
+## Example Action Events ## {#api-action-events-example}
+
+Example **ProductFootprint.RequestCreated**
+
+<div class="example">
+
+Request:
+
+```http
+POST /3/events HTTP/1.1
+host: api.example.org
+authorization: Bearer [BearerToken]
+content-type: application/cloudevents+json; charset=UTF-8
+```
+```json
+{
+  "type": "org.wbcsd.pact.ProductFootprint.RequestCreated.3",
+  "specversion": "1.0",
+  "id": "848dcf00-2c18-400d-bcb8-11e45bbf7ebd",
+  "source": "//api.recipient.org/3/events",
+  "time": "2024-11-06T16:23:00Z",
+  "data": {
+      "productId": ["urn:gtin:4712345060507"],
+      "geography": ["DE"],
+      "comment": "Please provide current PCF value."
+  }
+}
+```
+
+Response:
+
+```http
+HTTP/1.1 200 OK
+content-length: 0
+```
+
+</div>
+
+Example **ProductFootprint.RequestFulfilled**
+
+<div class="example">
+
+Request:
+
+```http
+POST /3/events HTTP/1.1
+host: api.recipient.org
+authorization: Bearer [BearerToken]
+content-type: application/cloudevents+json; charset=UTF-8
+```
+<pre class=include-code>
+path: examples/pf-response-event.json
+highlight: json
+</pre>
+
+Response: 
+
+```http
+HTTP/1.1 200 OK
+content-length: 0
+```
+
+</div>
 
 # Appendix A: License # {#license}
 
@@ -681,6 +982,17 @@ path: ../../LICENSE.md
 
 
 # Appendix B: Changelog # {#changelog}
+
+## Version 3.0.0-20250313 (Draft Mar 13, 2025) ## {#changelog-3.0.0-20250313}
+
+Summary of major changes:
+
+1. Description of API methods and responses is now generated from the OpenAPI specification.
+2. [Host system requirements](#api-host-system) condensed.
+3. [Error handling](#api-error-handling) added.
+3. Simplified [Authentication section](#api-auth)
+4. Added information on retry strategy for [RequestFulfilledEvent](#request-fulfilled-event), [RequestRejectedEvent](#request-rejected-event), [PublishedEvent](#published-event)
+5. Clarity on [definition of change](#lifecycle-handling)
 
 ## Version 3.0.0-20250217 (Draft Feb 17, 2025) ## {#changelog-3.0.0-20250217}
 
@@ -844,7 +1156,7 @@ Summary of changes:
 
 Summary of changes:
 1. fixed [[#api-action-list-example]], [[#api-action-events-example]],
-    [[#api-action-get-example]], and [[#business-cases-async-events-1-workflow]] by removing spurious
+    [[#api-action-get-example]], and [[#business-cases-async-events]] by removing spurious
     `geographicScope` object
 
 ## Version 2.2.1-20240507 (May 7, 2024) ## {#changelog-2.2.1-20240507}
@@ -870,7 +1182,7 @@ Summary of changes:
 
 1. removal of notes referring to the transition from v1 to v2
 2. fixed the incomplete `assurance` example and moved it to the appropriate section
-3. addition of missing examples in the [[#business-cases-async-events-1-workflow]] section
+3. addition of missing examples in the [[#business-cases-async-events]] section
 4. addition of advisement to <{CarbonFootprint/exemptedEmissionsPercent}> stating that the upper boundary will be removed in version 3
 5. clarification of how to handle error codes in [=ListResponseBody=] and [=GetResponseBody=]
 
@@ -950,7 +1262,7 @@ This version fixes 5 definition incorrectness
 
 1. property <{CarbonFootprint/fossilCarbonContent}>: was incorrectly
     defined with unit `kg of CO2e / declaredUnit`. The unit is now defined as `kg / declaredUnit`
-2. fix to the `referencePeriod` <a href=#example-filter-period>Filter Example</a>
+2. fix to the `referencePeriod` <a href="#filtering">Filter Example</a>
 3. fixed typo in the definition of <{CarbonFootprint/referencePeriodEnd}>
 4. fixed definition of <{CarbonFootprint/landManagementGhgEmissions}>: previously, it was incorrectly defined as a non-negative decimal
 5. fixed definition of <{CarbonFootprint/biogenicCarbonWithdrawal}>: previously, it was incorrectly defined as a non-negative decimal
@@ -958,8 +1270,8 @@ This version fixes 5 definition incorrectness
 
 In addition, this version:
 
-1. clarifies in [[#api-action-list]] the semantics of the [=Filter=] processing being OPTIONAL by introducing section [[#api-action-list-filtering]]
-2. clarifies that a [=host system=] must return HTTP error status codes if it does not implement the events endpoint (see [[#api-action-events]])
+1. clarifies in [[#action-listfootprints]] the semantics of the [=Filter=] processing being OPTIONAL by introducing section [[#filtering]]
+2. clarifies that a [=host system=] must return HTTP error status codes if it does not implement the events endpoint (see [[#action-events]])
 3. clarified the [=PCF=] term definition
 4. fixed linking to semantic versioning document
 5. reworded <{CarbonFootprint/referencePeriodStart}> and <{CarbonFootprint/referencePeriodEnd}>
@@ -1005,7 +1317,7 @@ Summary of the major changes and concepts added with this version:
 
 1. update to Pathfinder Framework Version 2.0, including data model changes which are not backwards-compatible, including
     1. addition of data type <{DataQualityIndicators}> and <{Assurance}> to <{CarbonFootprint}>
-2. event-based communication between [=host systems=] ([[#api-action-events]])
+2. event-based communication between [=host systems=] ([[#action-events]])
 3. support for data model extensions ([[#datamodelextension]])
 4. life cycle management of a <{ProductFootprint}> ([[#lifecycle]])
 
@@ -1051,9 +1363,9 @@ Overview of the changes to the data model compared with the data model version 1
         - Additional operators: `eq`, `lt`, `le`, `gt`, `and`, `any`
         - Additional properties: <{ProductFootprint/created}>, <{ProductFootprint/updated}>, <{ProductFootprint/productCategoryCpc}>, <{CarbonFootprint/geographyCountry}>, <{CarbonFootprint/referencePeriodStart}>, <{CarbonFootprint/referencePeriodEnd}>, <{ProductFootprint/companyIds}>, <{ProductFootprint/productIds}>.
     3. Addition of alternative [=Action ListFootprints=] response `HttpStatusCode` 202, and pull-based request/response semantics
-    4. pagination is now mandatory. See [[#api-action-list-pagination]]
+    4. pagination is now mandatory. See [[#pagination]]
 
-- [=Action Events=]: section [[#api-action-events]] added
+- [=Action Events=]: section [[#action-events]] added
 
 ## Version 1.0.1 ## {#changelog-1.0.1}
 
@@ -1063,14 +1375,14 @@ The following changes have been applied for version 1.0.1
 2. Fix to the JSON representation specification in `crosssectoralstandardset-json`
 3. Change to the minimum size of the set <{CarbonFootprint/productOrSectorSpecificRules}> from `0` to `1`, aligning with the overall specification.
 4. Removal of unreferenced data type `Boolean` from the data model section
-5. Rewording, simplified wording of chapter [[#api-action-auth]]
+5. Rewording, simplified wording of chapter [[#api-auth]]
 6. Addition of an authentication flow specification in chapter [[#api-auth]]
-7. Improved wording of request parameter `Filter` in section [[#api-action-list-request]]
-8. Improved wording in section [[#api-error-responses]], specifically
+7. Improved wording of request parameter `Filter` in section [[#action-listfootprints]]
+8. Improved wording in section [[#api-error-handling]], specifically
     - addition of [=error response=] definition
     - improved specification of the [=error response=] JSON representation
     - consolidated specification of overall [=error response=] representation as a HTTP Response
-    - improvements to previous subsection "List of error codes", plus merging into overall section [[#api-error-responses]]
+    - improvements to previous subsection "List of error codes", plus merging into overall section [[#api-error-handling]]
     - addition of list of example situations when an [=error response=] is returned
 9. Addition of Section [[#api-error-response-example]]
 10. Addition of term [=interoperable=] to section [[#terminology]], plus linking to in respective sections

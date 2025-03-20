@@ -105,6 +105,10 @@ def build(c):
         scripts.openapi.generate_data_model
         )
     build_task([
+        Dependency("spec/v3/rest-api.generated.md", ["spec/v3/openapi.yaml"])],
+        scripts.openapi.generate_rest_api
+        )
+    build_task([
         Dependency("build/v2/pact-simplified.xlsx", ["spec/v2/openapi.yaml"]),
         Dependency("build/v3/pact-simplified.xlsx", ["spec/v3/openapi.yaml"])],
         lambda source, target: scripts.excel.openapi_to_excel(source, target, "PACT Simplified Data Model", ["ProductFootprint"])
@@ -125,6 +129,7 @@ def build(c):
     build_task([
         Dependency("build/assets/logo.svg", ["assets/logo.svg"]), 
         Dependency("build/assets/logo-dark.svg", ["assets/logo-dark.svg"]), 
+        Dependency("build/assets/custom.css", ["assets/custom.css"]), 
         Dependency("build/assets/markdown.css", ["assets/markdown.css"]), 
         Dependency("build/v2/openapi.yaml", ["spec/v3/openapi.yaml"]), 
         Dependency("build/v3/openapi.yaml", ["spec/v3/openapi.yaml"])], 
@@ -183,16 +188,20 @@ def experiment(c):
     """
     # scripts.openapi.test("spec/v3/openapi.yaml")
     # scripts.schema.validate_json_data("spec/v3/openapi.yaml", "spec/v3/examples/list-footprints-response.json")
+    # schexma = scripts.schema.load_openapi_file("spec/v3/openapi.yaml")
+    # schema = scripts.schema.navigate_to(schema, "components/schemas/RequestCreatedEvent")
+    # print(scripts.schema.dump_schema(schema))
+
     scripts.schema.validate_json_data(
-        "spec/v3/openapi.yaml#paths/\/3\/footprints/get/responses/200/content/application\/json/schema", 
+        "spec/v3/openapi.yaml#paths/%2F3%2Ffootprints/get/responses/200/content/application%2Fjson/schema", 
         "spec/v3/examples/list-footprints-response.json"
         )
     scripts.schema.validate_json_data(
-        "spec/v3/openapi.yaml#paths/\/3\/footprints/get/responses/200/content/application\/json/schema", 
+        "spec/v3/openapi.yaml#paths/%2F3%2Ffootprints/get/responses/200/content/application%2Fjson/schema", 
         "spec/v3/examples/invalid-response-all-properties.json"
         )
     scripts.schema.validate_json_data(
-        "spec/v3/openapi.yaml#paths/\/3\/footprints\/{id}/get/responses/200/content/application\/json/schema", 
+        "spec/v3/openapi.yaml#paths/%2F3%2Ffootprints%2F{id}/get/responses/200/content/application%2Fjson/schema", 
         "spec/v3/examples/get-footprint-response.json"
         )
     scripts.schema.validate_json_data(
@@ -200,6 +209,6 @@ def experiment(c):
         "spec/v3/examples/pf-response-event.json"
         )
     scripts.schema.validate_json_data(
-        "spec/v3/openapi.yaml#paths/\/3\/footprints/get/responses/403/content/application\/json/schema", 
+        "spec/v3/openapi.yaml#paths/%2F3%2Ffootprints/get/responses/403/content/application%2Fjson/schema", 
         "spec/v3/examples/error-response-access-denied.json"
         )

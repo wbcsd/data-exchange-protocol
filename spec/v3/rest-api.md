@@ -1,102 +1,3 @@
-## Introduction ## {#api-intro}
-
-This section defines an [[!rfc9112|HTTP]]-based API for the [=interoperable=] exchange of [[#productfootprint|Product Footprint]] data between [=host systems=].
-
-The scope of the HTTP API is minimal by design. Additional features will be added in future versions of this specification.
-
-
-
-## <dfn>Host System</dfn> ## {#api-host-system}
-
-A host system serves the needs of a single or multiple [=data owners=]. Additionally, a host system can also serve the needs of [=data recipients=] if it retrieves data from host systems by calling the HTTP REST API ([[#api]]).
-
-Interoperable data exchange between a data owner and a data recipient can be achieved by
-
-1. the data owner offering <{ProductFootprint}> data through a host system that implements the [[#api|HTTP REST API]], and
-2. the data recipient making [[#api-auth|authenticated calls]] to retrieve ProductFootprint data; e.g. by calling the [=Action ListFootprints=].
-
-
-### Minimum requirements ## {#api-requirements}
-
-A [=host system=] MUST implement the actions
- - [=Action Authenticate=]
- - [=Action ListFootprints=]
- - [=Action GetFootprint=]
- - [=Action Events=].
-
-The host system MUST make its footprints available to the data recipient through both [=Action ListFootprints=] AND [=Action Event=]. 
-
-A [=host system=] MUST offer its actions under https method only.
-
-A [=host system=] SHOULD offer an [=OpenId Provider Configuration Document=] as specified in [[!OPENID-CONNECT]].
-
-A [=host system=] MUST offer all actions under the same [=Hostname=] and [=Subpath=] except for the token endpoint ([=Action Authenticate=] and the endpoint returned from the [=OpenId Provider Configuration Document=]).
-
-A [=host system=] CAN offer the [=OpenId Provider Configuration Document=] and [=Action Authenticate=] under [=AuthHostname=] and [=AuthSubpath=] which are different from [=Hostname=] and [=Subpath=].
-
-If a host system does not offer an [=OpenId Provider Configuration Document=], [=data recipients=] MUST assume that [=Action Authenticate=] is offered under [=AuthHostname=]`/`[=AuthSubpath=]`/auth/token` (see [[#api-auth]]).
-
-In case of succesful retrieval or creation of the PCF(s), The host system of the data owner MUST send back the 1 or more product footprints in a single event message to the data requester.
-
-
-<div class=example>
-  The host system's DNS domain name is `example.org` and the subpath is `/wbcsd` whereas the ID management system uses a `id.example.org` domain with an empty subpath. The URIs would then be:
-
-    - for [=OpenId Provider Configuration Document=]: [https://id.example.org/.well-known/openid-configuration](https://example.org/wbcsd/.well-known/openid-configuration)
-    - for [=Action Authenticate=]: [https://id.example.org/auth/token](https://id.example.org/auth/token)
-    - for [=Action ListFootprints=]: [https://example.org/wbcsd/2/footprints](https://example.org/wbcsd/2/footprints)
-    - etc.
-
-</div>
-
-### Out of scope ### {#api-host-system-out-of-scope}
-
-<div class=note>Non-normative</div>
-
-This standard focuses on the necessary definitions to enable interoperable data exchange between data owners and data recipients. This is mediated through a host system which implements the HTTP REST API defined in this document.
-
-Within the [=PACT=] Project, conforming host systems are called solutions.
-
-Solutions add further functionality on top of this standard in order to enable meaningful and interoperable data exchanges.
-
-The following section briefly describes some of the additional functionality which is beyond the scope of this document:
-
-<ol type="a">
-  <li>Footprint calculation according to the PACT Methodology</li>
-  <li>Authentication and access management: the act of deciding and setting which product footprint may be accessed by each data recipient</li>
-  <li>Credentials management: the overall functionality to generate access credentials for data recipients, to exchange these credentials with data recipients, to rotate or revoke such credentials, etc.</li>
-  <li>Logging: creation and storage of access logs and audit trails related to data exchange, authentication processes, etc.</li>
-</ol>
-
-
-## Authentication Flow ## {#api-auth}
-
-A [=host system=] requires a [=data recipient=] to first authenticate before successfully calling an Action (such as [=Action ListFootprints=] or [=Action Events=]). The [=data recipient=] MUST perform the <dfn>authentication flow</dfn>:
-
-1. data recipient attempting to perform the OpenId Connect-based flow, by
-    1. retrieving and validating the [=OpenId Provider Configuration Document=] of the host system (see [[!OPENID-CONNECT]]), and then
-    2. using as [=AuthEndpoint=] the value of the `token_endpoint` property of the [=OpenId Provider Configuration Document=]
-2. otherwise, data recipient using [=AuthHostname=]`/`[=AuthSubpath=]`/auth/token` as the [=AuthEndpoint=] in the next step.
-3. data recipient retrieving the [=access token=] from [=AuthEndpoint=] (see [[#api-action-auth-request]]).
-
-Note: The [=authentication flow=] is defined such that a Version [VERSION] data recipient can authenticate against host versions irrespective of their support for OpenID-Connect.
-
-<figure>
-  <img src="diagrams/authentication-flow.svg" height="100%" width="100%" >
-  <figcaption>Authentication flow.</figcaption>
-</figure>
-
-
-Once the [=authentication flow=] is complete, the [=data recipient=] can call the other actions of the [=host system=]
-  - using the value of `access_token` of the response of the [=Action Authenticate=] call as the
-    value for a [[!rfc6750]] <dfn>Bearer token</dfn>
-  - presenting the Bearer token for subsequent call(s) to the host system in accordance with
-    [[!rfc6750]] Section 2.1
-
-[=Access tokens=] SHOULD expire. In this case, data recipients MUST retrieve a new [=access token=]
-as described in this section.
-
-
 ## <dfn>Action Authenticate</dfn> ## {#api-action-auth}
 
 Request an access token using client credentials.
@@ -261,7 +162,7 @@ This will enable queries like `.../footprint/?x-atq-invoice-id=12345&geography=F
 
 1. The host system MAY return less ProductFootprints than requested through the [=Limit=] request parameter
 2. The host system MUST return a `Link` header if there are additional ProductFootprints ready to be retrieved, such that
-   1. The `Link` header conforms to [[!RFC8288]]
+   1. The `Link` header conforms to [[!rfc8288]]
    2. The value of the `rel` parameter is equal to `next`
    3. the target IRI (RFC8288, section 3.1) of the `Link` header is absolute
    4. The value of `host` of the target IRI is equal to the value of the `host` request header from the original `ListFootprints` HTTP request
