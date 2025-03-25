@@ -359,7 +359,8 @@ components:
             A unique identifier that a system uses to refer to the entire dataset of the PCF. 
             This is typically an automatically-generated number by the solution to maintain 
             the required technical references to data within the system. 
-          $ref: '#/components/schemas/UUID'
+          type: string
+          format: uuid
           examples:
           - "f4b1225a-bd44-4c8e-861d-079e4e1dfd69"
         specVersion:
@@ -1325,10 +1326,6 @@ components:
     NonEmptyString:
       type: string
       minLength: 1
-    UUID:
-      type: string
-      format: uuid
-      comment: '[RFC4122](https://tools.ietf.org/html/rfc4122)'
     Urn:
       type: string
       format: urn
@@ -1761,7 +1758,7 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
     NotImplementedResponse:
-      description: | 
+      description: |
         Not implemented.
 
         Response body MUST contain a JSON <{Error}> object
@@ -1770,7 +1767,7 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
     InternalErrorResponse:
-      description: | 
+      description: |
         Internal Error.
 
         Response body MUST contain a JSON <{Error}> object
