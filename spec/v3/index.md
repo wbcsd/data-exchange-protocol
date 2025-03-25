@@ -643,6 +643,64 @@ Types can have the following qualifiers:
   <td>All items in an `array` MUST be unique
 </table>
 
+## Units and validation rules
+
+Types and qualifiers are declared in the OpenAPI schema, defining the 
+structure of the PACT data model and the minimum set of properties and
+sub-objects necessary for exchanging product footprints. 
+In addition, the specification also includes information on the *unit* 
+of certain properties (e.g. *kgCO2e*: kilogram CO equivalent) and 
+*validation rules*  which are a formalized 
+notation of the requirements as decribed in the PACT Mehodology. These 
+include rules as: 'mandatory after 2025' or 'mandatory above a certain 
+biogenic content threshold'.
+
+<table><tbody>
+<tr><td>
+M
+<td>
+Value MUST be included
+<tr><td>
+M3
+<td>
+Value MUST be included starting version 3.0
+<tr><td>
+M2
+<td>
+Value MUST be included starting version 2.0
+<tr><td>
+M3-2027
+<td>
+Value MUST be included starting 2027
+<tr><td>
+SHALL
+<td>
+Value MUST be included 
+<tr><td style="white-space: nowrap">
+SHOULD
+<td>
+Value SHOULD be included, exceptions are possible, but 
+need explanation in `comment` property.
+<tr><td>
+MAY
+<td>Value MAY be included
+<tr><td style="white-space: nowrap">
+SHALL-2027
+<td>
+Value MUST be included starting 2027
+<tr><td style="white-space: nowrap">
+SHALL-Bio
+<td>
+Value MUST be included if biogenic carbon content is above a threshold. 
+<tr><td style="white-space: nowrap">
+SHOULD-Bio
+<td>
+If biogenic carbon content is above threshold, the value SHOULD be 
+included: exceptions are possible, but need explanation in `comment` 
+property.
+</table>
+
+See [=PACT Methodology=] for more details.
 
 ## Undefined Properties
 
