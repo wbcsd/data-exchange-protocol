@@ -9,9 +9,9 @@ In addition, for publishing a release:
   Update the Previous Version and TR links
 -->
 <pre class='metadata'>
-Text Macro: DATE 20250313
+Text Macro: DATE 20250327
 Text Macro: VERSION 3.0.0
-Text Macro: STATUS Draft
+Text Macro: STATUS LD
 Title: Technical Specifications for PCF Data Exchange
 TR: https://wbcsd.github.io/tr/2024/data-exchange-protocol-20241024/
 Previous Version: https://wbcsd.github.io/tr/2024/data-exchange-protocol-20240410/
@@ -34,7 +34,9 @@ Metadata Include: This version off
 
 # Introduction # {#intro}
 
+<!--
 Advisement: This is the Draft Release of the PACT 3.0.0 Specifications, for consultation and feedback by the PACT Members. 
+-->
 
 Advisement: This document is a work in progress and should not be used for conformance testing. 
   Please refer to the [latest stable version of the Technical Specifications](https://wbcsd.github.io/tr/2024/data-exchange-protocol-20241024/) for this.
