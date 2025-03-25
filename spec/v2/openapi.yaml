@@ -1058,34 +1058,6 @@ components:
             The value MUST be a JSON Object that conforms to the extension schema file 
             referenced by the dataSchema property.
 
-    NonEmptyString:
-      type: string
-      minLength: 1
-    Urn:
-      type: string
-      pattern: '^([uU][rR][nN]):'
-    PositiveNonZeroDecimal:
-      type: string
-      format: decimal
-      pattern: ^[+]?(\d*[1-9]\d*)(\.\d+)?|(0+\.\d*[1-9]\d*)$
-    PositiveOrZeroDecimal:
-      type: string
-      format: decimal
-      pattern: ^[+]?\d+(\.\d+)?$
-      comment: A positive or zero decimal number.
-    Decimal:
-      type: string
-      format: decimal
-      pattern: ^[+-]?\d+(\.\d+)?$
-    NegativeOrZeroDecimal:
-      type: string
-      format: decimal
-      pattern: ^(-\d+(\.\d+)?)|0+(\.0+)?$
-    NegativeNonZeroDecimal:
-      type: string
-      format: decimal
-      pattern: ^-((\d*[1-9]\d*)(\.\d+)?|(0+\.\d*[1-9]\d*))$
-
     ProductOrSectorSpecificRule:    
       title: ProductOrSectorSpecificRule
       description: |
@@ -1156,12 +1128,6 @@ components:
           description: |
             Version of the secondary emission factor databases
           $ref: '#/components/schemas/NonEmptyString'
-
-    Percent:
-      type: number
-      format: double
-      minimum: 0
-      maximum: 100
 
     DataQualityIndicators:
       description: | 
@@ -1279,12 +1245,6 @@ components:
             PCF calculation based on weighted average of all inputs representing 
             >5% of PCF emissions.
           $ref: '#/components/schemas/FloatBetween1And3'
-    FloatBetween1And3:
-      type: number
-      format: float
-      maximum: 3
-      minimum: 1
-
     Assurance:
       title: Assurance
       description: |
@@ -1379,6 +1339,53 @@ components:
           description: |
             Any additional comments that will clarify the interpretation of the assurance.
           type: string
+
+    # -----------
+    # Simple types
+    NonEmptyString:
+      type: string
+      minLength: 1
+    Urn:
+      type: string
+      format: urn
+      pattern: '^([uU][rR][nN]):'
+    Uri:
+      type: string
+      format: uri
+    Percent:
+      type: number
+      format: double
+      minimum: 0
+      maximum: 100
+    FloatBetween1And3:
+      type: number
+      format: float
+      maximum: 3
+      minimum: 1
+    Decimal:
+      type: string
+      format: decimal
+      pattern: ^[+-]?\d+(\.\d+)?$
+    PositiveNonZeroDecimal:
+      type: string
+      format: decimal
+      pattern: ^[+]?(\d*[1-9]\d*)(\.\d+)?|(0+\.\d*[1-9]\d*)$
+      comment: '> 0'
+    PositiveOrZeroDecimal:
+      type: string
+      format: decimal
+      pattern: ^[+]?\d+(\.\d+)?$
+      comment: '>= 0'
+    NegativeOrZeroDecimal:
+      type: string
+      format: decimal
+      pattern: ^(-\d+(\.\d+)?)|0+(\.0+)?$
+      comment: '<= 0'
+    NegativeNonZeroDecimal:
+      type: string
+      format: decimal
+      pattern: ^-((\d*[1-9]\d*)(\.\d+)?|(0+\.\d*[1-9]\d*))$
+      comment: '< 0'
 
     # -----------
     # Events
@@ -1561,51 +1568,78 @@ components:
               $ref: '#/components/schemas/ErrorResponse'
     # ---------------
     # Error Responses
-    ErrorResponse:
-      description: Response with an error code and descripton. See Chapter "Error
+    Error:
+      title: Error
+      description: Object with error code and descripton. See Chapter "Error
         Codes" of the Tech Specs for more details.
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code identifier.
+          enum:
+            - BadRequest # 400
+            - AccessDenied # 403
+            - TokenExpired # 401
+            - NotFound # 404 NoSuchFootprint
+            - InternalError # 500
+            - NotImplemented #501
+        message:
+          type: string
+          description: Human readable error message.
+      required:
+      - code
+      - message
+    BadRequestResponse:
+      description: |
+        Bad request.
       content:
         application/json:
           schema:
-            type: object
-            properties:
-              code:
-                type: string
-                description: Error code identifier.
-                enum:
-                  - BadRequest # 400
-                  - AccessDenied # 401
-                  - TokenExpired # 401
-                  - NotFound # NoSuchFootprint
-                  - InternalError # 500
-                  - NotImplemented #501
-              message:
-                type: string
-                description: Human readable error message.
-            required:
-            - code
-            - message
-    BadRequestResponse:
-      description: Bad request.
-      $ref: '#/components/schemas/ErrorResponse'
+            $ref: '#/components/schemas/Error'
     NotFoundResponse:
-      description: Not found.
-      $ref: '#/components/schemas/ErrorResponse'
+      description: |
+        Not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     UnauthorizedResponse: # 401
-      description: Unauthorized.
-      $ref: '#/components/schemas/ErrorResponse'
+      description: |
+        Unauthorized.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     TokenExpiredResponse: # 401
-      description: Token expired.
-      $ref: '#/components/schemas/ErrorResponse'
+      description: |
+        Token expired.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     ForbiddenResponse:
-      description: Access Denied.
-      $ref: '#/components/schemas/ErrorResponse'
+      description: |
+        Access Denied.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     NotImplementedResponse:
-      description: Not implemented.
-      $ref: '#/components/schemas/ErrorResponse'
+      description: |
+        Not implemented.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     InternalErrorResponse:
-      description: Internal Error.
-      $ref: '#/components/schemas/ErrorResponse'
+      description: |
+        Internal Error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
   securitySchemes:
     BearerAuth:
       description: OAuth2 Client Credentials Grant (RFC6749 4.4)
