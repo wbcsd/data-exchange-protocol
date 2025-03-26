@@ -1,4 +1,4 @@
-# 48. Support for Multi-Version ProductFootprint Exchange in the API
+# 48. Support multiple PCF versions in the API
 
 Date: 2025-03-26
 
