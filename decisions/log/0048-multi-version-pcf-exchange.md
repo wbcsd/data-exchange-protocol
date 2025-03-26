@@ -4,10 +4,10 @@ Date: 2025-03-26
 
 ## Context
 
-As we are moving from PACT version 2.x to version 3.0 and beyond, there will be a growing need to support multiple versions simultaneously, at least during the timespan that companies and solution providers a upgrade to the newer version of their
+As we are moving from PACT version 2.x to version 3.0 and beyond, there will be a growing need to support multiple versions simultaneously, at least during the timespan that companies and solution providers upgrade to a newer version of their
 software and systems. Starting with PACT API version 3.0, we propose the API to support the exchange of ProductFootprints 
 conforming to multiple versions of the ProductFootprint data model, including both version 2.x and version 3.0 and possible
-future versions. This enhancement will ensure backward compatibility with existing implementations while enabling the 
+future versions. This enhancement will ensure future backward compatibility while enabling the 
 adoption of the latest features and improvements introduced in version 3.0.
 
 Previously, the API was tightly coupled to a single version of the ProductFootprint data model, limiting flexibility and 
