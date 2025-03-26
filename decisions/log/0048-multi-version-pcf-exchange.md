@@ -162,8 +162,6 @@ Accept: application/json; version=2
 
 ## Considerations
 
-**Backward Compatibility**: The API must ensure that existing clients using version 2.x ProductFootprints can continue to function without requiring changes.
-
-**Future Expansion**: The design should accommodate additional ProductFootprint versions in the future without requiring significant changes to the API.
+**Backward Compatibility**: Version 3.0 of the PACT API + Data Model will not be backwards incompatible with 2.x. Host systems running 2.x API can continue to interoperate with oher 2.x systems without requiring changes. Host systems running 2.x API will not be able to communicate with the 3.x API. With this changes however, host systems running the 3.0 API will be able to communicate future 3.x and 4.x PCFs.
 
 **Split documentation**: This will require a split between specifications of the Exchange API and the specifications of the different versions of the data model.
