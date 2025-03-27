@@ -787,7 +787,7 @@ Example imaginary Data Model Extension for encoding shipment-related data, encod
 <pre highlight=json>
 {
   "specVersion": "2.0.0",
-  "dataSchema": "https://catalog.carbon-transparency.com/shipment/1.0.0/data-model.json",
+  "dataSchema": "https://catalog.carbon-transparency.org/shipment/1.0.0/data-model.json",
   "data": {
     "shipmentId": "S1234567890",
     "consignmentId": "Cabc.def-ghi",

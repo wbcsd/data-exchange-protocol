@@ -57,7 +57,7 @@ The methodological foundation of the specification is the PACT Methodology Versi
 
 Comments regarding this document are welcome. Please file issues directly on [GitHub](https://github.com/wbcsd/data-exchange-protocol/), or send them to [pact@wbcsd.org](mailto:pact@wbcsd.org).
 
-This document was published by [Partnership for Carbon Transparency (PACT)](https://www.carbon-transparency.com/) after an update to the [[!PACT-METHODOLOGY|PACT Methodology]]) was made.
+This document was published by [Partnership for Carbon Transparency (PACT)](https://www.carbon-transparency.org/) after an update to the [[!PACT-METHODOLOGY|PACT Methodology]]) was made.
 
 The technical specifications within this document are the result of consensus processes by PACT members and the WBCSD.
 
@@ -82,7 +82,7 @@ This technical specification is for
 
 The PACT (previously Pathfinder) Network is a concept developed by PACT and powered by the World Business Council for Sustainable Development (WBCSD). PACT is working toward the vision of an open and global network of interoperable solutions for the secure peer-to-peer exchange of accurate, primary and verified product emissions data – across all industries and value chains.
 
-For further information, please refer to the [PACT website](https://www.carbon-transparency.com) and the [PACT Pathfinder Network Vision Paper](https://wbcsd.sharepoint.com/:b:/s/ClimateEnergy/EXuphu_V4FZHqG1R8sr1mz8B5bo6bhhF0DBHnWDQq-_vCQ?e=Tae0eR).
+For further information, please refer to the [PACT website](https://www.carbon-transparency.org) and the [PACT Pathfinder Network Vision Paper](https://wbcsd.sharepoint.com/:b:/s/ClimateEnergy/EXuphu_V4FZHqG1R8sr1mz8B5bo6bhhF0DBHnWDQq-_vCQ?e=Tae0eR).
 
 
 ## Disclaimer ## {#disclaimer}
@@ -128,7 +128,7 @@ The license can be found in [[#license]].
 :: A `OpenId Provider Configuration Document` document provided in accordance with [[!OPENID-CONNECT]] Section 4
 
 : Partnership for Carbon Transparency (<dfn>PACT</dfn>)
-:: A WBCSD-led group of companies and organizations working together to develop a global and open network for the secure peer-to-peer exchange of accurate, primary and verified product emissions data. See [www.carbon-transparency.com](www.carbon-transparency.com) for more information.
+:: A WBCSD-led group of companies and organizations working together to develop a global and open network for the secure peer-to-peer exchange of accurate, primary and verified product emissions data. See [www.carbon-transparency.org](www.carbon-transparency.org) for more information.
 
 : PACT Methodology Version 3.0 (<dfn>PACT Methodology</dfn>)
 :: Guidance for the Accounting and Exchange of Product Life Cycle Emissions,
