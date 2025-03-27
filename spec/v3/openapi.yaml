@@ -1465,12 +1465,13 @@ components:
 
         If the data owner can *immediately* determine that it will not be able to 
         handle this request it MUST respond with an appropriate `4xx` error response, 
-        otherwise it MUST respond directly with a `200` (Success), indicating it will
-        be able to handle the request.
+        otherwise it MUST respond with a `200` (Success), indicating it will
+        be able to process the request asynchronously.
 
-        In the latter case, the data owner MUST send a follow-up event back to the data 
-        recipient at some time in the future. This follow up event MUST be either a 
-        `RequestFulfilledEvent` or `RequestRejectedEvent`.
+        Only in the latter case (after having accepted the request for processing) the data 
+        owner MUST send a follow-up event back to the data recipient at some time in the future. 
+        This follow up event MUST be either a `RequestFulfilledEvent` or `RequestRejectedEvent`. 
+        
       examples:
       - |
         ```http
