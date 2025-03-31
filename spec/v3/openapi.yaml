@@ -672,7 +672,7 @@ components:
             with `0`.          
           note: mandatory in 3.0, optional in v2.x
           $ref: '#/components/schemas/Decimal'
-        pcfExcludingBiogenicCO2Withdrawal:
+        pcfExcludingBiogenicUptake:
           description: |
             The PCF of the product including:
             - all emissions from fossil sources
@@ -680,25 +680,24 @@ components:
             - land management CO2 removals
 
             Excluding: 
-            - all biogenic CO2 withdrawals.
-
+            - biogenic CO2 uptake.
           x-unit: kgCO2e/declared unit
           x-comment: | 
             PCF (Excl. biogenic CO2 withdrawal) = fossilGhgEmissions + landUseChangeGhgEmissions + landManagementBiogenicCO2Emissions + biogenicNonCO2Emissions + landManagementBiogenicCO2Removals
-          x-rule: M3, M2-2025
+          x-rule: SHALL
           $ref: '#/components/schemas/Decimal'
-        pcfIncludingBiogenicCO2Withdrawal:
+        pcfIncludingBiogenicCO2Uptake:
           description: |
             The PCF of the product including: 
             - all emissions from fossil sources
             - all biogenic and land management-related CH4,  N2O, non-biogenic CO2, HFCs and PFCs emissions
             - land management CO2 removals
-            - all biogenic CO2 withdrawals.
+            - biogenic CO2 uptake.
 
           x-unit: kgCO2e/declared unit
           x-comment: |
             PCF (Incl. biogenic CO2 withdrawal) = FossilGHGEmissions + landUseChangeGHGEmissions + landManagementBiogenicCO2Emissions + biogenicNonCO2Emissions + landManagementBiogenicCO2Removals + biogenicCO2Withdrawal
-          x-rule: M3, M2-2025
+          x-rule: SHALL
           $ref: '#/components/schemas/Decimal'
         fossilGhgEmissions:
           description: |
@@ -710,41 +709,54 @@ components:
             The emissions from fossil sources as a result of fuel combustion, from fugitive 
             emissions, and from process emissions. 
           x-unit: kgCO2e/declared unit
-          x-rule: M
+          x-rule: SHALL
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
         fossilCarbonContent:
           description: |
             The fossil carbon content of the product (mass of carbon). 
           x-unit: kgC/declared unit
-          x-rule: M
+          x-rule: SHALL
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
         biogenicCarbonContent:
           description: |
             The biogenic carbon content of the product (mass of carbon). 
           x-unit: kgC/declared unit
-          x-rule: M
+          x-rule: SHALL
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
         landUseChangeGhgEmissions:
           description: |
             GHG emissions from land-use change, such as deforestation or conversion
             from natural forest to plantation forest, that cause carbon stock loss. 
           x-unit: kgCO2e/declared unit
-          x-rule: M3, M2-2025
+          x-rule: SHALL-BIO
           x-comment: Replaces dLucGhgEmissions
+          $ref: '#/components/schemas/PositiveOrZeroDecimal'
+        landUseChangeGhgEmissionsAndRemovals:
+          description: |
+            Net total of GHG emissions and removals from land-use change, typically from
+            secondary data sets. Note the overlap with `landUseChangeGhgEmissions`.
+          x-unit: kgCO2e/declared unit
+          x-rule: SHALL-BIO
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
         landCarbonLeakage:
           description: |
-            Indirect land use change due to carbon stock losses from conversion of native 
-            ecosystems to agricultural land to replace food production.
+            Placeholder for indirect land use change causing displacement of food production, outside of value-chain 
           x-unit: kgCO2e/declared unit
-          x-comment: Replaces iLucGhgEmissions
+          x-comment: Placeholder.
+          $ref: '#/components/schemas/PositiveOrZeroDecimal'
+        landManagementFossilGhgEmissions:
+          description: |
+            Fossil CO2 and N2O emissions due to land management practices.
+            Note: 'fossilGhgEmissions' already includes these emissions.
+          x-unit: kgCO2e/declared unit
+          x-rule: SHALL-BIO
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
         landManagementBiogenicCO2Emissions:
           description: |
             Biogenic CO2 emissions occurring due to recurring land management actions on 
             land within the same land-use category.
           x-unit: kgCO2e/declared unit
-          x-rule: M3-2027
+          x-rule: SHALL-BIO-2027
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
         landManagementBiogenicCO2Removals:
           description: |
@@ -752,12 +764,11 @@ components:
             pools (e.g. reforestation and afforestation). Subject to traceability requirements.
           x-unit: kgCO2e/declared unit
           $ref: '#/components/schemas/NegativeOrZeroDecimal'
-        biogenicCO2Withdrawal:
+        biogenicCO2Uptake:
           description: |
-            Net CO2 uptake of biomass in the product. Withdrawals are expressed in 
-            kgCO2e per declared unit, equal to or less than zero.
+            Temporary CO2 uptake of biomass in the product at point of leaving factory gate.
           x-unit: kgCO2e/declared unit
-          x-rule: M3, M2-2025
+          x-rule: SHALL-BIO
           $ref: '#/components/schemas/NegativeOrZeroDecimal'
           x-comment: Replaces biogenicCarbonWithdrawal
         biogenicNonCO2Emissions:
@@ -766,13 +777,13 @@ components:
             and composting of biowaste, including agricultural land management activities 
             such as manure fertilization and  enteric emissions.
           x-unit: kgCO2e/declared unit
-          x-rule: M3, M2-2025
+          x-rule: SHALL-BIO
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
-        uncertifiedLandManagementCO2Removals:
+        technologicalCO2Removals:
           description: |
-            Uncertified land management CO2 removals.
+            CO2 removed directly from the atmosphere or via biogenic CO2 capture. Subject to reporting requirements.
           x-unit: kgCO2e/declared unit
-          x-rule: M2-2025
+          x-rule: MAY
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
         aircraftGhgEmissions:
           description: |
@@ -810,6 +821,16 @@ components:
             (Only for Credit Approach) a URL to documentation verifying the certification from an external bookkeeping scheme. 
             This attribute ensures the reliability and avoids double counting of credits within the crediting system.
           $ref: '#/components/schemas/Uri' 
+        ccsTechnologicalCO2Capture:
+          description: |
+            The amount of CO2 captured during Carbon Capture and Storage (CCS) in the production.
+          $ref: '#/components/schemas/NegativeOrZeroDecimal'
+          x-unit: kgCO2e/declared unit
+        ccsTechnologicalCO2Removals:
+          description: |
+            Technological CO2 removals with geologic storage (kgCO2 removed per declared unit) (biogenic only)
+          $ref: '#/components/schemas/NegativeOrZeroDecimal'
+          x-unit: kgCO2e/declared unit
         landAreaOccupation:
           description: |
             Amount of agricultural land occupied in reporting year to produce the product.
@@ -1066,7 +1087,7 @@ components:
             For reference periods including the beginning of year 2025 or after, this property MUST be defined.
 
           note: string<decimal> in 3.0, was Number in 2.x
-          x-rule: M2-2025, M3
+          x-rule: SHALL
           summary: |
             Share of primary data in the final PCF, calculated according to 
             the PACT Methodology.
@@ -1078,7 +1099,7 @@ components:
             For reference periods ending before the beginning of year 2025, at least property <{CarbonFootprint/primaryDataShare}> or propery <{CarbonFootprint/dqi}> MUST be defined.
 
             For reference periods including the beginning of year 2025 or after, this property MUST be defined.
-          x-rule: M2-2025, M3
+          x-rule: SHALL
           summary: |
             Data Quality Indicators (dqi) in accordance with the PACT Methodology. 
           $ref: '#/components/schemas/DataQualityIndicators'
@@ -1230,9 +1251,7 @@ components:
         {
           "technologicalDQR": "2.0",
           "temporalDQR": "2.0",
-          "geographicalDQR": "2.0",
-          "completenessDQR": "2.0",
-          "reliabilityDQR": "2.0"
+          "geographicalDQR": "2.0"
         }
         ```        
       type: object
@@ -1281,7 +1300,6 @@ components:
         ```json 
         {
           "coverage": "PCF system",
-          "boundary": "Cradle-to-Gate"
           "providerName": "My Auditor",
           "completedAt": "2022-12-08T14:47:32Z"
           "standardName": "ISO 14044"
