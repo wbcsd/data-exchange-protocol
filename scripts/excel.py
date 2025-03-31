@@ -64,11 +64,15 @@ def generate_excel(ws, schema, types):
         property    = dict(title = "Attribute", width = 30),
         validation  = dict(title = "Validation", width = 15),
         description = dict(title = "User Friendly Description", width = 60, wrap_text = True, description="""
-M=Mandatory
-M2=Mandatory for any PCF calculated following PACT-2
-M3=Mandatory for any PCF calculated following PACT-3
-M2-2025=Mandatory for any PCF calculated in or after 2025 with PACT-2
-M3-2027=Mandatory for any PCF calculated in or after 2027 with PACT-3""".strip()),
+M=Mandatory (SHALL)
+O=Optional (MAY)
+SHALL=Mandatory
+SHALL-BIO=Mandatory if biogenic carbon above threshold
+SHALL-BIO-2027=Mandatory if biogenic carbon above threshold, beginning 2027
+SHOULD=Should be filled in, if possible.
+SHOULD-BIO=Should be filled in, if possibl and biogenic carbon above threshold
+MAY=Optional
+""".strip()),
         unit        = dict(title = "Unit", width = 17),
         comment     = dict(title = "Comment", width = 30),
         #link       = dict(title = "Link to Methodology", width = 15),
