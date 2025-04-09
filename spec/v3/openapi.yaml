@@ -13,6 +13,32 @@ info:
     maintained by the WBCSD PACT project and intended to be used by organizations 
     that wish to exchange PCF data with other organizations. The specifications 
     are designed to be technology-agnostic.
+  x-rule: |
+    SHALL = Required to fill in
+    SHALL-BIO = Required if biogenic carbon is above threshold and not unknown
+    SHALL-BIO-2027 = Required if biogenic carbon above threshold and not unknown, beginning 2027
+    SHALL-CCU = Required if CCU applicable and data not unknown
+    SHALL-CCS = Required if CCS applicable and data not unknown
+    SHALL-TECH-RM = Required if technological removals applicalbe and data not unknown
+    SHOULD = Recommended to fill in, exceptions possible
+    MAY = Optional
+
+    https://www.iso.org/foreword-supplementary-information.html
+  x-methodology-sections:
+    3.1.2: Hierarchy of application
+    3.2: Scope and boundary
+    3.2.2: Focus on GHG emissions
+    3.2.3: Scope and boundary of the PACT Methodology
+    3.2.4: Unit of analysis
+    3.3.1.1: Data identification
+    3.3.1.2: Criteria to exclude certain activities - Exemption rules
+    3.3.2.1: Accounting for transportation and distribution emissions
+    3.3.2.2: Accounting for waste treatment and recycling emissions within the Cradle-to-Gate boundary
+    3.3.2.4: Accounting for biogenic emissions and removals
+    3.3.2.5: Technological CO2 capture, storage and use
+    3.3.1.3: Allocation
+    4.2.2: Primary Data Share
+    4.2.3: Data quality indicators (DQIs) assessment
 tags:
 - name: footprint
   description: Synchronous retrieval of footprints
