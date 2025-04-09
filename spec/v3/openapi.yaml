@@ -13,6 +13,32 @@ info:
     maintained by the WBCSD PACT project and intended to be used by organizations 
     that wish to exchange PCF data with other organizations. The specifications 
     are designed to be technology-agnostic.
+  x-rule: |
+    SHALL = Required to fill in
+    SHALL-BIO = Required if biogenic carbon is above threshold and not unknown
+    SHALL-BIO-2027 = Required if biogenic carbon above threshold and not unknown, beginning 2027
+    SHALL-CCU = Required if CCU applicable and data not unknown
+    SHALL-CCS = Required if CCS applicable and data not unknown
+    SHALL-TECH-RM = Required if technological removals applicalbe and data not unknown
+    SHOULD = Recommended to fill in, exceptions possible
+    MAY = Optional
+
+    https://www.iso.org/foreword-supplementary-information.html
+  x-methodology-sections:
+    3.1.2: Hierarchy of application
+    3.2: Scope and boundary
+    3.2.2: Focus on GHG emissions
+    3.2.3: Scope and boundary of the PACT Methodology
+    3.2.4: Unit of analysis
+    3.3.1.1: Data identification
+    3.3.1.2: Criteria to exclude certain activities - Exemption rules
+    3.3.2.1: Accounting for transportation and distribution emissions
+    3.3.2.2: Accounting for waste treatment and recycling emissions within the Cradle-to-Gate boundary
+    3.3.2.4: Accounting for biogenic emissions and removals
+    3.3.2.5: Technological CO2 capture, storage and use
+    3.3.1.3: Allocation
+    4.2.2: Primary Data Share
+    4.2.3: Data quality indicators (DQIs) assessment
 tags:
 - name: footprint
   description: Synchronous retrieval of footprints
@@ -378,6 +404,7 @@ components:
             maintained by the solution. 
 
             See [[#lifecycle]] for details.
+          x-rule: SHOULD
           type: array
           items:
             type: string
@@ -450,12 +477,16 @@ components:
 
           type: string
           format: date-time
+          x-term: Validity Period
+          x-methodology: 3.2.3
         validityPeriodEnd:
           description: |
             The end date and time of the validity period. After this date the ProductFootprint
             is not valid for use anymore. See [[#validity-period]] for more details.
           type: string
           format: date-time
+          x-term: Validity Period
+          x-methodology: 3.2.3
         companyName:
           description: |
             The name of the company that is the PCF Data Owner
@@ -530,7 +561,6 @@ components:
             Additional information related to the product footprint.
 
             Whereas the property <{ProductFootprint/productDescription}> contains product-level information, <{ProductFootprint/comment}> SHOULD be used for information and instructions related to the calculation of the footprint, or other information which informs the ability to interpret, to audit or to verify the Product Footprint.
-          note: optional in 3.0, was mandatory in 2.x 
           summary: |
             Any additional information related to the PCF. Whereas the property productDescription 
             contains product-level information, comment should be used for information and instructions 
@@ -556,6 +586,7 @@ components:
 
              3. Additional information on biogenic emissions & removals calculation  should be specified. This includes information on tools used for  calculations (e.g. Cool Farm Tool), and methodological choices made in calculation of biogenic emissions and removals (e.g. Statistical  or Direct Land use change calculation for DLUC calculations). 
           type: string
+          x-rule: SHOULD
         pcf:
           description: |
             The carbon footprint of the given product with value conforming to the data 
@@ -601,7 +632,6 @@ components:
       - pcfIncludingBiogenicCO2Withdrawal
       - fossilGhgEmissions
       - fossilCarbonContent
-      - biogenicCarbonContent
       - ipccCharacterizationFactors
       - crossSectoralStandards
       - exemptedEmissionsPercent
@@ -643,6 +673,8 @@ components:
             - piece
             - hour
             - megabit second
+          x-term: Declared Unit
+          x-methodology: 3.2.4
         declaredUnitAmount:
           description: |
             The amount of <{CarbonFootprint/declaredUnitOfMeasurement|units}> contained
@@ -655,8 +687,10 @@ components:
             This is not representing the total annual quantity supplied (e.g. if the product is 
             supplied in bulk in kg, which is the declared unit selected, the value MUST be 1)
             
-          x-unit: declared unit       
           $ref: '#/components/schemas/PositiveNonZeroDecimal'
+          x-unit: declared unit
+          x-term: Declared Unit
+          x-methodology: 3.2.4
         productMassPerDeclaredUnit:
           description: |
             The mass (in kg) of the product excluding packaging. The 'declared unit' is
@@ -672,6 +706,8 @@ components:
             with `0`.          
           note: mandatory in 3.0, optional in v2.x
           $ref: '#/components/schemas/Decimal'
+          x-term: Declared Unit
+          x-methodology: 3.2.4
         pcfExcludingBiogenicUptake:
           description: |
             The PCF of the product including:
@@ -685,6 +721,8 @@ components:
           x-comment: | 
             PCF (Excl. biogenic CO2 withdrawal) = fossilGhgEmissions + landUseChangeGhgEmissions + landManagementBiogenicCO2Emissions + biogenicNonCO2Emissions + landManagementBiogenicCO2Removals
           x-rule: SHALL
+          x-term: PCF Excluding biogenic CO2 uptake 
+          x-methodology: 3.3.1
           $ref: '#/components/schemas/Decimal'
         pcfIncludingBiogenicCO2Uptake:
           description: |
@@ -698,6 +736,8 @@ components:
           x-comment: |
             PCF (Incl. biogenic CO2 withdrawal) = FossilGHGEmissions + landUseChangeGHGEmissions + landManagementBiogenicCO2Emissions + biogenicNonCO2Emissions + landManagementBiogenicCO2Removals + biogenicCO2Withdrawal
           x-rule: SHALL
+          x-term: PCF Including biogenic CO2 uptake
+          x-methodology: 3.3.1
           $ref: '#/components/schemas/Decimal'
         fossilGhgEmissions:
           description: |
@@ -710,18 +750,24 @@ components:
             emissions, and from process emissions. 
           x-unit: kgCO2e/declared unit
           x-rule: SHALL
+          x-term: Fossil emissions
+          x-methodology: 3.3.2.4
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
         fossilCarbonContent:
           description: |
             The fossil carbon content of the product (mass of carbon). 
           x-unit: kgC/declared unit
           x-rule: SHALL
+          x-term: Fossil carbon content
+          x-methodology: 3.3.2.4
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
         biogenicCarbonContent:
           description: |
             The biogenic carbon content of the product (mass of carbon). 
           x-unit: kgC/declared unit
-          x-rule: SHALL
+          x-rule: SHALL-BIO
+          x-term: Biogenic carbon content
+          x-methodology: 3.3.2.4
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
         landUseChangeGhgEmissions:
           description: |
@@ -729,14 +775,9 @@ components:
             from natural forest to plantation forest, that cause carbon stock loss. 
           x-unit: kgCO2e/declared unit
           x-rule: SHALL-BIO
+          x-term: Land use and land use change emissions or LUC emissions
           x-comment: Replaces dLucGhgEmissions
-          $ref: '#/components/schemas/PositiveOrZeroDecimal'
-        landUseChangeGhgEmissionsAndRemovals:
-          description: |
-            Net total of GHG emissions and removals from land-use change, typically from
-            secondary data sets. Note the overlap with `landUseChangeGhgEmissions`.
-          x-unit: kgCO2e/declared unit
-          x-rule: SHALL-BIO
+          x-methodology: 3.3.2.4
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
         landCarbonLeakage:
           description: |
@@ -749,7 +790,9 @@ components:
             Fossil CO2 and N2O emissions due to land management practices.
             Note: 'fossilGhgEmissions' already includes these emissions.
           x-unit: kgCO2e/declared unit
-          x-rule: SHALL-BIO
+          x-rule: SHALL-BIO-2027
+          x-term: Land management fossil emissions
+          x-methodology: 3.3.2.4
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
         landManagementBiogenicCO2Emissions:
           description: |
@@ -757,58 +800,103 @@ components:
             land within the same land-use category.
           x-unit: kgCO2e/declared unit
           x-rule: SHALL-BIO-2027
+          x-term: Land management CO2 emissions
+          x-methodology: 3.3.2.4
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
         landManagementBiogenicCO2Removals:
           description: |
-            CO2 removals resulting from a net increase in carbon stored in land-based carbon 
+            Biogenic CO2 removals resulting from a net increase in carbon stored in land-based carbon 
             pools (e.g. reforestation and afforestation). Subject to traceability requirements.
           x-unit: kgCO2e/declared unit
+          x-term: Land management CO2 removals
+          x-methodology: 3.3.2.4
           $ref: '#/components/schemas/NegativeOrZeroDecimal'
         biogenicCO2Uptake:
           description: |
             Temporary CO2 uptake of biomass in the product at point of leaving factory gate.
           x-unit: kgCO2e/declared unit
           x-rule: SHALL-BIO
+          x-term: Biogenic CO2 uptake
+          x-methodology: 3.3.2.4
           $ref: '#/components/schemas/NegativeOrZeroDecimal'
           x-comment: Replaces biogenicCarbonWithdrawal
         biogenicNonCO2Emissions:
           description: |
-            Biogenic Non-CO2 emissions (e.g. CH4 & N2O) caused by combustion of biofuels 
-            and composting of biowaste, including agricultural land management activities 
-            such as manure fertilization and  enteric emissions.
+            CH4 emissions from land management practices and  the oxidation and transformation or degradation of biomass.
           x-unit: kgCO2e/declared unit
           x-rule: SHALL-BIO
+          x-term: Biogenic non-CO2 emissions
+          x-methodology: 3.3.2.4
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
         technologicalCO2Removals:
           description: |
             CO2 removed directly from the atmosphere or via biogenic CO2 capture. Subject to reporting requirements.
           x-unit: kgCO2e/declared unit
-          x-rule: MAY
+          x-rule: SHALL-TECH-RM
+          x-term: Technological CO2 removals
+          x-methodology: 3.3.2.5
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
         aircraftGhgEmissions:
           description: |
             If present, the GHG emissions resulting from aircraft engine usage for the transport of the product, excluding radiative forcing.            
           x-unit: kgCO2e/declared unit
+          x-term: Aircraft emissions
+          x-methodology: 3.3.2.1
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
+        pacakgingEmissionsIncluded:
+          description: |
+            Indicates whether the packaging emissions are included in the scope and boundary of the product carbon footprint. 
+            If `true`, the packaging emissions are included in the product carbon footprint, and the `packagingGhgEmissions` property SHOULD be defined.
+            If `false`, the packaging emissions are not included in the product carbon footprin, and the `packagingGhgEmissions` property MUST be undefined.
+          type: boolean
+          x-rule: SHALL
+          x-term: Packaging emissions
+          x-methodology: 3.3.1.1
         packagingGhgEmissions:
           description: |
-            Emissions resulting from the packaging of the product. MUST be undefined if packaging emissions are not included.
+            Emissions resulting from the packaging of the product. 
+            SHOULD be defined if `packagingEmissionsIncluded` is true, MUST be undefined if `packagingEmissionsIncluded` is false.
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
+          x-rule: SHOULD
           x-unit: kgCO2e/declared unit
+          x-term: Packaging emissions
+          x-methodology: 3.3.1.1
+        packagingBiogenicCarbonContent:
+          description: |
+            TODO: Description
+          $ref: '#/components/schemas/PositiveOrZeroDecimal'
+          x-term: Packaging biogenic carbon content
+          x-methodology: 3.3.1.1
         outboundLogisticsGhgEmissions:
           description: |
-            Emissions resulting from outbound logistics. MUST be undefined if outbound logistics emissions are not included.
+            Emissions resulting from outbound logistics hould be calculated and reported separately up to the point where another
+            company (e.g., customer) takes over responsibility for the product (i.e. own or pay for the outbound logistics). 
+            MUST be undefined if outbound logistics are not the responsibility of the company calculating and exchanging the PCF.
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
+          x-rule: SHOULD
           x-unit: kgCO2e/declared unit
+          x-term: Outbound logistics emissions
+          x-methodology: 3.3.2.1 
         ccuCarbonContent:
           description: |
-            The amount of captured carbon (both biogenic and fossil) during CCU (Carbon Capture & Usage) in the production.
+            The amount of captured carbon (both biogenic and fossil) during CCU (Carbon Capture & Usage) in the product.
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
           x-unit: kgC/declared unit
-        ccuOrigin:
+          x-term: CCU carbon content
+          x-rule: SHALL-CCU
+          x-methodology: 3.3.2.5
+        technologicalCO2CaptureOrigin:
           description: |
-            Information about the origin (fossil or biogenic) and path of the captured CO2 used in CCU, including the name and location of the capture facility. This information enhances transparency and traceability, enabling tracking of CO2 across the value chain.        
+            For CCU: Information about the origin (fossil or biogenic) and path of the captured CO2 used in CCU, including 
+            the name and location of the capture facility. This information enhances transparency and traceability, 
+            enabling tracking of CO2 across the value chain.
+
+            For CCS: Traceability data, i.e. information on location injection site, geological reservoir as part of the overall 
+            'technological CO2 capture origin' data point for the PCF.
           type: string
+          x-term: Technological CO2 capture origin
+          x-rule: SHALL-CCU,SHALL-CCS
+          x-methodology: 3.3.2.5
         ccuCalculationApproach:
           description: |
             The calculation approach for CCU: "Cut-off" or "Credit." See [=PACT Methodology=] for details.
@@ -816,26 +904,40 @@ components:
           enum:
             - Cut-off
             - Credit 
+          x-term: CCU calculation approach
+          x-methodology: 3.3.2.5
+          x-rule: SHALL-CCU
         ccuCreditCertification:
           description: |
             (Only for Credit Approach) a URL to documentation verifying the certification from an external bookkeeping scheme. 
             This attribute ensures the reliability and avoids double counting of credits within the crediting system.
           $ref: '#/components/schemas/Uri' 
+          x-term: CCU credit certification
+          x-methodology: 3.3.2.5
+          x-rule: SHALL-CCU
         ccsTechnologicalCO2Capture:
           description: |
             The amount of CO2 captured during Carbon Capture and Storage (CCS) in the production.
           $ref: '#/components/schemas/NegativeOrZeroDecimal'
           x-unit: kgCO2e/declared unit
-        ccsTechnologicalCO2Removals:
+          x-term: Technological CO2 capture with geological storage
+          x-rule: SHALL-CCS
+          x-methodology: 3.3.2.5
+        recycledCarbonContent:
           description: |
-            Technological CO2 removals with geologic storage (kgCO2 removed per declared unit) (biogenic only)
-          $ref: '#/components/schemas/NegativeOrZeroDecimal'
+            The amount of carbon (both biogenic and fossil) from recycled material in the  product.
+          $ref: '#/components/schemas/PositiveOrZeroDecimal'
           x-unit: kgCO2e/declared unit
+          x-rule: SHOULD
+          x-term: Recycled carbon content
+          x-methodology: 3.3.2.2
         landAreaOccupation:
           description: |
             Amount of agricultural land occupied in reporting year to produce the product.
           x-unit: (m2/annum) / declared unit
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
+          x-term: Land occupation
+          x-methodology: 3.3.2.4
         ipccCharacterizationFactors:
           description: |
             The characterization factors from one or more IPCC Assessment Reports used in the calculation of the PCF (see [=PACT Methodology=] Section 3.2.2).
@@ -865,6 +967,8 @@ components:
           examples:
           - ["AR6"]
           - ["AR5", "AR6"]
+          x-term: Characterization factors
+          x-methodology: 3.2.2
         crossSectoralStandards:
           description: |
             The cross-sectoral standards applied for calculating or allocating [=GHG=] emissions.
@@ -907,6 +1011,8 @@ components:
               - PACT-3.0
           minItems: 1
           uniqueItems: true
+          x-term: Cross-sectoral standards
+          x-methodology: 3.1.2
           examples:
           - [ISO14067, PACT-3.0]
         productOrSectorSpecificRules:
@@ -926,6 +1032,8 @@ components:
             $ref: '#/components/schemas/ProductOrSectorSpecificRule'
           minItems: 1
           uniqueItems: true
+          x-term: Product or sector specific rules
+          x-methodology: 3.1.2
           note: Multiple ProductOrSpecificRules can be specifed, each with its own operator and ruleNames.
           examples: 
           -  
@@ -948,6 +1056,8 @@ components:
             general description of used technologies).
           note: optional in 3.0, was mandatory in 2.x
           type: string
+          x-rule: SHOULD
+          x-methodology: 3.2
         referencePeriodStart:
           description: |
             The start (including) of the time boundary for which the PCF value
@@ -960,6 +1070,8 @@ components:
             the given PCF is referencing, or reporting on.
           type: string
           format: date-time
+          x-term: Reference period
+          x-methodology: 3.2.3
         referencePeriodEnd:
           description: |
             The end (excluding) of the time boundary for which the PCF value is
@@ -972,6 +1084,8 @@ components:
             PCF is referencing, or reporting on.
           type: string
           format: date-time
+          x-term: Reference period
+          x-methodology: 3.2.3
         geographyRegionOrSubregion:
           description: |
             If present, the value MUST conform to data type {{RegionOrSubregion}}. See [[#dt-carbonfootprint-scope]] for further details. Additionally, see the [=PACT Methodology=] Section 6.1.2.2.
@@ -983,6 +1097,9 @@ components:
             the geographic region to which the PCF refers, i.e. "Africa", 
             "Central Asia", etc.
           type: string
+          x-rule: SHOULD
+          x-term: Region or Sub-Region
+          x-methodology: 3.2.3
           enum:
             - Africa
             - Americas
@@ -1021,6 +1138,9 @@ components:
           type: string
           pattern: '^[A-Z]{2}$'
           comment: ISO 3166-1 alpha-2
+          x-rule: SHOULD
+          x-term: Country
+          x-methodology: 3.2.3
           examples:
             - US
             - DE
@@ -1037,6 +1157,9 @@ components:
           type: string
           pattern: '^[A-Z]{2}-[A-Z0-9]{1,3}$'
           comment: ISO 3166-2
+          x-rule: SHOULD
+          x-term: Country subdivision
+          x-methodology: 3.2.3
           examples:
             - US-CA
             - DE-BW
@@ -1050,6 +1173,9 @@ components:
             the data owner for the PCF calculation (e.g. databases such as ecoinvent)
 
             If no secondary data is used, this property MUST BE undefined.
+          x-term: Secondary emission factors sources
+          x-methodology: 3.2.3
+          x-rule: SHOULD
           type: array
           minItems: 1
           items:
@@ -1062,12 +1188,16 @@ components:
           description: |
             The percentage of emissions excluded from PCF, expressed as a decimal number. See [=PACT Methodology=].
           note: string<decimal> in 3.0, was Number in 2.x. Removed upper boundary of 5%.
+          x-term: Exemption rules
+          x-methodology: 3.3.1.2
           $ref: '#/components/schemas/Decimal'
         exemptedEmissionsDescription:
           description: |
             Rationale behind exclusion of specific PCF emissions, CAN be the empty string if no emissions were excluded.
           summary: |
             If emissions exempted, rationale behind exclusion of specific PCF emissions.
+          x-term: Exemption rules
+          x-methodology: 3.3.1.2
           note: optional in 3.0, was mandatory in 2.x
           type: string
         allocationRulesDescription:
@@ -1078,6 +1208,8 @@ components:
             including an explanation of the underlying reasons (way of allocating 
             all activities from your manufacturing steps to the declared unit).
           type: string
+          x-term: Allocation rules
+          x-methodology: 3.3.1.3
         primaryDataShare:
           description: |
             The share of primary data in percent. See the [=PACT Methodology=].
@@ -1088,18 +1220,21 @@ components:
 
           note: string<decimal> in 3.0, was Number in 2.x
           x-rule: SHALL
+          x-term: Primary Data Share
+          x-methodology: 4.2.2
           summary: |
             Share of primary data in the final PCF, calculated according to 
             the PACT Methodology.
           $ref: '#/components/schemas/Decimal'
         dqi:
           description: |
-            If present, the Data Quality Indicators (dqi) in accordance with the [=PACT Methodology=] Sections 4.2.1 and 4.2.3, Appendix B.
-
+            If present, the Data Quality Indicators (dqi) in accordance with the [=PACT Methodology=]
             For reference periods ending before the beginning of year 2025, at least property <{CarbonFootprint/primaryDataShare}> or propery <{CarbonFootprint/dqi}> MUST be defined.
 
             For reference periods including the beginning of year 2025 or after, this property MUST be defined.
-          x-rule: SHALL
+          x-rule: SHALL-2027
+          x-term: Data Quality Indicators
+          x-methodology: 4.2.3
           summary: |
             Data Quality Indicators (dqi) in accordance with the PACT Methodology. 
           $ref: '#/components/schemas/DataQualityIndicators'
@@ -1107,6 +1242,8 @@ components:
           description: |
             The presence of the <{Verification}> object indicates whether or not the <{CarbonFootprint}> has
             been verified in line with [=PACT Methodology=] requirements
+          x-term: Verification information
+          x-rule: MAY
           $ref: '#/components/schemas/Verification'
 
     DataModelExtension:
@@ -1249,8 +1386,8 @@ components:
 
         ```json
         {
-          "technologicalDQR": "2.0",
-          "temporalDQR": "2.0",
+          "technologicalDQR": "5.0",
+          "temporalDQR": "3.0",
           "geographicalDQR": "2.0"
         }
         ```        
@@ -1269,6 +1406,8 @@ components:
             The value MUST be between `1` and `5` inclusive.
 
           note: string<decimal> in 3.0, was Number in 2.x
+          x-term: Technological representativeness
+          x-rule: SHALL
           $ref: '#/components/schemas/Decimal'
         temporalDQR:
           description: |
@@ -1278,6 +1417,8 @@ components:
 
             The value MUST be between `1` and `5` inclusive.
           note: string<decimal> in 3.0, was Number in 2.x
+          x-term: Temporal / Time representativenes
+          x-rule: SHALL
           $ref: '#/components/schemas/Decimal'
         geographicalDQR:
           description: |
@@ -1287,6 +1428,8 @@ components:
 
             The value MUST be between `1` and `5` inclusive.
           note: string<decimal> in 3.0, was Number in 2.x
+          x-term: Geographical representativenes
+          x-rule: SHALL
           $ref: '#/components/schemas/Decimal'
     Verification:
       title: Verification
@@ -1309,22 +1452,22 @@ components:
       properties:
         coverage:
           description: |
-            Level of granularity of the emissions data assured. 
-
-            This property MAY be undefined only if the kind of verification was not performed.
-          summary: |
-            Level of granularity of the emissions data assured
+            The coverage of the verification defines the type and level of GHG data to be verified.
           type: string
           note: values changed from v2.x
           enum:
             - PCF calculation model
             - PCF program
             - product level
+          x-term: Coverage
+          x-methodology: 5.3.3
         providerName:
           description: |
             The non-empty name of the independent third party engaged to undertake the verification.
           note: optional in version 3.0 was mandatory in 2.x
           type: string
+          x-term: Verification provider
+          x-methodology: 5.3.7
         completedAt:
           description: |
             The date at which the verification was completed
@@ -1648,7 +1791,7 @@ components:
       description: |
         Notification that a request for a ProductFootprint can not be fulfilled.
         The RequestRejectedEvent is an event sent back from the data owner to 
-        the data recipient upon NOT successfully fulfilling the preceeding 
+        the data recipient upon NOT successfully fulfilling the preceding 
         RequestCreatedEvent sent by the data recipient.
 
         If the [=data recipient=] cannot be reached by the [=data owner=], the data owner 
