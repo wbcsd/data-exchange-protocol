@@ -59,20 +59,20 @@ def generate_excel(ws, schema, types):
             if border:
                 cell.border = border
 
+    # Validation rules legenda:
+    validation_rules_legenda = schema["info"].get("x-rule","").strip()
+    methodology_sections = schema["info"].get("x-methodology-sections", {})
+    logging.info(methodology_sections)
+
     # Define the columns of the worksheet
     columns = dict(
         property    = dict(title = "Attribute", width = 30),
+        methodology = dict(title = "Methodology", width = 20),
+        section     = dict(title = "Section", width = 20),
         validation  = dict(title = "Validation", width = 15),
-        description = dict(title = "User Friendly Description", width = 60, wrap_text = True, description="""
-M=Mandatory (SHALL)
-O=Optional (MAY)
-SHALL=Mandatory
-SHALL-BIO=Mandatory if biogenic carbon above threshold
-SHALL-BIO-2027=Mandatory if biogenic carbon above threshold, beginning 2027
-SHOULD=Should be filled in, if possible.
-SHOULD-BIO=Should be filled in, if possibl and biogenic carbon above threshold
-MAY=Optional
-""".strip()),
+        # Retrieve legend from schema 
+        description = dict(title = "User Friendly Description", width = 60, wrap_text = True, description = validation_rules_legenda),
+        category    = dict(title = "Category", width = 17),
         unit        = dict(title = "Unit", width = 17),
         comment     = dict(title = "Comment", width = 30),
         #link       = dict(title = "Link to Methodology", width = 15),
@@ -84,9 +84,11 @@ MAY=Optional
     i = 0
     for column in columns.values():
         column['index'] = chr(ord('A') + i)
+        column['index-nr'] = i
         i += 1
 
     # Define a lambda function to for creating a row array of values
+    logging.info(columns.keys())
     row = lambda **kwargs: [kwargs[column] for column in columns.keys()]
 
     # Define the styles for the worksheet
@@ -102,11 +104,12 @@ MAY=Optional
     normal_style    = dict(font = fontname) # bgcolor="EEECE2", border=True)
     bold_style      = dict(font = fontname, bold = True)
     obsolete_style  = dict(font = fontname, strike = True, fgcolor = "95261F")
+    small_style     = dict(font = fontname, size = 9, fgcolor = "606060")
 
     logging.debug(f"Columns: {columns}")
 
     # Append the title and header rows
-    ws.append(["PACT Simplified Tech Specs" + status, "", "", "", "", "", "", "", "", "", ""])
+    ws.append(["PACT Simplified Data Model " + status, "", "", "", "", "", "", "", "", "", ""])
     ws.append([schema["info"]["version"], "", "", "", "", "", "", "", "", ""])
 
     # Append the column headers
@@ -158,6 +161,12 @@ MAY=Optional
         
         type_description = get_type_description(info)
         description = info.get("summary") or info.get("description") or "N/A"
+        
+        description = description.replace("See [[#lifecycle]] for details.", "")
+        description = description.replace("([[!RFC8141|URN]])", "(RFC8141)")
+        description = description.replace("See [[#validity-period]] for more details.", "")
+        description = description.replace("See <{DataModelExtension}> for details.", "")
+        
         paragraphs = description.split("\n")
         description = ""
         for paragraph in paragraphs:
@@ -176,16 +185,29 @@ MAY=Optional
         
         # Append a row to the worksheet
         rule = info.get("x-rule", "")
-        if mandatory:
-            rule = "M"
-        else:
-            rule = info.get("x-rule", "O")
+        logging.info(f"Rule: {rule} mandatory: {mandatory} name: {name}")
+        if mandatory and rule != "" and rule != "SHALL":
+            raise Exception("Conflicting required status for " + name)
+        if rule == "":
+            if mandatory:
+                rule = "SHALL" #"MUST"
+            else:
+                rule = "MAY"
+
+
+        section = info.get("x-methodology", "")
+        section = str(section) + " " + methodology_sections.get(section, "")
+        section = section.strip()
+        logging.info(section)
 
         ws.append(row(
             property = name,
+            methodology = info.get("x-term", ""),
+            section = section,
             validation = rule,
             comment = info.get("title", "") + info.get("x-comment", "") + info.get("note", ""),
             description = description,
+            category = parent.get("title", ""),
             unit = info.get("x-unit", "-"),
             accepted = type_description,
             example1 = str(examples[0]),
@@ -195,6 +217,11 @@ MAY=Optional
         # Apply styles to the row, first col (property name) will be bold
         format(ws[ws.max_row], normal_style)
         format(ws[ws.max_row][0], bold_style)
+        # Small style for category and unit
+        format(ws[ws.max_row][columns["section"]["index-nr"]], small_style)
+        format(ws[ws.max_row][columns["category"]["index-nr"]], small_style)
+        format(ws[ws.max_row][columns["unit"]["index-nr"]], small_style)
+        format(ws[ws.max_row][columns["comment"]["index-nr"]], small_style)
         # Strike-through obsolete or deprecated properties
         if info.get("deprecated") or info.get("obsolete"):
             format(ws[ws.max_row], obsolete_style)
@@ -211,7 +238,7 @@ MAY=Optional
         logging.debug(f"Writing type {name} at level {level}")
         if info.get("title") and name:
             # Append a row for the type itself and set background color to blue
-            ws.append([name + ": " + info["title"], info.get("x-rule"), info.get("summary"), "", "", "", "", "", ""])
+            ws.append([name + ": " + info["title"], info.get("x-term"), info.get("x-methodology"), info.get("x-rule"), info.get("summary"), "", "", "", "", "", "", ""])
             format(ws[ws.max_row], heading_style)
 
         for prop_name, prop_info in info.get("properties", {}).items():
