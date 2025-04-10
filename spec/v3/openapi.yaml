@@ -30,6 +30,7 @@ info:
     3.2.2: Focus on GHG emissions
     3.2.3: Scope and boundary of the PACT Methodology
     3.2.4: Unit of analysis
+    3.3.1: Calculation of product GHG emissions
     3.3.1.1: Data identification
     3.3.1.2: Criteria to exclude certain activities - Exemption rules
     3.3.2.1: Accounting for transportation and distribution emissions
@@ -391,7 +392,7 @@ components:
           - "f4b1225a-bd44-4c8e-861d-079e4e1dfd69"
         specVersion:
           description: |
-            The version of the PACT Tech Specs that the data being shared complies with. 
+            The version of the PACT Technical Specifications that the data being shared complies with. 
             This is a string in the format of "major.minor.patch" (e.g. "3.0.0").
           type: string
           pattern: '^\d+\.\d+\.\d+(-\d{8})?$'
@@ -838,16 +839,24 @@ components:
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
         aircraftGhgEmissions:
           description: |
-            If present, the GHG emissions resulting from aircraft engine usage for the transport of the product, excluding radiative forcing.            
+            If present, the GHG emissions resulting from aircraft engine usage 
+            for the transport of the product, excluding radiative forcing.
+            
+            The aircraft emissions are excluding biogenic CO2 uptake.      
           x-unit: kgCO2e/declared unit
           x-term: Aircraft emissions
           x-methodology: 3.3.2.1
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
-        pacakgingEmissionsIncluded:
+        packagingEmissionsIncluded:
           description: |
-            Indicates whether the packaging emissions are included in the scope and boundary of the product carbon footprint. 
-            If `true`, the packaging emissions are included in the product carbon footprint, and the `packagingGhgEmissions` property SHOULD be defined.
-            If `false`, the packaging emissions are not included in the product carbon footprin, and the `packagingGhgEmissions` property MUST be undefined.
+            Indicates whether the packaging emissions are included in the scope 
+            and boundary of the product carbon footprint. 
+
+            If `true`, the packaging emissions are included in the product carbon 
+            footprint, and the `packagingGhgEmissions` property SHOULD be defined.
+
+            If `false`, the packaging emissions are not included in the product carbon 
+            footprint, and the `packagingGhgEmissions` property MUST be undefined.
           type: boolean
           x-rule: SHALL
           x-term: Packaging emissions
@@ -855,7 +864,10 @@ components:
         packagingGhgEmissions:
           description: |
             Emissions resulting from the packaging of the product. 
-            SHOULD be defined if `packagingEmissionsIncluded` is true, MUST be undefined if `packagingEmissionsIncluded` is false.
+            SHOULD be defined if `packagingEmissionsIncluded` is true and MUST be 
+            undefined if `packagingEmissionsIncluded` is false.
+
+            The packaging emissions are excluding biogenic CO2 uptake.
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
           x-rule: SHOULD
           x-unit: kgCO2e/declared unit
@@ -863,15 +875,19 @@ components:
           x-methodology: 3.3.1.1
         packagingBiogenicCarbonContent:
           description: |
-            TODO: Description
+            The biogenic carbon content of the packaging (mass of carbon).
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
           x-term: Packaging biogenic carbon content
           x-methodology: 3.3.1.1
         outboundLogisticsGhgEmissions:
           description: |
-            Emissions resulting from outbound logistics hould be calculated and reported separately up to the point where another
-            company (e.g., customer) takes over responsibility for the product (i.e. own or pay for the outbound logistics). 
-            MUST be undefined if outbound logistics are not the responsibility of the company calculating and exchanging the PCF.
+            Emissions resulting from outbound logistics hould be calculated and reported 
+            separately up to the point where another company (e.g., customer) 
+            takes over responsibility for the product (i.e. own or pay for the outbound
+            logistics). MUST be undefined if  the company calculating and exchanging the 
+            PCF is not responsible for the outbound logistics. 
+            
+            The outbound logistics emissions are excluding biogenic CO2 uptake.
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
           x-rule: SHOULD
           x-unit: kgCO2e/declared unit
@@ -899,7 +915,7 @@ components:
           x-methodology: 3.3.2.5
         ccuCalculationApproach:
           description: |
-            The calculation approach for CCU: "Cut-off" or "Credit." See [=PACT Methodology=] for details.
+            The calculation approach for CCU: "Cut-off" or "Credit."
           type: string
           enum:
             - Cut-off
@@ -917,7 +933,7 @@ components:
           x-rule: SHALL-CCU
         ccsTechnologicalCO2Capture:
           description: |
-            The amount of CO2 captured during Carbon Capture and Storage (CCS) in the production.
+            The amount of CO2 captured with Carbon Capture and Storage (CCS) technologies.
           $ref: '#/components/schemas/NegativeOrZeroDecimal'
           x-unit: kgCO2e/declared unit
           x-term: Technological CO2 capture with geological storage
@@ -925,7 +941,7 @@ components:
           x-methodology: 3.3.2.5
         recycledCarbonContent:
           description: |
-            The amount of carbon (both biogenic and fossil) from recycled material in the  product.
+            The carbon content (both biogenic and fossil) from recycled material in the product (mass of carbon).
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
           x-unit: kgCO2e/declared unit
           x-rule: SHOULD
@@ -933,14 +949,14 @@ components:
           x-methodology: 3.3.2.2
         landAreaOccupation:
           description: |
-            Amount of agricultural land occupied in reporting year to produce the product.
+            The amount of agricultural land occupied in reporting year to produce the product.
           x-unit: (m2/annum) / declared unit
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
           x-term: Land occupation
           x-methodology: 3.3.2.4
         ipccCharacterizationFactors:
           description: |
-            The characterization factors from one or more IPCC Assessment Reports used in the calculation of the PCF (see [=PACT Methodology=] Section 3.2.2).
+            The characterization factors from one or more IPCC Assessment Reports used in the calculation of the PCF.
             It MUST be a non-empty set of strings with the format `AR$VERSION$`, where `$VERSION$` stands for the
             IPCC report version number and MUST be an integer.
 
@@ -1091,7 +1107,7 @@ components:
             If present, the value MUST conform to data type {{RegionOrSubregion}}. See [[#dt-carbonfootprint-scope]] for further details. Additionally, see the [=PACT Methodology=] Section 6.1.2.2.
 
           summary: |
-            The geographic representation of the PCF may be reported at different 
+            The geographic representation of the PCF should be reported at different 
             levels of granularity, depending on the preference of the data owner 
             (e.g., at a plant, region, or country level). This attribute specifies 
             the geographic region to which the PCF refers, i.e. "Africa", 
@@ -1130,7 +1146,7 @@ components:
           description: |
             If present, the value MUST conform to data type [=ISO3166CC=]. See [[#dt-carbonfootprint-scope]] for further details.
           summary: |
-            The geographic representation of the PCF may be reported at different levels
+            The geographic representation of the PCF should be reported at different levels
             of granularity, depending on the preference of the data owner (e.g., at a 
             plant, region, or country level). This field indicates the country to which 
             the PCF refers. The country name must be according to ISO 3166-2 alpha-2 
@@ -1148,7 +1164,7 @@ components:
           description: |
             If present, a ISO 3166-2 Subdivision Code. See [[#dt-carbonfootprint-scope]] for further details.
           summary: |
-            The geographic representation of the PCF may be reported at different 
+            The geographic representation of the PCF should be reported at different 
             levels of granularity, depending on the preference of the data owner 
             (e.g., at a plant, region, or country level). This attribute represents 
             the most granular (i.e. "most specific") geography, i.e. the specific 
@@ -1186,7 +1202,7 @@ components:
               version: "3.7"          
         exemptedEmissionsPercent:
           description: |
-            The percentage of emissions excluded from PCF, expressed as a decimal number. See [=PACT Methodology=].
+            The percentage of emissions excluded from PCF, expressed as a decimal number. 
           note: string<decimal> in 3.0, was Number in 2.x. Removed upper boundary of 5%.
           x-term: Exemption rules
           x-methodology: 3.3.1.2
@@ -1202,46 +1218,32 @@ components:
           type: string
         allocationRulesDescription:
           description: |
-            If present, a description of any allocation rules applied and the rationale explaining how the selected approach aligns with [=PACT Methodology=] rules (see Section 3.3.1.4).
-          summary: |
             Description of the allocation rules applied to the PCFs foreground data 
             including an explanation of the underlying reasons (way of allocating 
             all activities from your manufacturing steps to the declared unit).
           type: string
+          x-rule: SHOULD
           x-term: Allocation rules
           x-methodology: 3.3.1.3
         primaryDataShare:
           description: |
-            The share of primary data in percent. See the [=PACT Methodology=].
-
-            For reference periods ending before the beginning of year 2025, at least property <{CarbonFootprint/primaryDataShare}> or propery <{CarbonFootprint/dqi}> MUST be defined.
-
-            For reference periods including the beginning of year 2025 or after, this property MUST be defined.
-
+            Share of primary data in the final absolute PCF value excluding biogenic CO2 uptake (pcfExcludingBiogenicUptake).
           note: string<decimal> in 3.0, was Number in 2.x
           x-rule: SHALL
           x-term: Primary Data Share
           x-methodology: 4.2.2
-          summary: |
-            Share of primary data in the final PCF, calculated according to 
-            the PACT Methodology.
           $ref: '#/components/schemas/Decimal'
         dqi:
           description: |
-            If present, the Data Quality Indicators (dqi) in accordance with the [=PACT Methodology=]
-            For reference periods ending before the beginning of year 2025, at least property <{CarbonFootprint/primaryDataShare}> or propery <{CarbonFootprint/dqi}> MUST be defined.
-
-            For reference periods including the beginning of year 2025 or after, this property MUST be defined.
+            Data Quality Indicators (dqi) in accordance with the PACT Methodology.
           x-rule: SHALL-2027
           x-term: Data Quality Indicators
           x-methodology: 4.2.3
-          summary: |
-            Data Quality Indicators (dqi) in accordance with the PACT Methodology. 
           $ref: '#/components/schemas/DataQualityIndicators'
         verification:
           description: |
             The presence of the <{Verification}> object indicates whether or not the <{CarbonFootprint}> has
-            been verified in line with [=PACT Methodology=] requirements
+            been verified in line with [=PACT Methodology=] requirements.
           x-term: Verification information
           x-rule: MAY
           $ref: '#/components/schemas/Verification'
@@ -1378,9 +1380,7 @@ components:
     DataQualityIndicators:
       title: DataQualityIndicators
       description: | 
-        Data type DataQualityIndicators contains the quantitative data quality indicators in conformance with PACT Methodology Section 4.2.3 and Appendix B.
-
-        Each property is optional until the reference period includes the beginning of calendar year 2025, or later, when all properties MUST be defined.
+        Data type DataQualityIndicators contains the quantitative data quality indicators.  
       example: |
         Example value for the case that all DQIs are known but no coverage after exemption assessment performed:
 
@@ -1392,6 +1392,7 @@ components:
         }
         ```        
       type: object
+      x-methodology: 4.2.3
       required:
       - technologicalDQR
       - temporalDQR
@@ -1399,9 +1400,10 @@ components:
       properties:
         technologicalDQR:
           description: |
-            Quantitative data quality rating (DQR) based on the data quality matrix (See [=PACT Methodology=]),
-            scoring the technological representativeness of the sources used for PCF calculation based on
-            weighted average of all inputs.
+            Quantitative data quality rating (DQR) based on the data quality matrix,
+            scoring the technological representativeness of the sources used for
+            the final absolute PCF excluding biogenic CO2 uptake calculation based 
+            on weighted average of all inputs.
 
             The value MUST be between `1` and `5` inclusive.
 
@@ -1411,8 +1413,9 @@ components:
           $ref: '#/components/schemas/Decimal'
         temporalDQR:
           description: |
-            Quantitative data quality rating (DQR) based on the data quality matrix (See [=PACT Methodology=]),
-            scoring the temporal representativeness of the sources used for PCF calculation based on
+            Quantitative data quality rating (DQR) based on the data quality matrix,
+            scoring the temporal representativeness of the sources used for 
+            the final absolute PCF excluding biogenic CO2 uptake calculation based on
             weighted average of all inputs.
 
             The value MUST be between `1` and `5` inclusive.
@@ -1422,9 +1425,10 @@ components:
           $ref: '#/components/schemas/Decimal'
         geographicalDQR:
           description: |
-            Quantitative data quality rating (DQR) based on the data quality matrix (See [=PACT Methodology=]),
-            scoring the geographical representativeness of the sources used for PCF calculation
-            based on weighted average of all inputs.
+            Quantitative data quality rating (DQR) based on the data quality matrix,
+            scoring the geographical representativeness of the sources used for 
+            the final absolute PCF excluding biogenic CO2 uptake calculation based on
+            weighted average of all inputs.
 
             The value MUST be between `1` and `5` inclusive.
           note: string<decimal> in 3.0, was Number in 2.x
@@ -1434,9 +1438,7 @@ components:
     Verification:
       title: Verification
       description: |
-        Data type `Verification` contains the verification in conformance with [=PACT Methodology=].
-      summary: |
-        Contains the verification in conformance with PACT Methodology.
+        Contains the verification in conformance with the PACT Methodology.
       note: Renamed from 'Assurance' in 3.0
       example: |
         Example value for the case that 42% of the product’s overall GHG emissions covered by the data quality assessment:
