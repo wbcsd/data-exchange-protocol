@@ -650,42 +650,46 @@ Types can have the following qualifiers:
 Types and qualifiers are declared in the OpenAPI schema, defining the 
 structure of the PACT data model and the minimum set of properties and
 sub-objects necessary for exchanging product footprints. 
+
 In addition, the specification also includes information on the *unit* 
 of certain properties (e.g. *kgCO2e*: kilogram CO equivalent) and 
-*validation rules*  which are a formalized 
-notation of the requirements as decribed in the PACT Mehodology. These 
-include rules as: 'mandatory after 2025' or 'mandatory above a certain 
-biogenic content threshold'.
+*validation rules*  which are a formalized notation of the reporting 
+requirements as decribed in the PACT Mehodology. These include rules 
+as: 'mandatory starting 2027' or 'mandatory above a certain biogenic 
+content threshold'.
 
 <table><tbody>
 <tr><td>
-M
-<td>
-Value MUST be included
-<tr><td>
-M3
-<td>
-Value MUST be included starting version 3.0
-<tr><td>
-M2
-<td>
-Value MUST be included starting version 2.0
-<tr><td>
-M3-2027
-<td>
-Value MUST be included starting 2027
-<tr><td>
 SHALL
 <td>
-Value MUST be included 
+Value is required to be defined 
+<tr><td style="white-space: nowrap">
+SHALL-BIO
+<td>
+Value is required IF the biogenic carbon content is above a threshold AND data is availabe. 
+<tr><td style="white-space: nowrap">
+SHALL-BIO-2027
+<td>
+Value is required starting 2027 IF the biogenic carbon content is above a threshold AND data is available. 
+<tr><td style="white-space: nowrap">
+SHALL-CCU
+<td>
+Value is required IF CCU is applicable AND data is available. 
+<tr><td style="white-space: nowrap">
+SHALL-CCS
+<td>
+Value is required IF CCS is applicable AND data is available. 
+<tr><td style="white-space: nowrap">
+SHALL-TECH-RM
+<td>
+Value is required IF technological removals are applicable AND data is available. 
 <tr><td style="white-space: nowrap">
 SHOULD
 <td>
-Value SHOULD be included, exceptions are possible, but 
-need explanation in `comment` property.
+Value is recommended to be defined, exceptions are possible.
 <tr><td>
 MAY
-<td>Value MAY be included
+<td>Value is optional to be defined
 <tr><td style="white-space: nowrap">
 SHALL-2027
 <td>
