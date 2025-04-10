@@ -703,8 +703,12 @@ components:
             liters of the product.
 
             If the product mass is not relevant (i.e. PCF is for an energy (kWh, MJ), 
-            logistics (ton.km) or service related product), this attribute SHOULD be populated 
-            with `0`.          
+            logistics (ton.km) or service related product), this attribute SHALL be populated 
+            with `0`.
+
+            For the full list of declared units requiring to report a mass per declared unit 
+            attribute please refer to table 4 in the PACT Methodology.
+
           note: mandatory in 3.0, optional in v2.x
           $ref: '#/components/schemas/Decimal'
           x-term: Declared Unit
