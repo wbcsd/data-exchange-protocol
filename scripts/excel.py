@@ -12,6 +12,15 @@ from openpyxl.drawing.spreadsheet_drawing import AnchorMarker, TwoCellAnchor, On
 
 status = " (Living Document)"
 
+filter_text = {
+    "See [[#lifecycle]] for details.": "",
+    "([[!RFC8141|URN]])": "(RFC8141)",
+    "See [[#validity-period]] for more details.": "",
+    "See <{DataModelExtension}> for details.": "",
+    #"See [=PACT Methodology=] for details.": "",
+    #"(See [=PACT Methodology=])": "",
+    #"See [=PACT Methodology=].": ""
+}
 
 def generate_excel(ws, schema, types):
     """
@@ -162,10 +171,8 @@ def generate_excel(ws, schema, types):
         type_description = get_type_description(info)
         description = info.get("summary") or info.get("description") or "N/A"
         
-        description = description.replace("See [[#lifecycle]] for details.", "")
-        description = description.replace("([[!RFC8141|URN]])", "(RFC8141)")
-        description = description.replace("See [[#validity-period]] for more details.", "")
-        description = description.replace("See <{DataModelExtension}> for details.", "")
+        for key, value in filter_text.items():
+            description = description.replace(key, value)
         
         paragraphs = description.split("\n")
         description = ""
