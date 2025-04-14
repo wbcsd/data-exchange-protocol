@@ -15,6 +15,7 @@ For sources and to contribute, please visit the [WBCSD GitHub repository](https:
 [PACT Technical Specifications 3.0.0](v3/index.html) <br>
 [PACT OpenAPI 3.0.0](v3/openapi.yaml) <br>
 [PACT Simplified Data Model 3.0.0 (Excel)](v3/pact-simplified.xlsx) <br>
+[FAQ](v3/faq.html) <br>
 
 ## 3.0.0 Draft for Consultation
 

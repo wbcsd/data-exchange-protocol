@@ -45,10 +45,11 @@ def is_repo_pristine(directory = None):
     return subprocess.check_output("git diff --stat", shell=True, cwd=directory).decode(encoding="utf-8") == ""
 
 # Generate html from markdown
-def render_markdown(input, output):
-    template = """<html>
+def render_markdown(input, output: str):
+    rel_root_path = (output.count('/')-1) * "../"
+    template = f"""<html>
     <head>
-    <link href="assets/markdown.css" rel="stylesheet" />
+    <link href="{rel_root_path}assets/markdown.css" rel="stylesheet" />
     </head>
     <body>
     """
@@ -123,7 +124,9 @@ def build(c):
         Dependency(target, [source]) for source,target in fileset("./spec/**/*.mmd", "./build/**/*.svg")
         ])
     build_task([
-        Dependency("build/index.html", ["index.md"])], 
+        Dependency("build/index.html", ["index.md"]), 
+        Dependency("build/v3/faq.html", ["spec/v3/faq.md"])
+        ], 
         render_markdown
         )
     build_task([
