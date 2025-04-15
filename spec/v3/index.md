@@ -664,25 +664,21 @@ SHALL
 <td>
 Value is required to be defined 
 <tr><td style="white-space: nowrap">
-SHALL-BIO
+BIO
 <td>
-Value is required IF the biogenic carbon content is above a threshold AND data is availabe. 
+Required if biogenic and land sector related emissions are applicable, 0 if not applicable, blank if unknown or unavailable
 <tr><td style="white-space: nowrap">
-SHALL-BIO-2027
+BIO-2027
 <td>
-Value is required starting 2027 IF the biogenic carbon content is above a threshold AND data is available. 
+Required per 31/12/2027 if biogenic and land sector related emissions are applicable , 0 if not applicable, blank if unknown or unavalaible.
 <tr><td style="white-space: nowrap">
-SHALL-CCU
+CCU
 <td>
-Value is required IF CCU is applicable AND data is available. 
+Required if CCU applicable and data known and available, blank otherwise. 
 <tr><td style="white-space: nowrap">
-SHALL-CCS
+CCS
 <td>
-Value is required IF CCS is applicable AND data is available. 
-<tr><td style="white-space: nowrap">
-SHALL-TECH-RM
-<td>
-Value is required IF technological removals are applicable AND data is available. 
+Required if CCS applicable and data known and available, blank otherwise.
 <tr><td style="white-space: nowrap">
 SHOULD
 <td>
@@ -690,20 +686,6 @@ Value is recommended to be defined, exceptions are possible.
 <tr><td>
 MAY
 <td>Value is optional to be defined
-<tr><td style="white-space: nowrap">
-SHALL-2027
-<td>
-Value MUST be included starting 2027
-<tr><td style="white-space: nowrap">
-SHALL-Bio
-<td>
-Value MUST be included if biogenic carbon content is above a threshold. 
-<tr><td style="white-space: nowrap">
-SHOULD-Bio
-<td>
-If biogenic carbon content is above threshold, the value SHOULD be 
-included: exceptions are possible, but need explanation in `comment` 
-property.
 </table>
 
 See [=PACT Methodology=] for more details.

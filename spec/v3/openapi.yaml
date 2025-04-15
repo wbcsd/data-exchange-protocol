@@ -16,11 +16,10 @@ info:
   x-rule: |
 
     SHALL = Required to fill in
-    BIO = Required if biogenic carbon is above threshold, 0 if not applicable, blank if unknown or unavalaible
-    BIO-2027 = Required per 31/12/2027 if biogenic carbon above threshold, 0 if not applicable, blank if unknown or unavalaible
-    CCU = Required if CCU applicable, 0 if not applicable, blank if unknown or unavailable
-    CCS = Required if CCS applicable, 0 if not applicable, blank if unknown or unavailable
-    TECH-RM = Required if technological removals applicable, 0 if not applicable, blank if unknown or unavailable
+    BIO = Required if biogenic and land sector related emissions are applicable, 0 if not applicable, blank if unknown or unavailable
+    BIO-2027 = Required per 31/12/2027 if biogenic and land sector related emissions are applicable , 0 if not applicable, blank if unknown or unavalaible
+    CCU = Required if CCU applicable and data known and available, blank otherwise
+    CCS = Required if CCS applicable and data known and available, blank otherwise
     SHOULD = Recommended to fill in, exceptions possible
     MAY = Optional
 
