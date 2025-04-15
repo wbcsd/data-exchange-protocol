@@ -559,15 +559,12 @@ components:
           $ref: '#/components/schemas/NonEmptyString'
         comment:
           description: |
-            Additional information related to the product footprint.
-
-            Whereas the property <{ProductFootprint/productDescription}> contains product-level information, <{ProductFootprint/comment}> SHOULD be used for information and instructions related to the calculation of the footprint, or other information which informs the ability to interpret, to audit or to verify the Product Footprint.
-          summary: |
             Any additional information related to the PCF. Whereas the property productDescription 
             contains product-level information, comment should be used for information and instructions 
             related to the calculation of the PCF, or other information which informs the ability to interpret
             (e.g. LUC not included as unable to calculate LUC), to audit, or to verify the PCF.
 
+          
             Information explaining the current status of the PCF, what was changed since the last version, etc. If the PCF was changed since a previous version, indicate all methodological and/or production process change(s) that occurred to result in the PCF change. For example, include the relevant change(s) from the list below:
 
             1. In case product or sector specific guidance used does not align with PACT Methodology's requirement, the areas of disalignment should be specified in the comment section (e.g. allocation rules, exemption rules, data quality metrics).
@@ -577,6 +574,7 @@ components:
             Methodological:
              - Access to new Emission Factor data (database, supplier-specific, company-specific)
              - Updated upstream data (i.e. upstream supplier updated their PCF based on methodology change)
+            
             Production Process:
              - Change in process
              - Change in feedstock
@@ -629,8 +627,8 @@ components:
       - productMassPerDeclaredUnit
       - referencePeriodStart
       - referencePeriodEnd
-      - pcfExcludingBiogenicCO2Withdrawal
-      - pcfIncludingBiogenicCO2Withdrawal
+      - pcfExcludingBiogenicCO2Uptake
+      - pcfIncludingBiogenicCO2Uptake
       - fossilGhgEmissions
       - fossilCarbonContent
       - ipccCharacterizationFactors
@@ -715,27 +713,33 @@ components:
           x-methodology: 3.2.4
         pcfExcludingBiogenicUptake:
           description: |
-            The PCF of the product including:
-            - all emissions from fossil sources
-            - all biogenic and land management-related CH4,  N2O, non-biogenic CO2, HFCs and PFCs emissions
-            - land management CO2 removals
+            The PCF of the product:
 
-            Excluding: 
-            - biogenic CO2 uptake.
+            Including:
+            - All fossil emissions (CO2, CH4, N2O, HFCs, SF6, NF3, PFCs, HFEs, PFPEs, CFCs and HCFSs) from stationary/mobile combustion, industrial processes and fugitive emissions 
+            - All land sector-related related emissions (CO2, N2O, PFCs)
+            - All biogenic emissions (biogenic CH4, biogenic CO2)
+            - Land management removals and technological removals 
+
+            Excluding:
+            - Biogenic Product CO2 uptake
           x-unit: kgCO2e/declared unit
           x-comment: | 
-            PCF (Excl. biogenic CO2 withdrawal) = fossilGhgEmissions + landUseChangeGhgEmissions + landManagementBiogenicCO2Emissions + biogenicNonCO2Emissions + landManagementBiogenicCO2Removals
+            PCF (Excl. biogenic CO2 uptake) = fossilGhgEmissions + landUseChangeGhgEmissions + landManagementBiogenicCO2Emissions + biogenicNonCO2Emissions + landManagementBiogenicCO2Removals
           x-rule: SHALL
           x-term: PCF Excluding biogenic CO2 uptake 
           x-methodology: 3.3.1
           $ref: '#/components/schemas/Decimal'
         pcfIncludingBiogenicCO2Uptake:
           description: |
-            The PCF of the product including: 
-            - all emissions from fossil sources
-            - all biogenic and land management-related CH4,  N2O, non-biogenic CO2, HFCs and PFCs emissions
-            - land management CO2 removals
-            - biogenic CO2 uptake.
+            The PCF of the product:
+
+            Including:
+            - All fossil emissions (CO2, CH4, N2O, HFCs, SF6, NF3, PFCs, HFEs, PFPEs, CFCs and HCFSs) from stationary/mobile combustion, industrial processes and fugitive emissions 
+            - All land sector-related related emissions (CO2, N2O, PFCs)
+            - All biogenic emissions (biogenic CH4, biogenic CO2)
+            - Land management removals and technological removals 
+            - Biogenic Product CO2 uptake
 
           x-unit: kgCO2e/declared unit
           x-comment: |
@@ -792,11 +796,13 @@ components:
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
         landManagementFossilGhgEmissions:
           description: |
-            Fossil CO2 and N2O emissions due to land management practices.
+            Fossil CO2, N2O, fossil CH4, HFCs and PFCs emissions due to land 
+            management practices. 
+            
             Note: 'fossilGhgEmissions' already includes these emissions.
           x-unit: kgCO2e/declared unit
           x-rule: BIO-2027
-          x-term: Land management fossil emissions
+          x-term: Fossil emissions - land management
           x-methodology: 3.3.2.4
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
         landManagementBiogenicCO2Emissions:
@@ -837,7 +843,7 @@ components:
           description: |
             CO2 removed directly from the atmosphere or via biogenic CO2 capture. Subject to reporting requirements.
           x-unit: kgCO2e/declared unit
-          x-rule: TECH-RM
+          x-rule: CCS
           x-term: Technological CO2 removals
           x-methodology: 3.3.2.5
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
@@ -881,11 +887,12 @@ components:
           description: |
             The biogenic carbon content of the packaging (mass of carbon).
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
+          x-unit: kgC/declared unit
           x-term: Packaging biogenic carbon content
           x-methodology: 3.3.1.1
         outboundLogisticsGhgEmissions:
           description: |
-            Emissions resulting from outbound logistics hould be calculated and reported 
+            Emissions resulting from outbound logistics should be calculated and reported 
             separately up to the point where another company (e.g., customer) 
             takes over responsibility for the product (i.e. own or pay for the outbound
             logistics). MUST be undefined if  the company calculating and exchanging the 
@@ -958,14 +965,14 @@ components:
           description: |
             The carbon content (both biogenic and fossil) from recycled material in the product (mass of carbon).
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
-          x-unit: kgCO2e/declared unit
+          x-unit: kgC/declared unit
           x-rule: SHOULD
           x-term: Recycled carbon content
           x-methodology: 3.3.2.2
         landAreaOccupation:
           description: |
             The amount of agricultural land occupied in reporting year to produce the product.
-          x-unit: (m2/annum) / declared unit
+          x-unit: (m2/year) / declared unit
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
           x-term: Land occupation
           x-methodology: 3.3.2.4
@@ -1217,11 +1224,14 @@ components:
               version: "3.7"          
         exemptedEmissionsPercent:
           description: |
-            The percentage of emissions excluded from PCF, expressed as a decimal number. 
+            The percentage of emissions excluded from PCF. 
           note: string<decimal> in 3.0, was Number in 2.x. Removed upper boundary of 5%.
           x-term: Exemption rules
           x-methodology: 3.3.1.2
           $ref: '#/components/schemas/Decimal'
+          examples:
+            - "5.3"
+            - "10.4"
         exemptedEmissionsDescription:
           description: |
             Rationale behind exclusion of specific PCF emissions, CAN be the empty string if no emissions were excluded.
