@@ -935,6 +935,17 @@ components:
           x-term: CCU credit certification
           x-methodology: 3.3.2.5
           x-rule: CCU
+        ccsTechnologicalCO2CaptureInvolved:
+          description: |
+            Indicates whether CCS (including BECCS) take place within the scope and boundary of the product carbon footprint. 
+            
+            If 'true', `ccsTechnologicalCO2Capture`, `technologicalCO2Removals` and `technologicalCO2CaptureOrigin` shall be defined if known and available.
+
+            If false, `ccsTechnologicalCO2Capture`, `technologicalCO2Removals` and `technologicalCO2CaptureOrigin` shall be undefined.
+          type: boolean
+          x-term: Technological CO2 capture with geological storage
+          x-rule: SHALL
+          x-methodology: 3.3.2.5
         ccsTechnologicalCO2Capture:
           description: |
             The amount of CO2 captured with Carbon Capture and Storage (CCS) technologies.
