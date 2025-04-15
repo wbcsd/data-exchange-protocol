@@ -625,6 +625,22 @@ components:
             product, excluding radiative forcing.
           x-unit: kgCO2e/declared unit
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
+        packagingEmissionsIncluded:
+          description: |
+            A boolean flag indicating whether packaging emissions are included in the PCF (<{CarbonFootprint/pCfExcludingBiogenic}>, <{CarbonFootprint/pCfIncludingBiogenic}>).
+          summary: |
+            True or False to indicate whether packaging emissions are including in the PCF.
+          type: boolean
+        packagingGhgEmissions:
+          description: |
+            Emissions resulting from the packaging of the product.
+            TODO: If present, the value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg of CO2 equivalent per kilogram` (`kgCO2e / declared unit`), expressed as a [=decimal=] equal to or greater than zero.
+            The value MUST NOT be defined if <{CarbonFootprint/packagingEmissionsIncluded}> is `false`.
+          summary: |
+            Emissions resulting from the packaging of the product. The value MUST NOT 
+            be defined if packagingEmissionsIncluded is False.
+          $ref: '#/components/schemas/PositiveOrZeroDecimal'
+          x-unit: kgCO2e/declared unit
         characterizationFactors:
           description: |
             Advisement: DEPRECATED in 3.0. Superseded by <{CarbonFootprint/ipccCharacterizationFactorsSources}>.
@@ -946,22 +962,6 @@ components:
             If emissions exempted, rationale behind exclusion of specific PCF emissions.
           Advisement: This property will become OPTIONAL in version 3 of the Technical Specifications.
           type: string
-        packagingEmissionsIncluded:
-          description: |
-            A boolean flag indicating whether packaging emissions are included in the PCF (<{CarbonFootprint/pCfExcludingBiogenic}>, <{CarbonFootprint/pCfIncludingBiogenic}>).
-          summary: |
-            True or False to indicate whether packaging emissions are including in the PCF.
-          type: boolean
-        packagingGhgEmissions:
-          description: |
-            Emissions resulting from the packaging of the product.
-            TODO: If present, the value MUST be calculated per <{CarbonFootprint/declaredUnit|declared unit}> with unit `kg of CO2 equivalent per kilogram` (`kgCO2e / declared unit`), expressed as a [=decimal=] equal to or greater than zero.
-            The value MUST NOT be defined if <{CarbonFootprint/packagingEmissionsIncluded}> is `false`.
-          summary: |
-            Emissions resulting from the packaging of the product. The value MUST NOT 
-            be defined if packagingEmissionsIncluded is False.
-          $ref: '#/components/schemas/PositiveOrZeroDecimal'
-          x-unit: kgCO2e/declared unit
         allocationRulesDescription:
           description: |
             If present, a description of any allocation rules applied and the rationale explaining how the selected approach aligns with [=PACT Methodology=] rules (see Section 3.3.1.4).
@@ -1451,7 +1451,7 @@ components:
           properties:
             pfIds:
               type: array
-              description: The list of Product Ids that have been published or updated by the data owner.
+              description: The list of Product Footprint Ids that have been published or updated by the data owner.
               items:
                 type: string
                 format: uuid
