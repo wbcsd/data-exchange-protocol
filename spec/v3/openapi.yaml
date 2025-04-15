@@ -17,7 +17,7 @@ info:
 
     SHALL = Required to fill in
     BIO = Required if biogenic carbon is above threshold, 0 if not applicable, blank if unknown or unavalaible
-    BIO-2027 = Required as of 2027 if biogenic carbon above threshold, 0 if not applicable, blank if unknown or unavalaible
+    BIO-2027 = Required per 31/12/2027 if biogenic carbon above threshold, 0 if not applicable, blank if unknown or unavalaible
     CCU = Required if CCU applicable, 0 if not applicable, blank if unknown or unavailable
     CCS = Required if CCS applicable, 0 if not applicable, blank if unknown or unavailable
     TECH-RM = Required if technological removals applicable, 0 if not applicable, blank if unknown or unavailable
@@ -771,7 +771,7 @@ components:
           description: |
             The biogenic carbon content of the product (mass of carbon). 
           x-unit: kgC/declared unit
-          x-rule: SHALL-BIO
+          x-rule: BIO
           x-term: Biogenic carbon content
           x-methodology: 3.3.2.4
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
@@ -780,7 +780,7 @@ components:
             GHG emissions from land-use change, such as deforestation or conversion
             from natural forest to plantation forest, that cause carbon stock loss. 
           x-unit: kgCO2e/declared unit
-          x-rule: SHALL-BIO
+          x-rule: BIO
           x-term: Land use and land use change emissions or LUC emissions
           x-comment: Replaces dLucGhgEmissions
           x-methodology: 3.3.2.4
@@ -796,7 +796,7 @@ components:
             Fossil CO2 and N2O emissions due to land management practices.
             Note: 'fossilGhgEmissions' already includes these emissions.
           x-unit: kgCO2e/declared unit
-          x-rule: SHALL-BIO-2027
+          x-rule: BIO-2027
           x-term: Land management fossil emissions
           x-methodology: 3.3.2.4
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
@@ -805,7 +805,7 @@ components:
             Biogenic CO2 emissions occurring due to recurring land management actions on 
             land within the same land-use category.
           x-unit: kgCO2e/declared unit
-          x-rule: SHALL-BIO-2027
+          x-rule: BIO-2027
           x-term: Land management CO2 emissions
           x-methodology: 3.3.2.4
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
@@ -821,7 +821,7 @@ components:
           description: |
             Temporary CO2 uptake of biomass in the product at point of leaving factory gate.
           x-unit: kgCO2e/declared unit
-          x-rule: SHALL-BIO
+          x-rule: BIO
           x-term: Biogenic CO2 uptake
           x-methodology: 3.3.2.4
           $ref: '#/components/schemas/NegativeOrZeroDecimal'
@@ -830,7 +830,7 @@ components:
           description: |
             CH4 emissions from land management practices and  the oxidation and transformation or degradation of biomass.
           x-unit: kgCO2e/declared unit
-          x-rule: SHALL-BIO
+          x-rule: BIO
           x-term: Biogenic non-CO2 emissions
           x-methodology: 3.3.2.4
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
@@ -838,7 +838,7 @@ components:
           description: |
             CO2 removed directly from the atmosphere or via biogenic CO2 capture. Subject to reporting requirements.
           x-unit: kgCO2e/declared unit
-          x-rule: SHALL-TECH-RM
+          x-rule: TECH-RM
           x-term: Technological CO2 removals
           x-methodology: 3.3.2.5
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
@@ -904,7 +904,7 @@ components:
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
           x-unit: kgC/declared unit
           x-term: CCU carbon content
-          x-rule: SHALL-CCU
+          x-rule: CCU
           x-methodology: 3.3.2.5
         technologicalCO2CaptureOrigin:
           description: |
@@ -916,7 +916,7 @@ components:
             'technological CO2 capture origin' data point for the PCF.
           type: string
           x-term: Technological CO2 capture origin
-          x-rule: SHALL-CCU,SHALL-CCS
+          x-rule: CCU,CCS
           x-methodology: 3.3.2.5
         ccuCalculationApproach:
           description: |
@@ -927,7 +927,7 @@ components:
             - Credit 
           x-term: CCU calculation approach
           x-methodology: 3.3.2.5
-          x-rule: SHALL-CCU
+          x-rule: CCU
         ccuCreditCertification:
           description: |
             (Only for Credit Approach) a URL to documentation verifying the certification from an external bookkeeping scheme. 
@@ -935,14 +935,14 @@ components:
           $ref: '#/components/schemas/Uri' 
           x-term: CCU credit certification
           x-methodology: 3.3.2.5
-          x-rule: SHALL-CCU
+          x-rule: CCU
         ccsTechnologicalCO2Capture:
           description: |
             The amount of CO2 captured with Carbon Capture and Storage (CCS) technologies.
           $ref: '#/components/schemas/NegativeOrZeroDecimal'
           x-unit: kgCO2e/declared unit
           x-term: Technological CO2 capture with geological storage
-          x-rule: SHALL-CCS
+          x-rule: CCS
           x-methodology: 3.3.2.5
         recycledCarbonContent:
           description: |
