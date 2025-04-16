@@ -83,7 +83,7 @@ paths:
          4. A pagination link MUST be valid for at least 180 seconds after creation
          5. The data recipient CAN call the pagination link more than once
          6. Upon each call, the host system
-              - MUST return the same set of Product Footprints
+              - MUST return the same set of Product Footprints (TODO: is this realistic?)
               - MUST NOT return more product footprints than requested in case 
                 <{listFootprints/limit}> was defined by a [=data recipient=]
               - MUST return a `Link` header conforming with the previous description in case 
@@ -113,6 +113,8 @@ paths:
         /3/footprints/?geography=FR&x-atq-invoice-id=12345&limit=100
         ```
 
+        Note: the ODataV4 `$filter` syntax present in v2.x has been deprecated in v3.0.
+
       tags: [footprint]
       parameters:
       - name: limit
@@ -133,14 +135,6 @@ paths:
       - $ref: '#/components/parameters/validAfter'
       - $ref: '#/components/parameters/validBefore'
       - $ref: '#/components/parameters/status'
-      - name: '$filter'
-        in: query
-        description: |
-          Syntax as defined by the ODatav4 specification. Note: this parameter has been deprecated in 3.0.0.
-        allowEmptyValue: true
-        schema:
-          type: string
-        deprecated: true
       responses:
         '200':
           description: |
