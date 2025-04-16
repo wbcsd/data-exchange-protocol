@@ -1973,7 +1973,7 @@ components:
   parameters:
     productId:
       name: productId
-      description: One or more product IDs. Will return all footprints which have a corresponding ID in their `productIds` attribute. Note that a footprint itself can also have multiple product IDs.
+      description: One or more product IDs. Will return all footprints which have a corresponding ID in their `productIds` attribute. The match must be-case insensitive. Note that a footprint itself can also have multiple product IDs.
       in: query
       explode: true
       schema: 
@@ -1982,7 +1982,7 @@ components:
           $ref: '#/components/schemas/Urn'
     companyId:
       name: companyId
-      description: One or more company IDs. Will return all footprints which have a corresponding ID in their `companyId` attribute.
+      description: One or more company IDs. Will return all footprints which have a corresponding ID in their `companyId` attribute. The match must be case-insensitive. Note that a footprint itself can also have multiple company IDs.
       in: query
       explode: true
       schema: 
@@ -1991,7 +1991,7 @@ components:
           $ref: '#/components/schemas/Urn'
     geography:
       name: geography
-      description: One or more geographic specifiers. Values specified can denote `geographyRegion` or `geographyCountry` or `geographyCountrySubdivision`. Will return all footprints within the specified geography(s). 
+      description: One or more geographic specifiers. Values specified can denote `geographyRegion` or `geographyCountry` or `geographyCountrySubdivision`. Will return all footprints within the specified geography(s). The match must be-case insensitive. 
       in: query
       explode: true
       schema:
@@ -2000,7 +2000,7 @@ components:
           type: string
     classification:
       name: classification
-      description: One or more product classifications. Will return all footprints with corresponding values in the `productClassifications` attribute. Note that a footprint itself can have multiple classifications.
+      description: One or more product classifications. Will return all footprints with corresponding values in the `productClassifications` attribute. Note that a footprint itself can have multiple classifications. The match must be-case insensitive. 
       in: query
       explode: true
       schema:
@@ -2034,7 +2034,7 @@ components:
     status:
       name: status
       description: |
-        If present, MUST be "Active" or "Deprecated". If not specified, will return footprints regardless of status. 
+        If present, MUST be "Active" or "Deprecated". If not specified, will return footprints regardless of status. The match must be-case insensitive. 
       in: query
       schema:
         type: string
