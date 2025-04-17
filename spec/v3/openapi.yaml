@@ -793,7 +793,7 @@ components:
             Fossil CO2, N2O, fossil CH4, HFCs and PFCs emissions due to land 
             management practices. 
             
-            Note: 'fossilGhgEmissions' already includes these emissions.
+            Note: `fossilGhgEmissions` already includes these emissions.
           x-unit: kgCO2e/declared unit
           x-rule: BIO-2027
           x-term: Fossil emissions - land management
@@ -913,7 +913,7 @@ components:
             enabling tracking of CO2 across the value chain.
 
             For CCS: Traceability data, i.e. information on location injection site, geological reservoir as part of the overall 
-            'technological CO2 capture origin' data point for the PCF.
+            technological CO2 capture origin data point for the PCF.
           type: string
           x-term: Technological CO2 capture origin
           x-rule: CCU,CCS
@@ -940,9 +940,9 @@ components:
           description: |
             Indicates whether CCS (including BECCS) take place within the scope and boundary of the product carbon footprint. 
             
-            If 'true', `ccsTechnologicalCO2Capture`, `technologicalCO2Removals` and `technologicalCO2CaptureOrigin` shall be defined if known and available.
+            If `true`, `ccsTechnologicalCO2Capture`, `technologicalCO2Removals` and `technologicalCO2CaptureOrigin` shall be defined if known and available.
 
-            If false, `ccsTechnologicalCO2Capture`, `technologicalCO2Removals` and `technologicalCO2CaptureOrigin` shall be undefined.
+            If `false`, `ccsTechnologicalCO2Capture`, `technologicalCO2Removals` and `technologicalCO2CaptureOrigin` shall be undefined.
           type: boolean
           x-term: Technological CO2 capture with geological storage
           x-rule: SHALL
@@ -1120,7 +1120,7 @@ components:
           x-methodology: 3.2.3
         geographyRegionOrSubregion:
           description: |
-            If present, the value MUST conform to data type {{RegionOrSubregion}}. See [[#dt-carbonfootprint-scope]] for further details. Additionally, see the [=PACT Methodology=] Section 6.1.2.2.
+            If present, the value MUST be one of the [=UN geographic regions=] or [=UN geographic subregions=]. See [[#dt-carbonfootprint-scope]] for further details. Additionally, see the [=PACT Methodology=] Section 6.1.2.2.
 
           summary: |
             The geographic representation of the PCF should be reported at different 
