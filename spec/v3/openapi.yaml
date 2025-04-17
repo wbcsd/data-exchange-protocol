@@ -113,7 +113,7 @@ paths:
         /3/footprints/?geography=FR&x-atq-invoice-id=12345&limit=100
         ```
 
-        Note: the ODataV4 `$filter` syntax present in v2.x has been deprecated in v3.0.
+        Advisement: the ODataV4 `$filter` syntax present in v2.x has been deprecated in v3.0.
 
       tags: [footprint]
       parameters:
