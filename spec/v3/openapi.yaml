@@ -724,7 +724,7 @@ components:
           x-term: PCF Excluding biogenic CO2 uptake 
           x-methodology: 3.3.1
           $ref: '#/components/schemas/Decimal'
-        pcfIncludingBiogenicCO2Uptake:
+        pcfIncludingBiogenicUptake:
           description: |
             The PCF of the product:
 
