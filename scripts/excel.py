@@ -184,7 +184,7 @@ def generate_excel(ws, schema, types):
             else:
                 description += paragraph.strip() + " "
         description = description.strip()
-        print(description)
+        logging.debug(description)
         
         # experiment: change the word property to attribute, use regex for word boundary
         description = re.sub(r'\bproperty\b', 'attribute', description)
