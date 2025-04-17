@@ -71,7 +71,7 @@ paths:
         ### Pagination
 
          1. The host system MUST NOT return more product footprints than requested in 
-            case a <{listFootprints/limit}> parameter was specified by a [=data recipient=]
+            case a [=limit=] parameter was specified by a [=data recipient=]
          2. The host system MUST return an HTTP `Link` header if there are additional 
             ProductFootprints ready to be retrieved, such that
               - The `Link` header conforms to [[!RFC8288]]
@@ -79,13 +79,12 @@ paths:
               - the target URI of the `Link` header is absolute
               - The value of `host` of the target URI is equal to the value of the `host` 
                 request header from the original `ListFootprints` HTTP request
-         3. The target URI from the `Link` header is called a <dfn>pagination link</dfn>.
+         3. The target URI from the `Link` header is called a pagination link.
          4. A pagination link MUST be valid for at least 180 seconds after creation
          5. The data recipient CAN call the pagination link more than once
          6. Upon each call, the host system
-              - MUST return the same set of Product Footprints (TODO: is this realistic?)
               - MUST NOT return more product footprints than requested in case 
-                <{listFootprints/limit}> was defined by a [=data recipient=]
+                [=limit=] was defined by a [=data recipient=]
               - MUST return a `Link` header conforming with the previous description in case 
                 there are additional ProductFootprints available
                 ```http
@@ -141,7 +140,7 @@ paths:
             The host system succesfully returns a list of product footprints. This list 
             MAY be incomplete, in which case the host system MUST return a Link header
             conforming to [[!RFC8288]], also see [[#pagination]]. The list MUST NOT be 
-            larger than the <{listFootprints/limit}>, if specified. 
+            larger than the [=limit=], if specified. 
 
             ```http
             HTTP/1.1 200 OK
@@ -653,7 +652,7 @@ components:
 
             For example: a PCF for a 12 liter bottle of Ethanol states 2 kg of CO2e in 
             emissions. In this case the declared unit is 12 liter Ethanol, thus the
-            `declaredUnitOfMeasurement` is 'liter', and the `declaredUnitAmount` is 12.
+            `declaredUnitOfMeasurement` is "liter", and the `declaredUnitAmount` is 12.
           type: string
           enum:
             - liter
@@ -1160,12 +1159,14 @@ components:
           - "Southern Europe"
         geographyCountry:
           description: |
-            If present, the value MUST conform to data type [=ISO3166CC=]. See [[#dt-carbonfootprint-scope]] for further details.
+            If present, the value MUST conform to the [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) 
+            country code.
+            See [[#dt-carbonfootprint-scope]] for further details.
           summary: |
             The geographic representation of the PCF should be reported at different levels
             of granularity, depending on the preference of the data owner (e.g., at a 
             plant, region, or country level). This field indicates the country to which 
-            the PCF refers. The country name must be according to ISO 3166-2 alpha-2 
+            the PCF refers. The country name must be according to ISO 3166-1 alpha-2 
             country code (https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)
           type: string
           pattern: '^[A-Z]{2}$'
@@ -1178,14 +1179,14 @@ components:
             - DE
         geographyCountrySubdivision:
           description: |
-            If present, a ISO 3166-2 Subdivision Code. See [[#dt-carbonfootprint-scope]] for further details.
+            If present, a [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2) country and subdivision code. See [[#dt-carbonfootprint-scope]] for further details.
           summary: |
             The geographic representation of the PCF should be reported at different 
             levels of granularity, depending on the preference of the data owner 
             (e.g., at a plant, region, or country level). This attribute represents 
             the most granular (i.e. "most specific") geography, i.e. the specific 
             subdivision within a given country, for example New York State within 
-            the USA. Follows ISO 3166-2.
+            the USA. Follows ISO 3166-2 (https://en.wikipedia.org/wiki/ISO_3166-2)
           type: string
           pattern: '^[A-Z]{2}-[A-Z0-9]{1,3}$'
           comment: ISO 3166-2
@@ -1730,7 +1731,7 @@ components:
       description: | 
         Notification that the request for PCF(s) has been fulfilled by the data owner. 
         This notification will be sent by the data owner back to the data recipient in 
-        response to a ProductFootprintRequest.Created event, see [=RequestCreatedEvent=].
+        response to a ProductFootprintRequest.Created event, see [[#request-created-event]].
 
         The data object contains the original requestEventId and the resulting list of 
         ProductFootprints which conform to the set of criteria specified by the data 
@@ -1740,7 +1741,7 @@ components:
         RequestCreated event.
 
         If there are no product footprints to return, the data owner MUST send a
-        [=RequestRejectedEvent=] instead.
+        [[#request-rejected-event]] instead.
 
         If the [=data recipient=] cannot be reached by the [=data owner=], the data owner 
         SHOULD retry to send the event at a later time, using an exponential backoff

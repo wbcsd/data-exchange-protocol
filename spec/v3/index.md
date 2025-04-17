@@ -57,7 +57,7 @@ The methodological foundation of the specification is the PACT Methodology Versi
 
 Comments regarding this document are welcome. Please file issues directly on [GitHub](https://github.com/wbcsd/data-exchange-protocol/), or send them to [pact@wbcsd.org](mailto:pact@wbcsd.org).
 
-This document was published by [Partnership for Carbon Transparency (PACT)](https://www.carbon-transparency.org/) after an update to the [[!PACT-METHODOLOGY|PACT Methodology]]) was made.
+This document was published by [Partnership for Carbon Transparency (PACT)](https://www.carbon-transparency.org/) after an update to the [[!PACT-METHODOLOGY|PACT Methodology]] was made.
 
 The technical specifications within this document are the result of consensus processes by PACT members and the WBCSD.
 
@@ -692,7 +692,7 @@ See [=PACT Methodology=] for more details.
 
 ## Undefined Properties
 
-In a JSON object, a property is deemed 'undefined' if it is either not present in the object or explicitly set to `null`. For example:
+In a JSON object, a property is deemed undefined if it is either not present in the object or explicitly set to `null`. For example:
 
 ```json
 {
@@ -701,7 +701,7 @@ In a JSON object, a property is deemed 'undefined' if it is either not present i
 }
 ```
 
-In this example, `property2` is considered 'undefined'. 
+In this example, `property2` is considered undefined. 
 Also, any property not present in the object, for example `property3` is also considered `undefined`.
 
 
@@ -736,17 +736,19 @@ A [=host system=] MUST implement the following actions:
  - [Action GetFootprint](#action-getfootprint)
  - [Action Events](#action-events)
 
-The host system MUST make its footprints available to the data recipient through BOTH [=Action ListFootprints=] AND [=Action Events=]. 
+The host system MUST make its footprints available to the data recipient through BOTH [=Action ListFootprints=] AND [=Action Events=].
+
+A host system SHOULD implement access management to control what PCF's it accepts and makes available to which [=data recipients=].
 
 A [=host system=] MUST offer its actions over HTTPS only. 
 
 A [=host system=] MUST authenticate any client prior to using the above actions. 
 
-A [=host system=] MUST offer all actions except [=Action Authenticate=] under the same [=BaseUrl=], e.g. `https://api.example.org/`. Note that for version 3 these actions can be found under `$base-url$/3/...`
+A [=host system=] SHOULD offer an [=OpenId Provider Configuration Document=] for the client to obtain the token endpoint for [Action Authenticate](#api-auth).
 
-A [=host system=] SHOULD offer an [=OpenId Provider Configuration Document=] for the client to obtain the token endpoint for [=Action Authenticate=].
+A [=host system=] MUST offer all actions except [Action Authenticate](#api-auth) under the same Base URL, e.g. `https://api.example.org/`, or `https://example.org/pact-api/` Note that for version 3 these actions can be found under `$base-url$/3/...`
 
-A [=host system=] MAY offer the [=OpenId Provider Configuration Document=] and/or [=Action Authenticate=] under a [=AuthBaseUrl=] different from [=BaseUrl=], e.g. `https://id.example.org` (see [[#api-auth]])
+A [=host system=] MAY offer the [=OpenId Provider Configuration Document=] or [Action Authenticate](#api-auth) under a different URL (Auth Base Url): `$auth-base-url$/.well-known/openid-configuration` or `$auth-base-url$/auth/token`. See [[#api-auth]].
 
 
 
@@ -1267,15 +1269,15 @@ Summary of changes:
 This version introduces additional mandatory functionality:
 
 1. A new authentication flow ([[#api-auth]]) is specified which allows discovery
-    of the [=AuthEndpoint=] through an [=OpenId Provider Configuration Document=].
+    of token endpoint through an [=OpenId Provider Configuration Document=].
     The flow is backwards-compatible with the 2.0.x-series of authentication flow
-    based on the [=AuthSubpath=]`/auth/token` syntax.
+    based on the `/auth/token` syntax.
 
 ## Version 2.0.1-20231026 (Oct 26, 2023) ## {#changelog-2.0.1-20231026}
 
 Summary of changes:
 
-1. clarification of the error responses of the [=Action Authenticate=] endpoint, plus addition of an example error response in line with [[!rfc6749]]
+1. clarification of the error responses of the [Action Authenticate](#api-auth) endpoint, plus addition of an example error response in line with [[!rfc6749]]
 
 ## Version 2.0.1-20230927 (Sep 27, 2023) ## {#changelog-2.0.1-20230927}
 
