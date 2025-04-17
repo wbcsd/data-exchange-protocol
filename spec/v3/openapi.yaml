@@ -1406,16 +1406,16 @@ components:
         ```json
         {
           "technologicalDQR": "5.0",
-          "temporalDQR": "3.0",
           "geographicalDQR": "2.0"
+          "temporalDQR": "3.0",
         }
         ```        
       type: object
       x-methodology: 4.2.3
       required:
       - technologicalDQR
-      - temporalDQR
       - geographicalDQR
+      - temporalDQR
       properties:
         technologicalDQR:
           description: |
@@ -1430,18 +1430,6 @@ components:
           x-term: Technological representativeness
           x-rule: SHALL
           $ref: '#/components/schemas/Decimal'
-        temporalDQR:
-          description: |
-            Quantitative data quality rating (DQR) based on the data quality matrix,
-            scoring the temporal representativeness of the sources used for 
-            the final absolute PCF excluding biogenic CO2 uptake calculation based on
-            weighted average of all inputs.
-
-            The value MUST be between `1` and `5` inclusive.
-          note: string<decimal> in 3.0, was Number in 2.x
-          x-term: Temporal / Time representativenes
-          x-rule: SHALL
-          $ref: '#/components/schemas/Decimal'
         geographicalDQR:
           description: |
             Quantitative data quality rating (DQR) based on the data quality matrix,
@@ -1454,11 +1442,23 @@ components:
           x-term: Geographical representativenes
           x-rule: SHALL
           $ref: '#/components/schemas/Decimal'
+        temporalDQR:
+          description: |
+            Quantitative data quality rating (DQR) based on the data quality matrix,
+            scoring the temporal representativeness of the sources used for 
+            the final absolute PCF excluding biogenic CO2 uptake calculation based on
+            weighted average of all inputs.
+
+            The value MUST be between `1` and `5` inclusive.
+          note: string<decimal> in 3.0, was Number in 2.x
+          x-term: Temporal / Time representativenes
+          x-rule: SHALL
+          $ref: '#/components/schemas/Decimal'
     Verification:
       title: Verification
       description: |
         Contains the verification in conformance with the PACT Methodology.
-      note: Renamed from 'Assurance' in 3.0
+      note: Renamed from `Assurance` in 3.0
       example: |
         Example value for the case that 42% of the product’s overall GHG emissions covered by the data quality assessment:
         ```json 
