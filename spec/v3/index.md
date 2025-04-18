@@ -814,11 +814,12 @@ with the following request parameters:
 Example request:
 
 ```http
-POST /auth/token
+POST /auth/token HTTP/1.1
 Host: id.example.com
 Content-Type: application/x-www-form-urlencoded
+Authorization: Basic {base64(client_id:client_secret)}
 
-grant_type=client_credentials&client_id=your-client-id&client_secret=your-client-secret
+grant_type=client_credentials
 ```
 
 ### Token Response
@@ -849,7 +850,7 @@ For details and possible values for `error` see [[!rfc6749]] section 5.2
 Once obtained, the access token must be included in the Authorization header of API requests, following the OAuth 2.0 Bearer Token Usage standard (RFC 6750):
 
 ```http
-GET <base-url>/protected-resource
+GET <base-url>/3/<action> HTTP/1.1
 Authorization: Bearer <access_token>
 ```
 
