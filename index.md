@@ -8,7 +8,9 @@ The PACT Network (previously Pathfinder Network) is an open and global network o
 The PACT Technical Specifications describe the PCF data model and PCF exchange API. For guidance on calculating a PCF, please refer to the latest PACT Methodology on [https://carbon-transparency.org](https://www.carbon-transparency.org/pact-methodology)
 
 All recent versions of the Technical Specifications are published here, including OpenAPI schema and a Simplified Data Model in Excel format.
-For sources and to contribute, please visit the [WBCSD GitHub repository](https://github.com/wbcsd/data-exchange-protocol)
+We welcome contributions, please visit the [WBCSD GitHub repository](https://github.com/wbcsd/data-exchange-protocol)
+
+For timelines, see [RELEASE PLAN](RELEASE-PLAN.html)
 
 ## 3.0.0-pre (living document)
 

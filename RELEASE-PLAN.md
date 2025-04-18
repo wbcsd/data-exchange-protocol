@@ -1,8 +1,6 @@
-# Background and Context
+# Release Plan
 
 This release plan indicates timelines of both the PACT Methodology and PACT Technical Specifications.
-
-**As always, the timelines are subject to change.**
 
 ## PACT Methodology
 
@@ -25,11 +23,11 @@ This release plan indicates timelines of both the PACT Methodology and PACT Tech
 | [v3.0.0](https://wbcsd.github.io/data-exchange-protocol/v3/) | Feb 2025 | Apr 2025 | |
 
 ## Notes on Timeline Updates
-* April 2024: Release pushed from Q3 to Q4 2024 (both methodology and tech specs) given learnings in Q1 2024 requiring more time to reach consensus and alignment on all critical topics.
-* June 2024: Release pushed from Q4 2024 to Q1 2025 (both methodology and tech specs) given known delay in biogenic chapter and need to use the extra quarter to finalize alignment between Methodology and Technology.
-* December 2024: Deprecation and Sunset dates for V2 need to be determined.
-* February 2025: Removal of Sunset date, going forward we will only set a of Deprecation date to prevent confusion.
 * April 2025: Sunset dates for V2.x set to April 2026.
+* February 2025: Removal of Sunset date, going forward we will only set a of Deprecation date to prevent confusion.
+* December 2024: Deprecation and Sunset dates for V2 need to be determined.
+* June 2024: Release pushed from Q4 2024 to Q1 2025 (both methodology and tech specs) given known delay in biogenic chapter and need to use the extra quarter to finalize alignment between Methodology and Technology.
+* April 2024: Release pushed from Q3 to Q4 2024 (both methodology and tech specs) given learnings in Q1 2024 requiring more time to reach consensus and alignment on all critical topics.
 
 ## Definitions
 <dl>
