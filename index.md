@@ -10,14 +10,14 @@ The PACT Technical Specifications describe the PCF data model and PCF exchange A
 All recent versions of the Technical Specifications are published here, including OpenAPI schema and a Simplified Data Model in Excel format.
 We welcome contributions, please visit the [WBCSD GitHub repository](https://github.com/wbcsd/data-exchange-protocol)
 
-For timelines, see [RELEASE PLAN](RELEASE-PLAN.html)
+For timelines, see [RELEASE PLAN](release-plan)
 
 ## 3.0.0-pre (living document)
 
-[PACT Technical Specifications 3.0.0](v3/index.html) <br>
+[PACT Technical Specifications 3.0.0](v3/) <br>
 [PACT OpenAPI 3.0.0](v3/openapi.yaml) <br>
 [PACT Simplified Data Model 3.0.0 (Excel)](v3/pact-simplified.xlsx) <br>
-[FAQ](v3/faq.html) <br>
+[FAQ](v3/faq) <br>
 
 ## 3.0.0 Draft for Consultation
 
