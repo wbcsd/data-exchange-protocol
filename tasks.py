@@ -66,6 +66,7 @@ def copy_file(input, output):
 def build_task(dependencies, task):
     for dependency in dependencies:
         if dependency.outdated():
+            logging.info(f"Building {dependency.target}")
             dependency.makedir()
             task(dependency.sources[0], dependency.target)
 
@@ -74,6 +75,7 @@ def build_task(dependencies, task):
 def build_bikeshed(dependencies):
     for dependency in dependencies:
         if dependency.outdated():
+            logging.info(f"Building {dependency.target}")
             dependency.makedir()
             run(f"bikeshed -f --no-update --allow-nonlocal-files spec {dependency.sources[0]} {dependency.target}")
             patchup(dependency.sources[0], dependency.target)
@@ -82,6 +84,7 @@ def build_bikeshed(dependencies):
 def build_mermaid(dependencies):
     for dependency in dependencies:
         if dependency.outdated():
+            logging.info(f"Building {dependency.target}")
             dependency.makedir()
             # running with .github/puppeteer-config.json to avoid rendering issues on GitHub Actions
             run(f"mmdc -i {dependency.sources[0]} -o {dependency.target} --theme default -p .github/puppeteer-config.json")
