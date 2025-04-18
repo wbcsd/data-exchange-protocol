@@ -262,10 +262,11 @@ def generate_operation(output, path, method, operation):
     query = "?params=value&..." if "parameters" in operation and any(p["in"] == "query" for p in operation["parameters"]) else ""
     output.write(f"```HTTP\n{method.upper()} {path}{query}\n```\n")
     output.write(f"{operation['description']}\n\n")
+    namespace = operation['summary'].replace("Action ", "").replace(" ", "-").lower()
     logging.debug(operation['description'])
     if operation.get("parameters"):
         output.write("### Parameters\n")
-        write_defs_start(output)
+        write_defs_start(output, namespace)
         for param in operation["parameters"]:
             #file.write(f"- **{param['name']}** ({param['in']}): {param['description']}\n")
             # output.write(f"<tr>\n  <td><dfn>{param['name']}</dfn> ({param['in']})\n")
@@ -281,7 +282,7 @@ def generate_operation(output, path, method, operation):
                     output.write(variant["description"])
                     output.write("\n\n**Request Body**\n\n")
                     output.write(f"`content-type: {content_type}`\n")
-                    write_defs_start(output)
+                    write_defs_start(output, namespace)
                     for name, property in variant["properties"].items():
                         write_property(output, variant, name, property, termdef=False, recursive=True)
                     write_defs_end(output)
@@ -290,7 +291,7 @@ def generate_operation(output, path, method, operation):
             else:
                 output.write("\n\n**Request Body**\n\n")
                 output.write(f"`content-type: {content_type}`\n")
-                write_defs_start(output)
+                write_defs_start(output, namespace)
                 for name, property in content["schema"]["properties"].items():
                     write_property(output, variant, name, property, termdef=False)
                 write_defs_end(output)
