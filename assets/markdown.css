@@ -8,6 +8,7 @@
 		--body-color: black;
 		--link-color: #1d5cb5;
 		--logo-url: url(logo.svg);
+		--border-color: #aaa;
 	}
 }
 @media (prefers-color-scheme: dark) {
@@ -15,6 +16,7 @@
 	  --body-bg: black;
 	  --body-color: white;
 	  --link-color: #58a7f9;
+	  --border-color: #eaeaea;
 	  --logo-url: url(logo-dark.svg);
 	}
   }
@@ -107,22 +109,20 @@ ol {
 hr {
 	border: 0;
 	height: 1px;
-	border-bottom: 1px solid;
+	border-bottom: 1px solid var(--border-color);
 }
 
 h1 {
 	font-size: 2em;
 	margin-top: 0;
 	padding-bottom: 0.3em;
-	border-bottom-width: 1px;
-	border-bottom-style: solid;
+	border-bottom: 1px solid var(--border-color);
 }
 
 h2 {
 	font-size: 1.5em;
 	padding-bottom: 0.3em;
-	border-bottom-width: 1px;
-	border-bottom-style: solid;
+	border-bottom: 1px solid var(--border-color);
 }
 
 h3 {
@@ -148,7 +148,7 @@ table {
 
 th {
 	text-align: left;
-	border-bottom: 1px solid;
+	border-bottom: 1px solid var(--border-color);
 }
 
 th,
@@ -157,8 +157,14 @@ td {
 }
 
 table > tbody > tr + tr > td {
-	border-top: 1px solid;
+	border-top: 1px solid var(--border-color);
 }
+
+/*
+tr:nth-child(even) {
+	background-color: var(--vscode-editor-background, #fafafc);
+}
+*/
 
 blockquote {
 	margin: 0;
