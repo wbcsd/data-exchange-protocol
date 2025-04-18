@@ -143,10 +143,10 @@ The license can be found in [[#license]].
 :: The carbon (equivalent) emissions relating to a product. Products can be any kind of item exchanged between entities, including metric or volumetric quantities of a product.
      The <{ProductFootprint}> data model is a digital representation of a PCF in accordance with the [=PACT Methodology=].
 
-: <dfn>Solution Provider</dfn>
+: <dfn data-export>Solution Provider</dfn>
 :: An entity providing technical solutions to companies by implementing and offering [=host systems=].
 
-: <dfn>Solution</dfn>
+: <dfn data-export>Solution</dfn>
 :: Any PACT-conformant software host system is called a solution.
 
 : <dfn>UN geographic region</dfn>, <dfn>UN geographic subregion</dfn>
@@ -271,7 +271,7 @@ In future versions the deprecated properties `version` and `updated` will be rem
 
 ## Validity Period ## {#validity-period}
 
-The <dfn>validity period</dfn> is the time interval during which the 
+The validity period is the time interval during which the 
 ProductFootprint is declared as valid for use by a receiving [=data recipient=]. 
 
 The validity period is OPTIONAL defined by the properties <{ProductFootprint/validityPeriodStart}> (including) and <{ProductFootprint/validityPeriodEnd}> (excluding).
@@ -427,7 +427,7 @@ Below is a list of examples of <{ProductFootprint/productIds}> as used in the <{
 
 ## Product Classification URN's ## {#product-classification-urns}
 
-Similar to [=ProductIds=] a ProductClassification MUST be a URN as specified in [[RFC8141]]: 
+Similar to [product identifiers](#product-identifiers) any product classification MUST be a URN as specified in [[RFC8141]]: 
 
 ```
 urn:namespace:namespace-specific-string
@@ -1060,19 +1060,19 @@ Data model changes:
 Properties added:
   - <{CarbonFootprint/declaredUnitOfMeasurement}>
   - <{CarbonFootprint/declaredUnitAmount}>
-  - <{CarbonFootprint/pcfExcludingBiogenicCO2Withdrawal}>
-  - <{CarbonFootprint/pcfIncludingBiogenicCO2Withdrawal}>
+  - <{CarbonFootprint/pcfExcludingBiogenicUptake}>
+  - <{CarbonFootprint/pcfIncludingBiogenicUptake}>
   - <{CarbonFootprint/biogenicNonCO2Emissions}>
-  - <{CarbonFootprint/biogenicCO2Withdrawal}>
+  - <{CarbonFootprint/biogenicCO2Uptake}>
   - <{CarbonFootprint/landUseChangeGhgEmissions}>
   - <{CarbonFootprint/landCarbonLeakage}>
   - <{CarbonFootprint/landManagementBiogenicCO2Emissions}>
   - <{CarbonFootprint/landManagementBiogenicCO2Removals}>
-  - <{CarbonFootprint/uncertifiedLandManagementCO2Removals}>
+  - <{CarbonFootprint/landManagementFossilGhgEmissions}>
   - <{CarbonFootprint/landAreaOccupation}>
   - <{CarbonFootprint/outboundLogisticsGhgEmissions}>
   - <{CarbonFootprint/ipccCharacterizationFactors}>
-  - <{CarbonFootprint/ccuOrigin}>
+  - <{CarbonFootprint/technologicalCO2CaptureOrigin}>
   - <{CarbonFootprint/ccuCarbonContent}>
   - <{CarbonFootprint/ccuCreditCertification}>
   - <{CarbonFootprint/ccuCalculationApproach}>
@@ -1120,7 +1120,7 @@ Summary of changes:
     - `landUseGhgEmissions`
     - `landUseCarbonLeakage`
     - `landManagementBiogenicCO2Removals`
-    - `biogenicCO2Withdrawal`
+    - `biogenicUptake`
     - `otherBiogenicGhgEmissions`
     - `biogenicNonCO2Emissions`
     - `landManagementGhgEmissions`
@@ -1144,28 +1144,28 @@ Summary of changes:
 2. Removal of `CarbonFootprint/characterizationFactors` deprecated in 2.2 replaced by `CarbonFootprint/ipccCharacterizationFactors`
 3. Removal of `CarbonFootprint/crossSectoralStandardsUsed` deprecated in 2.3 replaced by `CarbonFootprint/crossSectoralStandards`
 4. Property <{ProductFootprint/comment}> now optional (ADR31).
-5. Property <{CarbonFootprint/boundaryProcessesDescription>}> now optional (ADR31).
+5. Property <{CarbonFootprint/boundaryProcessesDescription}> now optional (ADR31).
 6. Property <{CarbonFootprint/exemptedEmissionsDescription}> now optional (ADR31).
-7. Assurance <{Assurance/providername}> now optional
+7. Assurance `Assurance/providername` now optional
 8. Remove `CarbonFootprint/packagingEmissionsIncluded`.
 9. DQR ratings `technologicalDQR`, `temporalDQR`, `geographicalDQR`, `completenessDQR`, `reliabilityDQR` now range between 1 and 5.
 
 ## Version 3.0.0-20250127 (Jan 27, 2025) ## {#changelog-3.0.0-20250127}
 
 Summary of changes:
-1. Removal of property `assurance` on <{Assurance}> object (ADR44)
+1. Removal of property `assurance` on `Assurance` object (ADR44)
 
 ## Version 3.0.0-20241212 (Dec 12, 2024) ## {#changelog-3.0.0-20241212}
 
 Summary of changes:
 1. Updated references to the upcoming PACT Framework 3.0 
-2. Deprecation of property <{ProductFootprint/productCategoryCpc}> for 3.0 (ADR37)
+2. Deprecation of property `ProductFootprint/productCategoryCpc` for 3.0 (ADR37)
 3. Property <{ProductFootprint/comment}> advised optional 3.0 (ADR31)
 4. Property <{CarbonFootprint/boundaryProcessesDescription}> advised optional 3.0 (ADR31)
 5. Property <{CarbonFootprint/exemptedEmissionsDescription}> advised optional 3.0 ADR31)
-6. Deprecation of property <{CarbonFootprint/characterizationFactors}> for 3.0 (ADR28)
+6. Deprecation of property `CarbonFootprint/characterizationFactors` for 3.0 (ADR28)
 7. Removal of `crossSectoralStandardsUsed` which has been deprecated in 2.3 and is now superseeded by extensible crossSectoralStandards (ADR32).
-8. Assurance/<{Assurance/providername}> advised optional, after being mistakenly made mandatory in version 2.x
+8. `Assurance/providername` advised optional, after being mistakenly made mandatory in version 2.x
 9. Consistent Decimal typing for all fractional numbers (ADR39). The data type of the following fields has been changed from Number to Decimal: `primaryDataShare`, `exemptedEmissionsPercent`, `coveragePercent`, `technologicalDQR`, `temporalDQR`, `geographicalDQR`, `completenessDQR`, `reliabilityDQR`
 
 
@@ -1180,7 +1180,7 @@ Summary of changes:
 2. Added chapter [[#product-identifiers]] including specification and examples for a common URN namespace syntax for <{ProductFootprint/productIds}> (ADR34)
 3. Included URN namespace syntax for product classifications (ADR37)
 4. Added optional property <{ProductFootprint/productClassifications}> (ADR37)
-5. Advisement that property <{ProductFootprint/productCategoryCpc}> will be deprecated in version 3 (ADR37)
+5. Advisement that property `ProductFootprint/productCategoryCpc` will be deprecated in version 3 (ADR37)
 
 ## Version 2.3.0-20240904 (September 4, 2024) ## {#changelog-2.3.0-20240904}
 Summary of changes:
@@ -1191,7 +1191,7 @@ Summary of changes:
 1. Revision of <{ProductFootprint/productDescription}> to be more descriptive, following decision to keep attribute as mandatory
 2. Indication of deprecation of `crossSectoralStandardsUsed` and introduction of <{CarbonFootprint/crossSectoralStandards}>, reflecting consensus reached on ADR32
 3. Addition of advisement that `piece` will be added as a `DeclaredUnit` in v3; addition of attribute <{CarbonFootprint/productMassPerDeclaredUnit}>, per consensus reached on ADR33.
-4. Clarification added to <{ProductFootprint/statusComment}> attribute, per consensus reached in Methodology WG, to include descriptive reasoning behind a given change in status.
+4. Clarification added to `ProductFootprint/statusComment` attribute, per consensus reached in Methodology WG, to include descriptive reasoning behind a given change in status.
 5. Update contact email, Editor, and Former Editors
 
 
@@ -1211,7 +1211,7 @@ Summary of changes:
 
 Summary of changes:
 1. fixed <{CarbonFootprint/dqi}> value types in all examples
-2. clarification of <{DataQualityIndicators}> by removing misleading link to [=decimal=]
+2. clarification of <{DataQualityIndicators}> by removing misleading link to `decimal`
 
 ## Version 2.2.1-20240430 (Apr 30, 2024) ## {#changelog-2.2.1-20240430}
 
@@ -1232,18 +1232,18 @@ Summary of changes:
 2. fixed the incomplete `assurance` example and moved it to the appropriate section
 3. addition of missing examples in the [[#business-cases-async-events]] section
 4. addition of advisement to <{CarbonFootprint/exemptedEmissionsPercent}> stating that the upper boundary will be removed in version 3
-5. clarification of how to handle error codes in [=ListResponseBody=] and [=GetResponseBody=]
+5. clarification of how to handle error codes in [=Action ListFootprints=] and [=Action GetFootprints=]
 
 ## Version 2.2.0-20240327 (Mar 27, 2024) ## {#changelog-2.2.0-20240327}
 
 Summary of changes:
 
 1. addition of the new [[#business-cases]] chapter
-2. clarification of [=PF Request Event=] syntax, including the instruction that the
-    [=ProductFootprintFragment=] should refer to one single productm
-3. addition of a recommendation to include [=ProductIds=] in the PF Request Event request body
+2. clarification of `PF Request Event` syntax, including the instruction that the
+    `ProductFootprintFragment` should refer to one single product
+3. addition of a recommendation to include `ProductIds` in the PF Request Event request body
 4. fixed the incorrect the value of `pCfExcludingBiogenic` in all relevant examples
-5. addition of advisements to properties <{ProductFootprint/productCategoryCpc}>,
+5. addition of advisements to properties `ProductFootprint/productCategoryCpc`,
     <{ProductFootprint/comment}>, <{CarbonFootprint/boundaryProcessesDescription}>, and
     <{CarbonFootprint/exemptedEmissionsDescription}> stating that they will become OPTIONAL in
     version 3
@@ -1258,8 +1258,8 @@ Summary of changes:
 
 Summary of changes:
 
-1. deprecation of the <{CarbonFootprint/characterizationFactors}> property
-2. addition of a new <{CarbonFootprint/ipccCharacterizationFactorsSources}> property
+1. deprecation of the `CarbonFootprint/characterizationFactors` property
+2. addition of a new `CarbonFootprint/ipccCharacterizationFactorsSources` property
 3. updates to Action [=Action Events=] implementation requirement - changed from OPTIONAL to MANDATORY
 4. addition of an Example for a ProductFootprintFragment indicating a query for a PCF via productId
 5. addition of Examples of a PCF request and response Action Event flow
@@ -1286,15 +1286,15 @@ Summary of changes:
 1. definition fixes to properties <{CarbonFootprint/primaryDataShare}> and <{CarbonFootprint/dqi}> to resolve a discrepancy with the latest version of the Pathfinder Framework:
     previously, the 2 properties were defined in a mutually-exclusive fashion (either one must be defined but *NOT* both) whereas the Pathfinder Framework Version 2.0 defines them as follows (Section 4.2.1, Page 39):
     ```Initially, companies shall calculate and report, as part of PCF data exchange, on at least one of the following metrics: [...]```
-2. addition of references to SI Units to data type {{DeclaredUnit}}
+2. addition of references to SI Units to data type `DeclaredUnit`
 
 
 ## Version 2.0.1-20230720 (Jul 20, 2023) ## {#changelog-2.0.1-20230720}
 
 Summary of changes:
 
-1. clarification to specification of property <{CarbonFootprint/fossilGhgEmissions}>, <{CarbonFootprint/pCfExcludingBiogenic}>, <{CarbonFootprint/pCfIncludingBiogenic}>, and <{CarbonFootprint/biogenicCarbonWithdrawal}>
-2. in addition, further clarification on the bounds of the property <{CarbonFootprint/biogenicCarbonWithdrawal}> which must be equal to `0` or less than `0`
+1. clarification to specification of property `CarbonFootprint/fossilGhgEmissions`, `CarbonFootprint/pCfExcludingBiogenic`, `CarbonFootprint/pCfIncludingBiogenic`, and `CarbonFootprint/biogenicCarbonWithdrawal`
+2. in addition, further clarification on the bounds of the property `CarbonFootprint/biogenicCarbonWithdrawal` which must be equal to `0` or less than `0`
 
 
 ## Version 2.0.1-20230629 (Jun 29, 2023) ## {#changelog-2.0.1-20230629}
@@ -1312,13 +1312,13 @@ This version fixes 5 definition incorrectness
     defined with unit `kg of CO2e / declaredUnit`. The unit is now defined as `kg / declaredUnit`
 2. fix to the `referencePeriod` <a href="#filtering">Filter Example</a>
 3. fixed typo in the definition of <{CarbonFootprint/referencePeriodEnd}>
-4. fixed definition of <{CarbonFootprint/landManagementGhgEmissions}>: previously, it was incorrectly defined as a non-negative decimal
-5. fixed definition of <{CarbonFootprint/biogenicCarbonWithdrawal}>: previously, it was incorrectly defined as a non-negative decimal
+4. fixed definition of `CarbonFootprint/landManagementGhgEmissions`: previously, it was incorrectly defined as a non-negative decimal
+5. fixed definition of `CarbonFootprint/biogenicCarbonWithdrawal`: previously, it was incorrectly defined as a non-negative decimal
 
 
 In addition, this version:
 
-1. clarifies in [[#action-listfootprints]] the semantics of the [=Filter=] processing being OPTIONAL by introducing section [[#filtering]]
+1. clarifies in [[#action-listfootprints]] the semantics of the `filter` processing being OPTIONAL by introducing section [[#filtering]]
 2. clarifies that a [=host system=] must return HTTP error status codes if it does not implement the events endpoint (see [[#action-events]])
 3. clarified the [=PCF=] term definition
 4. fixed linking to semantic versioning document
@@ -1352,11 +1352,11 @@ Version 2 and the data model in this specification.
     (v2.0.0) semantics; i.e. *no* semantical update to the specification
     whatsoever
 3. formatting fix to the definition of property <{ProductFootprint/productDescription}>
-4. Updates to data type <{Assurance}>:
-    1. documentation fix to definition of property <{Assurance/coverage}>:
+4. Updates to data type `Assurance`:
+    1. documentation fix to definition of property `Assurance/coverage`:
         was marked as mandatory (`M`) and is now marked as `O` in accordance with its definition and the Pathfinder Framework;
         i.e. *no* semantical update to the specification whatsoever
-    2. addition of property <{Assurance/assurance}> in accordance with the Pathfinder Framework
+    2. addition of property `Assurance/assurance` in accordance with the Pathfinder Framework
 
 
 ## Version 2.0.0 (Feb 20, 2023) ## {#changelog-2.0.0}
@@ -1364,7 +1364,7 @@ Version 2 and the data model in this specification.
 Summary of the major changes and concepts added with this version:
 
 1. update to Pathfinder Framework Version 2.0, including data model changes which are not backwards-compatible, including
-    1. addition of data type <{DataQualityIndicators}> and <{Assurance}> to <{CarbonFootprint}>
+    1. addition of data type <{DataQualityIndicators}> and `Assurance` to <{CarbonFootprint}>
 2. event-based communication between [=host systems=] ([[#action-events]])
 3. support for data model extensions ([[#datamodelextension]])
 4. life cycle management of a <{ProductFootprint}> ([[#lifecycle]])
@@ -1375,41 +1375,41 @@ Overview of the changes to the data model compared with the data model version 1
 
 - changes to data type <{ProductFootprint}>:
   - properties <{ProductFootprint/validityPeriodStart}> and <{ProductFootprint/validityPeriodEnd}>: added
-  - life cycle properties <{ProductFootprint/precedingPfIds}>, <{ProductFootprint/status}> and <{ProductFootprint/statusComment}>: added
+  - life cycle properties <{ProductFootprint/precedingPfIds}>, <{ProductFootprint/status}> and `ProductFootprint/statusComment`: added
 - addition of data type <{DataQualityIndicators}> to <{CarbonFootprint}> via property <{CarbonFootprint/dqi}>
-- addition of data type <{Assurance}> to <{CarbonFootprint}> via property <{CarbonFootprint/assurance}>
+- addition of data type `Assurance` to <{CarbonFootprint}> via property `CarbonFootprint/assurance`
 -  changes to data type <{CarbonFootprint}>:
-  - property <{CarbonFootprint/characterizationFactors}>: added
-  - property <{CarbonFootprint/exemptedEmissionsPercent}>: added
-  - property <{CarbonFootprint/primaryDataShare}>: was mandatory is now optional
-  - property <{CarbonFootprint/pCfExcludingBiogenic}>: added
-  - property <{CarbonFootprint/pCfIncludingBiogenic}>: added
+  - property `CarbonFootprint/characterizationFactors`: added
+  - property `CarbonFootprint/exemptedEmissionsPercent`: added
+  - property `CarbonFootprint/primaryDataShare`: was mandatory is now optional
+  - property `CarbonFootprint/pCfExcludingBiogenic`: added
+  - property `CarbonFootprint/pCfIncludingBiogenic`: added
   - property <{CarbonFootprint/fossilCarbonContent}>: added
-  - property <{CarbonFootprint/biogenicCarbonWithdrawal}>: added
+  - property `CarbonFootprint/biogenicCarbonWithdrawal`: added
   - property <{CarbonFootprint/biogenicAccountingMethodology}>: added
   - property <{CarbonFootprint/packagingEmissionsIncluded}>: added
   - property <{CarbonFootprint/exemptedEmissionsDescription}>: added
-  - property <{CarbonFootprint/packagingGhgEmissions}: added
-  - property <{CarbonFootprint/uncertaintyAssessmentDescription}>: added
+  - property <{CarbonFootprint/packagingGhgEmissions}>: added
+  - property `CarbonFootprint/uncertaintyAssessmentDescription`: added
   - property `reportingPeriodStart`: renamed to <{CarbonFootprint/referencePeriodStart}>
   - property `reportingPeriodEnd`: renamed to <{CarbonFootprint/referencePeriodEnd}>
   - property `emissionFactorSources`: renamed to <{CarbonFootprint/secondaryEmissionFactorSources}>
   - property <{CarbonFootprint/aircraftGhgEmissions}>: added
 - changes to data type `BiogenicEmissions`:
   - all properties moved to <{CarbonFootprint}> and the data type removed fully, plus
-  - property `landUseChangeGhgEmissions` substituted with properties <{CarbonFootprint/iLucGhgEmissions}> and <{CarbonFootprint/dLucGhgEmissions}>
-  - property `landUseEmissions` renamed to <{CarbonFootprint/landManagementGhgEmissions}>
-  - property `otherEmissions` renamed to <{CarbonFootprint/otherBiogenicGhgEmissions}>
-- data type [=CompanyId=]: added, including instructions on custom company codes
-- changes to data type [=ProductId=]: addition of instructions for CAS, InChi and custom URN's.
+  - property `landUseChangeGhgEmissions` substituted with properties `CarbonFootprint/iLucGhgEmissions` and `CarbonFootprint/dLucGhgEmissions`
+  - property `landUseEmissions` renamed to `CarbonFootprint/landManagementGhgEmissions`
+  - property `otherEmissions` renamed to `CarbonFootprint/otherBiogenicGhgEmissions`
+- data type `CompanyId`: added, including instructions on custom company codes
+- changes to data type `ProductId`: addition of instructions for CAS, InChi and custom URN's.
 
 ### API Changes ### {#changelog-2.0.0-api}
 
 - [=Action ListFootprints=]:
-    1. rename of [=filter=] HTTP query parameter `filter` to `$filter`
+    1. rename of HTTP query parameter `filter` to `$filter`
     2. introduce additional allowed `$filter` operators and properties:
         - Additional operators: `eq`, `lt`, `le`, `gt`, `and`, `any`
-        - Additional properties: <{ProductFootprint/created}>, <{ProductFootprint/updated}>, <{ProductFootprint/productCategoryCpc}>, <{CarbonFootprint/geographyCountry}>, <{CarbonFootprint/referencePeriodStart}>, <{CarbonFootprint/referencePeriodEnd}>, <{ProductFootprint/companyIds}>, <{ProductFootprint/productIds}>.
+        - Additional properties: <{ProductFootprint/created}>, <{ProductFootprint/updated}>, `ProductFootprint/productCategoryCpc`, <{CarbonFootprint/geographyCountry}>, <{CarbonFootprint/referencePeriodStart}>, <{CarbonFootprint/referencePeriodEnd}>, <{ProductFootprint/companyIds}>, <{ProductFootprint/productIds}>.
     3. Addition of alternative [=Action ListFootprints=] response `HttpStatusCode` 202, and pull-based request/response semantics
     4. pagination is now mandatory. See [[#pagination]]
 
@@ -1419,7 +1419,7 @@ Overview of the changes to the data model compared with the data model version 1
 
 The following changes have been applied for version 1.0.1
 
-1. Addition of data type {{RegionOrSubregion}}, cleaning up the definition of property <{CarbonFootprint/geographyRegionOrSubregion}>
+1. Addition of data type `RegionOrSubregion`, cleaning up the definition of property <{CarbonFootprint/geographyRegionOrSubregion}>
 2. Fix to the JSON representation specification in `crosssectoralstandardset-json`
 3. Change to the minimum size of the set <{CarbonFootprint/productOrSectorSpecificRules}> from `0` to `1`, aligning with the overall specification.
 4. Removal of unreferenced data type `Boolean` from the data model section
@@ -1427,11 +1427,11 @@ The following changes have been applied for version 1.0.1
 6. Addition of an authentication flow specification in chapter [[#api-auth]]
 7. Improved wording of request parameter `Filter` in section [[#action-listfootprints]]
 8. Improved wording in section [[#api-error-handling]], specifically
-    - addition of [=error response=] definition
-    - improved specification of the [=error response=] JSON representation
-    - consolidated specification of overall [=error response=] representation as a HTTP Response
+    - addition of error response definition
+    - improved specification of the error response JSON representation
+    - consolidated specification of overall error response representation as a HTTP Response
     - improvements to previous subsection "List of error codes", plus merging into overall section [[#api-error-handling]]
-    - addition of list of example situations when an [=error response=] is returned
+    - addition of list of example situations when an error response is returned
 9. Addition of Section [[#api-error-response-example]]
 10. Addition of term [=interoperable=] to section [[#terminology]], plus linking to in respective sections
 11. Addition of Terms [=UN geographic region=] and [=UN geographic subregion=]
@@ -1487,11 +1487,6 @@ The following changes have been applied for version 1.0.1
     "authors": [],
     "href": "https://openid.net/specs/openid-connect-discovery-1_0.html",
     "title": "OpenID Connect Discovery 1.0 incorporating errata set 1"
-  },
-  "SI-Unit": {
-    "authors": [ "Bureau International des Poids et Mesures" ],
-    "href": "https://www.bipm.org/documents/20126/41483022/SI-Brochure-9-EN.pdf/2d2b50bf-f2b4-9661-f402-5f9d66e4b507",
-    "title": "The International System of Units (SI) – 9th edition Version 2.01"
   }
 }
 </pre>

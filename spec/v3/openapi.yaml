@@ -71,7 +71,7 @@ paths:
         ### Pagination
 
          1. The host system MUST NOT return more product footprints than requested in 
-            case a [=limit=] parameter was specified by a [=data recipient=]
+            case a `limit` parameter was specified by a [=data recipient=]
          2. The host system MUST return an HTTP `Link` header if there are additional 
             ProductFootprints ready to be retrieved, such that
               - The `Link` header conforms to [[!RFC8288]]
@@ -84,7 +84,7 @@ paths:
          5. The data recipient CAN call the pagination link more than once
          6. Upon each call, the host system
               - MUST NOT return more product footprints than requested in case 
-                [=limit=] was defined by a [=data recipient=]
+                `limit` was defined by a [=data recipient=]
               - MUST return a `Link` header conforming with the previous description in case 
                 there are additional ProductFootprints available
                 ```http
@@ -140,7 +140,7 @@ paths:
             The host system succesfully returns a list of product footprints. This list 
             MAY be incomplete, in which case the host system MUST return a Link header
             conforming to [[!RFC8288]], also see [[#pagination]]. The list MUST NOT be 
-            larger than the [=limit=], if specified. 
+            larger than the `limit`, if specified. 
 
             ```http
             HTTP/1.1 200 OK
@@ -289,7 +289,7 @@ paths:
          2. enabling a [=data owner=] to notify a [=data recipient=] on 
             updates to 1 or more Product Footprints: `PublishedEvent`
 
-        The Action Events endpoint accepts CloudEvent events (see [[!CE]]) encoded 
+        The Action Events endpoint accepts CloudEvent events (see [[!CE]] and [[!CE-JSON]]) encoded 
         in "Structured Content Mode" (see [[!CE-Structured-Content-Mode]]). 
 
         The CloudEvents are encoded in the "application/cloudevents+json" media type and
@@ -299,7 +299,7 @@ paths:
         - [`RequestCreatedEvent`](#request-created-event)
         - [`RequestFulfilledEvent`](#request-fulfilled-event)
         - [`RequestRejectedEvent`](#request-rejected-event)
-        - [`PublishedEvent`](#productfootprint-published-event)
+        - [`PublishedEvent`](#published-event)
 
         A host system MUST validate the event and return an HTTP 4xx status code if the
         event is invalid. 
@@ -348,7 +348,7 @@ components:
         specified in [[#api]].
 
         Conceptually, the data type <{ProductFootprint}> is modeled as a multi-purpose
-        container for product-specific emissions factors which is supported by
+        container for product-specific emission factors which is supported by
         extensibility through [=Data Model Extensions=].
 
         Data Model Extensions enable [=data owners=] to exchange additional information
@@ -620,8 +620,8 @@ components:
       - productMassPerDeclaredUnit
       - referencePeriodStart
       - referencePeriodEnd
-      - pcfExcludingBiogenicCO2Uptake
-      - pcfIncludingBiogenicCO2Uptake
+      - pcfExcludingBiogenicUptake
+      - pcfIncludingBiogenicUptake
       - fossilGhgEmissions
       - fossilCarbonContent
       - ipccCharacterizationFactors
@@ -736,7 +736,7 @@ components:
 
           x-unit: kgCO2e/declared unit
           x-comment: |
-            PCF (Incl. biogenic CO2 withdrawal) = FossilGHGEmissions + landUseChangeGHGEmissions + landManagementBiogenicCO2Emissions + biogenicNonCO2Emissions + landManagementBiogenicCO2Removals + biogenicCO2Withdrawal
+            PCF (Incl. biogenic CO2 withdrawal) = FossilGHGEmissions + landUseChangeGHGEmissions + landManagementBiogenicCO2Emissions + biogenicNonCO2Emissions + landManagementBiogenicCO2Removals + biogenicCO2Uptake
           x-rule: SHALL
           x-term: PCF Including biogenic CO2 uptake
           x-methodology: 3.3.1
@@ -1586,11 +1586,11 @@ components:
         SHOULD retry to send the event at a later time, using an exponential backoff
         strategy. It SHOULD abandon sending the event after 72 hours. 
 
-        The data object of the [=PublishedEvent=] contains the list of Product Footprint 
+        The data object of the `PublishedEvent` contains the list of Product Footprint 
         *IDs* that have been published or updated by the data owner.
         
         The data recipient can retrieve the *actual* Product Footprints by calling the 
-        [=GetFootprint=] action on the data owner's systems.
+        [=Action GetFootprint=] action on the data owner's systems.
       type: object
       examples:
       - | 
