@@ -1,6 +1,4 @@
-<div class="logo"></div>
-
-# FAQ PACT 3.0
+# FAQ
 
 ## Introduction
 
@@ -46,7 +44,7 @@
     
     The release date is planned for late April 2025. 
     
-    [Register for the events here to be part of the launch](https://wbcsd.my.salesforce-sites.com/GuestEventPageV2?aId=a5sVj0000004pFF)! 
+    [Register for the events here to be part of the launch](https://wbcsd.my.salesforce-sites.com/GuestEventPageV2?aId=a5sVj0000004pFF) 
     
 - **Will there be a public review period for V3?**
     
@@ -54,9 +52,9 @@
     
 - **How can the community provide feedback on V3?**
     
-    If you have a GitHub account, please log onto the platform and raise an issue directly on [GitHub](https://eur03.safelinks.protection.outlook.com/?url=https%3A%2F%2Fwbcsd.us7.list-manage.com%2Ftrack%2Fclick%3Fu%3D09b189c2ec748a1656aa81c18%26id%3D612d2488dc%26e%3D42f54b98a7&data=05%7C02%7CChakravarty%40wbcsd.org%7C43e695ccad444b99498c08dd50181300%7C0a4366413742468781073a60c81e1317%7C0%7C0%7C638754786505053669%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=WukabIiOsEBYjfwYLZOwhpTMdYtKrmx1vN5Fj0n6wEc%3D&reserved=0). Alternatively, please share your feedback via email to: [pact@wbcsd.org](mailto:pact@wbcsd.org) and [schuurmans@wbcsd.org](mailto:schuurmans@wbcsd.org).
+    If you have a GitHub account, please log onto the platform and raise an issue directly on [GitHub](https://github.com/wbcsd/data-exchange-protocol/issues). Alternatively, please share your feedback via email to: [pact@wbcsd.org](mailto:pact@wbcsd.org) and [schuurmans@wbcsd.org](mailto:schuurmans@wbcsd.org).
     
-    For in-depth information on rationale behind changes, please visit GitHub the [PACT Backlog](https://eur03.safelinks.protection.outlook.com/?url=https%3A%2F%2Fwbcsd.us7.list-manage.com%2Ftrack%2Fclick%3Fu%3D09b189c2ec748a1656aa81c18%26id%3Db5c21f667a%26e%3D42f54b98a7&data=05%7C02%7CChakravarty%40wbcsd.org%7C43e695ccad444b99498c08dd50181300%7C0a4366413742468781073a60c81e1317%7C0%7C0%7C638754786505068046%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=zLqSB%2FSRoexxWS%2BbSu%2FTVhjyf%2F%2ByHsj7VWz4K6uIxGA%3D&reserved=0) and [PACT on GitHub](https://eur03.safelinks.protection.outlook.com/?url=https%3A%2F%2Fwbcsd.us7.list-manage.com%2Ftrack%2Fclick%3Fu%3D09b189c2ec748a1656aa81c18%26id%3Dd96185f3c0%26e%3D42f54b98a7&data=05%7C02%7CChakravarty%40wbcsd.org%7C43e695ccad444b99498c08dd50181300%7C0a4366413742468781073a60c81e1317%7C0%7C0%7C638754786505081919%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=%2BcKCIvGjNAiAtR2BhGfMssdLyUlXmnzM5xZwC1UNKTE%3D&reserved=0).
+    For in-depth information on rationale behind changes, please visit the [PACT Backlog](https://backlog.carbon-transparency.org) and [PACT on GitHub](https://github.com/wbcsd/data-exchange-protocol).
     
 - **Will there be future releases beyond V3?**
     

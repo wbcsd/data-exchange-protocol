@@ -47,14 +47,21 @@ def is_repo_pristine(directory = None):
 # Generate html from markdown
 def render_markdown(input, output: str):
     rel_root_path = (output.count('/')-1) * "../"
-    template = f"""<html>
-    <head>
+    header = f"""<!doctype html>
+<html lang="en">
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type"><html>
     <link href="{rel_root_path}assets/markdown.css" rel="stylesheet" />
-    </head>
-    <body>
+</head>
+<body>
     """
+    footer = """</body>
+</html>"""
     with open(input, "r") as input_file:
-        html = template + markdown.markdown(input_file.read()) + "</body></html>"
+        html = header + markdown.markdown(
+            input_file.read(), 
+            extensions=['tables','md_in_html']
+            ) + footer
         with open(output, "w") as output_file:
             output_file.write(html)
 
@@ -128,6 +135,7 @@ def build(c):
         ])
     build_task([
         Dependency("build/index.html", ["index.md"]), 
+        Dependency("build/release-plan.html", ["RELEASE-PLAN.md"]),
         Dependency("build/v3/faq.html", ["spec/v3/faq.md"])
         ], 
         render_markdown
