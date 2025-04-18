@@ -29,6 +29,7 @@ This release plan indicates timelines of both the PACT Methodology and PACT Tech
 * June 2024: Release pushed from Q4 2024 to Q1 2025 (both methodology and tech specs) given known delay in biogenic chapter and need to use the extra quarter to finalize alignment between Methodology and Technology.
 * December 2024: Deprecation and Sunset dates for V2 need to be determined.
 * February 2025: Removal of Sunset date, going forward we will only set a of Deprecation date to prevent confusion.
+* April 2025: Sunset dates for V2.x set to April 2026.
 
 ## Definitions
 <dl>
