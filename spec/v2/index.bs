@@ -3029,7 +3029,7 @@ Overview of the changes to the data model compared with the data model version 1
   - property <{CarbonFootprint/biogenicAccountingMethodology}>: added
   - property <{CarbonFootprint/packagingEmissionsIncluded}>: added
   - property <{CarbonFootprint/exemptedEmissionsDescription}>: added
-  - property <{CarbonFootprint/packagingGhgEmissions}: added
+  - property <{CarbonFootprint/packagingGhgEmissions}>: added
   - property <{CarbonFootprint/uncertaintyAssessmentDescription}>: added
   - property `reportingPeriodStart`: renamed to <{CarbonFootprint/referencePeriodStart}>
   - property `reportingPeriodEnd`: renamed to <{CarbonFootprint/referencePeriodEnd}>
