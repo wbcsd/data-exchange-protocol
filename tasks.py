@@ -135,6 +135,7 @@ def build(c):
         ])
     build_task([
         Dependency("build/index.html", ["index.md"]), 
+        Dependency("build/license.html", ["LICENSE.md"]),
         Dependency("build/release-plan.html", ["RELEASE-PLAN.md"]),
         Dependency("build/v3/faq.html", ["spec/v3/faq.md"])
         ], 

@@ -99,8 +99,7 @@ PACT would also like to expressly thank the 40+ solutions which implemented V2 o
 
 ## License ## {#section-license}
 
-The license can be found in [[#license]].
-
+Refer to [this license](https://docs.carbon-transparency.org/license) for use of this document. 
 
 # Terminology # {#terminology}
 

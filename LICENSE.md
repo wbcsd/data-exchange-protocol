@@ -1,4 +1,4 @@
-1.         Definitions.
+1          Definitions.
 
 1.1       "Database Rights" means, to the extent any content in the Licensed Material is subject to any sui generis database right under any applicable law, the rights to extract, reuse, reproduce, and Share all or a substantial portion of the content subject to such database right.
 
@@ -23,7 +23,7 @@
 1.11     "Use" means the practice or exercise of any of the Licensed Rights
 
 
-2.         License.
+2         License.
 
 2.1       Subject to the terms and conditions of this License, Licensor hereby grants User during the Term (as defined in Section 6.1), solely under the Licensed Rights, a non-exclusive, worldwide, royalty-free, non-sublicensable, non-transferable, irrevocable license to Use the Licensed Material solely to:
 a.         reproduce, but not Share (other than as permitted under Section 2.1(c)),
@@ -42,7 +42,7 @@ d.         Share (subject to compliance with Section 3.2) any Separate Derivativ
 2.3       User shall make any User and exercise any of the Licensed Rights solely in accordance and compliance with all applicable law, and User shall not infringe any intellectual property right of any third party and/or misappropriate any information or intellectual property of any third party.
 
 
-3.         Attribution.
+3         Attribution.
 
 3.1       If User Shares any Reproduction under Section 2.1(c), User must retain, and not change, obstruct, or obscure in such Reproduction, the following information:
 
@@ -68,7 +68,7 @@ d.         Share (subject to compliance with Section 3.2) any Separate Derivativ
 3.4       Nothing in this License constitutes or shall be construed to be, or shall imply, that User is, or User's use of the Licensed Material in any way is, connected with, or sponsored, endorsed, or granted official status by, Licensor or any other person associated with Licensor or to whom attribution is to be given under Section 3.1 or Section 3.2.
 
 
-4.         Ownership.
+4         Ownership.
 
 4.1       In connection with this License, and as between Licensor and User, Licensor is and shall remain the sole owner of all rights, title, and interest in and to any and all of the Licensed Rights and the Licensed Material.
 
@@ -79,7 +79,7 @@ d.         Share (subject to compliance with Section 3.2) any Separate Derivativ
 4.4       Licensor is in no way limited or restricted license, exercise, or exploit any of the Licensed Rights under any other terms or agreements, commercially or Non-Commercially, or to assign, transfer, or convey any of the Licensed Rights, all as decided by Licensor in its sole discretion.
 
 
-5.         Disclaimer of Warranties and Limitation of Liability.
+5         Disclaimer of Warranties and Limitation of Liability.
 
 5.1       Licensor offers, provides, makes available, and licenses the Licensed Material, and grants the license and Licensed Rights, "as is" and "as available" without any representations or warranties, express or implied.  Licensor hereby disclaims all representations and warranties, express, implied, statutory, or otherwise, under any law, including, without limitation, all representations and warranties of title, merchantability, fitness for a particular purpose, non-infringement, absence of latent or other defects, accuracy, or the presence or absence of errors, whether or not known or discoverable. Where disclaimers of warranties are limited by applicable law, this disclaimer applies to the greatest extent not limited by such applicable law.
 
@@ -88,7 +88,7 @@ d.         Share (subject to compliance with Section 3.2) any Separate Derivativ
 5.3       The disclaimer of representations and warranties and the exclusion and limitation of liability under Sections 5.1 and 5.2 shall be interpreted in a manner that, to the extent possible, most closely approximates an absolute disclaimer and waiver of all liability.
 
 
-6.         Term and Termination.
+6         Term and Termination.
 
 6.1       This License and the license and rights hereunder are effective from the time when User accepts and agrees to this License until the expiration or termination of the Licensed Rights or the termination of this Licensed under Section 6.2, whichever occurs earlier (the "Term").
 
@@ -97,7 +97,7 @@ d.         Share (subject to compliance with Section 3.2) any Separate Derivativ
 6.3       The provisions of Sections 1, 2.1(d) and 3.2 (with regard to any Separate Derivative created by User prior to the expiration or termination of this License), 4, 5, and 7, and this Section 6.3, shall survive any termination or expiration of this License.
 
 
-7.         Miscellaneous.
+7         Miscellaneous.
 
 7.1       User recognizes that any actual or potential violation, breach, or non-performance of, or default under, any provision in this License may cause irreparable injury to Licensor for which Licensor may have no adequate remedy at law. User agrees that Licensor shall be entitled to seek injunctive relief or specific performance, without need or obligation to post any bond, to enforce any obligation, agreement, covenant, term and condition under this License, in addition to any other rights and remedies available to Licensor, all as Licensor elects in its sole discretion.
  
