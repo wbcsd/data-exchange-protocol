@@ -99,7 +99,7 @@ PACT would also like to expressly thank the 40+ solutions which implemented V2 o
 
 ## License ## {#section-license}
 
-Refer to [this license](https://docs.carbon-transparency.org/license) for use of this document. 
+Refer to the [LICENSE](https://docs.carbon-transparency.org/license) for use of this document. 
 
 # Terminology # {#terminology}
 
@@ -279,7 +279,7 @@ If a validity period is specified, it is restricted to a time window between <{C
 
   - If specified, <{ProductFootprint/validityPeriodStart}> MUST be greater than or equal to  <{CarbonFootprint/referencePeriodEnd}>.
 
-  - If <{ProductFootprint/validityPeriodEnd}> is specified it MUST be less than or equal to {CarbonFootprint/referencePeriodEnd}> + 3 years.
+  - If <{ProductFootprint/validityPeriodEnd}> is specified it MUST be less than or equal to <{CarbonFootprint/referencePeriodEnd}> + 3 years.
 
 
 If *no validity period* is specified, the ProductFootprint is valid for 
