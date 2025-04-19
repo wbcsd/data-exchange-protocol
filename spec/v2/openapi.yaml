@@ -1565,7 +1565,7 @@ components:
             requestEventId:
               type: string
             error:
-              $ref: '#/components/schemas/ErrorResponse'
+              $ref: '#/components/schemas/Error'
     # ---------------
     # Error Responses
     Error:
