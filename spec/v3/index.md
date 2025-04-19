@@ -1022,11 +1022,6 @@ content-length: 0
 
 </div>
 
-# Appendix A: License # {#license}
-
-<pre class=include>
-path: ../../LICENSE.md
-</pre>
 
 
 # Appendix B: Changelog # {#changelog}
