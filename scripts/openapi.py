@@ -142,7 +142,7 @@ def write_property(output, type, name, property, termdef=True, recursive=False):
             output.write(f", {sanitize(property['comment'])}")
         output.write("</div>")
     if property.get("x-rule"):
-        output.write(f"<div class='x-rule'><a href='#units-and-validation-rules'>{property['x-rule']}</a>")
+        output.write(f"<div class='x-rule'><a href='#validation-rules'>{property['x-rule']}</a>")
         if property.get("comment") and not property.get("x-unit"):
             output.write(f", {sanitize(property['comment'])}")
         output.write("</div>")
