@@ -718,7 +718,16 @@ components:
             - Biogenic Product CO2 uptake
           x-unit: kgCO2e/declared unit
           x-comment: | 
-            PCF (Excl. biogenic CO2 uptake) = fossilGhgEmissions + landUseChangeGhgEmissions + landManagementBiogenicCO2Emissions + biogenicNonCO2Emissions + landManagementBiogenicCO2Removals
+            PCF (Excl. biogenic CO2 uptake) = 
+            PCF (Incl. biogenic CO2 uptake) = 
+              fossilGhgEmissions + 
+              landUseChangeGhgEmissions + 
+              landManagementBiogenicCO2Emissions + 
+              landManagementBiogenicCO2Removals + 
+              landUseChangeGhgEmissions + 
+              technologicalCO2Removals + 
+              ccsTechnologicalCO2Capture
+              biogenicNonCO2Emissions
           x-rule: SHALL
           x-term: PCF Excluding biogenic CO2 uptake 
           x-methodology: 3.3.1
@@ -736,7 +745,16 @@ components:
 
           x-unit: kgCO2e/declared unit
           x-comment: |
-            PCF (Incl. biogenic CO2 withdrawal) = FossilGHGEmissions + landUseChangeGHGEmissions + landManagementBiogenicCO2Emissions + biogenicNonCO2Emissions + landManagementBiogenicCO2Removals + biogenicCO2Uptake
+            PCF (Incl. biogenic CO2 uptake) = 
+              fossilGhgEmissions + 
+              landUseChangeGhgEmissions + 
+              landManagementBiogenicCO2Emissions + 
+              landManagementBiogenicCO2Removals + 
+              landUseChangeGhgEmissions + 
+              technologicalCO2Removals + 
+              ccsTechnologicalCO2Capture
+              biogenicNonCO2Emissions + 
+              biogenicCO2Uptake
           x-rule: SHALL
           x-term: PCF Including biogenic CO2 uptake
           x-methodology: 3.3.1
