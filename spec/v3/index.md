@@ -1228,7 +1228,7 @@ Summary of changes:
     - Fixed linking to semantic versioning document
     - Reworded <{CarbonFootprint/referencePeriodStart}> and <{CarbonFootprint/referencePeriodEnd}>
     - Minor documentation improvements to <{ProductFootprint/status}>
-    - Added an advisement to <{CarbonFootprint/biogenicAccountingMethodology}>
+    - Added an advisement to `CarbonFootprint/biogenicAccountingMethodology`
     - Updated section [[#dataqualityindicators]] to reference Table 9 of the Pathfinder Framework
     - Fixed formatting of <{ProductFootprint/productDescription}> definition
 
@@ -1259,7 +1259,7 @@ Overview of the changes to the data model compared with the data model version 1
   - property `CarbonFootprint/pCfIncludingBiogenic`: added
   - property <{CarbonFootprint/fossilCarbonContent}>: added
   - property `CarbonFootprint/biogenicCarbonWithdrawal`: added
-  - property <{CarbonFootprint/biogenicAccountingMethodology}>: added
+  - property `CarbonFootprint/biogenicAccountingMethodology`: added
   - property <{CarbonFootprint/packagingEmissionsIncluded}>: added
   - property <{CarbonFootprint/exemptedEmissionsDescription}>: added
   - property <{CarbonFootprint/packagingGhgEmissions}>: added
