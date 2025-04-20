@@ -601,8 +601,8 @@ components:
         ### Scope of a CarbonFootprint ### {#dt-carbonfootprint-scope}
 
         Each CarbonFootprint is scoped by
-        1. Time Period: the time period is defined by the properties <{CarbonFootprint/referencePeriodStart}> and <{CarbonFootprint/referencePeriodEnd}> (see [=PACT Methodology=] section 6.1.2.1)
-        2. Geography: further set by the properties <{CarbonFootprint/geographyRegionOrSubregion}>, <{CarbonFootprint/geographyCountry}>, and <{CarbonFootprint/geographyCountrySubdivision}> (see [=PACT Methodology=] section 6.1.2.2)
+        1. Time Period: the time period is defined by the properties <{CarbonFootprint/referencePeriodStart}> and <{CarbonFootprint/referencePeriodEnd}> (see [=PACT Methodology=] section 3.2.3)
+        2. Geography: further set by the properties <{CarbonFootprint/geographyRegionOrSubregion}>, <{CarbonFootprint/geographyCountry}>, and <{CarbonFootprint/geographyCountrySubdivision}> (see [=PACT Methodology=] section 3.2.3)
 
         If a CarbonFootprint
         1. Has geographical granularity `Global`, then the properties <{CarbonFootprint/geographyCountry}> and <{CarbonFootprint/geographyRegionOrSubregion}> and <{CarbonFootprint/geographyCountrySubdivision}> MUST be `undefined`;
@@ -1137,7 +1137,7 @@ components:
           x-methodology: 3.2.3
         geographyRegionOrSubregion:
           description: |
-            If present, the value MUST be one of the [=UN geographic regions=] or [=UN geographic subregions=]. See [[#dt-carbonfootprint-scope]] for further details. Additionally, see the [=PACT Methodology=] Section 6.1.2.2.
+            If present, the value MUST be one of the [=UN geographic regions=] or [=UN geographic subregions=]. See [[#dt-carbonfootprint-scope]] for further details. Additionally, see the [=PACT Methodology=] Section 3.2.3.
 
           summary: |
             The geographic representation of the PCF should be reported at different 

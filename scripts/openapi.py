@@ -139,13 +139,16 @@ def write_property(output, type, name, property, termdef=True, recursive=False):
     if property.get("x-unit"):
         output.write(f"\n<div class='json-schema-unit'>{property['x-unit']}")
         if property.get("comment"):
-            output.write(f"<br>\n{sanitize(property['comment'])}")
+            output.write(f"\n{sanitize(property['comment'])}")
         output.write("</div>\n")
     if property.get("x-rule"):
         output.write(f"\n<div class='json-schema-rule'>{property['x-rule']}")
         if property.get("comment") and not property.get("x-unit"):
-            output.write(f"<br>\n{sanitize(property['comment'])}")
+            output.write(f"\n{sanitize(property['comment'])}")
         output.write("</div>\n")
+    if property.get("x-methodology"):
+        output.write(f"\n<div class='x-methodology'>Methodology section {property['x-methodology']}</div>")
+
     output.write("</td></tr>\n")
     if recursive and property["type"] == "object" and "properties" in property and not "title" in property:
         for sub_name, sub_property in property["properties"].items():
