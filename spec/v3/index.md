@@ -171,8 +171,6 @@ Note: This chapter is non-normative.
 
 Achieving transparency in carbon emissions at the product level is challenging due to the complexity of global supply chains. This specification focuses on enabling transparency through a peer-to-peer PCF data exchange by specifying necessary aspects for achieving interoperability, such as the [Data Model](#data-model) and [API](#api).
 
-This chapter provides examples for inter-company business cases related to the exchange of [=PCFs=], focusing on both asynchronous event processing and synchronous API calls.
-
 
 ## Asynchronous Exchange ## {#business-cases-async-events}
 
@@ -192,7 +190,7 @@ Generally, the data recipient sends a `RequestCreatedEvent` event to the data ow
 
 ### Sending an updated PCF
 
-At any time after a data owner has sent a PCF to the data recipient, the data owner can send an update, for example because a PCF was updated or deprecated, or a new PCF was published, see [#lifecycle].
+At any time after a data owner has sent a PCF to the data recipient, the data owner can send an update, for example because a PCF was updated or deprecated, or a new PCF was published, see [[#lifecycle]].
 
 In this case the data owner sends a `PublishedEvent` to the data recipient.
 
@@ -204,7 +202,7 @@ Refer to [[#action-events]] for detailed request and response formats.
 
 ## Synchronous Retrieval 
 
-The synchronous part of te API allows for immediate retrieval of PCF's. Refer to [[#action-listfootprints]] and [[#action-getfootprint]] for detailed request and response formats.
+The synchronous part of the PACT API allows for immediate retrieval of PCFs. Refer to [[#action-listfootprints]] and [[#action-getfootprint]] for detailed request and response formats.
 
 
 ### Getting multiple PCFs
@@ -214,12 +212,12 @@ must provide filtering on a minimum set of criteria.
 
 1. The data recipient authenticates with the data owner.
 2. The data recipient calls the `/footprints` endpoint, optionally providing a filter with search criteria and a limit to obtain a list of PCFs. 
-3. After validating the request, the data owner returns a 2xx status code and the list of {<ProductFootprint>} objects. On error the data owner returns a relevant HTTP error code. For details, see [#rest-api]
+3. After validating the request, the data owner returns a 2xx status code and the list of <{ProductFootprint}> objects. On error the data owner returns a relevant HTTP error code. For details, see [[#api]]
 
 
 ### Getting a single PCF
 
-A data-recipient can directly obtain a given PCF by it's ID by calling `GetFootprint`.
+A data-recipient can directly obtain a given PCF by its ID by calling `GetFootprint`.
 
 1. The data recipient authenticates with the data owner.
 2. The data recipient calls the `/footprints/{id}` endpoint, providing the PCF ID (in UUID format)
@@ -233,7 +231,7 @@ A data-recipient can directly obtain a given PCF by it's ID by calling `GetFootp
 
 <div class=note>This section is non-normative</div>
 
-The contents of a <{ProductFootprint|Product Footprints}> can change over time. For instance when a [=data owner=] publishes an updated Product Footprint ("upstream Product Footprints") which goes into the calculation of another Product Footprint ("downstream Product Footprint").
+The contents of a <{ProductFootprint}> can change over time. For instance when a [=data owner=] publishes an updated Product Footprint ("upstream Product Footprints") which goes into the calculation of another Product Footprint ("downstream Product Footprint").
 
 Even without upstream changes, a downstream Product Footprint can undergo changes in its own right, for instance when calculation errors are discovered and fixed, or when secondary emission databases are updated.
 
@@ -251,7 +249,7 @@ A <{ProductFootprint}> with <{ProductFootprint/status}> `Deprecated` MUST NOT be
 
 ### Updating PCFs
 
-Starting with Version 3.0, a change to any part of the footprint MUST result in a new footprint with a new <{ProductFootprint/id}>. The old `id` SHOULD be added to the <{ProductFootprint/PrecedingPfIds}> list to be able to track back to the previous version. The version number of this new PCF MUST always be 1 and the `updated` property always null. The old PCF MUST have its `status` set to `Deprecated`.
+Starting with version 3.0, a change to any part of the footprint MUST result in a new footprint with a new <{ProductFootprint/id}>. The old `id` SHOULD be added to the <{ProductFootprint/PrecedingPfIds}> list to be able to track back to the previous version. The version number of this new PCF MUST always be 1 and the `updated` property always null. The old PCF MUST have its `status` set to `Deprecated`.
 
 ### Deprecating PCFs
 
@@ -259,14 +257,14 @@ If a PCF becomes obsolete without being replaced, the `status` property of the P
 
 ### Properties to Become Obsolete
 
-Starting version 3.0, the `statusComment` is now obsolete and has been removed from the <{ProductFootprint}>.
+Starting with version 3.0, the `statusComment` is now obsolete and has been removed from the <{ProductFootprint}>.
 In future versions the deprecated properties `version` and `updated` will be removed.
 
 ### Implementation Guidelines
 
-1. Version 3.x MAY in its internal data model store the `version` and `updated` properties. Any incoming minor change will be accepted if `incoming.version` is higher than `existing.version`. The updated PCF will be stored, including `version` and `updated` properties.
+1. Any implementaion MAY in its internal data model store the `version` and `updated` properties. Any incoming minor change will be accepted if `incoming.version` is higher than `existing.version`. The updated PCF will be stored, including `version` and `updated` properties.
 
-2. Version 3.x MAY choose NOT to store `version` and `updated` properties. In that case, any incoming minor change will be accepted if `incoming.updated` is later than `existing.created`. The PCF will be stored, making sure the `created` date/time is set to the incoming `updated` date/time.
+2. Any implementation MAY choose NOT to store `version` and `updated` properties. In that case, any incoming minor change will be accepted if `incoming.updated` is later than `existing.created`. The PCF will be stored, making sure the `created` date/time is set to the incoming `updated` date/time.
 
 ## Validity Period ## {#validity-period}
 
@@ -301,7 +299,7 @@ This will not eliminate the need for a mapping process but will ease mapping ide
 
 We recognize there are existing relevant namespaces and corresponding URN syntax specifications. These can either be IANA-registered namespaces (like `urn:ISBN`) or widely used standards like `urn:gtin`. When product identification based on one or more of these standards is applicable, the corresponding namespaces should be used.
 
-Similar to product identifiers, [product classifiers](#product-classification-urns) contain URN's, using well-known namespaces when applicable, or a custom `pact` namespace if needed.
+Similar to product identifiers, [product classifiers](#product-classification-urns) contain URNs, using well-known namespaces when applicable, or a custom `pact` namespace if needed.
 
 
 ## Product Identifier URN’s ## {#product-identifier-urns}
@@ -424,7 +422,7 @@ Below is a list of examples of <{ProductFootprint/productIds}> as used in the <{
 </table>
 
 
-## Product Classification URN's ## {#product-classification-urns}
+## Product Classification URNs ## {#product-classification-urns}
 
 Similar to [product identifiers](#product-identifiers) any product classification MUST be a URN as specified in [[RFC8141]]: 
 
@@ -607,7 +605,7 @@ The following basic types are used in the data model:
   ```
 <tr>
   <td><code>string&lt;datetime&gt;</code>
-  <td> Dates MUST be formatted according to ISO8601
+  <td> Dates MUST be formatted according to [[!ISO8601-1]]
 
   ```json
   "2025-04-23T18:25:43.511Z"
@@ -737,7 +735,7 @@ A [=host system=] MUST implement the following actions:
 
 The host system MUST make its footprints available to the data recipient through BOTH [=Action ListFootprints=] AND [=Action Events=].
 
-A host system SHOULD implement access management to control what PCF's it accepts and makes available to which [=data recipients=].
+A host system SHOULD implement access management to control what PCFs it accepts and makes available to which [=data recipients=].
 
 A [=host system=] MUST offer its actions over HTTPS only. 
 
@@ -1274,7 +1272,7 @@ Overview of the changes to the data model compared with the data model version 1
   - property `landUseEmissions` renamed to `CarbonFootprint/landManagementGhgEmissions`
   - property `otherEmissions` renamed to `CarbonFootprint/otherBiogenicGhgEmissions`
 - data type `CompanyId`: added, including instructions on custom company codes
-- changes to data type `ProductId`: addition of instructions for CAS, InChi and custom URN's.
+- changes to data type `ProductId`: addition of instructions for CAS, InChi and custom URNs.
 
 ### API Changes ### {#changelog-2.0.0-api}
 
@@ -1333,6 +1331,12 @@ The following changes have been applied for version 1.0.1
     "href": "https://github.com/cloudevents/spec/blob/v1.0.2/cloudevents/bindings/http-protocol-binding.md#32-structured-content-mode",
     "title": "HTTP Protocol Binding for CloudEvents - Version 1.0.2",
     "status": "LS",
+    "publisher": "The Linux Foundation"
+  },
+  "OPENAPI": {
+    "authors": [],
+    "href": "https://spec.openapis.org/oas/v3.1.1.html",
+    "title": "OpenAPI Specification v3.1.1",
     "publisher": "The Linux Foundation"
   },
   "PACT-METHODOLOGY": {

@@ -63,10 +63,10 @@ paths:
         to the requesting data recipient.
 
         If the host system has multiple versions of the same footprint with the 
-        same `id`, it MUST include only the latest version in the list of
-        footprints. The host system SHOULD include preceding footprints which have
-        been deprecated in the resulting list of footprints, except if the `status`
-        query parameter explicity requests only active footprints.
+        same `id`, it MUST include only return the latest version. The host system 
+        SHOULD include preceding footprints which have been deprecated in the 
+        resulting list of footprints, except if the `status` query parameter 
+        explicity requests only active footprints.
 
         ### Pagination
 
@@ -410,7 +410,7 @@ components:
              "079e425a-464f-528d-341d-4a944a1dfd70"]
         version:
           description: |
-            The version number of the PCF. Starting 3.0, any change to a
+            The version number of the PCF. Starting with version 3.0, any change to a
             PCF will generate a new ID, so this field is no longer needed.
             
             See [[#lifecycle]] for details.
@@ -442,7 +442,7 @@ components:
         status:
           description: |
             The status of the PCF. `Active` means that the PCF is the most recent version 
-            and is the one that SHOULD be used by a data recipients, e.g. for product 
+            and is the one that SHOULD be used by a data recipient, e.g. for product 
             footprint calculations. `Deprecated` means that the PCF is no longer 
             the most recent version and SHOULD NOT be used by data recipients.
             
@@ -706,7 +706,7 @@ components:
           x-methodology: 3.2.4
         referencePeriodStart:
           description: |
-            The start (including) of the time boundary for which the PCF value
+            The start (inclusive) of the time boundary for which the PCF value
             is considered to be representative. Specifically, this start date
             represents the earliest date from which activity data was collected
             to include in the PCF calculation. 
@@ -720,7 +720,7 @@ components:
           x-methodology: 3.2.3
         referencePeriodEnd:
           description: |
-            The end (excluding) of the time boundary for which the PCF value is
+            The end (exclusive) of the time boundary for which the PCF value is
             considered to be representative. Specifically, this end date
             represents the latest date from which activity data was collected
             to include in the PCF calculation.
@@ -977,7 +977,7 @@ components:
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
         landAreaOccupation:
           description: |
-            The amount of agricultural land occupied in reporting year to produce the product.
+            The amount of agricultural land occupied in the reporting year to produce the product.
           x-unit: (m2/year) / declared unit
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
           x-term: Land occupation
@@ -994,13 +994,13 @@ components:
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
         packagingEmissionsIncluded:
           description: |
-            Indicates whether the packaging emissions are included in the scope 
+            Indicates whether packaging emissions are included in the scope 
             and boundary of the product carbon footprint. 
 
-            If `true`, the packaging emissions are included in the product carbon 
+            If `true`, packaging emissions are included in the product carbon 
             footprint, and the `packagingGhgEmissions` property SHOULD be defined.
 
-            If `false`, the packaging emissions are not included in the product carbon 
+            If `false`, packaging emissions are not included in the product carbon 
             footprint, and the `packagingGhgEmissions` property MUST be undefined.
           type: boolean
           x-rule: SHALL
@@ -1012,7 +1012,7 @@ components:
             SHOULD be defined if `packagingEmissionsIncluded` is true and MUST be 
             undefined if `packagingEmissionsIncluded` is false.
 
-            The packaging emissions are excluding biogenic CO2 uptake.
+            Packaging emissions are excluding biogenic CO2 uptake.
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
           x-rule: SHOULD
           x-unit: kgCO2e/declared unit
@@ -1099,7 +1099,7 @@ components:
         ccuCreditCertification:
           description: |
             (Only for Credit Approach) a URL to documentation verifying the certification from an external bookkeeping scheme. 
-            This attribute ensures the reliability and avoids double counting of credits within the crediting system.
+            This attribute ensures reliability and avoids double counting of credits within the crediting system.
           $ref: '#/components/schemas/Uri' 
           x-term: CCU credit certification
           x-methodology: 3.3.2.5
@@ -1149,13 +1149,13 @@ components:
               :: for the ISO 14040-44 Standard, "Environmental management — Life cycle assessment — Principles and framework"
               : `GHGP-Product`
               :: for the Greehouse Gas Protocol (GHGP) Product Standard
-              : PEF
+              : `PEF`
               :: for the EU Product Environmental Footprint Guide
               : `PACT-1.0`
               : `PACT-2.0`
               : `PACT-3.0`
               :: for a given version of the [=PACT Methodology=]. It is recommended to use the latest version of the Methodology.
-              : PAS2050
+              : `PAS2050`
               :: for the Publicly Available Specification (PAS) 2050, "Specification for the assessment of the life cycle greenhouse gas emissions of goods and services". The use of this standard is permitted but not recommended.
 
             The enumeration of standards above CAN evolve in future revisions. A host system MUST accept ProductFootprints from later revisions with `crossSectoralStandards` containing values that are not defined in this specification.
@@ -1212,7 +1212,7 @@ components:
               - "PCR-A"
         exemptedEmissionsPercent:
           description: |
-            The percentage of emissions excluded from PCF. 
+            The percentage of emissions excluded from the PCF. 
           note: string<decimal> in 3.0, was Number in 2.x. Removed upper boundary of 5%.
           x-term: Exemption rules
           x-methodology: 3.3.1.2
@@ -1233,7 +1233,7 @@ components:
           description: |
             Description of the allocation rules applied to the PCFs foreground data 
             including an explanation of the underlying reasons (way of allocating 
-            all activities from your manufacturing steps to the declared unit).
+            all activities from manufacturing steps to the declared unit).
           type: string
           x-rule: SHOULD
           x-term: Allocation rules
@@ -1344,8 +1344,8 @@ components:
         operator:
           description: |
             Selection of operator of PCR being used for the PCF calculation. If 
-            operator is not available in the given list, or if you have followed
-            a sector specific guidance, please select "Other" and include details 
+            operator is not available in the given list, or if a sector specific 
+            guidance has been followed, please set "Other" and include details 
             under "otherOperatorName".
           type: string
           enum:
@@ -1475,12 +1475,11 @@ components:
         Contains the verification in conformance with the PACT Methodology.
       note: Renamed from `Assurance` in 3.0
       example: |
-        Example value for the case that 42% of the product’s overall GHG emissions covered by the data quality assessment:
         ```json 
         {
-          "coverage": "PCF system",
+          "coverage": "PCF program",
           "providerName": "My Auditor",
-          "completedAt": "2022-12-08T14:47:32Z"
+          "completedAt": "2025-04-08T14:47:32Z"
           "standardName": "ISO 14044"
         }
         ```
@@ -2025,7 +2024,7 @@ components:
     validOn:
       name: validOn
       description: |
-        If present, MUST match all PCFs which were valid on the date specified: footprint.validityPeriodBegin <= validOn AND validFrom <= footprint.validityPeriodEnd
+        If present, MUST match all PCFs which were valid on the date specified: validityPeriodStart <= validOn <= validityPeriodEnd. See [[#validity-period]] for determining validity period.
       in: query
       schema:
         type: string
@@ -2033,7 +2032,8 @@ components:
     validAfter:
       name: validAfter
       description: |
-        If present, MUST match PCFs with validAfter < footprint.validityPeriodBegin
+        If present, MUST match PCFs with validityPeriodStart > validAfter. 
+        See [[#validity-period]] for determining validity period. 
       in: query
       schema:
         type: string
@@ -2041,7 +2041,8 @@ components:
     validBefore:
       name: validBefore
       description: |
-        If present, MUST match PCFs with validBefore > footprint.validityPeriodEnd
+        If present, MUST match PCFs with validityPeriodEnd < validBefore
+        See [[#validity-period]] for determining validity period. 
       in: query
       schema:
         type: string
