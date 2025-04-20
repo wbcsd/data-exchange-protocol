@@ -839,7 +839,7 @@ components:
           x-rule: CCS
           x-term: Technological CO2 removals
           x-methodology: 3.3.2.5
-          $ref: '#/components/schemas/PositiveOrZeroDecimal'
+          $ref: '#/components/schemas/NegativeOrZeroDecimal'
         aircraftGhgEmissions:
           description: |
             If present, the GHG emissions resulting from aircraft engine usage 
