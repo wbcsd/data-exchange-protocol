@@ -135,21 +135,21 @@ def write_property(output, type, name, property, termdef=True, recursive=False):
     output.write("\n\n")
     output.write(property["description"].strip().replace("\n\n\n", "\n\n\n\n"))
     output.write(get_example_text(name, property))
-    output.write("\n")
+    output.write("\n\n")
     if property.get("x-unit"):
-        output.write(f"\n<div class='json-schema-unit'>{property['x-unit']}")
+        output.write(f"<div class='x-unit'>{property['x-unit']}")
         if property.get("comment"):
-            output.write(f"\n{sanitize(property['comment'])}")
-        output.write("</div>\n")
+            output.write(f", {sanitize(property['comment'])}")
+        output.write("</div>")
     if property.get("x-rule"):
-        output.write(f"\n<div class='json-schema-rule'>{property['x-rule']}")
+        output.write(f"<div class='x-rule'><a href='#units-and-validation-rules'>{property['x-rule']}</a>")
         if property.get("comment") and not property.get("x-unit"):
-            output.write(f"\n{sanitize(property['comment'])}")
-        output.write("</div>\n")
+            output.write(f", {sanitize(property['comment'])}")
+        output.write("</div>")
     if property.get("x-methodology"):
-        output.write(f"\n<div class='x-methodology'>Methodology section {property['x-methodology']}</div>")
+        output.write(f"<div class='x-methodology'>Methodology section {property['x-methodology']}</div>")
 
-    output.write("</td></tr>\n")
+    output.write("\n</td></tr>\n")
     if recursive and property["type"] == "object" and "properties" in property and not "title" in property:
         for sub_name, sub_property in property["properties"].items():
             write_property(output, property, name + "." + sub_name, sub_property, termdef)
