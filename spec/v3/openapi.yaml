@@ -704,409 +704,6 @@ components:
           $ref: '#/components/schemas/Decimal'
           x-term: Declared Unit
           x-methodology: 3.2.4
-        pcfExcludingBiogenicUptake:
-          description: |
-            The PCF of the product:
-
-            Including:
-            - All fossil emissions (CO2, CH4, N2O, HFCs, SF6, NF3, PFCs, HFEs, PFPEs, CFCs and HCFSs) from stationary/mobile combustion, industrial processes and fugitive emissions 
-            - All land sector-related related emissions (CO2, N2O, PFCs)
-            - All biogenic emissions (biogenic CH4, biogenic CO2)
-            - Land management removals and technological removals 
-
-            Excluding:
-            - Biogenic Product CO2 uptake
-          x-unit: kgCO2e/declared unit
-          x-comment: | 
-            PCF (Excl. biogenic CO2 uptake) = 
-            PCF (Incl. biogenic CO2 uptake) = 
-              fossilGhgEmissions + 
-              landUseChangeGhgEmissions + 
-              landManagementBiogenicCO2Emissions + 
-              landManagementBiogenicCO2Removals + 
-              landUseChangeGhgEmissions + 
-              technologicalCO2Removals + 
-              ccsTechnologicalCO2Capture
-              biogenicNonCO2Emissions
-          x-rule: SHALL
-          x-term: PCF Excluding biogenic CO2 uptake 
-          x-methodology: 3.3.1
-          $ref: '#/components/schemas/Decimal'
-        pcfIncludingBiogenicUptake:
-          description: |
-            The PCF of the product:
-
-            Including:
-            - All fossil emissions (CO2, CH4, N2O, HFCs, SF6, NF3, PFCs, HFEs, PFPEs, CFCs and HCFSs) from stationary/mobile combustion, industrial processes and fugitive emissions 
-            - All land sector-related related emissions (CO2, N2O, PFCs)
-            - All biogenic emissions (biogenic CH4, biogenic CO2)
-            - Land management removals and technological removals 
-            - Biogenic Product CO2 uptake
-
-          x-unit: kgCO2e/declared unit
-          x-comment: |
-            PCF (Incl. biogenic CO2 uptake) = 
-              fossilGhgEmissions + 
-              landUseChangeGhgEmissions + 
-              landManagementBiogenicCO2Emissions + 
-              landManagementBiogenicCO2Removals + 
-              landUseChangeGhgEmissions + 
-              technologicalCO2Removals + 
-              ccsTechnologicalCO2Capture
-              biogenicNonCO2Emissions + 
-              biogenicCO2Uptake
-          x-rule: SHALL
-          x-term: PCF Including biogenic CO2 uptake
-          x-methodology: 3.3.1
-          $ref: '#/components/schemas/Decimal'
-        fossilGhgEmissions:
-          description: |
-            The emissions from fossil sources as a result of fuel combustion, from 
-            fugitive emissions, and from process emissions. 
-            
-            Expressed in kgCO2e per declared unit. 
-          summary: |
-            The emissions from fossil sources as a result of fuel combustion, from fugitive 
-            emissions, and from process emissions. 
-          x-unit: kgCO2e/declared unit
-          x-rule: SHALL
-          x-term: Fossil emissions
-          x-methodology: 3.3.2.4
-          $ref: '#/components/schemas/PositiveOrZeroDecimal'
-        fossilCarbonContent:
-          description: |
-            The fossil carbon content of the product (mass of carbon). 
-          x-unit: kgC/declared unit
-          x-rule: SHALL
-          x-term: Fossil carbon content
-          x-methodology: 3.3.2.4
-          $ref: '#/components/schemas/PositiveOrZeroDecimal'
-        biogenicCarbonContent:
-          description: |
-            The biogenic carbon content of the product (mass of carbon). 
-          x-unit: kgC/declared unit
-          x-rule: BIO
-          x-term: Biogenic carbon content
-          x-methodology: 3.3.2.4
-          $ref: '#/components/schemas/PositiveOrZeroDecimal'
-        landUseChangeGhgEmissions:
-          description: |
-            GHG emissions from land-use change, such as deforestation or conversion
-            from natural forest to plantation forest, that cause carbon stock loss. 
-          x-unit: kgCO2e/declared unit
-          x-rule: BIO
-          x-term: Land use and land use change emissions or LUC emissions
-          x-comment: Replaces dLucGhgEmissions
-          x-methodology: 3.3.2.4
-          $ref: '#/components/schemas/PositiveOrZeroDecimal'
-        landCarbonLeakage:
-          description: |
-            Placeholder for indirect land use change causing displacement of food production, outside of value-chain 
-          x-unit: kgCO2e/declared unit
-          x-comment: Placeholder.
-          $ref: '#/components/schemas/PositiveOrZeroDecimal'
-        landManagementFossilGhgEmissions:
-          description: |
-            Fossil CO2, N2O, fossil CH4, HFCs and PFCs emissions due to land 
-            management practices. 
-            
-            Note: `fossilGhgEmissions` already includes these emissions.
-          x-unit: kgCO2e/declared unit
-          x-rule: BIO-2027
-          x-term: Fossil emissions - land management
-          x-methodology: 3.3.2.4
-          $ref: '#/components/schemas/PositiveOrZeroDecimal'
-        landManagementBiogenicCO2Emissions:
-          description: |
-            Biogenic CO2 emissions occurring due to recurring land management actions on 
-            land within the same land-use category.
-          x-unit: kgCO2e/declared unit
-          x-rule: BIO-2027
-          x-term: Land management CO2 emissions
-          x-methodology: 3.3.2.4
-          $ref: '#/components/schemas/PositiveOrZeroDecimal'
-        landManagementBiogenicCO2Removals:
-          description: |
-            Biogenic CO2 removals resulting from a net increase in carbon stored in land-based carbon 
-            pools (e.g. reforestation and afforestation). Subject to traceability requirements.
-          x-unit: kgCO2e/declared unit
-          x-term: Land management CO2 removals
-          x-methodology: 3.3.2.4
-          $ref: '#/components/schemas/NegativeOrZeroDecimal'
-        biogenicCO2Uptake:
-          description: |
-            Temporary CO2 uptake of biomass in the product at point of leaving factory gate.
-          x-unit: kgCO2e/declared unit
-          x-rule: BIO
-          x-term: Biogenic CO2 uptake
-          x-methodology: 3.3.2.4
-          $ref: '#/components/schemas/NegativeOrZeroDecimal'
-          x-comment: Replaces biogenicCarbonWithdrawal
-        biogenicNonCO2Emissions:
-          description: |
-            CH4 emissions from land management practices and  the oxidation and transformation or degradation of biomass.
-          x-unit: kgCO2e/declared unit
-          x-rule: BIO
-          x-term: Biogenic non-CO2 emissions
-          x-methodology: 3.3.2.4
-          $ref: '#/components/schemas/PositiveOrZeroDecimal'
-        technologicalCO2Removals:
-          description: |
-            CO2 removed directly from the atmosphere or via biogenic CO2 capture. Subject to reporting requirements.
-          x-unit: kgCO2e/declared unit
-          x-rule: CCS
-          x-term: Technological CO2 removals
-          x-methodology: 3.3.2.5
-          $ref: '#/components/schemas/NegativeOrZeroDecimal'
-        aircraftGhgEmissions:
-          description: |
-            If present, the GHG emissions resulting from aircraft engine usage 
-            for the transport of the product, excluding radiative forcing.
-            
-            The aircraft emissions are excluding biogenic CO2 uptake.      
-          x-unit: kgCO2e/declared unit
-          x-term: Aircraft emissions
-          x-methodology: 3.3.2.1
-          $ref: '#/components/schemas/PositiveOrZeroDecimal'
-        packagingEmissionsIncluded:
-          description: |
-            Indicates whether the packaging emissions are included in the scope 
-            and boundary of the product carbon footprint. 
-
-            If `true`, the packaging emissions are included in the product carbon 
-            footprint, and the `packagingGhgEmissions` property SHOULD be defined.
-
-            If `false`, the packaging emissions are not included in the product carbon 
-            footprint, and the `packagingGhgEmissions` property MUST be undefined.
-          type: boolean
-          x-rule: SHALL
-          x-term: Packaging emissions
-          x-methodology: 3.3.1.1
-        packagingGhgEmissions:
-          description: |
-            Emissions resulting from the packaging of the product. 
-            SHOULD be defined if `packagingEmissionsIncluded` is true and MUST be 
-            undefined if `packagingEmissionsIncluded` is false.
-
-            The packaging emissions are excluding biogenic CO2 uptake.
-          $ref: '#/components/schemas/PositiveOrZeroDecimal'
-          x-rule: SHOULD
-          x-unit: kgCO2e/declared unit
-          x-term: Packaging emissions
-          x-methodology: 3.3.1.1
-        packagingBiogenicCarbonContent:
-          description: |
-            The biogenic carbon content of the packaging (mass of carbon).
-          $ref: '#/components/schemas/PositiveOrZeroDecimal'
-          x-unit: kgC/declared unit
-          x-term: Packaging biogenic carbon content
-          x-methodology: 3.3.1.1
-        outboundLogisticsGhgEmissions:
-          description: |
-            Emissions resulting from outbound logistics should be calculated and reported 
-            separately up to the point where another company (e.g., customer) 
-            takes over responsibility for the product (i.e. own or pay for the outbound
-            logistics). MUST be undefined if  the company calculating and exchanging the 
-            PCF is not responsible for the outbound logistics. 
-            
-            The outbound logistics emissions are excluding biogenic CO2 uptake.
-          $ref: '#/components/schemas/PositiveOrZeroDecimal'
-          x-rule: SHOULD
-          x-unit: kgCO2e/declared unit
-          x-term: Outbound logistics emissions
-          x-methodology: 3.3.2.1 
-        ccuCarbonContent:
-          description: |
-            The amount of captured carbon (both biogenic and fossil) during CCU (Carbon Capture & Usage) in the product.
-          $ref: '#/components/schemas/PositiveOrZeroDecimal'
-          x-unit: kgC/declared unit
-          x-term: CCU carbon content
-          x-rule: CCU
-          x-methodology: 3.3.2.5
-        technologicalCO2CaptureOrigin:
-          description: |
-            For CCU: Information about the origin (fossil or biogenic) and path of the captured CO2 used in CCU, including 
-            the name and location of the capture facility. This information enhances transparency and traceability, 
-            enabling tracking of CO2 across the value chain.
-
-            For CCS: Traceability data, i.e. information on location injection site, geological reservoir as part of the overall 
-            technological CO2 capture origin data point for the PCF.
-          type: string
-          x-term: Technological CO2 capture origin
-          x-rule: CCU,CCS
-          x-methodology: 3.3.2.5
-        ccuCalculationApproach:
-          description: |
-            The calculation approach for CCU: "Cut-off" or "Credit."
-          type: string
-          enum:
-            - Cut-off
-            - Credit 
-          x-term: CCU calculation approach
-          x-methodology: 3.3.2.5
-          x-rule: CCU
-        ccuCreditCertification:
-          description: |
-            (Only for Credit Approach) a URL to documentation verifying the certification from an external bookkeeping scheme. 
-            This attribute ensures the reliability and avoids double counting of credits within the crediting system.
-          $ref: '#/components/schemas/Uri' 
-          x-term: CCU credit certification
-          x-methodology: 3.3.2.5
-          x-rule: CCU
-        ccsTechnologicalCO2CaptureInvolved:
-          description: |
-            Indicates whether CCS (including BECCS) take place within the scope and boundary of the product carbon footprint. 
-            
-            If `true`, `ccsTechnologicalCO2Capture`, `technologicalCO2Removals` and `technologicalCO2CaptureOrigin` shall be defined if known and available.
-
-            If `false`, `ccsTechnologicalCO2Capture`, `technologicalCO2Removals` and `technologicalCO2CaptureOrigin` shall be undefined.
-          type: boolean
-          x-term: Technological CO2 capture with geological storage
-          x-rule: SHALL
-          x-methodology: 3.3.2.5
-        ccsTechnologicalCO2Capture:
-          description: |
-            The amount of CO2 captured with Carbon Capture and Storage (CCS) technologies.
-          $ref: '#/components/schemas/NegativeOrZeroDecimal'
-          x-unit: kgCO2e/declared unit
-          x-term: Technological CO2 capture with geological storage
-          x-rule: CCS
-          x-methodology: 3.3.2.5
-        recycledCarbonContent:
-          description: |
-            The carbon content (both biogenic and fossil) from recycled material in the product (mass of carbon).
-          $ref: '#/components/schemas/PositiveOrZeroDecimal'
-          x-unit: kgC/declared unit
-          x-rule: SHOULD
-          x-term: Recycled carbon content
-          x-methodology: 3.3.2.2
-        landAreaOccupation:
-          description: |
-            The amount of agricultural land occupied in reporting year to produce the product.
-          x-unit: (m2/year) / declared unit
-          $ref: '#/components/schemas/PositiveOrZeroDecimal'
-          x-term: Land occupation
-          x-methodology: 3.3.2.4
-        ipccCharacterizationFactors:
-          description: |
-            The characterization factors from one or more IPCC Assessment Reports used in the calculation of the PCF.
-            It MUST be a non-empty set of strings with the format `AR$VERSION$`, where `$VERSION$` stands for the
-            IPCC report version number and MUST be an integer.
-
-            Per the Methodology the latest available characterization factor version shall be used, i.e., `["AR6"]`. In the event this is not possible, include the set of all characterization factors used.
-          note: supersedes `characterizationFactors` deprecated in 2.3.
-          summary: |              
-            The IPCC (Intergovernmental Panel of Climate Change) frequently releases (GWP) 
-            global warming potential values for climate gases related to CO2. These GWP 
-            values are released in Assessment Reports (AR), which are numbered. 
-            
-            The AR number can be used to track the age and accuracy of the GWP values used
-            in reporting. This field indicates the IPCC version of the GWP characterization 
-            factors used in the calculation of the PCF.
-
-            Per the PACT Methodology, the latest available characterization factor version 
-            shall be used, i.e., [""AR6""]. In the event this is not possible, include the 
-            set of all characterization factors used.
-          type: array
-          items:
-            type: string
-            pattern: '^AR\d+$'
-          minItems: 1
-          uniqueItems: true
-          examples:
-          - ["AR6"]
-          - ["AR5", "AR6"]
-          x-term: Characterization factors
-          x-methodology: 3.2.2
-        crossSectoralStandards:
-          description: |
-            The cross-sectoral standards applied for calculating or allocating [=GHG=] emissions.
-
-            It MUST be a non-empty array and SHOULD contain only the following values without duplicates:
-
-              : `ISO14067`
-              :: for the ISO 14067 Standard, "Greenhouse gases — Carbon footprint of products — Requirements and guidelines for quantification"
-              : `ISO14083`
-              :: for the ISO 14083 Standard, "Greenhouse gases — Quantification and reporting of greenhouse gas emissions arising from transport chain operations"
-              : `ISO14040-44`
-              :: for the ISO 14040-44 Standard, "Environmental management — Life cycle assessment — Principles and framework"
-              : `GHGP-Product`
-              :: for the Greehouse Gas Protocol (GHGP) Product Standard
-              : PEF
-              :: for the EU Product Environmental Footprint Guide
-              : `PACT-1.0`
-              : `PACT-2.0`
-              : `PACT-3.0`
-              :: for a given version of the [=PACT Methodology=]. It is recommended to use the latest version of the Methodology.
-              : PAS2050
-              :: for the Publicly Available Specification (PAS) 2050, "Specification for the assessment of the life cycle greenhouse gas emissions of goods and services". The use of this standard is permitted but not recommended.
-
-            The enumeration of standards above CAN evolve in future revisions. A host system MUST accept ProductFootprints from later revisions with `crossSectoralStandards` containing values that are not defined in this specification.
-          note: Supersedes `crossSectoralStandardsUsed` deprecated in version 2.3.
-          summary: |
-            The cross-sectoral standards applied for calculating or allocating GHG 
-            emissions. If multiple apply, list all.
-          type: array
-          items:
-            type: string
-            enum:
-              - ISO14067
-              - ISO14083
-              - ISO14040-44
-              - GHGP-Product
-              - PEF
-              - PACT-1.0
-              - PACT-2.0
-              - PACT-3.0
-          minItems: 1
-          uniqueItems: true
-          x-term: Cross-sectoral standards
-          x-methodology: 3.1.2
-          examples:
-          - [ISO14067, PACT-3.0]
-        productOrSectorSpecificRules:
-          description: |
-            The product-specific or sector-specific rules applied for calculating or allocating GHG emissions. If no product or sector specific rules were followed, this set MUST be empty.
-          summary: |
-            The product-specific or sector-specific rules applied for calculating or 
-            allocating GHG emissions. Sector specific guidance frameworks, such as 
-            Product Category Rules (PCR), are sets of rules for how to calculate and 
-            document Life Cycle Assessments. They provide product category specific
-            guidance and enhance comparability between assessments of the different 
-            suppliers for the same category (sector). The same applies to Product 
-            Environmental Footprint Category Rules (PEFCR)).  If no rules were used, 
-            leave this field empty.
-          type: array
-          items:
-            $ref: '#/components/schemas/ProductOrSectorSpecificRule'
-          minItems: 1
-          uniqueItems: true
-          x-term: Product or sector specific rules
-          x-methodology: 3.1.2
-          note: Multiple ProductOrSpecificRules can be specifed, each with its own operator and ruleNames.
-          examples: 
-          -  
-            - operator: PEF
-              ruleNames:
-              - "PEF 1.0"
-              - "PEF 2.0"
-            - operator: PCR
-              ruleNames:
-              - "PCR-A"
-        biogenicAccountingMethodology:
-          description: |
-            UNDER DISCUSSION
-          type: string
-        boundaryProcessesDescription:
-          description: |
-            Brief description of the processes attributable to each life cycle stage included 
-            in the PCF (e.g. electricity consumption for manufacturing), especially those 
-            that significantly contribute manufacturing steps of the product (including 
-            general description of used technologies).
-          note: optional in 3.0, was mandatory in 2.x
-          type: string
-          x-rule: SHOULD
-          x-methodology: 3.2
         referencePeriodStart:
           description: |
             The start (including) of the time boundary for which the PCF value
@@ -1214,27 +811,405 @@ components:
           examples:
             - US-CA
             - DE-BW
-        secondaryEmissionFactorSources:
+        boundaryProcessesDescription:
           description: |
-            If secondary data was used to calculate the <{CarbonFootprint}>, then it MUST include the property <{CarbonFootprint/secondaryEmissionFactorSources}> with value the emission factors used for the <{CarbonFootprint}> calculation.
-
-            If no secondary data is used, this property MUST BE undefined.
-          summary: |
-            The list of secondary data sources and versions which have been used by 
-            the data owner for the PCF calculation (e.g. databases such as ecoinvent)
-
-            If no secondary data is used, this property MUST BE undefined.
-          x-term: Secondary emission factors sources
-          x-methodology: 3.2.3
+            Brief description of the processes attributable to each life cycle stage included 
+            in the PCF (e.g. electricity consumption for manufacturing), especially those 
+            that significantly contribute manufacturing steps of the product (including 
+            general description of used technologies).
+          note: optional in 3.0, was mandatory in 2.x
+          type: string
           x-rule: SHOULD
+          x-methodology: 3.2
+        pcfExcludingBiogenicUptake:
+          description: |
+            The PCF of the product:
+
+            Including:
+            - All fossil emissions (CO2, CH4, N2O, HFCs, SF6, NF3, PFCs, HFEs, PFPEs, CFCs and HCFSs) from stationary/mobile combustion, industrial processes and fugitive emissions 
+            - All land sector-related related emissions (CO2, N2O, PFCs)
+            - All biogenic emissions (biogenic CH4, biogenic CO2)
+            - Land management removals and technological removals 
+
+            Excluding:
+            - Biogenic Product CO2 uptake
+          x-unit: kgCO2e/declared unit
+          x-comment: | 
+            PCF (Excl. biogenic CO2 uptake) = 
+            PCF (Incl. biogenic CO2 uptake) = 
+              fossilGhgEmissions + 
+              landUseChangeGhgEmissions + 
+              landManagementBiogenicCO2Emissions + 
+              landManagementBiogenicCO2Removals + 
+              landUseChangeGhgEmissions + 
+              technologicalCO2Removals + 
+              ccsTechnologicalCO2Capture
+              biogenicNonCO2Emissions
+          x-rule: SHALL
+          x-term: PCF Excluding biogenic CO2 uptake 
+          x-methodology: 3.3.1
+          $ref: '#/components/schemas/Decimal'
+        pcfIncludingBiogenicUptake:
+          description: |
+            The PCF of the product:
+
+            Including:
+            - All fossil emissions (CO2, CH4, N2O, HFCs, SF6, NF3, PFCs, HFEs, PFPEs, CFCs and HCFSs) from stationary/mobile combustion, industrial processes and fugitive emissions 
+            - All land sector-related related emissions (CO2, N2O, PFCs)
+            - All biogenic emissions (biogenic CH4, biogenic CO2)
+            - Land management removals and technological removals 
+            - Biogenic Product CO2 uptake
+
+          x-unit: kgCO2e/declared unit
+          x-comment: |
+            PCF (Incl. biogenic CO2 uptake) = 
+              fossilGhgEmissions + 
+              landUseChangeGhgEmissions + 
+              landManagementBiogenicCO2Emissions + 
+              landManagementBiogenicCO2Removals + 
+              landUseChangeGhgEmissions + 
+              technologicalCO2Removals + 
+              ccsTechnologicalCO2Capture
+              biogenicNonCO2Emissions + 
+              biogenicCO2Uptake
+          x-rule: SHALL
+          x-term: PCF Including biogenic CO2 uptake
+          x-methodology: 3.3.1
+          $ref: '#/components/schemas/Decimal'
+        fossilCarbonContent:
+          description: |
+            The fossil carbon content of the product (mass of carbon). 
+          x-unit: kgC/declared unit
+          x-rule: SHALL
+          x-term: Fossil carbon content
+          x-methodology: 3.3.2.4
+          $ref: '#/components/schemas/PositiveOrZeroDecimal'
+        biogenicCarbonContent:
+          description: |
+            The biogenic carbon content of the product (mass of carbon). 
+          x-unit: kgC/declared unit
+          x-rule: BIO
+          x-term: Biogenic carbon content
+          x-methodology: 3.3.2.4
+          $ref: '#/components/schemas/PositiveOrZeroDecimal'
+        recycledCarbonContent:
+          description: |
+            The carbon content (both biogenic and fossil) from recycled material in the product (mass of carbon).
+          $ref: '#/components/schemas/PositiveOrZeroDecimal'
+          x-unit: kgC/declared unit
+          x-rule: SHOULD
+          x-term: Recycled carbon content
+          x-methodology: 3.3.2.2
+        fossilGhgEmissions:
+          description: |
+            The emissions from fossil sources as a result of fuel combustion, from 
+            fugitive emissions, and from process emissions. 
+            
+            Expressed in kgCO2e per declared unit. 
+          summary: |
+            The emissions from fossil sources as a result of fuel combustion, from fugitive 
+            emissions, and from process emissions. 
+          x-unit: kgCO2e/declared unit
+          x-rule: SHALL
+          x-term: Fossil emissions
+          x-methodology: 3.3.2.4
+          $ref: '#/components/schemas/PositiveOrZeroDecimal'
+        landUseChangeGhgEmissions:
+          description: |
+            GHG emissions from land-use change, such as deforestation or conversion
+            from natural forest to plantation forest, that cause carbon stock loss. 
+          x-unit: kgCO2e/declared unit
+          x-rule: BIO
+          x-term: Land use and land use change emissions or LUC emissions
+          x-comment: Replaces dLucGhgEmissions
+          x-methodology: 3.3.2.4
+          $ref: '#/components/schemas/PositiveOrZeroDecimal'
+        landCarbonLeakage:
+          description: |
+            Placeholder for indirect land use change causing displacement of food production, outside of value-chain 
+          x-unit: kgCO2e/declared unit
+          x-comment: Placeholder.
+          $ref: '#/components/schemas/PositiveOrZeroDecimal'
+        landManagementFossilGhgEmissions:
+          description: |
+            Fossil CO2, N2O, fossil CH4, HFCs and PFCs emissions due to land 
+            management practices. 
+            
+            Note: `fossilGhgEmissions` already includes these emissions.
+          x-unit: kgCO2e/declared unit
+          x-rule: BIO-2027
+          x-term: Fossil emissions - land management
+          x-methodology: 3.3.2.4
+          $ref: '#/components/schemas/PositiveOrZeroDecimal'
+        landManagementBiogenicCO2Emissions:
+          description: |
+            Biogenic CO2 emissions occurring due to recurring land management actions on 
+            land within the same land-use category.
+          x-unit: kgCO2e/declared unit
+          x-rule: BIO-2027
+          x-term: Land management CO2 emissions
+          x-methodology: 3.3.2.4
+          $ref: '#/components/schemas/PositiveOrZeroDecimal'
+        landManagementBiogenicCO2Removals:
+          description: |
+            Biogenic CO2 removals resulting from a net increase in carbon stored in land-based carbon 
+            pools (e.g. reforestation and afforestation). Subject to traceability requirements.
+          x-unit: kgCO2e/declared unit
+          x-term: Land management CO2 removals
+          x-methodology: 3.3.2.4
+          $ref: '#/components/schemas/NegativeOrZeroDecimal'
+        biogenicCO2Uptake:
+          description: |
+            Temporary CO2 uptake of biomass in the product at point of leaving factory gate.
+          x-unit: kgCO2e/declared unit
+          x-rule: BIO
+          x-term: Biogenic CO2 uptake
+          x-methodology: 3.3.2.4
+          $ref: '#/components/schemas/NegativeOrZeroDecimal'
+          x-comment: Replaces biogenicCarbonWithdrawal
+        biogenicNonCO2Emissions:
+          description: |
+            CH4 emissions from land management practices and  the oxidation and transformation or degradation of biomass.
+          x-unit: kgCO2e/declared unit
+          x-rule: BIO
+          x-term: Biogenic non-CO2 emissions
+          x-methodology: 3.3.2.4
+          $ref: '#/components/schemas/PositiveOrZeroDecimal'
+        landAreaOccupation:
+          description: |
+            The amount of agricultural land occupied in reporting year to produce the product.
+          x-unit: (m2/year) / declared unit
+          $ref: '#/components/schemas/PositiveOrZeroDecimal'
+          x-term: Land occupation
+          x-methodology: 3.3.2.4
+        aircraftGhgEmissions:
+          description: |
+            If present, the GHG emissions resulting from aircraft engine usage 
+            for the transport of the product, excluding radiative forcing.
+            
+            The aircraft emissions are excluding biogenic CO2 uptake.      
+          x-unit: kgCO2e/declared unit
+          x-term: Aircraft emissions
+          x-methodology: 3.3.2.1
+          $ref: '#/components/schemas/PositiveOrZeroDecimal'
+        packagingEmissionsIncluded:
+          description: |
+            Indicates whether the packaging emissions are included in the scope 
+            and boundary of the product carbon footprint. 
+
+            If `true`, the packaging emissions are included in the product carbon 
+            footprint, and the `packagingGhgEmissions` property SHOULD be defined.
+
+            If `false`, the packaging emissions are not included in the product carbon 
+            footprint, and the `packagingGhgEmissions` property MUST be undefined.
+          type: boolean
+          x-rule: SHALL
+          x-term: Packaging emissions
+          x-methodology: 3.3.1.1
+        packagingGhgEmissions:
+          description: |
+            Emissions resulting from the packaging of the product. 
+            SHOULD be defined if `packagingEmissionsIncluded` is true and MUST be 
+            undefined if `packagingEmissionsIncluded` is false.
+
+            The packaging emissions are excluding biogenic CO2 uptake.
+          $ref: '#/components/schemas/PositiveOrZeroDecimal'
+          x-rule: SHOULD
+          x-unit: kgCO2e/declared unit
+          x-term: Packaging emissions
+          x-methodology: 3.3.1.1
+        packagingBiogenicCarbonContent:
+          description: |
+            The biogenic carbon content of the packaging (mass of carbon).
+          $ref: '#/components/schemas/PositiveOrZeroDecimal'
+          x-unit: kgC/declared unit
+          x-term: Packaging biogenic carbon content
+          x-methodology: 3.3.1.1
+        outboundLogisticsGhgEmissions:
+          description: |
+            Emissions resulting from outbound logistics should be calculated and reported 
+            separately up to the point where another company (e.g., customer) 
+            takes over responsibility for the product (i.e. own or pay for the outbound
+            logistics). MUST be undefined if  the company calculating and exchanging the 
+            PCF is not responsible for the outbound logistics. 
+            
+            The outbound logistics emissions are excluding biogenic CO2 uptake.
+          $ref: '#/components/schemas/PositiveOrZeroDecimal'
+          x-rule: SHOULD
+          x-unit: kgCO2e/declared unit
+          x-term: Outbound logistics emissions
+          x-methodology: 3.3.2.1 
+        technologicalCO2CaptureOrigin:
+          description: |
+            For CCU: Information about the origin (fossil or biogenic) and path of the captured CO2 used in CCU, including 
+            the name and location of the capture facility. This information enhances transparency and traceability, 
+            enabling tracking of CO2 across the value chain.
+
+            For CCS: Traceability data, i.e. information on location injection site, geological reservoir as part of the overall 
+            technological CO2 capture origin data point for the PCF.
+          type: string
+          x-term: Technological CO2 capture origin
+          x-rule: CCU,CCS
+          x-methodology: 3.3.2.5
+        technologicalCO2Removals:
+          description: |
+            CO2 removed directly from the atmosphere or via biogenic CO2 capture. Subject to reporting requirements.
+          x-unit: kgCO2e/declared unit
+          x-rule: CCS
+          x-term: Technological CO2 removals
+          x-methodology: 3.3.2.5
+          $ref: '#/components/schemas/PositiveOrZeroDecimal'
+        ccsTechnologicalCO2CaptureIncluded:
+          description: |
+            Indicates whether CCS (including BECCS) take place within the scope and boundary of the product carbon footprint. 
+            
+            If `true`, `ccsTechnologicalCO2Capture`, `technologicalCO2Removals` and `technologicalCO2CaptureOrigin` shall be defined if known and available.
+
+            If `false`, `ccsTechnologicalCO2Capture`, `technologicalCO2Removals` and `technologicalCO2CaptureOrigin` shall be undefined.
+          type: boolean
+          x-term: Technological CO2 capture with geological storage
+          x-rule: SHALL
+          x-methodology: 3.3.2.5
+        ccsTechnologicalCO2Capture:
+          description: |
+            The amount of CO2 captured with Carbon Capture and Storage (CCS) technologies.
+          $ref: '#/components/schemas/NegativeOrZeroDecimal'
+          x-unit: kgCO2e/declared unit
+          x-term: Technological CO2 capture with geological storage
+          x-rule: CCS
+          x-methodology: 3.3.2.5
+        ccuCarbonContent:
+          description: |
+            The amount of captured carbon (both biogenic and fossil) during CCU (Carbon Capture & Usage) in the product.
+          $ref: '#/components/schemas/PositiveOrZeroDecimal'
+          x-unit: kgC/declared unit
+          x-term: CCU carbon content
+          x-rule: CCU
+          x-methodology: 3.3.2.5
+        ccuCalculationApproach:
+          description: |
+            The calculation approach for CCU: "Cut-off" or "Credit."
+          type: string
+          enum:
+            - Cut-off
+            - Credit 
+          x-term: CCU calculation approach
+          x-methodology: 3.3.2.5
+          x-rule: CCU
+        ccuCreditCertification:
+          description: |
+            (Only for Credit Approach) a URL to documentation verifying the certification from an external bookkeeping scheme. 
+            This attribute ensures the reliability and avoids double counting of credits within the crediting system.
+          $ref: '#/components/schemas/Uri' 
+          x-term: CCU credit certification
+          x-methodology: 3.3.2.5
+          x-rule: CCU
+        ipccCharacterizationFactors:
+          description: |
+            The characterization factors from one or more IPCC Assessment Reports used in the calculation of the PCF.
+            It MUST be a non-empty set of strings with the format `AR$VERSION$`, where `$VERSION$` stands for the
+            IPCC report version number and MUST be an integer.
+
+            Per the Methodology the latest available characterization factor version shall be used, i.e., `["AR6"]`. In the event this is not possible, include the set of all characterization factors used.
+          note: supersedes `characterizationFactors` deprecated in 2.3.
+          summary: |              
+            The IPCC (Intergovernmental Panel of Climate Change) frequently releases (GWP) 
+            global warming potential values for climate gases related to CO2. These GWP 
+            values are released in Assessment Reports (AR), which are numbered. 
+            
+            The AR number can be used to track the age and accuracy of the GWP values used
+            in reporting. This field indicates the IPCC version of the GWP characterization 
+            factors used in the calculation of the PCF.
+
+            Per the PACT Methodology, the latest available characterization factor version 
+            shall be used, i.e., [""AR6""]. In the event this is not possible, include the 
+            set of all characterization factors used.
           type: array
-          minItems: 1
           items:
-            $ref: '#/components/schemas/EmissionFactorSource'
+            type: string
+            pattern: '^AR\d+$'
+          minItems: 1
+          uniqueItems: true
           examples:
-          -
-            - name: ecoinvent
-              version: "3.7"          
+          - ["AR6"]
+          - ["AR5", "AR6"]
+          x-term: Characterization factors
+          x-methodology: 3.2.2
+        crossSectoralStandards:
+          description: |
+            The cross-sectoral standards applied for calculating or allocating [=GHG=] emissions.
+
+            It MUST be a non-empty array and SHOULD contain only the following values without duplicates:
+
+              : `ISO14067`
+              :: for the ISO 14067 Standard, "Greenhouse gases — Carbon footprint of products — Requirements and guidelines for quantification"
+              : `ISO14083`
+              :: for the ISO 14083 Standard, "Greenhouse gases — Quantification and reporting of greenhouse gas emissions arising from transport chain operations"
+              : `ISO14040-44`
+              :: for the ISO 14040-44 Standard, "Environmental management — Life cycle assessment — Principles and framework"
+              : `GHGP-Product`
+              :: for the Greehouse Gas Protocol (GHGP) Product Standard
+              : PEF
+              :: for the EU Product Environmental Footprint Guide
+              : `PACT-1.0`
+              : `PACT-2.0`
+              : `PACT-3.0`
+              :: for a given version of the [=PACT Methodology=]. It is recommended to use the latest version of the Methodology.
+              : PAS2050
+              :: for the Publicly Available Specification (PAS) 2050, "Specification for the assessment of the life cycle greenhouse gas emissions of goods and services". The use of this standard is permitted but not recommended.
+
+            The enumeration of standards above CAN evolve in future revisions. A host system MUST accept ProductFootprints from later revisions with `crossSectoralStandards` containing values that are not defined in this specification.
+          note: Supersedes `crossSectoralStandardsUsed` deprecated in version 2.3.
+          summary: |
+            The cross-sectoral standards applied for calculating or allocating GHG 
+            emissions. If multiple apply, list all.
+          type: array
+          items:
+            type: string
+            enum:
+              - ISO14067
+              - ISO14083
+              - ISO14040-44
+              - GHGP-Product
+              - PEF
+              - PACT-1.0
+              - PACT-2.0
+              - PACT-3.0
+          minItems: 1
+          uniqueItems: true
+          x-term: Cross-sectoral standards
+          x-methodology: 3.1.2
+          examples:
+          - [ISO14067, PACT-3.0]
+        productOrSectorSpecificRules:
+          description: |
+            The product-specific or sector-specific rules applied for calculating or allocating GHG emissions. If no product or sector specific rules were followed, this set MUST be empty.
+          summary: |
+            The product-specific or sector-specific rules applied for calculating or 
+            allocating GHG emissions. Sector specific guidance frameworks, such as 
+            Product Category Rules (PCR), are sets of rules for how to calculate and 
+            document Life Cycle Assessments. They provide product category specific
+            guidance and enhance comparability between assessments of the different 
+            suppliers for the same category (sector). The same applies to Product 
+            Environmental Footprint Category Rules (PEFCR)).  If no rules were used, 
+            leave this field empty.
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductOrSectorSpecificRule'
+          minItems: 1
+          uniqueItems: true
+          x-term: Product or sector specific rules
+          x-methodology: 3.1.2
+          note: Multiple ProductOrSpecificRules can be specifed, each with its own operator and ruleNames.
+          examples: 
+          -  
+            - operator: PEF
+              ruleNames:
+              - "PEF 1.0"
+              - "PEF 2.0"
+            - operator: PCR
+              ruleNames:
+              - "PCR-A"
         exemptedEmissionsPercent:
           description: |
             The percentage of emissions excluded from PCF. 
@@ -1263,6 +1238,27 @@ components:
           x-rule: SHOULD
           x-term: Allocation rules
           x-methodology: 3.3.1.3
+        secondaryEmissionFactorSources:
+          description: |
+            If secondary data was used to calculate the <{CarbonFootprint}>, then it MUST include the property <{CarbonFootprint/secondaryEmissionFactorSources}> with value the emission factors used for the <{CarbonFootprint}> calculation.
+
+            If no secondary data is used, this property MUST BE undefined.
+          summary: |
+            The list of secondary data sources and versions which have been used by 
+            the data owner for the PCF calculation (e.g. databases such as ecoinvent)
+
+            If no secondary data is used, this property MUST BE undefined.
+          x-term: Secondary emission factors sources
+          x-methodology: 3.2.3
+          x-rule: SHOULD
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/EmissionFactorSource'
+          examples:
+          -
+            - name: ecoinvent
+              version: "3.7"          
         primaryDataShare:
           description: |
             Share of primary data in the final absolute PCF value excluding biogenic CO2 uptake (pcfExcludingBiogenicUptake).
