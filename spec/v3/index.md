@@ -1068,7 +1068,7 @@ Summary of major changes since version 2.3:
     - <{CarbonFootprint/landAreaOccupation}>
     - <{CarbonFootprint/technologicalCO2CaptureOrigin}>
     - <{CarbonFootprint/technologicalCO2Removals}>
-    - <{CarbonFootprint/ccsTechnologicalCO2CaptureInvolved}>
+    - <{CarbonFootprint/ccsTechnologicalCO2CaptureIncluded}>
     - <{CarbonFootprint/ccsTechnologicalCO2Capture}>
     - <{CarbonFootprint/ccuCreditCertification}>
     - <{CarbonFootprint/ccuCalculationApproach}>
