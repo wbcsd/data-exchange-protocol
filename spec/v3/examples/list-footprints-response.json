@@ -64,15 +64,12 @@
           "technologicalDQR": "1.6",
           "temporalDQR": "2.6",
           "geographicalDQR": "1.8"
-        },
-        "verification": {
-          "providerName": ""
         }
       },
       "extensions": [
         {
           "specVersion": "3.0.0",
-          "dataSchema": "https://catalog.carbon-transparency.org/shipment/1.0.0/data-model.json",
+          "dataSchema": "https://example.org/schemas/shipment/1.0.0/data-model.json",
           "data": {
             "shipmentId": "S1234567890",
             "consignmentId": "Cabc.def-ghi",
