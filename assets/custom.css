@@ -37,11 +37,6 @@ dt>code {
     color: rgba(160, 0, 0, 0.9);
 }
 
-.json-schema-unit {
-    font-style: italic;
-    font-size: 0.9em;
-}
-
 .json-schema-enum code {
     background-color: rgba(100, 100, 100, 0.03);
     color: #666;
@@ -54,3 +49,18 @@ dt>code {
     margin-right: 0px;
     display: inline-block;
 }
+
+.x-unit {
+    font-style: italic;
+    font-size: 0.9em;
+}
+
+.x-rule {
+    font-style: normal;
+}
+
+.x-methodology {
+    font-style: normal;
+}
+
+
