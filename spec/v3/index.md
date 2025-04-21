@@ -552,11 +552,35 @@ Additional uses of the data model are supported through the concept of
 [=Data Model Extensions=]. These allow [=data owners=] to add
 further information to a <{ProductFootprint}>.
 
-### OpenAPI Schema
+## Validation
 
-The Data model and the REST API are defined by the OpenAPI specification at [https://specs.carbon-transparency.org/](https://specs.carbon-transparency.org/). All data types described below are based on this schema.
+This specification defines two distinct validation layers that serve different purposes:
 
-## Basic Types
+1. [**OpenAPI Schema Rules**](#openapi-schema) - Defined by the [[!OpenAPI]] schema, this layer specifies the technical requirements for machine-to-machine communication and exchange of PCFs. Software implementations MUST adhere to these requirements for interoperability. 
+
+2. [**PACT Methodology Reporting Rules**](#reporting-rules) - A set of business rules that guide what data should be included to properly follow carbon reporting practices. These rules indicate which properties are expected to be filled in according to the [=PACT Methodology=].
+
+A conformant software implementation MUST adhere to the OpenAPI schema for all API methods and data objects.
+
+Additionally, implementations CAN incorporate functionality to assist end-users with following the PACT Methodology reporting rules, such as by validating inputs or signaling missing information. This logic should be implemented in the end-user facing part of the application, while inter-machine communication is governed solely by the OpenAPI schema.
+
+
+## OpenAPI Schema
+
+The data model and API actions described here are formally defined in the [[!OpenAPI]] specification available at [https://docs.carbon-transparency.org/](https://docs.carbon-transparency.org/).
+
+The OpenAPI schema serves two critical functions:
+
+1. It defines the complete structure of the PACT data model, including all data types, properties, and their relationships.
+2. It specifies the technical requirements for API compliance, including:
+
+   * The minimum set of properties that MUST be provided  for valid API communication
+   * Required data formats and value constraints
+   * Valid request and response structures for each API endpoint
+
+Implementations MUST conform to this schema to ensure interoperability when exchanging product footprints through the REST API. The schema should be considered the authoritative technical reference for all implementation decisions related to data structure and API communication.
+
+### Basic Types
 
 The following basic types are used in the data model:
 
@@ -621,9 +645,9 @@ The following basic types are used in the data model:
 
 </table>
 
- ## Qualifiers
+ ### Qualifiers
  
-Types can have the following qualifiers:
+Types can have the following qualifiers. Any data object send to or from the API MUST to adhere to these for interoperability between [=host systems=].
 
 <table class="data">
 <thead>
@@ -633,7 +657,7 @@ Types can have the following qualifiers:
 <tbody>
 <tr>
   <td><code>Required</code>
-  <td>The property MUST be provided and MUST NOT be `null`
+  <td>The property MUST be provided and MUST NOT be `null`.
 <tr>
   <td><code>NonEmpty</code>
   <td>The `string` or `array` MUST have a length >= 1
@@ -642,19 +666,18 @@ Types can have the following qualifiers:
   <td>All items in an `array` MUST be unique
 </table>
 
-## Units and validation rules
 
-Types and qualifiers are declared in the OpenAPI schema, defining the 
-structure of the PACT data model and the minimum set of properties and
-sub-objects necessary for exchanging product footprints. 
+## PACT Methodology Reporting Rules ## {#reporting-rules}
 
-In addition, the specification also includes information on the *unit* 
-of certain properties (e.g. *kgCO2e*: kilogram CO equivalent) and 
-*validation rules*  which are a formalized notation of the reporting 
-requirements as decribed in the PACT Mehodology. These include rules 
-as: 'mandatory starting 2027' or 'mandatory above a certain biogenic 
-content threshold'.
+In addition to the technical requirements defined in the OpenAPI schema, the [=PACT Methodology=] defines a set of reporting expectations for carbon footprint data. 
 
+These rules indicate which properties SHALL, SHOULD or MAY be provided in specific reporting contexts, even if they are technically optional in the API schema.
+These reporting rules are expressed using the following notation:
+
+Where applicable, the specification below also includes information on the *unit* 
+of certain properties (e.g. *kgCO2e*: kilogram CO equivalent) and if 
+values are expected to be negative or positive.
+ 
 <table><tbody>
 <tr><td>
 SHALL
