@@ -22,6 +22,79 @@ filter_text = {
     #"See [=PACT Methodology=].": ""
 }
 
+COLUMN_DEFS = """
+property:
+    title: Technical Property
+    width: 30
+    description: |
+        The technical name of the data attribute, as specified in the PACT Tech Specs 3.0. 
+        The Data Model of the specification contains properties grouped in data types.
+attribute:
+    title: Methodology Attribute
+    width: 20
+    description: |
+        The name of the data attribute as specified in the PACT Framework v3.0.
+        Note that not all attributes are listed in the Framework, as some fields are purely technical.
+section:
+    title: Methodology Section
+    width: 20
+    description: |
+        A reference to the relevant section in the PACT Framework v3.0.
+reporting:
+    title: Reporting Rule
+    width: 15
+    description: $$
+description:
+    title: Description
+    width: 60
+    wrap_text: true
+    description: |
+        The description of the data attribute, as specified in the PACT Tech Specs 3.0.
+category:
+    title: Category
+    width: 17
+    description: |
+        The category of the data attribute.
+unit:
+    title: Unit
+    width: 17
+    description: |
+        The unit of the data of the given attribute (e.g. kgCO2e / declaredUnit)
+comment:
+    title: Comment
+    width: 30
+    description: |
+        A comment on the data attribute. This may include information on how to calculate the value, or other relevant information.
+accepted:
+    title: Accepted Value(s)
+    width: 20
+    wrap_text: true
+    description: |
+        A description of the accepted values of the data attribute - some fields are limited to only a certain set of "valid values", whereas other fields can be free form text, booleans (true/false) or numbers.
+example1:
+    title: Example 1
+    width: 30
+    wrap_text: true
+    description: |
+        An example of how the data attribute could be populated (note exact syntax of each field is dependent on the solution used for data entry)
+example2:
+    title: Example 2
+    width: 30
+    wrap_text: true
+    description: |
+        An example of how the data attribute could be populated (note exact syntax of each field is dependent on the solution used for data entry)
+example3:
+    title: Example 3
+    width: 30
+    wrap_text: true
+    description: |
+        An example of how the data attribute could be populated (note exact syntax of each field is dependent on the solution used for data entry)
+#mandatory:
+#    title: Mandatory
+#    description: >
+#        An indication whether the field is mandatory or not. M indicates mandatory, O indicates optional, and M2025 indicates optional until 2025, when the field becomes mandatory.
+"""
+
 def generate_excel(ws, schema, types):
     """
     @param ws: the worksheet to write to
@@ -68,28 +141,14 @@ def generate_excel(ws, schema, types):
             if border:
                 cell.border = border
 
-    # Validation rules legenda:
-    validation_rules_legenda = schema["info"].get("x-rule","").strip()
+    # Reporting rules legenda:
+    reporting_rules_legenda = schema["info"].get("x-rule","").strip()
     methodology_sections = schema["info"].get("x-methodology-sections", {})
     logging.info(methodology_sections)
 
-    # Define the columns of the worksheet
-    columns = dict(
-        property    = dict(title = "Attribute", width = 30),
-        methodology = dict(title = "Methodology", width = 20),
-        section     = dict(title = "Section", width = 20),
-        validation  = dict(title = "Validation", width = 15),
-        # Retrieve legend from schema 
-        description = dict(title = "User Friendly Description", width = 60, wrap_text = True, description = validation_rules_legenda),
-        category    = dict(title = "Category", width = 17),
-        unit        = dict(title = "Unit", width = 17),
-        comment     = dict(title = "Comment", width = 30),
-        #link       = dict(title = "Link to Methodology", width = 15),
-        accepted    = dict(title = "Accepted Value(s)", width = 20, wrap_text = True),
-        example1    = dict(title = "Example 1", width = 30, wrap_text = True),
-        example2    = dict(title = "Example 2", width = 30, wrap_text = True),
-        example3    = dict(title = "Example 3", width = 30, wrap_text = True)
-    )
+    # Load the column definitions from the YAML string
+    columns = yaml.safe_load(COLUMN_DEFS)
+    columns["reporting"]["description"] = reporting_rules_legenda
     i = 0
     for column in columns.values():
         column['index'] = chr(ord('A') + i)
@@ -106,14 +165,15 @@ def generate_excel(ws, schema, types):
     color_table_header = "2A4879" 
     color_header       = "489F81"
     
-    title_style     = dict(font = fontname, size = 16, bold = False, bgcolor = color_title, fgcolor = "FFFFFF")
-    subtitle_style  = dict(font = fontname, size = 16, bold = False, bgcolor = color_title, fgcolor = "FFFFFF")
-    header_style    = dict(font = fontname, bgcolor = color_table_header, fgcolor = "FFFFFF")
-    heading_style   = dict(font = fontname, bold = True, bgcolor = color_header, fgcolor = "FFFFFF")
-    normal_style    = dict(font = fontname) # bgcolor="EEECE2", border=True)
-    bold_style      = dict(font = fontname, bold = True)
-    obsolete_style  = dict(font = fontname, strike = True, fgcolor = "95261F")
-    small_style     = dict(font = fontname, size = 9, fgcolor = "606060")
+    title_style        = dict(font = fontname, size = 16, bold = False, bgcolor = color_title, fgcolor = "FFFFFF")
+    subtitle_style     = dict(font = fontname, size = 16, bold = False, bgcolor = color_title, fgcolor = "FFFFFF")
+    header_style       = dict(font = fontname, bgcolor = color_table_header, fgcolor = "FFFFFF")
+    header_desc_style  = dict(font = fontname, size = 9, bgcolor = color_table_header, fgcolor = "FFFFFF")
+    heading_style      = dict(font = fontname, bold = True, bgcolor = color_header, fgcolor = "FFFFFF")
+    normal_style       = dict(font = fontname) # bgcolor="EEECE2", border=True)
+    bold_style         = dict(font = fontname, bold = True)
+    obsolete_style     = dict(font = fontname, strike = True, fgcolor = "95261F")
+    small_style        = dict(font = fontname, size = 9, fgcolor = "606060")
 
     logging.debug(f"Columns: {columns}")
 
@@ -133,7 +193,7 @@ def generate_excel(ws, schema, types):
     format(ws[1], title_style)
     format(ws[2], subtitle_style)
     format(ws[3], header_style)
-    format(ws[4], header_style)
+    format(ws[4], header_desc_style)
 
     # Inner function to get a succinct type description
     def get_type_description(info):
@@ -212,9 +272,9 @@ def generate_excel(ws, schema, types):
 
         ws.append(row(
             property = name,
-            methodology = info.get("x-term", ""),
+            attribute = info.get("x-term", ""),
             section = section,
-            validation = rule,
+            reporting = rule,
             comment = info.get("title", "") + info.get("x-comment", "") + info.get("note", ""),
             description = description,
             category = parent.get("title", ""),
@@ -276,6 +336,20 @@ def generate_excel(ws, schema, types):
                 wrap_text=column.get("wrap_text", False),
                 vertical="top"
                 )
+    # wrap all header descriptions
+    for cell in ws[4]:
+        cell.alignment = Alignment(
+            indent = cell.alignment.indent, 
+            wrap_text=column.get("wrap_text", False),
+            vertical="top"
+            )
+    # HACK: merge reporting rules and description cells
+    ws.merge_cells(start_row=4, start_column=4, end_row=4, end_column=5)
+
+    # HACK: force style on data model extensions
+    ws.cell(ws.max_row-3, 1).value = "extensions: DataModelExtension[]"
+    ws.cell(ws.max_row-3, 2).value = "Data model extensions"
+    format(ws[ws.max_row-3], heading_style)
 
     # Insert the PACT logo
     img = Image("./assets/logo-dark-margin.png")
