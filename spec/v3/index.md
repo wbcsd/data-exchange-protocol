@@ -165,11 +165,36 @@ A conforming [=host system=] is any algorithm realized as software and/or hardwa
 A conforming requesting [=data recipient=] is any algorithm realized as software and/or hardware that complies with the relevant normative statements in [[#api]].
 
 
-# Exchanging Footprints # {#business-cases}
+
+# Exchanging Footprints # {#exchanging-footprints}
 
 Note: This chapter is non-normative.
 
 Achieving transparency in carbon emissions at the product level is challenging due to the complexity of global supply chains. This specification focuses on enabling transparency through a peer-to-peer PCF data exchange by specifying necessary aspects for achieving interoperability, such as the [Data Model](#data-model) and [API](#api).
+
+
+## Synchronous Retrieval 
+
+The synchronous part of the PACT API allows for immediate retrieval of PCFs. Refer to [[#action-listfootprints]] and [[#action-getfootprint]] for detailed request and response formats.
+
+
+### Getting multiple PCFs
+
+The `ListFootprints` action allows for directly retrieving multiple PCFs. Starting from version 3.0, host systems
+must provide filtering on a minimum set of criteria. 
+
+1. The data recipient authenticates with the data owner.
+2. The data recipient calls the `/footprints` endpoint, optionally providing a filter with search criteria and a limit to obtain a list of PCFs. 
+3. After validating the request, the data owner returns a 2xx status code and the list of <{ProductFootprint}> objects. On error the data owner returns a relevant HTTP error code. For details, see [[#api]]
+
+
+### Getting a single PCF
+
+A data-recipient can directly obtain a given PCF by its ID by calling `GetFootprint`.
+
+1. The data recipient authenticates with the data owner.
+2. The data recipient calls the `/footprints/{id}` endpoint, providing the PCF ID (in UUID format)
+3. If found, the data owner returns the PCF in <{ProductFootprint}> and HTTP status code 200. If not found a 404 (Not found) status code will be returned. 
 
 
 ## Asynchronous Exchange ## {#business-cases-async-events}
@@ -198,30 +223,6 @@ In this case the data owner sends a `PublishedEvent` to the data recipient.
 1. The data recipient should validate this incoming event and directly return a status code indicating succesful receipt (HTTP code 2xx) or an error (HTTP 4xx or 5xx). 
 
 Refer to [[#action-events]] for detailed request and response formats.
-
-
-## Synchronous Retrieval 
-
-The synchronous part of the PACT API allows for immediate retrieval of PCFs. Refer to [[#action-listfootprints]] and [[#action-getfootprint]] for detailed request and response formats.
-
-
-### Getting multiple PCFs
-
-The `ListFootprints` action allows for directly retrieving multiple PCFs. Starting from version 3.0, host systems
-must provide filtering on a minimum set of criteria. 
-
-1. The data recipient authenticates with the data owner.
-2. The data recipient calls the `/footprints` endpoint, optionally providing a filter with search criteria and a limit to obtain a list of PCFs. 
-3. After validating the request, the data owner returns a 2xx status code and the list of <{ProductFootprint}> objects. On error the data owner returns a relevant HTTP error code. For details, see [[#api]]
-
-
-### Getting a single PCF
-
-A data-recipient can directly obtain a given PCF by its ID by calling `GetFootprint`.
-
-1. The data recipient authenticates with the data owner.
-2. The data recipient calls the `/footprints/{id}` endpoint, providing the PCF ID (in UUID format)
-3. If found, the data owner returns the PCF in <{ProductFootprint}> and HTTP status code 200. If not found a 404 (Not found) status code will be returned. 
 
 
 
@@ -745,7 +746,7 @@ The scope of the HTTP API is minimal by design. Additional features will be adde
 A host system serves the needs of a single or multiple [=data owners=]. Additionally, a host system can also serve the needs of [=data recipients=] if it retrieves data from other host systems by calling their API.
 
 In other words, any host system which implements the API endpoints as described in this specification can play 
-the role of [=data owner=] as well as of [=data recipient=], thus mirroring real-world supply chains. See [[#business-cases]] for more details.
+the role of [=data owner=] as well as of [=data recipient=], thus mirroring real-world supply chains. See [[#exchanging-footprints]] for more details.
 
 A [=host system=] MUST implement the following actions:
 
@@ -754,7 +755,7 @@ A [=host system=] MUST implement the following actions:
  - [Action GetFootprint](#action-getfootprint)
  - [Action Events](#action-events)
 
-The host system MUST make its footprints available to the data recipient through BOTH [=Action ListFootprints=] AND [=Action Events=].
+The host system MUST make footprints available to the data recipient through BOTH [=Action ListFootprints=] AND [=Action Events=]. 
 
 A host system SHOULD implement access management to control what PCFs it accepts and makes available to which [=data recipients=].
 
@@ -1165,7 +1166,7 @@ Summary of changes:
 
 1. **Documentation Improvements:**
     - Added diagram with visual representation of asynchronous event processing workflow
-    - Fixed [[#api-action-list-example]], [[#api-action-events-example]], [[#api-action-get-example]], and [[#business-cases-async-events]] by removing spurious `geographicScope` object
+    - Fixed [[#api-action-list-example]], [[#api-action-events-example]], [[#api-action-get-example]], and [[#exchanging-footprints-async-events]] by removing spurious `geographicScope` object
     - Fixed <{CarbonFootprint/dqi}> value types in all examples
     - Fixed <{DataQualityIndicators}> by removing misleading link to `decimal`
 
@@ -1177,8 +1178,8 @@ Summary of changes:
 Summary of changes:
 
 1. **Documentation Improvements:**
-    - Addition of the new [[#business-cases]] chapter
-    - Addition of missing examples in the [[#business-cases-async-events]] section
+    - Addition of the new [[#exchanging-footprintss]] chapter
+    - Addition of missing examples in the [[#exchanging-footprints-async-events]] section
     - Fixed the incomplete `assurance` example and moved it to the appropriate section
     - Fixed the incorrect value of `pCfExcludingBiogenic` in all relevant examples
     - Removal of notes referring to the transition from v1 to v2
