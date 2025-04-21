@@ -682,7 +682,7 @@ values are expected to be negative or positive.
 <tr><td>
 SHALL
 <td>
-Value is required to be defined 
+Value is required to report on
 <tr><td style="white-space: nowrap">
 BIO
 <td>
@@ -702,10 +702,10 @@ Required if CCS applicable and data known and available, blank otherwise.
 <tr><td style="white-space: nowrap">
 SHOULD
 <td>
-Value is recommended to be defined, exceptions are possible.
+Value is recommended to report on, exceptions are possible.
 <tr><td>
 MAY
-<td>Value is optional to be defined
+<td>Value is optional to report on
 </table>
 
 See [=PACT Methodology=] for more details.
