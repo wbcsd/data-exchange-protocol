@@ -1189,7 +1189,7 @@ Summary of changes:
 
 1. **Documentation Improvements:**
     - Added diagram with visual representation of asynchronous event processing workflow
-    - Fixed [[#api-action-list-example]], [[#api-action-events-example]], [[#api-action-get-example]], and [[#exchanging-footprints-async-events]] by removing spurious `geographicScope` object
+    - Fixed [[#api-action-list-example]], [[#api-action-events-example]], [[#api-action-get-example]], and [[#exchanging-footprints]] by removing spurious `geographicScope` object
     - Fixed <{CarbonFootprint/dqi}> value types in all examples
     - Fixed <{DataQualityIndicators}> by removing misleading link to `decimal`
 
@@ -1201,8 +1201,8 @@ Summary of changes:
 Summary of changes:
 
 1. **Documentation Improvements:**
-    - Addition of the new [[#exchanging-footprintss]] chapter
-    - Addition of missing examples in the [[#exchanging-footprints-async-events]] section
+    - Addition of the new [[#exchanging-footprints]] chapter
+    - Addition of missing examples in the [[#exchanging-footprints]] section
     - Fixed the incomplete `assurance` example and moved it to the appropriate section
     - Fixed the incorrect value of `pCfExcludingBiogenic` in all relevant examples
     - Removal of notes referring to the transition from v1 to v2
