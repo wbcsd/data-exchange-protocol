@@ -775,7 +775,7 @@ A [=host system=] MUST implement the following actions:
  - [Action GetFootprint](#action-getfootprint)
  - [Action Events](#action-events)
 
-The host system MUST make footprints available to the data recipient through BOTH [=Action ListFootprints=] AND [=Action Events=]. 
+The host system MUST make footprints available for a data recipient through BOTH [=Action ListFootprints=] AND [=Action Events=]. Any product footprint obtained through an asynchronous request MUST also be retrievable through both synchronous methods, AND vice versa. This symmetry ensures any conformant [=host system=] in a supply chain can act as a [=data owner=] and a [=data recipient=]
 
 A host system SHOULD implement access management to control what PCFs it accepts and makes available to which [=data recipients=].
 
