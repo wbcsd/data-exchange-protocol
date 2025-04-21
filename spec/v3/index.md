@@ -166,6 +166,367 @@ A conforming requesting [=data recipient=] is any algorithm realized as software
 
 
 
+
+# Data Model # {#data-model}
+
+
+## Introduction ## {#data-model-intro}
+
+This section specifies a data model for [[#productfootprint|product footprints]] conforming
+with the [=PACT Methodology=] Version 3.
+
+The overall data model is designed for interactions between [=data owners=] and
+[=data recipients=], to enable
+(i) interoperability,
+(ii) comparability of and transparency over product footprints, or
+(iii) the calculation of derived <{CarbonFootprint|CarbonFootprints}> from other <{CarbonFootprint|CarbonFootprints}>.
+
+The data model consists of the following major data types:
+
+1. <{ProductFootprint}>: contains information to identify a product,
+    plus further information such as the <{CarbonFootprint}>
+2. <{CarbonFootprint}>: contains information related to the carbon footprint
+    of a product.
+3. <{DataModelExtension}>: contains additional information beyond the data model
+    specified in this document.
+
+Additional uses of the data model are supported through the concept of
+[=Data Model Extensions=]. These allow [=data owners=] to add
+further information to a <{ProductFootprint}>.
+
+## Validation
+
+This specification defines two distinct validation layers that serve different purposes:
+
+1. [**OpenAPI Schema Definition**](#openapi-schema) - The schema definition for the data model API specify the technical requirements for machine-to-machine communication and exchange of PCFs. Software implementations MUST adhere to these requirements for interoperability. 
+
+2. [**PACT Methodology Reporting Rules**](#reporting-rules) - A set of business rules that guide what data should be included to properly follow carbon reporting practices. These rules indicate which properties are expected to be filled in according to the [=PACT Methodology=].
+
+A conformant software implementation MUST adhere to the OpenAPI schema for all API methods and data objects.
+
+Additionally, implementations CAN incorporate functionality to assist end-users with following the PACT Methodology reporting rules, such as by validating inputs or signaling missing information. This logic should be implemented in the end-user facing part of the application, while inter-machine communication is governed solely by the OpenAPI schema.
+
+
+## OpenAPI Schema
+
+The data model and API actions described here are formally defined in the [[!OpenAPI]] specification available at [https://docs.carbon-transparency.org/](https://docs.carbon-transparency.org/).
+
+The OpenAPI schema serves two critical functions:
+
+1. It defines the complete structure of the PACT data model, including all data types, properties, and their relationships.
+2. It specifies the technical requirements for API compliance, including:
+
+   * The minimum set of properties that MUST be provided  for valid API communication
+   * Required data formats and value constraints
+   * Valid request and response structures for each API endpoint
+
+Implementations MUST conform to this schema to ensure interoperability when exchanging product footprints through the REST API. The schema should be considered the authoritative technical reference for all implementation decisions related to data structure and API communication.
+
+### Basic Types
+
+The following basic types are used in the data model:
+
+<table class="data">
+<thead>
+<th>Type
+<th>Description 
+<tbody>
+<tr>
+  <td><code>string</code>
+  <td> Any string of undetermined length, including the empty string ""
+
+  ```json
+  "Sample string"
+  ```
+<tr>
+  <td><code>string&lt;uuid&gt;</code>
+  <td> String representation of a UUID, see RFC4122
+
+  ```json
+  "{91715e5e-fd0b-4d1c-8fab-76290c46e6ed}"
+  ```
+<tr>
+  <td><code>string&lt;urn&gt;</code>
+  <td> String representation of a URN, see RFC8141 
+  
+  ```json
+  "urn:gtin:5695872369587"
+  ```
+<tr>
+  <td><code>string&lt;decimal&gt;</code>
+  <td> Non-integer numbers in the data model MUST be represented as decimal strings. 
+
+  ```json
+  "12.3456",
+  "-9876.5432102"
+  "1.2345e+6"
+  ```
+<tr>
+  <td><code>integer</code>
+  <td>Non-fractional numbers SHOULD be represented as integers. 
+
+  ```json
+  123,
+  -456
+  ```
+<tr>
+  <td><code>string&lt;datetime&gt;</code>
+  <td> Dates MUST be formatted according to [[!ISO8601-1]]
+
+  ```json
+  "2025-04-23T18:25:43.511Z"
+  ```
+
+<tr>
+  <td><code>boolean</code>
+  <td> Boolean flag: <code>true</code> or <code>false</code>
+
+  ```json
+  true
+  ```
+
+</table>
+
+ ### Qualifiers
+ 
+Types can have the following qualifiers. Any data object send to or from the API MUST to adhere to these for interoperability between [=host systems=].
+
+<table class="data">
+<thead>
+<tr>
+  <th>Qualifier
+  <th>Description
+<tbody>
+<tr>
+  <td><code>Required</code>
+  <td>The property MUST be provided and MUST NOT be `null`.
+<tr>
+  <td><code>NonEmpty</code>
+  <td>The `string` or `array` MUST have a length >= 1
+<tr>
+  <td><code>Unique</code>
+  <td>All items in an `array` MUST be unique
+</table>
+
+
+## PACT Methodology Reporting Rules ## {#reporting-rules}
+
+In addition to the technical requirements defined in the OpenAPI schema, the [=PACT Methodology=] defines a set of reporting expectations for carbon footprint data. 
+
+These rules indicate which properties SHALL, SHOULD or MAY be provided in specific reporting contexts, even if they are technically optional in the API schema.
+These reporting rules are expressed using the following notation:
+
+Where applicable, the specification below also includes information on the *unit* 
+of certain properties (e.g. *kgCO2e*: kilogram CO equivalent) and if 
+values are expected to be negative or positive.
+ 
+<table><tbody>
+<tr><td>
+SHALL
+<td>
+Value is required to report on
+<tr><td style="white-space: nowrap">
+BIO
+<td>
+Required if biogenic and land sector related emissions are applicable, 0 if not applicable, blank if unknown or unavailable
+<tr><td style="white-space: nowrap">
+BIO-2027
+<td>
+Required per 31/12/2027 if biogenic and land sector related emissions are applicable , 0 if not applicable, blank if unknown or unavalaible.
+<tr><td style="white-space: nowrap">
+CCU
+<td>
+Required if CCU applicable and data known and available, blank otherwise. 
+<tr><td style="white-space: nowrap">
+CCS
+<td>
+Required if CCS applicable and data known and available, blank otherwise.
+<tr><td style="white-space: nowrap">
+SHOULD
+<td>
+Value is recommended to report on, exceptions are possible.
+<tr><td>
+MAY
+<td>Value is optional to report on
+</table>
+
+See [=PACT Methodology=] for more details.
+
+## Undefined Properties
+
+In a JSON object, a property is deemed undefined if it is either not present in the object or explicitly set to `null`. For example:
+
+```json
+{
+  "property1": "value1",
+  "property2": null
+}
+```
+
+In this example, `property2` is considered undefined. 
+Also, any property not present in the object, for example `property3` is also considered `undefined`.
+
+
+
+<pre class=include>
+path: data-model.generated.md
+</pre>
+
+
+
+# HTTP REST API # {#api}
+
+## Introduction ## {#api-intro}
+
+This section defines an [[!rfc9112|HTTP]]-based API for the [=interoperable=] exchange of [[#productfootprint|Product Footprint]] data between [=host systems=].
+
+The scope of the HTTP API is minimal by design. Additional features will be added in future versions of this specification.
+
+
+
+## <dfn>Host System</dfn> ## {#api-host-system}
+
+A host system serves the needs of a single or multiple [=data owners=]. Additionally, a host system can also serve the needs of [=data recipients=] if it retrieves data from other host systems by calling their API.
+
+In other words, any host system which implements the API endpoints as described in this specification can play 
+the role of [=data owner=] as well as of [=data recipient=], thus mirroring real-world supply chains. See [[#exchanging-footprints]] for more details.
+
+A [=host system=] MUST implement the following actions:
+
+ - [Action Authenticate](#api-auth)
+ - [Action ListFootprints](#action-listfootprints)
+ - [Action GetFootprint](#action-getfootprint)
+ - [Action Events](#action-events)
+
+The host system MUST make footprints available for a data recipient through BOTH [=Action ListFootprints=] AND [=Action Events=]. Any product footprint obtained through an asynchronous request MUST also be retrievable through both synchronous methods, AND vice versa. This symmetry ensures any conformant [=host system=] in a supply chain can act as a [=data owner=] and a [=data recipient=]
+
+A host system SHOULD implement access management to control what PCFs it accepts and makes available to which [=data recipients=].
+
+A [=host system=] MUST offer its actions over HTTPS only. 
+
+A [=host system=] MUST authenticate any client prior to using the above actions. 
+
+A [=host system=] SHOULD offer an [=OpenId Provider Configuration Document=] for the client to obtain the token endpoint for [Action Authenticate](#api-auth).
+
+A [=host system=] MUST offer all actions except [Action Authenticate](#api-auth) under the same Base URL, e.g. `https://api.example.org/`, or `https://example.org/pact-api/` Note that for version 3 these actions can be found under `$base-url$/3/...`
+
+A [=host system=] MAY offer the [=OpenId Provider Configuration Document=] or [Action Authenticate](#api-auth) under a different URL (Auth Base Url): `$auth-base-url$/.well-known/openid-configuration` or `$auth-base-url$/auth/token`. See [[#api-auth]].
+
+
+
+## Out of scope ## {#api-host-system-out-of-scope}
+
+<div class=note>Non-normative</div>
+
+This standard focuses on the necessary definitions to enable interoperable data exchange between data owners and data recipients. This is mediated through a host system which implements the HTTP REST API defined in this document.
+
+Within the [=PACT=] Project, conforming host systems are called solutions.
+
+Solutions add further functionality on top of this standard in order to enable meaningful and interoperable data exchanges.
+
+The following section briefly describes some of the additional functionality which is beyond the scope of this document:
+
+<ol type="a">
+  <li>Footprint calculation according to the PACT Methodology</li>
+  <li>Authentication and access management: the act of deciding and setting which product footprint may be accessed by each data recipient</li>
+  <li>Credentials management: the overall functionality to generate access credentials for data recipients, to exchange these credentials with data recipients, to rotate or revoke such credentials, etc.</li>
+  <li>Logging: creation and storage of access logs and audit trails related to data exchange, authentication processes, etc.</li>
+</ol>
+
+## Error Handling ## {#api-error-handling}
+
+The actions [GetFootprint](#action-getfootprint), [ListFootprints](#action-listfootprints) and [Events](#action-events) MUST return an appropriate HTTP status code and MUST include a JSON <{Error}> object with information on the error.
+
+Error responses are specified in detail such that data recipients can understand the cause of the error, and so that potentially host systems can act on and resolve errors automatically.
+
+Error responses from [Action Authenticate](#api-auth) follow the OAuth specification [[!rfc6750]]. See [[#api-auth]]
+
+
+## Authentication Flow ## {#api-auth}
+
+The API requires authentication using the OAuth 2.0 client credentials flow. Clients must obtain an access token before making requests to protected endpoints.
+
+[=Host systems=] MUST implement this action in conformance with [[!rfc6749]] Section 4.4.
+
+
+### Obtaining an Access Token
+
+Clients SHOULD retrieve the token endpoint dynamically via the OpenID Connect discovery mechanism. The OpenID configuration can  be found at:
+
+```
+$auth-base-url$/.well-known/openid-configuration
+```
+
+If provided by the host system, this document contains the `token_endpoint` to be used by the client. 
+
+If no OpenID configuration is provided by the host system, clients MUST assume `$auth-base-url$/auth/token` to be the token endpoint.
+
+After determining the token endpoint, clients MUST obtain an access token by making a request to:
+
+```http
+POST $token-endpoint$ 
+```
+
+with the following request parameters:
+
+ * `grant_type`: Must be set to `client_credentials`.
+ * `client_id`: The client’s unique identifier.
+ * `client_secret`: The client’s secret key.
+
+Example request:
+
+```http
+POST /auth/token HTTP/1.1
+Host: id.example.com
+Content-Type: application/x-www-form-urlencoded
+Authorization: Basic {base64(client_id:client_secret)}
+
+grant_type=client_credentials
+```
+
+### Token Response
+
+A successful response returns an access token in the following format:
+
+```json
+{
+  "access_token": "<token>",
+  "token_type": "Bearer",
+  "expires_in": 3600
+}
+```
+
+If the client cannot be authenticated, the [=host system=] MUST respond with a 400 or 401 status code, and provide details on the error:
+
+```json
+{
+  "error": "invalid_client",
+  "error_description": "Authentication failed"
+}
+```
+
+For details and possible values for `error` see [[!rfc6749]] section 5.2
+
+### Using the Access Token
+
+Once obtained, the access token must be included in the Authorization header of API requests, following the OAuth 2.0 Bearer Token Usage standard (RFC 6750):
+
+```http
+GET <base-url>/3/<action> HTTP/1.1
+Authorization: Bearer <access_token>
+```
+
+The host system MUST check the Access Token and return a 401 when it has expired or is invalid. 
+
+Access tokens SHOULD expire. In this case, data recipients MUST retrieve a new [access token](#obtaining-an-access-token)
+as described in this section.
+
+
+<pre class=include>
+path: rest-api.generated.md
+</pre>
+
+
 # Exchanging Footprints # {#exchanging-footprints}
 
 Note: This chapter is non-normative.
@@ -544,364 +905,6 @@ In determining which URN namespace and corresponding syntax to use, the data own
 These namespaces allow systems and standards to consistently identify and categorize products, making them useful in a variety of domains like supply chain management, retail, industrial procurement, and publication. If you’re working with a specific product categorization system, you may find these URNs particularly relevant for classification or reference purposes.
 
 
-# Data Model # {#data-model}
-
-
-## Introduction ## {#data-model-intro}
-
-This section specifies a data model for [[#productfootprint|product footprints]] conforming
-with the [=PACT Methodology=] Version 3.
-
-The overall data model is designed for interactions between [=data owners=] and
-[=data recipients=], to enable
-(i) interoperability,
-(ii) comparability of and transparency over product footprints, or
-(iii) the calculation of derived <{CarbonFootprint|CarbonFootprints}> from other <{CarbonFootprint|CarbonFootprints}>.
-
-The data model consists of the following major data types:
-
-1. <{ProductFootprint}>: contains information to identify a product,
-    plus further information such as the <{CarbonFootprint}>
-2. <{CarbonFootprint}>: contains information related to the carbon footprint
-    of a product.
-3. <{DataModelExtension}>: contains additional information beyond the data model
-    specified in this document.
-
-Additional uses of the data model are supported through the concept of
-[=Data Model Extensions=]. These allow [=data owners=] to add
-further information to a <{ProductFootprint}>.
-
-## Validation
-
-This specification defines two distinct validation layers that serve different purposes:
-
-1. [**OpenAPI Schema Definition**](#openapi-schema) - The schema definition for the data model API specify the technical requirements for machine-to-machine communication and exchange of PCFs. Software implementations MUST adhere to these requirements for interoperability. 
-
-2. [**PACT Methodology Reporting Rules**](#reporting-rules) - A set of business rules that guide what data should be included to properly follow carbon reporting practices. These rules indicate which properties are expected to be filled in according to the [=PACT Methodology=].
-
-A conformant software implementation MUST adhere to the OpenAPI schema for all API methods and data objects.
-
-Additionally, implementations CAN incorporate functionality to assist end-users with following the PACT Methodology reporting rules, such as by validating inputs or signaling missing information. This logic should be implemented in the end-user facing part of the application, while inter-machine communication is governed solely by the OpenAPI schema.
-
-
-## OpenAPI Schema
-
-The data model and API actions described here are formally defined in the [[!OpenAPI]] specification available at [https://docs.carbon-transparency.org/](https://docs.carbon-transparency.org/).
-
-The OpenAPI schema serves two critical functions:
-
-1. It defines the complete structure of the PACT data model, including all data types, properties, and their relationships.
-2. It specifies the technical requirements for API compliance, including:
-
-   * The minimum set of properties that MUST be provided  for valid API communication
-   * Required data formats and value constraints
-   * Valid request and response structures for each API endpoint
-
-Implementations MUST conform to this schema to ensure interoperability when exchanging product footprints through the REST API. The schema should be considered the authoritative technical reference for all implementation decisions related to data structure and API communication.
-
-### Basic Types
-
-The following basic types are used in the data model:
-
-<table class="data">
-<thead>
-<th>Type
-<th>Description 
-<tbody>
-<tr>
-  <td><code>string</code>
-  <td> Any string of undetermined length, including the empty string ""
-
-  ```json
-  "Sample string"
-  ```
-<tr>
-  <td><code>string&lt;uuid&gt;</code>
-  <td> String representation of a UUID, see RFC4122
-
-  ```json
-  "{91715e5e-fd0b-4d1c-8fab-76290c46e6ed}"
-  ```
-<tr>
-  <td><code>string&lt;urn&gt;</code>
-  <td> String representation of a URN, see RFC8141 
-  
-  ```json
-  "urn:gtin:5695872369587"
-  ```
-<tr>
-  <td><code>string&lt;decimal&gt;</code>
-  <td> Non-integer numbers in the data model MUST be represented as decimal strings. 
-
-  ```json
-  "12.3456",
-  "-9876.5432102"
-  "1.2345e+6"
-  ```
-<tr>
-  <td><code>integer</code>
-  <td>Non-fractional numbers SHOULD be represented as integers. 
-
-  ```json
-  123,
-  -456
-  ```
-<tr>
-  <td><code>string&lt;datetime&gt;</code>
-  <td> Dates MUST be formatted according to [[!ISO8601-1]]
-
-  ```json
-  "2025-04-23T18:25:43.511Z"
-  ```
-
-<tr>
-  <td><code>boolean</code>
-  <td> Boolean flag: <code>true</code> or <code>false</code>
-
-  ```json
-  true
-  ```
-
-</table>
-
- ### Qualifiers
- 
-Types can have the following qualifiers. Any data object send to or from the API MUST to adhere to these for interoperability between [=host systems=].
-
-<table class="data">
-<thead>
-<tr>
-  <th>Qualifier
-  <th>Description
-<tbody>
-<tr>
-  <td><code>Required</code>
-  <td>The property MUST be provided and MUST NOT be `null`.
-<tr>
-  <td><code>NonEmpty</code>
-  <td>The `string` or `array` MUST have a length >= 1
-<tr>
-  <td><code>Unique</code>
-  <td>All items in an `array` MUST be unique
-</table>
-
-
-## PACT Methodology Reporting Rules ## {#reporting-rules}
-
-In addition to the technical requirements defined in the OpenAPI schema, the [=PACT Methodology=] defines a set of reporting expectations for carbon footprint data. 
-
-These rules indicate which properties SHALL, SHOULD or MAY be provided in specific reporting contexts, even if they are technically optional in the API schema.
-These reporting rules are expressed using the following notation:
-
-Where applicable, the specification below also includes information on the *unit* 
-of certain properties (e.g. *kgCO2e*: kilogram CO equivalent) and if 
-values are expected to be negative or positive.
- 
-<table><tbody>
-<tr><td>
-SHALL
-<td>
-Value is required to report on
-<tr><td style="white-space: nowrap">
-BIO
-<td>
-Required if biogenic and land sector related emissions are applicable, 0 if not applicable, blank if unknown or unavailable
-<tr><td style="white-space: nowrap">
-BIO-2027
-<td>
-Required per 31/12/2027 if biogenic and land sector related emissions are applicable , 0 if not applicable, blank if unknown or unavalaible.
-<tr><td style="white-space: nowrap">
-CCU
-<td>
-Required if CCU applicable and data known and available, blank otherwise. 
-<tr><td style="white-space: nowrap">
-CCS
-<td>
-Required if CCS applicable and data known and available, blank otherwise.
-<tr><td style="white-space: nowrap">
-SHOULD
-<td>
-Value is recommended to report on, exceptions are possible.
-<tr><td>
-MAY
-<td>Value is optional to report on
-</table>
-
-See [=PACT Methodology=] for more details.
-
-## Undefined Properties
-
-In a JSON object, a property is deemed undefined if it is either not present in the object or explicitly set to `null`. For example:
-
-```json
-{
-  "property1": "value1",
-  "property2": null
-}
-```
-
-In this example, `property2` is considered undefined. 
-Also, any property not present in the object, for example `property3` is also considered `undefined`.
-
-
-
-<pre class=include>
-path: data-model.generated.md
-</pre>
-
-
-
-# HTTP REST API # {#api}
-
-## Introduction ## {#api-intro}
-
-This section defines an [[!rfc9112|HTTP]]-based API for the [=interoperable=] exchange of [[#productfootprint|Product Footprint]] data between [=host systems=].
-
-The scope of the HTTP API is minimal by design. Additional features will be added in future versions of this specification.
-
-
-
-## <dfn>Host System</dfn> ## {#api-host-system}
-
-A host system serves the needs of a single or multiple [=data owners=]. Additionally, a host system can also serve the needs of [=data recipients=] if it retrieves data from other host systems by calling their API.
-
-In other words, any host system which implements the API endpoints as described in this specification can play 
-the role of [=data owner=] as well as of [=data recipient=], thus mirroring real-world supply chains. See [[#exchanging-footprints]] for more details.
-
-A [=host system=] MUST implement the following actions:
-
- - [Action Authenticate](#api-auth)
- - [Action ListFootprints](#action-listfootprints)
- - [Action GetFootprint](#action-getfootprint)
- - [Action Events](#action-events)
-
-The host system MUST make footprints available for a data recipient through BOTH [=Action ListFootprints=] AND [=Action Events=]. Any product footprint obtained through an asynchronous request MUST also be retrievable through both synchronous methods, AND vice versa. This symmetry ensures any conformant [=host system=] in a supply chain can act as a [=data owner=] and a [=data recipient=]
-
-A host system SHOULD implement access management to control what PCFs it accepts and makes available to which [=data recipients=].
-
-A [=host system=] MUST offer its actions over HTTPS only. 
-
-A [=host system=] MUST authenticate any client prior to using the above actions. 
-
-A [=host system=] SHOULD offer an [=OpenId Provider Configuration Document=] for the client to obtain the token endpoint for [Action Authenticate](#api-auth).
-
-A [=host system=] MUST offer all actions except [Action Authenticate](#api-auth) under the same Base URL, e.g. `https://api.example.org/`, or `https://example.org/pact-api/` Note that for version 3 these actions can be found under `$base-url$/3/...`
-
-A [=host system=] MAY offer the [=OpenId Provider Configuration Document=] or [Action Authenticate](#api-auth) under a different URL (Auth Base Url): `$auth-base-url$/.well-known/openid-configuration` or `$auth-base-url$/auth/token`. See [[#api-auth]].
-
-
-
-## Out of scope ## {#api-host-system-out-of-scope}
-
-<div class=note>Non-normative</div>
-
-This standard focuses on the necessary definitions to enable interoperable data exchange between data owners and data recipients. This is mediated through a host system which implements the HTTP REST API defined in this document.
-
-Within the [=PACT=] Project, conforming host systems are called solutions.
-
-Solutions add further functionality on top of this standard in order to enable meaningful and interoperable data exchanges.
-
-The following section briefly describes some of the additional functionality which is beyond the scope of this document:
-
-<ol type="a">
-  <li>Footprint calculation according to the PACT Methodology</li>
-  <li>Authentication and access management: the act of deciding and setting which product footprint may be accessed by each data recipient</li>
-  <li>Credentials management: the overall functionality to generate access credentials for data recipients, to exchange these credentials with data recipients, to rotate or revoke such credentials, etc.</li>
-  <li>Logging: creation and storage of access logs and audit trails related to data exchange, authentication processes, etc.</li>
-</ol>
-
-## Error Handling ## {#api-error-handling}
-
-The actions [GetFootprint](#action-getfootprint), [ListFootprints](#action-listfootprints) and [Events](#action-events) MUST return an appropriate HTTP status code and MUST include a JSON <{Error}> object with information on the error.
-
-Error responses are specified in detail such that data recipients can understand the cause of the error, and so that potentially host systems can act on and resolve errors automatically.
-
-Error responses from [Action Authenticate](#api-auth) follow the OAuth specification [[!rfc6750]]. See [[#api-auth]]
-
-
-## Authentication Flow ## {#api-auth}
-
-The API requires authentication using the OAuth 2.0 client credentials flow. Clients must obtain an access token before making requests to protected endpoints.
-
-[=Host systems=] MUST implement this action in conformance with [[!rfc6749]] Section 4.4.
-
-
-### Obtaining an Access Token
-
-Clients SHOULD retrieve the token endpoint dynamically via the OpenID Connect discovery mechanism. The OpenID configuration can  be found at:
-
-```
-$auth-base-url$/.well-known/openid-configuration
-```
-
-If provided by the host system, this document contains the `token_endpoint` to be used by the client. 
-
-If no OpenID configuration is provided by the host system, clients MUST assume `$auth-base-url$/auth/token` to be the token endpoint.
-
-After determining the token endpoint, clients MUST obtain an access token by making a request to:
-
-```http
-POST $token-endpoint$ 
-```
-
-with the following request parameters:
-
- * `grant_type`: Must be set to `client_credentials`.
- * `client_id`: The client’s unique identifier.
- * `client_secret`: The client’s secret key.
-
-Example request:
-
-```http
-POST /auth/token HTTP/1.1
-Host: id.example.com
-Content-Type: application/x-www-form-urlencoded
-Authorization: Basic {base64(client_id:client_secret)}
-
-grant_type=client_credentials
-```
-
-### Token Response
-
-A successful response returns an access token in the following format:
-
-```json
-{
-  "access_token": "<token>",
-  "token_type": "Bearer",
-  "expires_in": 3600
-}
-```
-
-If the client cannot be authenticated, the [=host system=] MUST respond with a 400 or 401 status code, and provide details on the error:
-
-```json
-{
-  "error": "invalid_client",
-  "error_description": "Authentication failed"
-}
-```
-
-For details and possible values for `error` see [[!rfc6749]] section 5.2
-
-### Using the Access Token
-
-Once obtained, the access token must be included in the Authorization header of API requests, following the OAuth 2.0 Bearer Token Usage standard (RFC 6750):
-
-```http
-GET <base-url>/3/<action> HTTP/1.1
-Authorization: Bearer <access_token>
-```
-
-The host system MUST check the Access Token and return a 401 when it has expired or is invalid. 
-
-Access tokens SHOULD expire. In this case, data recipients MUST retrieve a new [access token](#obtaining-an-access-token)
-as described in this section.
-
-
-<pre class=include>
-path: rest-api.generated.md
-</pre>
 
 
 # Examples # {#api-examples}
