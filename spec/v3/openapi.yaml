@@ -62,9 +62,7 @@ paths:
         return the product footprints for which the data owner granted access 
         to the requesting data recipient.
 
-        If the host system has multiple versions of the same footprint with the 
-        same `id`, it MUST include only return the latest version. The host system 
-        SHOULD include preceding footprints which have been deprecated in the 
+        The host system SHOULD include footprints which have been deprecated in the 
         resulting list of footprints, except if the `status` query parameter 
         explicity requests only active footprints.
 
@@ -200,9 +198,6 @@ paths:
       summary: Action GetFootprint
       description: |
         Retrieve a single Product Carbon Footprint (PCF) by its unique identifier.
-
-        If the host system has multiple versions of the same footprint with the
-        same `id`, it MUST include only the latest version in the list of footprints.
 
         If the requested ProductFootprint is deprecated, the host system SHOULD
         return the deprecated ProductFootprint, if it is still available.
@@ -364,7 +359,6 @@ components:
       required:
       - id
       - specVersion
-      - version
       - created
       - status
       - companyName
@@ -408,16 +402,16 @@ components:
           examples:
           - ["f4b1225a-bd44-4c8e-861d-079e4e1dfd69", 
              "079e425a-464f-528d-341d-4a944a1dfd70"]
-        version:
-          description: |
-            The version number of the PCF. Starting with version 3.0, any change to a
-            PCF will generate a new ID, so this field is no longer needed.
+        # version:
+        #   description: |
+        #     The version number of the PCF. Starting with version 3.0, any change to a
+        #     PCF will generate a new ID, so this field is no longer needed.
             
-            See [[#lifecycle]] for details.
-          note: Deprecated in 3.0. MUST be 1.
-          type: integer
-          format: int32
-          minimum: 0
+        #     See [[#lifecycle]] for details.
+        #   note: Deprecated in 3.0. MUST be 1.
+        #   type: integer
+        #   format: int32
+        #   minimum: 0
         created:
           description: |
             The date and time when the PCF was created. This is typically an automatically 
@@ -429,16 +423,16 @@ components:
           format: date-time
           examples:
           - '2024-10-31T00:00:00Z'
-        updated:
-          description: |
-            The date and time when the PCF was last updated. Starting 3.0  any change to 
-            a PCF will generate a new ProductFootprint, which is immutable, leaving 
-            the updated property redundant.
+        # updated:
+        #   description: |
+        #     The date and time when the PCF was last updated. Starting 3.0  any change to 
+        #     a PCF will generate a new ProductFootprint, which is immutable, leaving 
+        #     the updated property redundant.
             
-            See [[#lifecycle]] for details.
-          note: Deprecated in 3.0.
-          type: string
-          format: date-time
+        #     See [[#lifecycle]] for details.
+        #   note: Deprecated in 3.0.
+        #   type: string
+        #   format: date-time
         status:
           description: |
             The status of the PCF. `Active` means that the PCF is the most recent version 

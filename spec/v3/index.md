@@ -237,7 +237,7 @@ Even without upstream changes, a downstream Product Footprint can undergo change
 
 This section defines how changes to Product Footprints shall be handled by [=data owners=] and communicated to [=data recipients=] through the <{ProductFootprint}> data model.
 
-Starting with Version 3.0, any change to a Product Footprint will result in a new Product Footprint with a new ID. The previous Product Footprint will be marked as `Deprecated`.
+Note: starting with Version 3.0, any change to a Product Footprint will result in a new Product Footprint with a new ID. The previous Product Footprint will be marked as `Deprecated`.
 
 ## Change Definition and Handling ## {#lifecycle-handling}
 
@@ -249,22 +249,19 @@ A <{ProductFootprint}> with <{ProductFootprint/status}> `Deprecated` MUST NOT be
 
 ### Updating PCFs
 
-Starting with version 3.0, a change to any part of the footprint MUST result in a new footprint with a new <{ProductFootprint/id}>. The old `id` SHOULD be added to the <{ProductFootprint/PrecedingPfIds}> list to be able to track back to the previous version. The version number of this new PCF MUST always be 1 and the `updated` property always null. The old PCF MUST have its `status` set to `Deprecated`.
+Starting with version 3.0, a change to any part of the footprint MUST result in a new footprint with a new <{ProductFootprint/id}>. The old `id` SHOULD be added to the <{ProductFootprint/PrecedingPfIds}> list to be able to track back to the previous version. The old PCF MUST have its `status` set to `Deprecated`. 
 
 ### Deprecating PCFs
 
-If a PCF becomes obsolete without being replaced, the `status` property of the PCF needs to be set to `Deprecated`.
+If a PCF becomes obsolete the `status` property of the PCF needs to be set to `Deprecated`. Note that this is the only occasion after creation that an already existing PCF will and MUST change. 
 
-### Properties to Become Obsolete
+### Obsolete Properties
 
-Starting with version 3.0, the `statusComment` is now obsolete and has been removed from the <{ProductFootprint}>.
-In future versions the deprecated properties `version` and `updated` will be removed.
+Starting with version 3.0, the following properties are now obsolete and have been removed from the <{ProductFootprint}>L:
 
-### Implementation Guidelines
-
-1. Any implementaion MAY in its internal data model store the `version` and `updated` properties. Any incoming minor change will be accepted if `incoming.version` is higher than `existing.version`. The updated PCF will be stored, including `version` and `updated` properties.
-
-2. Any implementation MAY choose NOT to store `version` and `updated` properties. In that case, any incoming minor change will be accepted if `incoming.updated` is later than `existing.created`. The PCF will be stored, making sure the `created` date/time is set to the incoming `updated` date/time.
+  - `version`
+  - `updated`
+  - `statusComment`
 
 ## Validity Period ## {#validity-period}
 
@@ -1303,7 +1300,7 @@ Overview of the changes to the data model compared with the data model version 1
     1. rename of HTTP query parameter `filter` to `$filter`
     2. introduce additional allowed `$filter` operators and properties:
         - Additional operators: `eq`, `lt`, `le`, `gt`, `and`, `any`
-        - Additional properties: <{ProductFootprint/created}>, <{ProductFootprint/updated}>, `ProductFootprint/productCategoryCpc`, <{CarbonFootprint/geographyCountry}>, <{CarbonFootprint/referencePeriodStart}>, <{CarbonFootprint/referencePeriodEnd}>, <{ProductFootprint/companyIds}>, <{ProductFootprint/productIds}>.
+        - Additional properties: <{ProductFootprint/created}>, `ProductFootprint/updated`, `ProductFootprint/productCategoryCpc`, <{CarbonFootprint/geographyCountry}>, <{CarbonFootprint/referencePeriodStart}>, <{CarbonFootprint/referencePeriodEnd}>, <{ProductFootprint/companyIds}>, <{ProductFootprint/productIds}>.
     3. Addition of alternative [=Action ListFootprints=] response `HttpStatusCode` 202, and pull-based request/response semantics
     4. pagination is now mandatory. See [[#pagination]]
 
