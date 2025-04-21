@@ -483,7 +483,6 @@ components:
           description: |
             The non-empty set of Uniform Resource Names ([[!RFC8141|URN]]). Each value of 
             this set is supposed to uniquely identify the ProductFootprint Data Owner. 
-            TODO: See Company Identifier section for details
           summary: |
             A list of company identifiers which represent the companies that are considered 
             data owners of the PCF. In a large organization, this may include multiple
