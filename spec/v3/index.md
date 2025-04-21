@@ -237,7 +237,8 @@ Even without upstream changes, a downstream Product Footprint can undergo change
 
 This section defines how changes to Product Footprints shall be handled by [=data owners=] and communicated to [=data recipients=] through the <{ProductFootprint}> data model.
 
-Note: starting with Version 3.0, any change to a Product Footprint will result in a new Product Footprint with a new ID. The previous Product Footprint will be marked as `Deprecated`.
+Advisement: Starting with version 3.0, any change to a Product Footprint will result in a new Product Footprint with a new ID. The previous Product Footprint will be marked as `Deprecated`. The properties `version`, `updated` and `statusComment` 
+are now obsolete.
 
 ## Change Definition and Handling ## {#lifecycle-handling}
 

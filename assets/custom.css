@@ -33,6 +33,10 @@ dt>code {
     content: initial;
 }
 
+strong.advisement {
+    text-align: inherit;
+}
+
 .json-schema-type {
     font-family: monospace;
 }
