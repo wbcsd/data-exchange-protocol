@@ -172,6 +172,26 @@ Note: This chapter is non-normative.
 
 Achieving transparency in carbon emissions at the product level is challenging due to the complexity of global supply chains. This specification focuses on enabling transparency through a peer-to-peer PCF data exchange by specifying necessary aspects for achieving interoperability, such as the [Data Model](#data-model) and [API](#api).
 
+The PACT API supports two complementary methods for exchanging carbon footprint data, each designed for different use cases. 
+
+1. **Synchronous Retrieval**: Provides immediate access to carbon footprint data through direct API calls. This approach is ideal for:
+
+   * On-demand access to *already existing* PCFs
+   * Integration with applications requiring real-time data access
+   * Scenarios where the data recipient needs only to consume data (not receive updates)
+
+
+2. **Asynchronous Exchange**: Enables event-based communication where PCF data can be requested, delivered, and updated over time. This approach is suited for:
+
+    * Situations where a PCF may not be immediately available and needs time to be calculated
+    * Workflows requiring notifications when new or updated PCF data becomes available
+    * Complex supply chain scenarios where data may change over time
+
+
+Both methods use the same underlying data model but differ in their communication patterns and implementation requirements. 
+
+The following sections describe each exchange method in detail, including the specific API actions, communication flows, and implementation considerations.
+
 
 ## Synchronous Retrieval 
 
