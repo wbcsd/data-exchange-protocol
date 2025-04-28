@@ -554,6 +554,15 @@ The following sections describe each exchange method in detail, including the sp
 The synchronous part of the PACT API allows for immediate retrieval of PCFs. Refer to [[#action-listfootprints]] and [[#action-getfootprint]] for detailed request and response formats.
 
 
+### Getting a single PCF
+
+A data-recipient can directly obtain a given PCF by its ID by calling `GetFootprint`.
+
+1. The data recipient authenticates with the data owner.
+2. The data recipient calls the `/footprints/{id}` endpoint, providing the PCF ID (in UUID format)
+3. If found, the data owner returns the PCF in <{ProductFootprint}> and HTTP status code 200. If not found a 404 (Not found) status code will be returned. 
+
+
 ### Getting multiple PCFs
 
 The `ListFootprints` action allows for directly retrieving multiple PCFs. Starting from version 3.0, host systems
@@ -562,15 +571,6 @@ must provide a way for data recipients to filter the resulting list, with a mini
 1. The data recipient authenticates with the data owner.
 2. The data recipient calls the `/footprints` endpoint, optionally providing a filter with search criteria and a limit to obtain a list of PCFs. 
 3. After validating the request, the data owner returns a 2xx status code and the list of <{ProductFootprint}> objects. On error the data owner returns a relevant HTTP error code. For details, see [[#api]]
-
-
-### Getting a single PCF
-
-A data-recipient can directly obtain a given PCF by its ID by calling `GetFootprint`.
-
-1. The data recipient authenticates with the data owner.
-2. The data recipient calls the `/footprints/{id}` endpoint, providing the PCF ID (in UUID format)
-3. If found, the data owner returns the PCF in <{ProductFootprint}> and HTTP status code 200. If not found a 404 (Not found) status code will be returned. 
 
 
 ## Asynchronous Exchange ## {#business-cases-async-events}
