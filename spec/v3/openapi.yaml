@@ -1032,6 +1032,25 @@ components:
           x-unit: kgCO2e/declared unit
           x-term: Outbound logistics emissions
           x-methodology: 3.3.2.1 
+        ccsTechnologicalCO2CaptureIncluded:
+          description: |
+            Indicates whether CCS (including BECCS) take place within the scope and boundary of the product carbon footprint. 
+            
+            If `true`, `ccsTechnologicalCO2Capture`, `technologicalCO2Removals` and `technologicalCO2CaptureOrigin` shall be defined if known and available.
+
+            If `false`, `ccsTechnologicalCO2Capture`, `technologicalCO2Removals` and `technologicalCO2CaptureOrigin` shall be undefined.
+          type: boolean
+          x-term: Technological CO2 capture with geological storage
+          x-rule: SHALL
+          x-methodology: 3.3.2.5
+        ccsTechnologicalCO2Capture:
+          description: |
+            The amount of CO2 captured with Carbon Capture and Storage (CCS) technologies.
+          $ref: '#/components/schemas/NegativeOrZeroDecimal'
+          x-unit: kgCO2e/declared unit
+          x-term: Technological CO2 capture with geological storage
+          x-rule: CCS
+          x-methodology: 3.3.2.5
         technologicalCO2CaptureOrigin:
           description: |
             For CCU: Information about the origin (fossil or biogenic) and path of the captured CO2 used in CCU, including 
@@ -1052,25 +1071,6 @@ components:
           x-term: Technological CO2 removals
           x-methodology: 3.3.2.5
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
-        ccsTechnologicalCO2CaptureIncluded:
-          description: |
-            Indicates whether CCS (including BECCS) take place within the scope and boundary of the product carbon footprint. 
-            
-            If `true`, `ccsTechnologicalCO2Capture`, `technologicalCO2Removals` and `technologicalCO2CaptureOrigin` shall be defined if known and available.
-
-            If `false`, `ccsTechnologicalCO2Capture`, `technologicalCO2Removals` and `technologicalCO2CaptureOrigin` shall be undefined.
-          type: boolean
-          x-term: Technological CO2 capture with geological storage
-          x-rule: SHALL
-          x-methodology: 3.3.2.5
-        ccsTechnologicalCO2Capture:
-          description: |
-            The amount of CO2 captured with Carbon Capture and Storage (CCS) technologies.
-          $ref: '#/components/schemas/NegativeOrZeroDecimal'
-          x-unit: kgCO2e/declared unit
-          x-term: Technological CO2 capture with geological storage
-          x-rule: CCS
-          x-methodology: 3.3.2.5
         ccuCarbonContent:
           description: |
             The amount of captured carbon (both biogenic and fossil) during CCU (Carbon Capture & Usage) in the product.
