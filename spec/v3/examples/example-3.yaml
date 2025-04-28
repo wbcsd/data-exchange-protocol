@@ -1,0 +1,79 @@
+id: e7u1639i-bg76-4c6e-608p-542u7i9iujh98
+specVersion: 3.0.0
+precedingPfIds: 
+created: 2025-04-30T00:00:00Z
+status: Active
+validityPeriodStart: 2024-12-31T00:00:00Z
+validityPeriodEnd: 2027-12-31T00:00:00Z
+companyName: Company 3
+companyIds: [urn:company:example:company3]
+productDescription: Car door mostly steel and aluminum; unpackaged
+productIds: [urn:gtin:5268596541023]
+productClassifications: [urn:pact:productclassification:un-cpc:7892]
+productNameCompany: Product 3
+comment: 
+pcf: 
+  declaredUnitOfMeasurement: piece
+  declaredUnitAmount: 1
+  productMassPerDeclaredUnit: 25
+  referencePeriodStart: 2024-02-28T00:00:00Z
+  referencePeriodEnd: 2024-09-30T00:00:00Z
+  geographyRegionOrSubregion: Northern Europe
+  geographyCountry: DE
+  geographyCountrySubdivision: DE-BW
+  boundaryProcessesDescription: |
+    1) Material acquisition and preprocessing, including extraction of steel and aluminium
+    2) Production: fuel consumption, electricity consumption, water consumption, process-generated direct emissions 
+    3) Distribution and storage: transportation of the finished product from manufacturing site to storage site (reported separately in outbound logistics)"
+  pcfExcludingBiogenicUptake: 77.00
+  pcfIncludingBiogenicUptake: 77.00
+  fossilCarbonContent: 11.72
+  biogenicCarbonContent: 0
+  recycledCarbonContent: 0
+  fossilGhgEmissions: 77
+  landUseChangeGhgEmissions: 0
+  landCarbonLeakage: 0
+  landManagementFossilGhgEmissions: 0
+  landManagementBiogenicCO2Emissions: 0
+  landManagementBiogenicCO2Removals: 0
+  biogenicCO2Uptake: 0
+  biogenicNonCO2Emissions: 0
+  landAreaOccupation: 0
+  aircraftGhgEmissions: 0
+  packagingEmissionsIncluded: FALSE
+  packagingGhgEmissions: 
+  packagingBiogenicCarbonContent: 
+  outboundLogisticsGhgEmissions: 4
+  ccsTechnologicalCO2CaptureIncluded: 
+  ccsTechnologicalCO2Capture: 
+  technologicalCO2CaptureOrigin: 
+  technologicalCO2Removals: 
+  ccuCarbonContent: 
+  ccuCalculationApproach: 
+  ccuCreditCertification: 
+  ipccCharacterizationFactors: ['AR5', 'AR6']
+  crossSectoralStandards: 
+  - GHGP-Product
+  - ISO14067
+  productOrSectorSpecificRules: 
+  - operator: Other
+    ruleNames:
+    - Catena-X Product Carbon Footprint Rulebook CX-PCF Rules, v.3
+    otherOperatorName: Catena-X
+  exemptedEmissionsPercent: 0.8
+  exemptedEmissionsDescription: Using the most conservative emission factor from a region with higher energy intensive grid for input A resulted in a contribution of 0.8% for this input. This is less than 3% and therefore considered under the cut off rule
+  allocationRulesDescription: 
+  secondaryEmissionFactorSources:
+  - name: Sphera
+    version: 2024
+  primaryDataShare: 13.1
+  dqi: 
+    technologicalDQR: 2.3
+    geographicalDQR: 3.4
+    temporalDQR: 3.1
+  verification: 
+    coverage: PCF calculation model
+    providerName: Auditor X
+    completedAt: 2024-01-31T00:00:00Z
+    standardName: GHG Protocol Product standard, ISO Standard 14067
+    comments: Verified solution X was used for the calculation of the PCFs

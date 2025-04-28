@@ -1,0 +1,71 @@
+id: D5CBA999-6A4B-4CBE-9E0A-6D8F27D1D191
+specVersion: 3.0.0
+precedingPfIds: 
+created: 2025-04-30T00:00:00Z
+status: Active
+validityPeriodStart: 2024-12-31T00:00:00Z
+validityPeriodEnd: 2027-12-31T00:00:00Z
+companyName: Company 4
+companyIds: [urn:company:example:company4]
+productDescription: |
+  Refined wood pulp - Microcrystalline cellulose (MCC) for application as filler in Built Envrironment (based on sugarcane)
+productIds: [urn:gtin:5268596541023]
+productClassifications: [urn:pact:productclassification:un-cpc:7892]
+productNameCompany: Product 4
+comment: 
+pcf:
+  declaredUnitOfMeasurement: kilogram
+  declaredUnitAmount: 1
+  productMassPerDeclaredUnit: 1
+  referencePeriodStart: 2024-02-25T00:00:00Z
+  referencePeriodEnd: 2024-09-30T00:00:00Z
+  geographyRegionOrSubregion: Latin America and the Caribbean
+  geographyCountry: BR
+  geographyCountrySubdivision: BR-SP
+  boundaryProcessesDescription: |
+    1) Material acquisition and preprocessing, including cultivation of sugarcane
+    2) Industrial processing: fuel consumption, electricity consumption, water consumption, process-generated direct emissions in order to extract, grind, wash and distill product"
+  pcfExcludingBiogenicUptake: 0.42
+  pcfIncludingBiogenicUptake: 0.05
+  fossilCarbonContent: 0
+  biogenicCarbonContent: 0.1
+  recycledCarbonContent: 0
+  fossilGhgEmissions: 0.17
+  landUseChangeGhgEmissions: 0.2
+  landCarbonLeakage: 0
+  landManagementFossilGhgEmissions: 0.05
+  landManagementBiogenicCO2Emissions: 0
+  landManagementBiogenicCO2Removals: 0
+  biogenicCO2Uptake: -0.37
+  biogenicNonCO2Emissions: 0.001
+  landAreaOccupation: 0.004
+  aircraftGhgEmissions: 0
+  packagingEmissionsIncluded: FALSE
+  packagingGhgEmissions: 
+  packagingBiogenicCarbonContent: 
+  outboundLogisticsGhgEmissions: 0.002
+  ccsTechnologicalCO2CaptureIncluded: 
+  ccsTechnologicalCO2Capture: 
+  technologicalCO2CaptureOrigin: 
+  technologicalCO2Removals: 
+  ccuCarbonContent: 
+  ccuCalculationApproach: 
+  ccuCreditCertification: 
+  ipccCharacterizationFactors: ['AR6']
+  crossSectoralStandards: [PEF]
+  productOrSectorSpecificRules:
+  - operator: PEF
+    ruleNames: 
+    - GHG Protocol Land sector & removals standard
+    otherOperatorName: GHG Protocol
+  exemptedEmissionsPercent: 0
+  exemptedEmissionsDescription: 
+  allocationRulesDescription: 
+  secondaryEmissionFactorSources: 
+  - name: Sphera
+    version: 2020
+  primaryDataShare: 80.2
+  dqi: 
+    technologicalDQR: 1
+    geographicalDQR: 2.2
+    temporalDQR: 4

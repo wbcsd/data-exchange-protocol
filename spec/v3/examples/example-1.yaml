@@ -1,0 +1,73 @@
+id: 12345678-9abc-def0-1234-567812345678
+specVersion: 3.0.0
+created: '2025-04-30T00:00:00Z'
+status: Active
+validityPeriodStart: '2024-12-31T00:00:00Z'
+validityPeriodEnd: '2027-12-31T00:00:00Z'
+companyName: Company 1
+companyIds: ['urn:company:example:company1']
+productDescription: Bioethanol 98%, sugar beet feedstock, bulk - no packaging
+productIds: [urn:gtin:5695872369587]
+productClassifications: [urn:pact:productclassification:cas:1456]
+productNameCompany: Product 1
+comment: | 
+  As using TfS, PDS and DQR calculations are slightly different
+  Use of Cool Farm Tool for emissions of sugar beet cultivation
+pcf: 
+  declaredUnitOfMeasurement: kilogram
+  declaredUnitAmount: 1
+  productMassPerDeclaredUnit: 1
+  referencePeriodStart: '2024-01-01T00:00:00Z'
+  referencePeriodEnd: '2024-12-31T00:00:00Z'
+  geographyRegionOrSubregion: Northern America
+  geographyCountry: US
+  geographyCountrySubdivision: US-TX
+  boundaryProcessesDescription: |
+    1) Material acquisition and preprocessing, including cultivation of sugar beet
+    2) Production: fuel consumption, electricity consumption, water consumption, process-generated direct emissions from the fermentation and distillation of ethanol
+  pcfExcludingBiogenicUptake: 0.384
+  pcfIncludingBiogenicUptake: -1.23
+  fossilCarbonContent: 0
+  biogenicCarbonContent: 0.44
+  recycledCarbonContent: 0
+  fossilGhgEmissions: 0.35
+  landUseChangeGhgEmissions: 0
+  landCarbonLeakage: 0
+  landManagementFossilGhgEmissions: 0.03
+  landManagementBiogenicCO2Emissions: 0.004
+  landManagementBiogenicCO2Removals: 0
+  biogenicCO2Uptake: -1.61
+  biogenicNonCO2Emissions: 0.002
+  landAreaOccupation: 0.41
+  aircraftGhgEmissions: 0
+  packagingEmissionsIncluded: true
+  packagingGhgEmissions: 
+  packagingBiogenicCarbonContent: 
+  outboundLogisticsGhgEmissions: 
+  ccsTechnologicalCO2CaptureIncluded: 
+  ccsTechnologicalCO2Capture: 
+  technologicalCO2CaptureOrigin: 
+  technologicalCO2Removals: 
+  ccuCarbonContent: 
+  ccuCalculationApproach: 
+  ccuCreditCertification: 
+  ipccCharacterizationFactors: ['AR6']
+  crossSectoralStandards: 
+  - GHGP-Product
+  - PACT-3.0
+  productOrSectorSpecificRules:
+  - operator: Other
+    ruleNames: 
+    - The Product Carbon Footprint Guideline for the Chemical Industry, v.3
+  otherOperatorName: TfS
+  exemptedEmissionsPercent: 0
+  exemptedEmissionsDescription: 
+  allocationRulesDescription: Mass allocation
+  secondaryEmissionFactorSources: 
+  - name: Ecoinvent
+    version: 3.1
+  primaryDataShare: 12.9
+  dqi: 
+    technologicalDQR: 1.5
+    geographicalDQR: 3.2
+    temporalDQR: 2.4

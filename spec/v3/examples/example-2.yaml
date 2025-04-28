@@ -1,0 +1,77 @@
+id: f4b1225a-bd44-4c8e-861d-079e4e1dfd69
+specVersion: 3.0.0
+precedingPfIds: ['f4b1225a-bd44-4c8e-861d-079e4e1dfd69', '079e425a-464f-528d-341d-4a944a1dfd70']
+created: 2025-04-30T00:00:00Z
+status: Active
+validityPeriodStart: 2024-12-31T00:00:00Z
+validityPeriodEnd: 2027-12-31T00:00:00Z
+companyName: Company 2
+companyIds: ['urn:company:example:company2']
+productDescription: Bioethanol 98%, sugar beet feedstock, including 100% fossil plastic packaging
+productIds: [urn:gtin:4712345060507]
+productClassifications: ['urn:pact:productclassification:un-cpc:1234']
+productNameCompany: Product 2
+comment: |
+  As using TfS, PDS and DQR calculations are slightly different
+
+  Access to new supplier-specific emission factors compared to secondary database in previous PCF
+
+  LandManagementBiogenicCO2Emissions is unknown
+
+  Use of Cool Farm Tool for emissions of sugar beet cultivation"
+pcf: 
+  declaredUnitOfMeasurement: liter
+  declaredUnitAmount: 12
+  productMassPerDeclaredUnit: 9.468
+  referencePeriodStart: 2024-01-01T00:00:00Z
+  referencePeriodEnd: 2024-12-31T00:00:00Z
+  geographyRegionOrSubregion: Northern America
+  geographyCountry: US
+  geographyCountrySubdivision: US-TX
+  boundaryProcessesDescription: |
+    1) Material acquisition and preprocessing, including cultivation of sugar beet
+    2) Production: fuel consumption, electricity consumption, water consumption, process-generated direct emissions from the fermentation and distillation of ethanol
+  pcfExcludingBiogenicUptake: 5.14
+  pcfIncludingBiogenicUptake: -14.22
+  fossilCarbonContent: 0.16
+  biogenicCarbonContent: 5.28
+  recycledCarbonContent: 0
+  fossilGhgEmissions: 4.78
+  landUseChangeGhgEmissions: 0
+  landCarbonLeakage: 0
+  landManagementFossilGhgEmissions: 0.36
+  landManagementBiogenicCO2Emissions: 
+  landManagementBiogenicCO2Removals: 0
+  biogenicCO2Uptake: -19.36
+  biogenicNonCO2Emissions: 0.024
+  landAreaOccupation: 4.92
+  aircraftGhgEmissions: 0
+  packagingEmissionsIncluded: TRUE
+  packagingGhgEmissions: 0.58
+  packagingBiogenicCarbonContent: 0
+  outboundLogisticsGhgEmissions: 
+  ccsTechnologicalCO2CaptureIncluded: 
+  ccsTechnologicalCO2Capture: 
+  technologicalCO2CaptureOrigin: 
+  technologicalCO2Removals: 
+  ccuCarbonContent: 
+  ccuCalculationApproach: 
+  ccuCreditCertification: 
+  ipccCharacterizationFactors: ['AR6']
+  crossSectoralStandards: [GHGP-Product, ISO14067]
+  productOrSectorSpecificRules:
+  - operator: Other
+    ruleNames: 
+    - The Product Carbon Footprint Guideline for the Chemical Industry, v.3
+  otherOperatorName: TfS
+  exemptedEmissionsPercent: 0
+  exemptedEmissionsDescription: 
+  allocationRulesDescription: Mass allocation
+  secondaryEmissionFactorSources: 
+  - name: Ecoinvent
+    version: 3.1
+  primaryDataShare: 16.8
+  dqi:  
+    technologicalDQR: 2.5
+    geographicalDQR: 4.1
+    temporalDQR: 1.3
