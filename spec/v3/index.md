@@ -1384,8 +1384,8 @@ The following changes have been applied for version 1.0.1
   },
   "PACT-METHODOLOGY": {
     "authors": [],
-    "href": "https://wbcsd.github.io/tr/2023/framework-20232601/framework.pdf",
-    "title": "PACT Pathfinder Framework: Guidance for the Accounting and Exchange of Product Life Cycle Emissions (Version 2.0)",
+    "href": "https://docs.carbon-transparency.org/spec/3.0.0/PACT_Methodology_3.0.0.pdf",
+    "title": "PACT Methodology: Methodology for Calculating and Exchanging Cradle-to-Gate Product Carbon Footprints (PCFs) Version 3.0",
     "status": "LS",
     "publisher": "WBCSD"
   },
