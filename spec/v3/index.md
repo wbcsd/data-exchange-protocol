@@ -36,7 +36,6 @@ Advisement: This is the Draft Release of the PACT 3.0.0 Specifications, for cons
 Advisement: This document is a work in progress and should not be used for conformance testing. 
   Please refer to the [latest stable version of the Technical Specifications](https://wbcsd.github.io/tr/2024/data-exchange-protocol-20241024/) for this.
 
-  For an overview of changes since the last version (2.3), see the [[#changelog]].
 <!--
 Advisement: This document will change heavily preparing for the 3.0 draft for consultation, ETA Mid-Feb.
   All feedback is welcome.
@@ -47,6 +46,9 @@ This document contains the necessary technical foundation for the [=PACT Network
 The goal of this document is to enable the [=interoperable=] exchange of [=PCF|Product Carbon Footprints=] across [[#conformance|conforming]] [=host systems=].
 
 The methodological foundation of the specification is the PACT Methodology Version 3.0, see [[!PACT-METHODOLOGY]].
+
+For an overview of changes since the last version (2.3), see the [[#changelog]].
+
 
 ## Status of This Document ## {#status}
 
@@ -270,6 +272,7 @@ The following basic types are used in the data model:
 
   ```json
   "2025-04-23T18:25:43.511Z"
+  "2025-04-24T12:13:44Z"
   ```
 
 <tr>
