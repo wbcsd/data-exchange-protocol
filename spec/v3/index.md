@@ -317,7 +317,7 @@ These rules indicate which properties SHALL, SHOULD or MAY be provided in specif
 These reporting rules are expressed using the following notation:
 
 Where applicable, the specification below also includes information on the *unit* 
-of certain properties (e.g. *kgCO2e*: kilogram CO equivalent) and if 
+of certain properties (e.g. *kgCO2e*: kilogram CO2 equivalent) and if 
 values are expected to be negative or positive.
  
 <table><tbody>
@@ -332,7 +332,7 @@ Required if biogenic and land sector related emissions are applicable, 0 if not 
 <tr><td style="white-space: nowrap">
 BIO-2027
 <td>
-Required per 31/12/2027 if biogenic and land sector related emissions are applicable , 0 if not applicable, blank if unknown or unavalaible.
+Required per 31/12/2027 if biogenic and land sector related emissions are applicable , 0 if not applicable, blank if unknown or unavailable.
 <tr><td style="white-space: nowrap">
 CCU
 <td>
@@ -562,7 +562,7 @@ The synchronous part of the PACT API allows for immediate retrieval of PCFs. Ref
 ### Getting multiple PCFs
 
 The `ListFootprints` action allows for directly retrieving multiple PCFs. Starting from version 3.0, host systems
-must provide filtering on a minimum set of criteria. 
+must provide a way for data recipients to filter the resulting list, with a minimum set of criteria. 
 
 1. The data recipient authenticates with the data owner.
 2. The data recipient calls the `/footprints` endpoint, optionally providing a filter with search criteria and a limit to obtain a list of PCFs. 
