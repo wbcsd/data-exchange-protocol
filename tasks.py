@@ -207,6 +207,21 @@ def experiment(c):
     # schema = scripts.schema.navigate_to(schema, "components/schemas/RequestCreatedEvent")
     # print(scripts.schema.dump_schema(schema))
 
+    def yaml_to_json(inp, out):
+        logging.info(f"Building {out}")
+        scripts.schema.yaml_to_json_file(inp, out)
+        scripts.schema.validate_json_data("spec/v3/openapi.yaml#components/schemas/ProductFootprint", out)
+
+    build_task([
+        Dependency("spec/v3/examples/example-1.json", ["spec/v3/examples/example-1.yaml"]),
+        Dependency("spec/v3/examples/example-2.json", ["spec/v3/examples/example-2.yaml"]),
+        Dependency("spec/v3/examples/example-3.json", ["spec/v3/examples/example-3.yaml"]),
+        Dependency("spec/v3/examples/example-4.json", ["spec/v3/examples/example-4.yaml"])
+        ],
+        yaml_to_json
+    )
+    return
+
     scripts.schema.validate_json_data(
         "spec/v3/openapi.yaml#paths/%2F3%2Ffootprints/get/responses/200/content/application%2Fjson/schema", 
         "spec/v3/examples/list-footprints-response.json"

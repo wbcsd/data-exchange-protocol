@@ -1,4 +1,5 @@
 import sys
+import datetime
 import yaml
 import logging
 import json
@@ -134,7 +135,52 @@ def schema_diff(old_file_path, new_file_path):
             summary(item, level + 1)
         
     summary(differences)
-        
+
+
+def filter_nulls_convert_nums(obj):
+    """
+    Recursively filter out None values from dictionaries and lists.
+    """
+    if isinstance(obj, dict):
+        return {k: filter_nulls_convert_nums(v) for k, v in obj.items() if v is not None}
+    elif isinstance(obj, list):
+        return [filter_nulls_convert_nums(item) for item in obj if item is not None]
+    elif isinstance(obj, bool):
+        return obj
+    elif isinstance(obj, datetime.datetime):
+        return obj.isoformat()
+    elif isinstance(obj, (int, float)):
+        return str(obj)
+    return obj
+
+def yaml_to_json(inp, out):
+    """
+    Convert a YAML string to a JSON string.
+    Args:
+        inp: input stream
+        out: output stream.
+
+    Numeric values will be converted to strings.
+    Properties with null values will be excluded.
+    """
+    obj = yaml.safe_load(inp)
+    obj = filter_nulls_convert_nums(obj)
+    return json.dump(obj, out, indent=2)
+
+def yaml_to_json_file(inp_path, out_path):
+    """
+    Convert a YAML file to a JSON file.
+    Args:
+        inp_path: input file path
+        out_path: output file path
+    """
+    with open(inp_path, 'r') as inp_file:
+        obj = yaml.safe_load(inp_file)
+    print(obj)
+    obj = filter_nulls_convert_nums(obj)
+    with open(out_path, 'w') as out_file:
+        json.dump(obj, out_file, indent=2, )
+
 
 if __name__ == "__main__":
     if len(sys.argv) != 3:
