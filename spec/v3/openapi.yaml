@@ -389,7 +389,7 @@ components:
           description: |
             A given PCF may change over time, due to updates to the calculation. 
             This is a list of IDs that reflect "past versions" of the current PCF,
-            maintained by the solution. 
+            maintained by the solution. If defined, MUST be non-empty set of IDs.
 
             See [[#lifecycle]] for details.
           x-rule: SHOULD
