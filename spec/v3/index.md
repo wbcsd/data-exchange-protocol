@@ -198,13 +198,13 @@ further information to a <{ProductFootprint}>.
 
 This specification defines two distinct validation layers that serve different purposes:
 
-1. [**OpenAPI Schema Definition**](#openapi-schema) - The schema definition for the data model API specify the technical requirements for machine-to-machine communication and exchange of PCFs. Software implementations MUST adhere to these requirements for interoperability. 
+1. [**OpenAPI Schema Definition**](#openapi-schema) - The schema definition for the data model API specifies the technical requirements for machine-to-machine communication and exchange of PCFs. Software implementations MUST adhere to these requirements for interoperability. 
 
-2. [**PACT Methodology Reporting Rules**](#reporting-rules) - A set of business rules that guide what data should be included to properly follow carbon reporting practices. These rules indicate which properties are expected to be filled in according to the [=PACT Methodology=].
+2. [**PACT Methodology Reporting Rules**](#reporting-rules) - A set of rules that state what data to include to properly follow carbon reporting practices. These rules indicate which properties are expected to be filled in according to the [=PACT Methodology=].
 
 A conformant software implementation MUST adhere to the OpenAPI schema for all API methods and data objects.
 
-Additionally, implementations CAN incorporate functionality to assist end-users with following the PACT Methodology reporting rules, such as by validating inputs or signaling missing information. This logic should be implemented in the end-user facing part of the application, while inter-machine communication is governed solely by the OpenAPI schema.
+Additionally, implementations CAN incorporate functionality to assist end-users with following the PACT Methodology reporting rules, such as by validating inputs or signaling missing information. This logic should be implemented in the user interface of the application, while inter-machine communication is governed solely by the OpenAPI schema.
 
 
 ## OpenAPI Schema
