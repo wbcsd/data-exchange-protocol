@@ -33,13 +33,13 @@ attribute:
     title: Methodology Attribute
     width: 20
     description: |
-        The name of the data attribute as specified in the PACT Framework v3.0.
-        Note that not all attributes are listed in the Framework, as some fields are purely technical.
+        The name of the data attribute as specified in the PACT Methodology v3.0.
+        Note that not all attributes are listed in the Methodology, as some fields are purely technical.
 section:
     title: Methodology Section
     width: 20
     description: |
-        A reference to the relevant section in the PACT Framework v3.0.
+        A reference to the relevant section in the PACT Methodology v3.0.
 reporting:
     title: Reporting Rule
     width: 15
