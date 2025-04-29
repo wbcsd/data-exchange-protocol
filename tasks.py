@@ -150,6 +150,15 @@ def build(c):
         Dependency("build/v3/openapi.yaml", ["spec/v3/openapi.yaml"])], 
         copy_file
         )
+    build_task([
+        Dependency("build/assets/logo.svg", ["assets/logo.svg"]), 
+        Dependency("build/assets/logo-dark.svg", ["assets/logo-dark.svg"]), 
+        Dependency("build/assets/custom.css", ["assets/custom.css"]), 
+        Dependency("build/assets/markdown.css", ["assets/markdown.css"]), 
+        Dependency("build/ref/methodology/pact-methodology-v3.0.pdf", ["ref/methodology/pact-methodology-v3.0.pdf"])
+        ],
+        copy_file
+        )
 
 
 @task(help={"ver": "Major version to release, can be v2 or v3"})
