@@ -4,28 +4,18 @@ import yaml
 import re
 import jsonref
 import logging
+import markdown
 from openpyxl import Workbook
 from openpyxl.drawing.image import Image
 from openpyxl.styles import Alignment, PatternFill, Font, Border, Side
 from openpyxl.drawing.spreadsheet_drawing import AnchorMarker, TwoCellAnchor, OneCellAnchor
 
 
-status = " (Living Document)"
-
-filter_text = {
-    "See [[#lifecycle]] for details.": "",
-    "([[!RFC8141|URN]])": "(RFC8141)",
-    "See [[#validity-period]] for more details.": "",
-    "See <{DataModelExtension}> for details.": "",
-    #"See [=PACT Methodology=] for details.": "",
-    #"(See [=PACT Methodology=])": "",
-    #"See [=PACT Methodology=].": ""
-}
-
 COLUMN_DEFS = """
 property:
     title: Technical Property
     width: 30
+    style: bold
     description: |
         The technical name of the data attribute, as specified in the PACT Tech Specs 3.0. 
         The Data Model of the specification contains properties grouped in data types.
@@ -38,6 +28,7 @@ attribute:
 section:
     title: Methodology Section
     width: 20
+    style: small
     description: |
         A reference to the relevant section in the PACT Methodology v3.0.
 reporting:
@@ -47,46 +38,49 @@ reporting:
 description:
     title: Description
     width: 60
-    wrap_text: true
+    style: text
     description: |
         The description of the data attribute, as specified in the PACT Tech Specs 3.0.
 category:
     title: Category
     width: 17
+    style: small
     description: |
         The category of the data attribute.
 unit:
     title: Unit
     width: 17
+    style: small
     description: |
         The unit of the data of the given attribute (e.g. kgCO2e / declaredUnit)
 comment:
     title: Comment
     width: 30
+    style: small
     description: |
         A comment on the data attribute. This may include information on how to calculate the value, or other relevant information.
 accepted:
     title: Accepted Value(s)
     width: 20
-    wrap_text: true
+    style: text
     description: |
         A description of the accepted values of the data attribute - some fields are limited to only a certain set of "valid values", whereas other fields can be free form text, booleans (true/false) or numbers.
 example1:
     title: Example 1
     width: 30
-    wrap_text: true
+    style: text
     description: |
         An example of how the data attribute could be populated (note exact syntax of each field is dependent on the solution used for data entry)
 example2:
     title: Example 2
     width: 30
-    wrap_text: true
+    style: text
     description: |
         An example of how the data attribute could be populated (note exact syntax of each field is dependent on the solution used for data entry)
 example3:
     title: Example 3
     width: 30
-    wrap_text: true
+    style: text
     description: |
         An example of how the data attribute could be populated (note exact syntax of each field is dependent on the solution used for data entry)
 #mandatory:
@@ -95,18 +89,132 @@ example3:
 #        An indication whether the field is mandatory or not. M indicates mandatory, O indicates optional, and M2025 indicates optional until 2025, when the field becomes mandatory.
 """
 
-def generate_excel(ws, schema, types):
-    """
-    @param ws: the worksheet to write to
-    @param schema: the OpenAPI schema
-    @param types: list of types to include in the worksheet
-    
-    This function generates an Excel worksheet from an OpenAPI schema. 
-    It starts with the types specified in the list and follows all
-    references to other types. 
-    """
+COLUMNS = yaml.safe_load(COLUMN_DEFS)
 
-    def format(item, style):
+filter_text = {
+    "See [[#lifecycle]] for details.": "",
+    "([[!RFC8141|URN]])": "(RFC8141)",
+    "See [[#validity-period]] for more details.": "",
+    "See <{DataModelExtension}> for details.": "",
+    #"See [=PACT Methodology=] for details.": "",
+    #"(See [=PACT Methodology=])": "",
+    #"See [=PACT Methodology=].": ""
+}
+
+
+class ExcelWriter:
+    def __init__(self, output_path: str):
+        self.output_path = output_path
+        self.wb = Workbook()
+        self.ws = self.wb.active
+        self.ws.title = "PACT Simplified Data Model"
+        self.ws.sheet_view.zoomScale = 140
+
+        # Define the columns of the worksheet
+        self.columns = COLUMNS
+        i = 0
+        for column in self.columns.values():
+            column['index'] = chr(ord('A') + i)
+            column['index-nr'] = i
+            i += 1
+        # Define the styles for the worksheet
+        fontname           = "Aptos Narrow"
+        color_title        = "08094C"
+        color_table_header = "2A4879" 
+        color_header       = "489F81"
+        self.styles = dict(
+            title = dict(font = fontname, size = 16, bold = False, bgcolor = color_title, fgcolor = "FFFFFF"),
+            subtitle = dict(font = fontname, size = 16, bold = False, bgcolor = color_title, fgcolor = "FFFFFF"),
+            header = dict(font = fontname, bold = True, bgcolor = color_table_header, fgcolor = "FFFFFF"),
+            header_desc = dict(font = fontname, size = 10, bgcolor = color_table_header, fgcolor = "FFFFFF"),
+            subheader = dict(font = fontname, bold = True, bgcolor = color_header, fgcolor = "FFFFFF"),
+            normal = dict(font = fontname), # bgcolor="EEECE2", border=True)
+            bold = dict(font = fontname, bold = True),
+            obsolete = dict(font = fontname, strike = True, fgcolor = "95261F"),
+            small = dict(font = fontname, size = 9, fgcolor = "606060")
+        )
+
+        # Set cell widths
+        for column in self.columns.values():
+            self.ws.column_dimensions[column["index"]].width = column.get("width", 15)
+
+    def save(self):
+        # Apply word-wrap alignment for columns description and examples
+        for column in self.columns.values():
+            for cell in self.ws[column["index"]]:
+                cell.alignment = Alignment(
+                    indent = cell.alignment.indent, 
+                    wrap_text=column.get("style", "") == "text",
+                    vertical="top"
+                    )
+        # wrap all header descriptions
+        for cell in self.ws[4]:
+            cell.alignment = Alignment(
+                indent = cell.alignment.indent, 
+                wrap_text=column.get("style", "") == "text",
+                vertical="top"
+                )
+        # HACK: merge reporting rules and description cells
+        self.ws.merge_cells(start_row=4, start_column=4, end_row=4, end_column=5)
+
+        # HACK: force style on data model extensions
+        self.ws.cell(self.ws.max_row-3, 1).value = "extensions: DataModelExtension[]"
+        self.ws.cell(self.ws.max_row-3, 2).value = "Data model extensions"
+        self.format(self.ws[self.ws.max_row-3], self.styles['subheader'])
+
+        # Insert the PACT logo
+        img = Image("./assets/logo-dark-margin.png")
+        img.width = img.width / 5
+        img.height = img.height / 5
+        self.ws.add_image(img, "A1")
+        self.ws.row_dimensions[1].height = img.height * 4 / 3
+        self.ws["A1"].alignment = Alignment(vertical="bottom")
+
+        # Save the file
+        self.wb.save(self.output_path)
+        
+    def write_title(self, title):
+        row = ["" for column in self.columns.values()]
+        row[0] = title
+        self.ws.append(row)
+        self.format(self.ws[1], self.styles['title'])
+
+    def write_subtitle(self, subtitle):
+        row = ["" for column in self.columns.values()]
+        row[0] = subtitle
+        self.ws.append(row)
+        self.format(self.ws[self.ws.max_row], self.styles['subtitle'])
+
+    def write_header(self):
+        self.ws.append(column.get("title","") for column in self.columns.values())
+        self.format(self.ws[self.ws.max_row], self.styles['header'])
+        self.ws.append(column.get("description","") for column in self.columns.values())
+        self.format(self.ws[self.ws.max_row], self.styles['header_desc'])    
+
+    def write_type(self, items: list):
+        self.ws.append(items)
+        self.format(self.ws[self.ws.max_row], self.styles['subheader'])
+
+    def write_property(self, object: dict):
+        row = [str(object[name]) for name in self.columns.keys()]
+        # Append the row to the worksheet
+        self.ws.append(row)
+
+        # Apply styles to the row, first col (property name) will be bold
+        self.format(self.ws[self.ws.max_row], self.styles["normal"])
+        for column in self.columns.values():        
+            print(column)
+            style = column.get("style", "normal")
+            if style != "normal" and style != "text":
+                self.format(self.ws[self.ws.max_row][column["index-nr"]], self.styles[style])
+        # Strike-through obsolete or deprecated properties
+        # if info.get("deprecated") or info.get("obsolete"):
+        #    format(ws[ws.max_row], obsolete_style)
+        # Indent the first cell of the row just added
+        # ws[ws.max_row][0].alignment = Alignment(indent=level)
+
+    
+    def format(self, item, style):
         alignment = None
 
         #if style.get("word_wrap"):
@@ -141,59 +249,123 @@ def generate_excel(ws, schema, types):
             if border:
                 cell.border = border
 
-    # Reporting rules legenda:
-    reporting_rules_legenda = schema["info"].get("x-rule","").strip()
+
+
+class HtmlWriter:
+    def __init__(self, output_path):
+        self.output_path = output_path
+        self.output = open(output_path, "w")
+        self.columns = COLUMNS
+        self.output.write("""<!doctype html>
+<html lang='en'>
+<head>
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <title>PACT Simplified Data Model</title>
+    <link rel='stylesheet' href='../assets/markdown.css'>
+    <style>
+    body       { padding: 0; margin: 0; }    
+    table,th,tr,td { border-collapse: collapse; padding: 0; margin: 0; border: 0; vertical-align: top; }
+    td,th      { padding-right: 4px; }
+    h1,h2,h3   { border: none; margin: 0; }
+    p          { margin: 4px; }
+    li p       { margin: 0; }
+    .title     { background-color: #08094C; color: #FFFFFF; font-size: 16px; }
+    .subtitle  { background-color: #08094C; color: #FFFFFF; font-size: 16px; }
+    .header    { background-color: #2A4879; color: #FFFFFF; }
+    .subheader { background-color: #2A4879; color: #FFFFFF; }
+    .subheader th { font-size: 11px; font-weight: normal; }
+    .heading   { font-weight: bold; background-color: #489F81; color: #FFFFFF; }
+    .bold      { font-weight: bold; }
+    .small     { font-size: 0.9em; }
+    .w15       { min-width: 100px; }
+    .w17       { min-width: 120px; }
+    .w20       { min-width: 140px; }
+    .w30       { min-width: 210px; }
+    .w60       { min-width: 420px; }
+    </style>
+</head>
+<body>
+    <table style='width:100%; border-collapse: collapse;'>
+""")
+
+    def save(self):
+        self.output.write("</table>")
+        self.output.write("</body></html>")
+        self.output.close()
+
+    def write_title(self, title):
+        self.output.write(f"""
+<tr class='title'><td colspan='{len(self.columns)}'><img src="./assets/logo-dark-margin.png" width="200" height="200"></td></tr>
+<tr class='title'><td colspan='{len(self.columns)}'><h2>{title}</h2></td></tr>""")
+ 
+    def write_subtitle(self, subtitle):
+        self.output.write(f"<tr class='subtitle'><td colspan='{len(self.columns)}'><h2>{subtitle}</h2></td></tr>\n")
+
+    def write_header(self):
+        self.output.write("<tr class='header'>\n")
+        for column in self.columns.values():
+            self.output.write(f"<th class='w{column.get('width','')}'>{column.get('title','')}</th>")
+        self.output.write("</tr>\n")
+        self.output.write("<tr class='subheader'>\n")
+        for name, column in self.columns.items():
+            value = markdown.markdown(column.get("description","").replace("\n", "\n\n"))
+            if name == "reporting":
+                self.output.write(f"<th colspan='2'>{value}</th>")
+            elif name != "description":
+                self.output.write(f"<th>{value}</th>")
+                
+        self.output.write("</tr>\n")
+
+    def write_type(self, items: list):
+        self.output.write("<tr class='heading'>\n")
+        for item in items:
+            self.output.write(f"<td>{item}</td>")
+        for i in range(len(self.columns) - len(items)):
+            self.output.write("<td></td>")
+        self.output.write("</tr>\n")
+
+    def write_property(self, object):
+        self.output.write("<tr>\n")
+        
+        # iterate over name and column in self.columns
+        for name, column in self.columns.items():
+            value = str(object.get(name, ""))
+            style = column.get("style", "normal")
+            if style == "text":
+                value = markdown.markdown(value.replace("\n", "\n\n"))
+            if style != "normal":
+                css = f" class='{style}'"
+            else:
+                css = ""
+            self.output.write(f"<td {css}>{value}</td>")
+
+        self.output.write("</tr>\n")
+
+
+def generate(writer, title, schema, typename):
+    """
+    @param ws: the worksheet to write to
+    @param schema: the OpenAPI schema
+    @param types: list of types to include in the worksheet
+    
+    This function generates an Excel worksheet from an OpenAPI schema. 
+    It starts with the types specified in the list and follows all
+    references to other types. 
+    """
+    
+    # Validation rules legenda:
+    validation_rules_legenda = schema["info"].get("x-rule","").strip()
     methodology_sections = schema["info"].get("x-methodology-sections", {})
     logging.info(methodology_sections)
-
-    # Load the column definitions from the YAML string
-    columns = yaml.safe_load(COLUMN_DEFS)
-    columns["reporting"]["description"] = reporting_rules_legenda
-    i = 0
-    for column in columns.values():
-        column['index'] = chr(ord('A') + i)
-        column['index-nr'] = i
-        i += 1
-
-    # Define a lambda function to for creating a row array of values
-    logging.info(columns.keys())
-    row = lambda **kwargs: [kwargs[column] for column in columns.keys()]
-
-    # Define the styles for the worksheet
-    fontname           = "Aptos Narrow"
-    color_title        = "08094C"
-    color_table_header = "2A4879" 
-    color_header       = "489F81"
-    
-    title_style        = dict(font = fontname, size = 16, bold = False, bgcolor = color_title, fgcolor = "FFFFFF")
-    subtitle_style     = dict(font = fontname, size = 16, bold = False, bgcolor = color_title, fgcolor = "FFFFFF")
-    header_style       = dict(font = fontname, bgcolor = color_table_header, fgcolor = "FFFFFF")
-    header_desc_style  = dict(font = fontname, size = 9, bgcolor = color_table_header, fgcolor = "FFFFFF")
-    heading_style      = dict(font = fontname, bold = True, bgcolor = color_header, fgcolor = "FFFFFF")
-    normal_style       = dict(font = fontname) # bgcolor="EEECE2", border=True)
-    bold_style         = dict(font = fontname, bold = True)
-    obsolete_style     = dict(font = fontname, strike = True, fgcolor = "95261F")
-    small_style        = dict(font = fontname, size = 9, fgcolor = "606060")
-
-    logging.debug(f"Columns: {columns}")
+    writer.columns["reporting"]["description"] = validation_rules_legenda
 
     # Append the title and header rows
-    ws.append(["PACT Simplified Data Model " + status, "", "", "", "", "", "", "", "", "", ""])
-    ws.append([schema["info"]["version"], "", "", "", "", "", "", "", "", ""])
+    writer.write_title(title)
+    writer.write_subtitle(schema["info"]["version"])
 
     # Append the column headers
-    ws.append([column["title"] for column in columns.values()])
-    ws.append([column.get("description","") for column in columns.values()])
-
-    # Set cell widths
-    for column in columns.values():
-        ws.column_dimensions[column["index"]].width = column.get("width", 15)
-    
-    # format the first rows with the styles
-    format(ws[1], title_style)
-    format(ws[2], subtitle_style)
-    format(ws[3], header_style)
-    format(ws[4], header_desc_style)
+    writer.write_header()
 
     # Inner function to get a succinct type description
     def get_type_description(info):
@@ -270,7 +442,7 @@ def generate_excel(ws, schema, types):
         section = section.strip()
         logging.info(section)
 
-        ws.append(row(
+        writer.write_property(dict(
             property = name,
             attribute = info.get("x-term", ""),
             section = section,
@@ -280,23 +452,10 @@ def generate_excel(ws, schema, types):
             category = parent.get("title", ""),
             unit = info.get("x-unit", "-"),
             accepted = type_description,
-            example1 = str(examples[0]),
-            example2 = str(examples[1]),
-            example3 = str(examples[2])
+            example1 = examples[0],
+            example2 = examples[1],
+            example3 = examples[2]
             ))
-        # Apply styles to the row, first col (property name) will be bold
-        format(ws[ws.max_row], normal_style)
-        format(ws[ws.max_row][0], bold_style)
-        # Small style for category and unit
-        format(ws[ws.max_row][columns["section"]["index-nr"]], small_style)
-        format(ws[ws.max_row][columns["category"]["index-nr"]], small_style)
-        format(ws[ws.max_row][columns["unit"]["index-nr"]], small_style)
-        format(ws[ws.max_row][columns["comment"]["index-nr"]], small_style)
-        # Strike-through obsolete or deprecated properties
-        if info.get("deprecated") or info.get("obsolete"):
-            format(ws[ws.max_row], obsolete_style)
-        # Indent the first cell of the row just added
-        ws[ws.max_row][0].alignment = Alignment(indent=level)
 
         if info.get("type", None) == "array" and info["items"].get("type") == "object":
             logging.debug(f"Writing array for {name} at level {level}")
@@ -308,8 +467,7 @@ def generate_excel(ws, schema, types):
         logging.debug(f"Writing type {name} at level {level}")
         if info.get("title") and name:
             # Append a row for the type itself and set background color to blue
-            ws.append([name + ": " + info["title"], info.get("x-term"), info.get("x-methodology"), info.get("x-rule"), info.get("summary"), "", "", "", "", "", "", ""])
-            format(ws[ws.max_row], heading_style)
+            writer.write_type([name + ": " + info["title"], info.get("x-term"), info.get("x-methodology"), info.get("x-rule"), info.get("summary")])
 
         for prop_name, prop_info in info.get("properties", {}).items():
             # Skip obsolete properties
@@ -323,49 +481,18 @@ def generate_excel(ws, schema, types):
 
 
     # Find the specified types in the schema
-    for name in types:
-        type = schema["components"]["schemas"][name]
-        write_type(name, type)
+    type = schema["components"]["schemas"][typename]
+    write_type(typename, type)
 
 
-    # Apply word-wrap alignment for columns description and examples
-    for column in columns.values():
-        for cell in ws[column["index"]]:
-            cell.alignment = Alignment(
-                indent = cell.alignment.indent, 
-                wrap_text=column.get("wrap_text", False),
-                vertical="top"
-                )
-    # wrap all header descriptions
-    for cell in ws[4]:
-        cell.alignment = Alignment(
-            indent = cell.alignment.indent, 
-            wrap_text=column.get("wrap_text", False),
-            vertical="top"
-            )
-    # HACK: merge reporting rules and description cells
-    ws.merge_cells(start_row=4, start_column=4, end_row=4, end_column=5)
-
-    # HACK: force style on data model extensions
-    ws.cell(ws.max_row-3, 1).value = "extensions: DataModelExtension[]"
-    ws.cell(ws.max_row-3, 2).value = "Data model extensions"
-    format(ws[ws.max_row-3], heading_style)
-
-    # Insert the PACT logo
-    img = Image("./assets/logo-dark-margin.png")
-    img.width = img.width / 5
-    img.height = img.height / 5
-    ws.add_image(img, "A1")
-    ws.row_dimensions[1].height = img.height * 4 / 3
-    ws["A1"].alignment = Alignment(vertical="bottom")
 
 
-def openapi_to_excel(input_path, output_path, title, types):
+def openapi_to_excel(input_path, output_path:str, title, type):
     """
     @param input_path: path to the OpenAPI schema file
     @param output_path: path to the output Excel file
     @param title: title of the Excel worksheet
-    @param types: list of types to include in the Excel worksheet
+    @param types: name of the type to include in the Excel worksheet
     """
 
     # Load the schema from the file
@@ -373,52 +500,54 @@ def openapi_to_excel(input_path, output_path, title, types):
         schema = yaml.safe_load(file)
     schema = jsonref.replace_refs(schema, merge_props=True)
 
-    # Create a new workbook and select the active worksheet
-    wb = Workbook()
-    ws = wb.active
-    ws.title = title
-    ws.sheet_view.zoomScale = 140
 
-    # Generate the worksheet
-    generate_excel(ws, schema, types)
-    wb.save(output_path)
+    # Generate the Excel file
+    writer = ExcelWriter(output_path)
+    generate(writer, title, schema, type)
+    writer.save()
+
+    # Generate the HTML file
+    output_path = output_path.removesuffix(".xlsx") + ".html"
+    writer = HtmlWriter(output_path)
+    generate(writer, title, schema, type)
+    writer.save()
 
 
 
-if __name__ == "__main__":
-    # Get command line args
-    if len(sys.argv) < 2:
-        print("Usage: python3 generate-excel.py <input-path>")
-        print("This script generates an Excel file from a OpenAPI schema.")
-        print("")
-        print("Example:")
-        print("python3 generate-excel pact-openapi-2.2.1-wip.yaml")
-        print()
-        exit()
-    input_path = sys.argv[1]
-    if not os.path.exists(input_path):
-        print("File not found:", input_path)
-        exit()
-    status = " (Living Document)"
-    if (len(sys.argv) >= 3):
-        status = " (" + sys.argv[2].upper() + ")"
+# if __name__ == "__main__":
+#     # Get command line args
+#     if len(sys.argv) < 2:
+#         print("Usage: python3 generate-excel.py <input-path>")
+#         print("This script generates an Excel file from a OpenAPI schema.")
+#         print("")
+#         print("Example:")
+#         print("python3 generate-excel pact-openapi-2.2.1-wip.yaml")
+#         print()
+#         exit()
+#     input_path = sys.argv[1]
+#     if not os.path.exists(input_path):
+#         print("File not found:", input_path)
+#         exit()
+#     status = " (Living Document)"
+#     if (len(sys.argv) >= 3):
+#         status = " (" + sys.argv[2].upper() + ")"
     
-    # Load the schema from the file
-    with open(input_path) as file:
-        schema1 = yaml.safe_load(file)
-    schema = jsonref.replace_refs(schema1, merge_props=True)
+#     # Load the schema from the file
+#     with open(input_path) as file:
+#         schema1 = yaml.safe_load(file)
+#     schema = jsonref.replace_refs(schema1, merge_props=True)
 
-    # Create a new workbook and select the active worksheet
-    wb = Workbook()
-    ws = wb.active
-    ws.title = "PACT Simplified Data Model"
-    ws.sheet_view.zoomScale = 140
+#     # Create a new workbook and select the active worksheet
+#     wb = Workbook()
+#     ws = wb.active
+#     ws.title = "PACT Simplified Data Model"
+#     ws.sheet_view.zoomScale = 140
 
-    generate_excel(ws, schema, ["ProductFootprint"])
+#     generate_excel(ws, schema, ["ProductFootprint"])
 
-    # Save the workbook to a file
-    output_path = os.path.basename(input_path)
-    output_path = output_path.replace('-openapi-', '-simplified-model-')
-    output_path = output_path.replace(".yaml", "") + ".xlsx"
-    output_path = os.path.join(os.path.dirname(input_path), output_path)
-    wb.save(output_path)
+#     # Save the workbook to a file
+#     output_path = os.path.basename(input_path)
+#     output_path = output_path.replace('-openapi-', '-simplified-model-')
+#     output_path = output_path.replace(".yaml", "") + ".xlsx"
+#     output_path = os.path.join(os.path.dirname(input_path), output_path)
+#     wb.save(output_path)
