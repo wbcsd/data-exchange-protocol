@@ -829,12 +829,10 @@ components:
           x-unit: kgCO2e/declared unit
           x-comment: | 
             PCF (Excl. biogenic CO2 uptake) = 
-            PCF (Incl. biogenic CO2 uptake) = 
               fossilGhgEmissions + 
               landUseChangeGhgEmissions + 
               landManagementBiogenicCO2Emissions + 
               landManagementBiogenicCO2Removals + 
-              landUseChangeGhgEmissions + 
               technologicalCO2Removals + 
               ccsTechnologicalCO2Capture
               biogenicNonCO2Emissions
@@ -860,7 +858,6 @@ components:
               landUseChangeGhgEmissions + 
               landManagementBiogenicCO2Emissions + 
               landManagementBiogenicCO2Removals + 
-              landUseChangeGhgEmissions + 
               technologicalCO2Removals + 
               ccsTechnologicalCO2Capture
               biogenicNonCO2Emissions + 
