@@ -35,8 +35,8 @@ jobs:
       - name: Install Python dependencies
         run: pip3 install -r requirements.txt
         # run: pip3 install pyaml jsonref markdown invoke bikeshed openpyxl
-      - name: Install Mermaid
-        run: 	npm list -g @mermaid-js/mermaid-cli || npm install -g @mermaid-js/mermaid-cli
+      #- name: Install Mermaid
+      #  run: 	npm list -g @mermaid-js/mermaid-cli || npm install -g @mermaid-js/mermaid-cli
       - name: Build specs
         run: invoke clean build
         shell: bash

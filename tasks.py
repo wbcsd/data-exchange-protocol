@@ -89,6 +89,7 @@ def build_bikeshed(dependencies):
 
 # Build Mermaid diagrams.
 def build_mermaid(dependencies):
+    return
     for dependency in dependencies:
         if dependency.outdated():
             logging.info(f"Building {dependency.target}")
