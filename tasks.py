@@ -173,14 +173,34 @@ def release(c, ver="v2"):
     input = f"./spec/{ver}/index.bs" 
     input = f"./spec/{ver}/index.md" if not os.path.exists(input) else input
     title, date, version, status = parse_bikeshed_file(input)
-    print(f"Building release version {version}", file=sys.stderr)
+    year = date[0:4]
+    logging.info(f"Version: {version}, Date: {date}, Status: {status} Year: {year}")
+    destination  = "../tr"
 
     if status != "Release":
-        raise Exception("Not a release version")
+        raise Exception(f"Not a release version: {version}: {status}")
     if not is_repo_pristine("."):
         raise Exception("Working tree is dirty. Finish committing files or stash, then try again.")
-        
-    print("Building release version", version) 
+    if not os.path.exists(destination):
+        raise Exception(f"Destination {destination} does not exist. Expecting the local path to the TR repository.")
+    if os.path.exists(f"{destination}/{date}"):
+        raise Exception(f"Destination {destination}/{date} already exists. Expecting a new release.")
+
+    print(f"Building release version {version}", file=sys.stderr)
+    clean(c)
+    build(c)
+
+    print("Publishing release") 
+    run(f"mkdir -p {destination}/{year}/data-exchange-protocol-{date}")
+    run(f"cp -R build/{ver}/* {destination}/{year}/data-exchange-protocol-{date}")
+    run(f"cp -R build/assets {destination}/{year}")
+
+    run(f"mkdir -p {destination}/data-exchange-protocol/{version}")
+    run(f"cp -R build/{ver}/* {destination}/data-exchange-protocol/{version}")
+    run(f"cp -R build/assets {destination}/data-exchange-protocol")
+
+    print(f"Published release version {version} to {destination}")
+    print(f"Commit and merge the pull request in the TR repository")
 
 @task(help={"ver": "Major version to serve, can be v2 or v3"}) 
 def serve(c, ver="v3"):
