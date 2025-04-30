@@ -168,7 +168,8 @@ def release(c, ver="v2"):
     Release a version of the specification. Specify the major 
     version to release, this can be v1, v2 or v3.
     """
-    input = f"./spec/{ver}/index.bs"
+    input = f"./spec/{ver}/index.bs" 
+    input = f"./spec/{ver}/index.md" if not os.path.exists(input) else input
     title, date, version, status = parse_bikeshed_file(input)
     print(f"Building release version {version}", file=sys.stderr)
 
