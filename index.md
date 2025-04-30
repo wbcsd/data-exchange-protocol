@@ -12,18 +12,23 @@ We welcome contributions, please visit the [WBCSD GitHub repository](https://git
 
 For timelines, see [RELEASE PLAN](release-plan)
 
-## 3.0.0-pre (living document)
+## 3.0.0 (latest stable)
 
-[PACT Technical Specifications 3.0.0](v3/) <br>
-[PACT OpenAPI 3.0.0](v3/openapi.yaml) <br>
-[PACT Simplified Data Model 3.0.0 (Excel)](v3/pact-simplified.xlsx) <br>
-[FAQ](v3/faq) <br>
+[PACT Technical Specifications 3.0.0](ref/data-exchange-protocol/3.0.0/) <br>
+[PACT Simplified Data Model 3.0.0 (Excel)](ref/data-exchange-protocol/3.0.0/pact-simplified.xlsx) <br>
+[PACT Simplified Data Model 3.0.0 (HTML)](ref/data-exchange-protocol/3.0.0/pact-simplified.html) <br>
+[PACT OpenAPI 3.0.0](ref/data-exchange-protocol/3.0.0/openapi.yaml) <br>
+[FAQ](ref/data-exchange-protocol/3.0.0/faq) <br>
 
+[PACT Methodology 3.0](ref/methodology/pact-methodology-v3.0.pdf)
+
+<!--
 ## 3.0.0 Draft for Consultation
 
 [PACT Technical Specifications 3.0.0](https://wbcsd.github.io/tr/2025/) <br>
 [PACT OpenAPI 3.0.0](https://wbcsd.github.io/tr/2025/openapi.yaml) <br>
 [PACT Simplified Data Model 3.0.0 (Excel)](https://wbcsd.github.io/tr/2025/pact-simplified.xlsx) <br>
+-->
 
 <!--
 ## 2.3.1-pre (work-in-progress)
@@ -32,7 +37,7 @@ For timelines, see [RELEASE PLAN](release-plan)
 [PACT OpenAPI 3.0.0](v2/openapi.yaml) <br>
 -->
 
-## 2.3.0 (latest stable)
+## 2.3.0
 
 [PACT Technical Specifications 2.3.0](https://wbcsd.github.io/tr/2024/data-exchange-protocol-20241024/) <br>
 [PACT OpenAPI 2.3.0](https://specs.carbon-transparency.org/pact-openapi-2.3.0.yaml) <br>

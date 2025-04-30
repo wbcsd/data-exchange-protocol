@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang='en'>
+<head>
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <title>PACT Simplified Data Model</title>
+    <link rel='stylesheet' href='../assets/markdown.css'>
+    <style>
+    html,body  { padding: 0; margin: 0; }    
+    table,th,tr,td { border-collapse: collapse; padding: 0; margin: 0; border: 0; vertical-align: top; }
+    td,th      { padding-right: 2px; padding-left: 2px; border-right: 1px solid #AAAAAA; }
+    h1,h2,h3   { border: none; margin: 0; }
+    p          { margin: 4px; }
+    li p       { margin: 0; }
+    .title     { background-color: #08094C; color: #FFFFFF; font-size: 16px; }
+    .subtitle  { background-color: #08094C; color: #FFFFFF; font-size: 16px; }
+    .header    { background-color: #2A4879; color: #FFFFFF; }
+    .subheader { background-color: #2A4879; color: #FFFFFF; }
+    .subheader th { font-size: 11px; font-weight: normal; }
+    .heading   { font-weight: bold; background-color: #489F81; color: #FFFFFF; }
+    .bold      { font-weight: bold; }
+    .small     { font-size: 0.9em; }
+    .w15       { min-width: 100px; }
+    .w17       { min-width: 120px; }
+    .w20       { min-width: 140px; }
+    .w30       { min-width: 210px; }
+    .w60       { min-width: 420px; }
+    </style>
+</head>
+<body>
+    <table style='width:100%; border-collapse: collapse;'>
+
+<tr class='title'><td colspan='13'><img src="../assets/logo-dark.svg" width="200" height="200"></td></tr>
+<tr class='title'><td colspan='13'><h2>PACT Simplified Data Model</h2></td></tr><tr class='subtitle'><td colspan='13'><h2>3.0.0</h2></td></tr>
+<tr class='header'>
+<th class='w30'>Technical Property</th><th class='w20'>Methodology Attribute</th><th class='w20'>Methodology Section</th><th class='w15'>Reporting Rule</th><th class='w60'>Description</th><th class='w17'>Category</th><th class='w17'>Unit</th><th class='w30'>Comment</th><th class='w20'>Accepted Value(s)</th><th class='w30'>Example 1</th><th class='w30'>Example 2</th><th class='w30'>Example 3</th><th class='w30'>Example 4</th></tr>
+<tr class='subheader'>
+<th><p>The technical name of the data attribute, as specified in the PACT Tech Specs 3.0. </p>
+<p>The Data Model of the specification contains properties grouped in data types.</p></th><th><p>The name of the data attribute as specified in the PACT Methodology v3.0.</p>
+<p>Note that not all attributes are listed in the Methodology, as some fields are purely technical.</p></th><th><p>A reference to the relevant section in the PACT Methodology v3.0.</p></th><th colspan='2'><p>SHALL = Required to report on</p>
+<p>BIO = Required if biogenic and land sector related emissions are applicable, 0 if not applicable, blank if unknown or unavailable</p>
+<p>BIO-2027 = Required by 31/12/2027 if biogenic and land sector related emissions are applicable , 0 if not applicable, blank if unknown or unavalaible</p>
+<p>CCU = Required if CCU applicable and data known and available, blank otherwise</p>
+<p>CCS = Required if CCS applicable and data known and available, blank otherwise</p>
+<p>SHOULD = Recommended to report on in, exceptions possible</p>
+<p>MAY = Optional</p>
+<p>https://www.iso.org/foreword-supplementary-information.html</p></th><th><p>The category of the data attribute.</p></th><th><p>The unit of the data of the given attribute (e.g. kgCO2e / declaredUnit)</p></th><th><p>A comment on the data attribute. This may include information on how to calculate the value, or other relevant information.</p></th><th><p>A description of the accepted values of the data attribute - some fields are limited to only a certain set of "valid values", whereas other fields can be free form text, booleans (true/false) or numbers.</p></th><th><p>An example of how the data attribute could be populated (note exact syntax of each field is dependent on the solution used for data entry)</p></th><th><p>An example of how the data attribute could be populated (note exact syntax of each field is dependent on the solution used for data entry)</p></th><th><p>An example of how the data attribute could be populated (note exact syntax of each field is dependent on the solution used for data entry)</p></th><th><p>An example of how the data attribute could be populated (note exact syntax of each field is dependent on the solution used for data entry)</p></th></tr>
+<tr class='heading'>
+<td>ProductFootprint: ProductFootprint</td><td>None</td><td>None</td><td>None</td><td>The ProductFootprint represents the footprint of a product.
+</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr>
+<td  class='bold'>id</td><td ></td><td  class='small'></td><td >SHALL</td><td  class='text'><p>A unique identifier that a system uses to refer to the entire dataset of the PCF. This is typically an automatically-generated number by the solution to maintain the required technical references to data within the system.</p></td><td  class='small'>ProductFootprint</td><td  class='small'>-</td><td  class='small'></td><td  class='text'><p>uuid</p>
+<p>(string)</p></td><td  class='text'><p>12345678-9abc-def0-1234-567812345678</p></td><td  class='text'><p>f4b1225a-bd44-4c8e-861d-079e4e1dfd69</p></td><td  class='text'><p>8b26f3b8-f5d9-4adf-8a11-02e05d273e58</p></td><td  class='text'><p>d5cba999-6a4b-4cbe-9e0a-6d8f27d1d191</p></td></tr>
+<tr>
+<td  class='bold'>specVersion</td><td ></td><td  class='small'></td><td >SHALL</td><td  class='text'><p>The version of the PACT Technical Specifications that the data being shared complies with. This is a string in the format of "major.minor.patch" (e.g. "3.0.0").</p></td><td  class='small'>ProductFootprint</td><td  class='small'>-</td><td  class='small'></td><td  class='text'><p>string</p></td><td  class='text'><p>3.0.0</p></td><td  class='text'><p>3.0.0</p></td><td  class='text'><p>3.0.0</p></td><td  class='text'><p>3.0.0</p></td></tr>
+<tr>
+<td  class='bold'>precedingPfIds</td><td ></td><td  class='small'></td><td >SHOULD</td><td  class='text'><p>A given PCF may change over time, due to updates to the calculation. This is a list of IDs that reflect "past versions" of the current PCF, maintained by the solution. If defined, MUST be non-empty set of IDs.</p></td><td  class='small'>ProductFootprint</td><td  class='small'>-</td><td  class='small'></td><td  class='text'><p>array: uuid</p>
+<p>(string)</p></td><td  class='text'></td><td  class='text'><p>['f4b1225a-bd44-4c8e-861d-079e4e1dfd69', '079e425a-464f-528d-341d-4a944a1dfd70']</p></td><td  class='text'></td><td  class='text'></td></tr>
+<tr>
+<td  class='bold'>created</td><td ></td><td  class='small'></td><td >SHALL</td><td  class='text'><p>The date and time when the PCF was created. This is typically an automatically generated field by the solution. It SHOULD NOT be used to derive status of validity of the PCF.</p></td><td  class='small'>ProductFootprint</td><td  class='small'>-</td><td  class='small'></td><td  class='text'><p>date-time</p>
+<p>(string)</p></td><td  class='text'><p>2025-04-30T00:00:00Z</p></td><td  class='text'><p>2025-04-30 00:00:00+00:00</p></td><td  class='text'><p>2025-04-30 00:00:00+00:00</p></td><td  class='text'><p>2025-04-30 00:00:00+00:00</p></td></tr>
+<tr>
+<td  class='bold'>status</td><td ></td><td  class='small'></td><td >SHALL</td><td  class='text'><p>The status of the PCF. <code>Active</code> means that the PCF is the most recent version and is the one that SHOULD be used by a data recipient, e.g. for product footprint calculations. <code>Deprecated</code> means that the PCF is no longer the most recent version and SHOULD NOT be used by data recipients.</p></td><td  class='small'>ProductFootprint</td><td  class='small'>-</td><td  class='small'></td><td  class='text'><p>Active|Deprecated</p>
+<p>(string)</p></td><td  class='text'><p>Active</p></td><td  class='text'><p>Active</p></td><td  class='text'><p>Active</p></td><td  class='text'><p>Active</p></td></tr>
+<tr>
+<td  class='bold'>validityPeriodStart</td><td >Validity Period</td><td  class='small'>3.2.3 Scope and boundary of the PACT Methodology</td><td >MAY</td><td  class='text'><p>The start date and time of the validity period. The period of time between the validityPeriodStart and validityPeriodEnd is defined as the "validity period", and represents the time period during which the PCF is valid. Specifying the validity period is optional. If this is not specified, then it is assumed the PCF is valid for 3 years, starting from the referencePeriodEnd.</p></td><td  class='small'>ProductFootprint</td><td  class='small'>-</td><td  class='small'></td><td  class='text'><p>date-time</p>
+<p>(string)</p></td><td  class='text'><p>2024-12-31T00:00:00Z</p></td><td  class='text'><p>2024-12-31 00:00:00+00:00</p></td><td  class='text'><p>2024-12-31 00:00:00+00:00</p></td><td  class='text'><p>2024-12-31 00:00:00+00:00</p></td></tr>
+<tr>
+<td  class='bold'>validityPeriodEnd</td><td >Validity Period</td><td  class='small'>3.2.3 Scope and boundary of the PACT Methodology</td><td >MAY</td><td  class='text'><p>The end date and time of the validity period. After this date the ProductFootprint is not valid for use anymore.</p></td><td  class='small'>ProductFootprint</td><td  class='small'>-</td><td  class='small'></td><td  class='text'><p>date-time</p>
+<p>(string)</p></td><td  class='text'><p>2027-12-31T00:00:00Z</p></td><td  class='text'><p>2027-12-31 00:00:00+00:00</p></td><td  class='text'><p>2027-12-31 00:00:00+00:00</p></td><td  class='text'><p>2027-12-31 00:00:00+00:00</p></td></tr>
+<tr>
+<td  class='bold'>companyName</td><td ></td><td  class='small'></td><td >SHALL</td><td  class='text'><p>The name of the company that is the PCF Data Owner</p></td><td  class='small'>ProductFootprint</td><td  class='small'>-</td><td  class='small'></td><td  class='text'><p>string</p></td><td  class='text'><p>Company 1</p></td><td  class='text'><p>Company 2</p></td><td  class='text'><p>Company 3</p></td><td  class='text'><p>Company 4</p></td></tr>
+<tr>
+<td  class='bold'>companyIds</td><td ></td><td  class='small'></td><td >SHALL</td><td  class='text'><p>A list of company identifiers which represent the companies that are considered data owners of the PCF. In a large organization, this may include multiple subsidiaries or legal entities of a given corporation, hence the need to provide multiple identifiers. A list of only one identifier is also valid. The format of each companyID MUST be provided as a Uniform Resource Names (RFC8141), which helps ensure the data provided is standardized and can be interpreted by the receiving system.</p></td><td  class='small'>ProductFootprint</td><td  class='small'>-</td><td  class='small'></td><td  class='text'><p>array: urn</p>
+<p>(string)</p></td><td  class='text'><p>['urn:company:example:company1']</p></td><td  class='text'><p>['urn:company:example:company2']</p></td><td  class='text'><p>['urn:company:example:company3']</p></td><td  class='text'><p>['urn:company:example:company4']</p></td></tr>
+<tr>
+<td  class='bold'>productDescription</td><td ></td><td  class='small'></td><td >SHALL</td><td  class='text'><p>The free-form description of the product, including any additional relevant information such as production technology, packaging, process, feedstock and technical parameters (e.g. dimensions). Products which are services (i.e. consulting) should include a short description of the service.</p></td><td  class='small'>ProductFootprint</td><td  class='small'>-</td><td  class='small'></td><td  class='text'><p>string</p></td><td  class='text'><p>Bioethanol 98%, sugar beet feedstock, bulk - no packaging</p></td><td  class='text'><p>Bioethanol 98%, sugar beet feedstock, including 100% fossil plastic packaging</p></td><td  class='text'><p>Car door mostly steel and aluminum; unpackaged</p></td><td  class='text'><p>Refined wood pulp - Microcrystalline cellulose (MCC) for application as filler in Built Envrironment (based on sugarcane)</p></td></tr>
+<tr>
+<td  class='bold'>productIds</td><td ></td><td  class='small'></td><td >SHALL</td><td  class='text'><p>All relevant product identifiers to identify the product for which the provided PCF was calculated (e.g. supplier part number, GTIN, article number, batch number, etc.)</p></td><td  class='small'>ProductFootprint</td><td  class='small'>-</td><td  class='small'></td><td  class='text'><p>array: urn</p>
+<p>(string)</p></td><td  class='text'><p>['urn:gtin:5695872369587']</p></td><td  class='text'><p>['urn:gtin:4712345060507']</p></td><td  class='text'><p>['urn:gtin:5268596541023']</p></td><td  class='text'><p>['urn:gtin:5268596541023']</p></td></tr>
+<tr>
+<td  class='bold'>productClassifications</td><td ></td><td  class='small'></td><td >MAY</td><td  class='text'><p>A list of classification or category identifiers in URN format. Use well known urn's here, or adhere to recommended urn:pact: format. For example UN CPC, CAS Numbr, CN Code etc. </p>
+<p>This replaces the productCategoryCpc attribute from 2.0.</p></td><td  class='small'>ProductFootprint</td><td  class='small'>-</td><td  class='small'>Replaces productCategoryCpc deprecated in 2.3</td><td  class='text'><p>array: urn</p>
+<p>(string)</p></td><td  class='text'><p>['urn:pact:productclassification:cas:1456']</p></td><td  class='text'><p>['urn:pact:productclassification:un-cpc:1234']</p></td><td  class='text'><p>['urn:pact:productclassification:un-cpc:7892']</p></td><td  class='text'><p>['urn:pact:productclassification:un-cpc:7892']</p></td></tr>
+<tr>
+<td  class='bold'>productNameCompany</td><td ></td><td  class='small'></td><td >SHALL</td><td  class='text'><p>The name with which the company producing the product refers to it, i.e. the product's trade name. Recognizable by the receiver of the PCF information.</p></td><td  class='small'>ProductFootprint</td><td  class='small'>-</td><td  class='small'></td><td  class='text'><p>string</p></td><td  class='text'><p>Product 1</p></td><td  class='text'><p>Product 2</p></td><td  class='text'><p>Product 3</p></td><td  class='text'><p>Product 4</p></td></tr>
+<tr>
+<td  class='bold'>comment</td><td ></td><td  class='small'></td><td >SHOULD</td><td  class='text'><p>Any additional information related to the PCF. Whereas the attribute productDescription contains product-level information, comment should be used for information and instructions related to the calculation of the PCF, or other information which informs the ability to interpret (e.g. LUC not included as unable to calculate LUC), to audit, or to verify the PCF. </p>
+<p>Information explaining the current status of the PCF, what was changed since the last version, etc. If the PCF was changed since a previous version, indicate all methodological and/or production process change(s) that occurred to result in the PCF change. For example, include the relevant change(s) from the list below: </p>
+<ol>
+<li>
+<p>In case product or sector specific guidance used does not align with PACT Methodology's requirement, the areas of disalignment should be specified in the comment section (e.g. allocation rules, exemption rules, data quality metrics). </p>
+</li>
+<li>
+<p>Information explaining the current status of the PCF, what was changed since the last version, etc. If the PCF was changed since a previous version, indicate all methodological and/or production process change(s) that occurred to result in the PCF change. E.g., include the relevant change(s) from the list below: </p>
+</li>
+</ol>
+<p>Methodological: </p>
+<ul>
+<li>
+<p>Access to new Emission Factor data (database, supplier-specific, company-specific)</p>
+</li>
+<li>
+<p>Updated upstream data (i.e. upstream supplier updated their PCF based on methodology change)</p>
+</li>
+</ul>
+<p>Production Process: </p>
+<ul>
+<li>
+<p>Change in process</p>
+</li>
+<li>
+<p>Change in feedstock</p>
+</li>
+<li>
+<p>Change from conventional to certified sustainable material</p>
+</li>
+<li>
+<p>Change in energy source</p>
+</li>
+<li>
+<p>Change in upstream supplier</p>
+</li>
+<li>
+<p>Updated upstream data (i.e. upstream supplier updated their PCF based on process change)</p>
+</li>
+<li>
+<p>Additional information on biogenic emissions &amp; removals calculation  should be specified. This includes information on tools used for  calculations (e.g. Cool Farm Tool), and methodological choices made in calculation of biogenic emissions and removals (e.g. Statistical  or Direct Land use change calculation for DLUC calculations).</p>
+</li>
+</ul></td><td  class='small'>ProductFootprint</td><td  class='small'>-</td><td  class='small'></td><td  class='text'><p>string</p></td><td  class='text'><p>As using TfS, PDS and DQR calculations are slightly different</p>
+<p>Use of Cool Farm Tool for emissions of sugar beet cultivation</p></td><td  class='text'><p>As using TfS, PDS and DQR calculations are slightly different</p>
+<p>Access to new supplier-specific emission factors compared to secondary database in previous PCF</p>
+<p>LandManagementBiogenicCO2Emissions is unknown</p>
+<p>Use of Cool Farm Tool for emissions of sugar beet cultivation"</p></td><td  class='text'></td><td  class='text'></td></tr>
+<tr class='heading'>
+<td>pcf: CarbonFootprint</td><td>None</td><td>None</td><td>None</td><td>The carbon footprint of the given product.</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr>
+<td  class='bold'>declaredUnitOfMeasurement</td><td >Declared Unit</td><td  class='small'>3.2.4 Unit of analysis</td><td >SHALL</td><td  class='text'><p>The unit of measurement of the product. Together with <code>declaredUnitAmount</code> this defines the 'declared unit' of the product. Emissions in this carbon footprint are expressed in kgCO2e per 'declared unit'. </p>
+<p>For example: a PCF for a 12 liter bottle of Ethanol states 2 kg of CO2e in emissions. In this case the declared unit is 12 liter Ethanol, thus the <code>declaredUnitOfMeasurement</code> is "liter", and the <code>declaredUnitAmount</code> is 12.</p></td><td  class='small'>CarbonFootprint</td><td  class='small'>-</td><td  class='small'></td><td  class='text'><p>liter|kilogram|cubic meter|kilowatt hour|megajoule|ton kilometer|square meter|piece|hour|megabit second</p>
+<p>(string)</p></td><td  class='text'><p>kilogram</p></td><td  class='text'><p>liter</p></td><td  class='text'><p>piece</p></td><td  class='text'><p>kilogram</p></td></tr>
+<tr>
+<td  class='bold'>declaredUnitAmount</td><td >Declared Unit</td><td  class='small'>3.2.4 Unit of analysis</td><td >SHALL</td><td  class='text'><p>The amount of units contained within the product to which the PCF refers. This is not representing the total annual quantity supplied (e.g. if the product is supplied in bulk in kg, which is the declared unit selected, the value MUST be 1)</p></td><td  class='small'>CarbonFootprint</td><td  class='small'>declared unit</td><td  class='small'></td><td  class='text'><p>decimal (&gt; 0)</p>
+<p>(string)</p></td><td  class='text'><p>1</p></td><td  class='text'><p>12</p></td><td  class='text'><p>1</p></td><td  class='text'><p>1</p></td></tr>
+<tr>
+<td  class='bold'>productMassPerDeclaredUnit</td><td >Declared Unit</td><td  class='small'>3.2.4 Unit of analysis</td><td >SHALL</td><td  class='text'><p>The mass (in kg) of the product excluding packaging. The 'declared unit' is the <code>declaredUnitAmount</code> times <code>declaredUnitOfMeasurement</code>. </p>
+<p>For example, if the declared unit is <code>piece</code>, this attribute MUST be populated with the mass of <code>declaredUnitAmount</code> pieces of the product. If the declared unit is <code>liter</code>, this attribute MUST be populated with the mass of <code>declaredUnitAmount</code> liters of the product. </p>
+<p>If the product mass is not relevant (i.e. PCF is for an energy (kWh, MJ), logistics (ton.km) or service related product), this attribute SHALL be populated with <code>0</code>. </p>
+<p>For the full list of declared units requiring to report a mass per declared unit attribute please refer to table 4 in the PACT Methodology.</p></td><td  class='small'>CarbonFootprint</td><td  class='small'>-</td><td  class='small'>mandatory in 3.0, optional in v2.x</td><td  class='text'><p>decimal</p>
+<p>(string)</p></td><td  class='text'><p>1</p></td><td  class='text'><p>9.468</p></td><td  class='text'><p>25</p></td><td  class='text'><p>1</p></td></tr>
+<tr>
+<td  class='bold'>referencePeriodStart</td><td >Reference period</td><td  class='small'>3.2.3 Scope and boundary of the PACT Methodology</td><td >SHALL</td><td  class='text'><p>The start date and time of the earliest activity data used to calculate the PCF. This start date can be considered the start of the period over which the given PCF is referencing, or reporting on.</p></td><td  class='small'>CarbonFootprint</td><td  class='small'>-</td><td  class='small'></td><td  class='text'><p>date-time</p>
+<p>(string)</p></td><td  class='text'><p>2024-01-01T00:00:00Z</p></td><td  class='text'><p>2024-01-01 00:00:00+00:00</p></td><td  class='text'><p>2024-02-28 00:00:00+00:00</p></td><td  class='text'><p>2024-02-25 00:00:00+00:00</p></td></tr>
+<tr>
+<td  class='bold'>referencePeriodEnd</td><td >Reference period</td><td  class='small'>3.2.3 Scope and boundary of the PACT Methodology</td><td >SHALL</td><td  class='text'><p>The end date and time of the latest activity data used to calculate the PCF. This end date can be considered the end of the period over which the given PCF is referencing, or reporting on.</p></td><td  class='small'>CarbonFootprint</td><td  class='small'>-</td><td  class='small'></td><td  class='text'><p>date-time</p>
+<p>(string)</p></td><td  class='text'><p>2024-12-31T00:00:00Z</p></td><td  class='text'><p>2024-12-31 00:00:00+00:00</p></td><td  class='text'><p>2024-09-30 00:00:00+00:00</p></td><td  class='text'><p>2024-09-30 00:00:00+00:00</p></td></tr>
+<tr>
+<td  class='bold'>geographyRegionOrSubregion</td><td >Region or Sub-Region</td><td  class='small'>3.2.3 Scope and boundary of the PACT Methodology</td><td >SHOULD</td><td  class='text'><p>The geographic representation of the PCF should be reported at different levels of granularity, depending on the preference of the data owner (e.g., at a plant, region, or country level). This attribute specifies the geographic region to which the PCF refers, i.e. "Africa", "Central Asia", etc.</p></td><td  class='small'>CarbonFootprint</td><td  class='small'>-</td><td  class='small'></td><td  class='text'><p>Africa|Americas|Asia|Europe|Oceania|Australia and New Zealand|Central Asia|Eastern Asia|Eastern Europe|Latin America and the Caribbean|Melanesia|Micronesia|Northern Africa|Northern America|Northern Europe|Polynesia|South-eastern Asia|Southern Asia|Southern Europe|Sub-Saharan Africa|Western Asia|Western Europe</p>
+<p>(string)</p></td><td  class='text'><p>Northern America</p></td><td  class='text'><p>Northern America</p></td><td  class='text'><p>Northern Europe</p></td><td  class='text'><p>Latin America and the Caribbean</p></td></tr>
+<tr>
+<td  class='bold'>geographyCountry</td><td >Country</td><td  class='small'>3.2.3 Scope and boundary of the PACT Methodology</td><td >SHOULD</td><td  class='text'><p>The geographic representation of the PCF should be reported at different levels of granularity, depending on the preference of the data owner (e.g., at a plant, region, or country level). This field indicates the country to which the PCF refers. The country name must be according to ISO 3166-1 alpha-2 country code (https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)</p></td><td  class='small'>CarbonFootprint</td><td  class='small'>-</td><td  class='small'></td><td  class='text'><p>(ISO 3166-1 alpha-2)</p>
+<p>(string)</p></td><td  class='text'><p>US</p></td><td  class='text'><p>US</p></td><td  class='text'><p>DE</p></td><td  class='text'><p>BR</p></td></tr>
+<tr>
+<td  class='bold'>geographyCountrySubdivision</td><td >Country subdivision</td><td  class='small'>3.2.3 Scope and boundary of the PACT Methodology</td><td >SHOULD</td><td  class='text'><p>The geographic representation of the PCF should be reported at different levels of granularity, depending on the preference of the data owner (e.g., at a plant, region, or country level). This attribute represents the most granular (i.e. "most specific") geography, i.e. the specific subdivision within a given country, for example New York State within the USA. Follows ISO 3166-2 (https://en.wikipedia.org/wiki/ISO_3166-2)</p></td><td  class='small'>CarbonFootprint</td><td  class='small'>-</td><td  class='small'></td><td  class='text'><p>(ISO 3166-2)</p>
+<p>(string)</p></td><td  class='text'><p>US-TX</p></td><td  class='text'><p>US-TX</p></td><td  class='text'><p>DE-BW</p></td><td  class='text'><p>BR-SP</p></td></tr>
+<tr>
+<td  class='bold'>boundaryProcessesDescription</td><td ></td><td  class='small'>3.2 Scope and boundary</td><td >SHOULD</td><td  class='text'><p>Brief description of the processes attributable to each life cycle stage included in the PCF (e.g. electricity consumption for manufacturing), especially those that significantly contribute manufacturing steps of the product (including general description of used technologies).</p></td><td  class='small'>CarbonFootprint</td><td  class='small'>-</td><td  class='small'>optional in 3.0, was mandatory in 2.x</td><td  class='text'><p>string</p></td><td  class='text'><p>1) Material acquisition and preprocessing, including cultivation of sugar beet</p>
+<p>2) Production: fuel consumption, electricity consumption, water consumption, process-generated direct emissions from the fermentation and distillation of ethanol</p></td><td  class='text'><p>1) Material acquisition and preprocessing, including cultivation of sugar beet</p>
+<p>2) Production: fuel consumption, electricity consumption, water consumption, process-generated direct emissions from the fermentation and distillation of ethanol</p></td><td  class='text'><p>1) Material acquisition and preprocessing, including extraction of steel and aluminium</p>
+<p>2) Production: fuel consumption, electricity consumption, water consumption, process-generated direct emissions </p>
+<p>3) Distribution and storage: transportation of the finished product from manufacturing site to storage site (reported separately in outbound logistics)"</p></td><td  class='text'><p>1) Material acquisition and preprocessing, including cultivation of sugarcane</p>
+<p>2) Industrial processing: fuel consumption, electricity consumption, water consumption, process-generated direct emissions in order to extract, grind, wash and distill product"</p></td></tr>
+<tr>
+<td  class='bold'>pcfExcludingBiogenicUptake</td><td >PCF Excluding biogenic CO2 uptake</td><td  class='small'>3.3.1 Calculation of product GHG emissions</td><td >SHALL</td><td  class='text'><p>The PCF of the product: </p>
+<p>Including: </p>
+<ul>
+<li>
+<p>All fossil emissions (CO2, CH4, N2O, HFCs, SF6, NF3, PFCs, HFEs, PFPEs, CFCs and HCFSs) from stationary/mobile combustion, industrial processes and fugitive emissions</p>
+</li>
+<li>
+<p>All land sector-related related emissions (CO2, N2O, PFCs)</p>
+</li>
+<li>
+<p>All biogenic emissions (biogenic CH4, biogenic CO2)</p>
+</li>
+<li>
+<p>Land management removals and technological removals</p>
+</li>
+</ul>
+<p>Excluding: </p>
+<ul>
+<li>Biogenic Product CO2 uptake</li>
+</ul></td><td  class='small'>CarbonFootprint</td><td  class='small'>kgCO2e/declared unit</td><td  class='small'>PCF (Excl. biogenic CO2 uptake) = 
+  fossilGhgEmissions + 
+  landUseChangeGhgEmissions + 
+  landManagementBiogenicCO2Emissions + 
+  landManagementBiogenicCO2Removals + 
+  technologicalCO2Removals + 
+  ccsTechnologicalCO2Capture
+  biogenicNonCO2Emissions
+</td><td  class='text'><p>decimal</p>
+<p>(string)</p></td><td  class='text'><p>0.384</p></td><td  class='text'><p>5.14</p></td><td  class='text'><p>77.0</p></td><td  class='text'><p>0.42</p></td></tr>
+<tr>
+<td  class='bold'>pcfIncludingBiogenicUptake</td><td >PCF Including biogenic CO2 uptake</td><td  class='small'>3.3.1 Calculation of product GHG emissions</td><td >SHALL</td><td  class='text'><p>The PCF of the product: </p>
+<p>Including: </p>
+<ul>
+<li>
+<p>All fossil emissions (CO2, CH4, N2O, HFCs, SF6, NF3, PFCs, HFEs, PFPEs, CFCs and HCFSs) from stationary/mobile combustion, industrial processes and fugitive emissions</p>
+</li>
+<li>
+<p>All land sector-related related emissions (CO2, N2O, PFCs)</p>
+</li>
+<li>
+<p>All biogenic emissions (biogenic CH4, biogenic CO2)</p>
+</li>
+<li>
+<p>Land management removals and technological removals</p>
+</li>
+<li>
+<p>Biogenic Product CO2 uptake</p>
+</li>
+</ul></td><td  class='small'>CarbonFootprint</td><td  class='small'>kgCO2e/declared unit</td><td  class='small'>PCF (Incl. biogenic CO2 uptake) = 
+  fossilGhgEmissions + 
+  landUseChangeGhgEmissions + 
+  landManagementBiogenicCO2Emissions + 
+  landManagementBiogenicCO2Removals + 
+  technologicalCO2Removals + 
+  ccsTechnologicalCO2Capture
+  biogenicNonCO2Emissions + 
+  biogenicCO2Uptake
+</td><td  class='text'><p>decimal</p>
+<p>(string)</p></td><td  class='text'><p>-1.23</p></td><td  class='text'><p>-14.22</p></td><td  class='text'><p>77.0</p></td><td  class='text'><p>0.05</p></td></tr>
+<tr>
+<td  class='bold'>fossilCarbonContent</td><td >Fossil carbon content</td><td  class='small'>3.3.2.4 Accounting for biogenic emissions and removals</td><td >SHALL</td><td  class='text'><p>The fossil carbon content of the product (mass of carbon).</p></td><td  class='small'>CarbonFootprint</td><td  class='small'>kgC/declared unit</td><td  class='small'></td><td  class='text'><p>decimal (&gt;= 0)</p>
+<p>(string)</p></td><td  class='text'><p>0</p></td><td  class='text'><p>0.16</p></td><td  class='text'><p>11.72</p></td><td  class='text'><p>0</p></td></tr>
+<tr>
+<td  class='bold'>biogenicCarbonContent</td><td >Biogenic carbon content</td><td  class='small'>3.3.2.4 Accounting for biogenic emissions and removals</td><td >BIO</td><td  class='text'><p>The biogenic carbon content of the product (mass of carbon).</p></td><td  class='small'>CarbonFootprint</td><td  class='small'>kgC/declared unit</td><td  class='small'></td><td  class='text'><p>decimal (&gt;= 0)</p>
+<p>(string)</p></td><td  class='text'><p>0.44</p></td><td  class='text'><p>5.28</p></td><td  class='text'><p>0</p></td><td  class='text'><p>0.1</p></td></tr>
+<tr>
+<td  class='bold'>recycledCarbonContent</td><td >Recycled carbon content</td><td  class='small'>3.3.2.2 Accounting for waste treatment and recycling emissions within the Cradle-to-Gate boundary</td><td >SHOULD</td><td  class='text'><p>The carbon content (both biogenic and fossil) from recycled material in the product (mass of carbon).</p></td><td  class='small'>CarbonFootprint</td><td  class='small'>kgC/declared unit</td><td  class='small'></td><td  class='text'><p>decimal (&gt;= 0)</p>
+<p>(string)</p></td><td  class='text'><p>0</p></td><td  class='text'><p>0</p></td><td  class='text'><p>0</p></td><td  class='text'><p>0</p></td></tr>
+<tr>
+<td  class='bold'>fossilGhgEmissions</td><td >Fossil emissions</td><td  class='small'>3.3.2.4 Accounting for biogenic emissions and removals</td><td >SHALL</td><td  class='text'><p>The emissions from fossil sources as a result of fuel combustion, from fugitive emissions, and from process emissions.</p></td><td  class='small'>CarbonFootprint</td><td  class='small'>kgCO2e/declared unit</td><td  class='small'></td><td  class='text'><p>decimal (&gt;= 0)</p>
+<p>(string)</p></td><td  class='text'><p>0.35</p></td><td  class='text'><p>4.78</p></td><td  class='text'><p>77</p></td><td  class='text'><p>0.17</p></td></tr>
+<tr>
+<td  class='bold'>landUseChangeGhgEmissions</td><td >Land use and land use change emissions or LUC emissions</td><td  class='small'>3.3.2.4 Accounting for biogenic emissions and removals</td><td >BIO</td><td  class='text'><p>GHG emissions from land-use change, such as deforestation or conversion from natural forest to plantation forest, that cause carbon stock loss.</p></td><td  class='small'>CarbonFootprint</td><td  class='small'>kgCO2e/declared unit</td><td  class='small'>Replaces dLucGhgEmissions</td><td  class='text'><p>decimal (&gt;= 0)</p>
+<p>(string)</p></td><td  class='text'><p>0</p></td><td  class='text'><p>0</p></td><td  class='text'><p>0</p></td><td  class='text'><p>0.2</p></td></tr>
+<tr>
+<td  class='bold'>landCarbonLeakage</td><td ></td><td  class='small'></td><td >MAY</td><td  class='text'><p>Placeholder for indirect land use change causing displacement of food production, outside of value-chain</p></td><td  class='small'>CarbonFootprint</td><td  class='small'>kgCO2e/declared unit</td><td  class='small'>Placeholder.</td><td  class='text'><p>decimal (&gt;= 0)</p>
+<p>(string)</p></td><td  class='text'><p>0</p></td><td  class='text'><p>0</p></td><td  class='text'><p>0</p></td><td  class='text'><p>0</p></td></tr>
+<tr>
+<td  class='bold'>landManagementFossilGhgEmissions</td><td >Fossil emissions - land management</td><td  class='small'>3.3.2.4 Accounting for biogenic emissions and removals</td><td >BIO-2027</td><td  class='text'><p>Fossil CO2, N2O, fossil CH4, HFCs and PFCs emissions due to land management practices. </p>
+<p>Note: <code>fossilGhgEmissions</code> already includes these emissions.</p></td><td  class='small'>CarbonFootprint</td><td  class='small'>kgCO2e/declared unit</td><td  class='small'></td><td  class='text'><p>decimal (&gt;= 0)</p>
+<p>(string)</p></td><td  class='text'><p>0.03</p></td><td  class='text'><p>0.36</p></td><td  class='text'><p>0</p></td><td  class='text'><p>0.05</p></td></tr>
+<tr>
+<td  class='bold'>landManagementBiogenicCO2Emissions</td><td >Land management CO2 emissions</td><td  class='small'>3.3.2.4 Accounting for biogenic emissions and removals</td><td >BIO-2027</td><td  class='text'><p>Biogenic CO2 emissions occurring due to recurring land management actions on land within the same land-use category.</p></td><td  class='small'>CarbonFootprint</td><td  class='small'>kgCO2e/declared unit</td><td  class='small'></td><td  class='text'><p>decimal (&gt;= 0)</p>
+<p>(string)</p></td><td  class='text'><p>0.004</p></td><td  class='text'></td><td  class='text'><p>0</p></td><td  class='text'><p>0</p></td></tr>
+<tr>
+<td  class='bold'>landManagementBiogenicCO2Removals</td><td >Land management CO2 removals</td><td  class='small'>3.3.2.4 Accounting for biogenic emissions and removals</td><td >MAY</td><td  class='text'><p>Biogenic CO2 removals resulting from a net increase in carbon stored in land-based carbon pools (e.g. reforestation and afforestation). Subject to traceability requirements.</p></td><td  class='small'>CarbonFootprint</td><td  class='small'>kgCO2e/declared unit</td><td  class='small'></td><td  class='text'><p>decimal (&lt;= 0)</p>
+<p>(string)</p></td><td  class='text'><p>0</p></td><td  class='text'><p>0</p></td><td  class='text'><p>0</p></td><td  class='text'><p>0</p></td></tr>
+<tr>
+<td  class='bold'>biogenicCO2Uptake</td><td >Biogenic CO2 uptake</td><td  class='small'>3.3.2.4 Accounting for biogenic emissions and removals</td><td >BIO</td><td  class='text'><p>Temporary CO2 uptake of biomass in the product at point of leaving factory gate.</p></td><td  class='small'>CarbonFootprint</td><td  class='small'>kgCO2e/declared unit</td><td  class='small'>Replaces biogenicCarbonWithdrawal</td><td  class='text'><p>decimal (&lt;= 0)</p>
+<p>(string)</p></td><td  class='text'><p>-1.61</p></td><td  class='text'><p>-19.36</p></td><td  class='text'><p>0</p></td><td  class='text'><p>-0.37</p></td></tr>
+<tr>
+<td  class='bold'>biogenicNonCO2Emissions</td><td >Biogenic non-CO2 emissions</td><td  class='small'>3.3.2.4 Accounting for biogenic emissions and removals</td><td >BIO</td><td  class='text'><p>CH4 emissions from land management practices and  the oxidation and transformation or degradation of biomass.</p></td><td  class='small'>CarbonFootprint</td><td  class='small'>kgCO2e/declared unit</td><td  class='small'></td><td  class='text'><p>decimal (&gt;= 0)</p>
+<p>(string)</p></td><td  class='text'><p>0.002</p></td><td  class='text'><p>0.024</p></td><td  class='text'><p>0</p></td><td  class='text'><p>0.001</p></td></tr>
+<tr>
+<td  class='bold'>landAreaOccupation</td><td >Land occupation</td><td  class='small'>3.3.2.4 Accounting for biogenic emissions and removals</td><td >MAY</td><td  class='text'><p>The amount of agricultural land occupied in the reporting year to produce the product.</p></td><td  class='small'>CarbonFootprint</td><td  class='small'>(m2/year) / declared unit</td><td  class='small'></td><td  class='text'><p>decimal (&gt;= 0)</p>
+<p>(string)</p></td><td  class='text'><p>0.41</p></td><td  class='text'><p>4.92</p></td><td  class='text'><p>0</p></td><td  class='text'><p>0.004</p></td></tr>
+<tr>
+<td  class='bold'>aircraftGhgEmissions</td><td >Aircraft emissions</td><td  class='small'>3.3.2.1 Accounting for transportation and distribution emissions</td><td >MAY</td><td  class='text'><p>If present, the GHG emissions resulting from aircraft engine usage for the transport of the product, excluding radiative forcing. </p>
+<p>The aircraft emissions are excluding biogenic CO2 uptake.</p></td><td  class='small'>CarbonFootprint</td><td  class='small'>kgCO2e/declared unit</td><td  class='small'></td><td  class='text'><p>decimal (&gt;= 0)</p>
+<p>(string)</p></td><td  class='text'><p>0</p></td><td  class='text'><p>0</p></td><td  class='text'><p>0</p></td><td  class='text'><p>0</p></td></tr>
+<tr>
+<td  class='bold'>packagingEmissionsIncluded</td><td >Packaging emissions</td><td  class='small'>3.3.1.1 Data identification</td><td >SHALL</td><td  class='text'><p>Indicates whether packaging emissions are included in the scope and boundary of the product carbon footprint. </p>
+<p>If <code>true</code>, packaging emissions are included in the product carbon footprint, and the <code>packagingGhgEmissions</code> attribute SHOULD be defined. </p>
+<p>If <code>false</code>, packaging emissions are not included in the product carbon footprint, and the <code>packagingGhgEmissions</code> attribute MUST be undefined.</p></td><td  class='small'>CarbonFootprint</td><td  class='small'>-</td><td  class='small'></td><td  class='text'><p>boolean</p></td><td  class='text'><p>True</p></td><td  class='text'><p>True</p></td><td  class='text'><p>False</p></td><td  class='text'><p>False</p></td></tr>
+<tr>
+<td  class='bold'>packagingGhgEmissions</td><td >Packaging emissions</td><td  class='small'>3.3.1.1 Data identification</td><td >SHOULD</td><td  class='text'><p>Emissions resulting from the packaging of the product. SHOULD be defined if <code>packagingEmissionsIncluded</code> is true and MUST be undefined if <code>packagingEmissionsIncluded</code> is false. </p>
+<p>Packaging emissions are excluding biogenic CO2 uptake.</p></td><td  class='small'>CarbonFootprint</td><td  class='small'>kgCO2e/declared unit</td><td  class='small'></td><td  class='text'><p>decimal (&gt;= 0)</p>
+<p>(string)</p></td><td  class='text'></td><td  class='text'><p>0.58</p></td><td  class='text'></td><td  class='text'></td></tr>
+<tr>
+<td  class='bold'>packagingBiogenicCarbonContent</td><td >Packaging biogenic carbon content</td><td  class='small'>3.3.1.1 Data identification</td><td >MAY</td><td  class='text'><p>The biogenic carbon content of the packaging (mass of carbon).</p></td><td  class='small'>CarbonFootprint</td><td  class='small'>kgC/declared unit</td><td  class='small'></td><td  class='text'><p>decimal (&gt;= 0)</p>
+<p>(string)</p></td><td  class='text'></td><td  class='text'><p>0</p></td><td  class='text'></td><td  class='text'></td></tr>
+<tr>
+<td  class='bold'>outboundLogisticsGhgEmissions</td><td >Outbound logistics emissions</td><td  class='small'>3.3.2.1 Accounting for transportation and distribution emissions</td><td >SHOULD</td><td  class='text'><p>Emissions resulting from outbound logistics should be calculated and reported separately up to the point where another company (e.g., customer) takes over responsibility for the product (i.e. own or pay for the outbound logistics). MUST be undefined if  the company calculating and exchanging the PCF is not responsible for the outbound logistics. </p>
+<p>The outbound logistics emissions are excluding biogenic CO2 uptake.</p></td><td  class='small'>CarbonFootprint</td><td  class='small'>kgCO2e/declared unit</td><td  class='small'></td><td  class='text'><p>decimal (&gt;= 0)</p>
+<p>(string)</p></td><td  class='text'></td><td  class='text'></td><td  class='text'><p>4</p></td><td  class='text'><p>0.002</p></td></tr>
+<tr>
+<td  class='bold'>ccsTechnologicalCO2CaptureIncluded</td><td >Technological CO2 capture with geological storage</td><td  class='small'>3.3.2.5 Technological CO2 capture, storage and use</td><td >SHALL</td><td  class='text'><p>Indicates whether CCS (including BECCS) take place within the scope and boundary of the product carbon footprint. </p>
+<p>If <code>true</code>, <code>ccsTechnologicalCO2Capture</code>, <code>technologicalCO2Removals</code> and <code>technologicalCO2CaptureOrigin</code> shall be defined if known and available. </p>
+<p>If <code>false</code>, <code>ccsTechnologicalCO2Capture</code>, <code>technologicalCO2Removals</code> and <code>technologicalCO2CaptureOrigin</code> shall be undefined.</p></td><td  class='small'>CarbonFootprint</td><td  class='small'>-</td><td  class='small'></td><td  class='text'><p>boolean</p></td><td  class='text'></td><td  class='text'></td><td  class='text'></td><td  class='text'></td></tr>
+<tr>
+<td  class='bold'>ccsTechnologicalCO2Capture</td><td >Technological CO2 capture with geological storage</td><td  class='small'>3.3.2.5 Technological CO2 capture, storage and use</td><td >CCS</td><td  class='text'><p>The amount of CO2 captured with Carbon Capture and Storage (CCS) technologies.</p></td><td  class='small'>CarbonFootprint</td><td  class='small'>kgCO2e/declared unit</td><td  class='small'></td><td  class='text'><p>decimal (&lt;= 0)</p>
+<p>(string)</p></td><td  class='text'></td><td  class='text'></td><td  class='text'></td><td  class='text'></td></tr>
+<tr>
+<td  class='bold'>technologicalCO2CaptureOrigin</td><td >Technological CO2 capture origin</td><td  class='small'>3.3.2.5 Technological CO2 capture, storage and use</td><td >CCU,CCS</td><td  class='text'><p>For CCU: Information about the origin (fossil or biogenic) and path of the captured CO2 used in CCU, including the name and location of the capture facility. This information enhances transparency and traceability, enabling tracking of CO2 across the value chain. </p>
+<p>For CCS: Traceability data, i.e. information on location injection site, geological reservoir as part of the overall technological CO2 capture origin data point for the PCF.</p></td><td  class='small'>CarbonFootprint</td><td  class='small'>-</td><td  class='small'></td><td  class='text'><p>string</p></td><td  class='text'></td><td  class='text'></td><td  class='text'></td><td  class='text'></td></tr>
+<tr>
+<td  class='bold'>technologicalCO2Removals</td><td >Technological CO2 removals</td><td  class='small'>3.3.2.5 Technological CO2 capture, storage and use</td><td >CCS</td><td  class='text'><p>CO2 removed directly from the atmosphere or via biogenic CO2 capture. Subject to reporting requirements.</p></td><td  class='small'>CarbonFootprint</td><td  class='small'>kgCO2e/declared unit</td><td  class='small'></td><td  class='text'><p>decimal (&gt;= 0)</p>
+<p>(string)</p></td><td  class='text'></td><td  class='text'></td><td  class='text'></td><td  class='text'></td></tr>
+<tr>
+<td  class='bold'>ccuCarbonContent</td><td >CCU carbon content</td><td  class='small'>3.3.2.5 Technological CO2 capture, storage and use</td><td >CCU</td><td  class='text'><p>The amount of captured carbon (both biogenic and fossil) during CCU (Carbon Capture &amp; Usage) in the product.</p></td><td  class='small'>CarbonFootprint</td><td  class='small'>kgC/declared unit</td><td  class='small'></td><td  class='text'><p>decimal (&gt;= 0)</p>
+<p>(string)</p></td><td  class='text'></td><td  class='text'></td><td  class='text'></td><td  class='text'></td></tr>
+<tr>
+<td  class='bold'>ccuCalculationApproach</td><td >CCU calculation approach</td><td  class='small'>3.3.2.5 Technological CO2 capture, storage and use</td><td >CCU</td><td  class='text'><p>The calculation approach for CCU: "Cut-off" or "Credit."</p></td><td  class='small'>CarbonFootprint</td><td  class='small'>-</td><td  class='small'></td><td  class='text'><p>Cut-off|Credit</p>
+<p>(string)</p></td><td  class='text'></td><td  class='text'></td><td  class='text'></td><td  class='text'></td></tr>
+<tr>
+<td  class='bold'>ccuCreditCertification</td><td >CCU credit certification</td><td  class='small'>3.3.2.5 Technological CO2 capture, storage and use</td><td >CCU</td><td  class='text'><p>(Only for Credit Approach) a URL to documentation verifying the certification from an external bookkeeping scheme. This attribute ensures reliability and avoids double counting of credits within the crediting system.</p></td><td  class='small'>CarbonFootprint</td><td  class='small'>-</td><td  class='small'></td><td  class='text'><p>uri</p>
+<p>(string)</p></td><td  class='text'></td><td  class='text'></td><td  class='text'></td><td  class='text'></td></tr>
+<tr>
+<td  class='bold'>ipccCharacterizationFactors</td><td >Characterization factors</td><td  class='small'>3.2.2 Focus on GHG emissions</td><td >SHALL</td><td  class='text'><p>The IPCC (Intergovernmental Panel of Climate Change) frequently releases (GWP) global warming potential values for climate gases related to CO2. These GWP values are released in Assessment Reports (AR), which are numbered. </p>
+<p>The AR number can be used to track the age and accuracy of the GWP values used in reporting. This field indicates the IPCC version of the GWP characterization factors used in the calculation of the PCF. </p>
+<p>Per the PACT Methodology, the latest available characterization factor version shall be used, i.e., [""AR6""]. In the event this is not possible, include the set of all characterization factors used.</p></td><td  class='small'>CarbonFootprint</td><td  class='small'>-</td><td  class='small'>supersedes `characterizationFactors` deprecated in 2.3.</td><td  class='text'><p>array: string</p></td><td  class='text'><p>['AR6']</p></td><td  class='text'><p>['AR6']</p></td><td  class='text'><p>['AR5', 'AR6']</p></td><td  class='text'><p>['AR6']</p></td></tr>
+<tr>
+<td  class='bold'>crossSectoralStandards</td><td >Cross-sectoral standards</td><td  class='small'>3.1.2 Hierarchy of application</td><td >SHALL</td><td  class='text'><p>The cross-sectoral standards applied for calculating or allocating GHG emissions. If multiple apply, list all.</p></td><td  class='small'>CarbonFootprint</td><td  class='small'>-</td><td  class='small'>Supersedes `crossSectoralStandardsUsed` deprecated in version 2.3.</td><td  class='text'><p>array: ISO14067|ISO14083|ISO14040-44|GHGP-Product|PEF|PACT-1.0|PACT-2.0|PACT-3.0</p>
+<p>(string)</p></td><td  class='text'><p>['GHGP-Product', 'PACT-3.0']</p></td><td  class='text'><p>['GHGP-Product', 'ISO14067']</p></td><td  class='text'><p>['GHGP-Product', 'ISO14067']</p></td><td  class='text'><p>['PEF']</p></td></tr>
+<tr>
+<td  class='bold'>productOrSectorSpecificRules</td><td >Product or sector specific rules</td><td  class='small'>3.1.2 Hierarchy of application</td><td >MAY</td><td  class='text'><p>The product-specific or sector-specific rules applied for calculating or allocating GHG emissions. Sector specific guidance frameworks, such as Product Category Rules (PCR), are sets of rules for how to calculate and document Life Cycle Assessments. They provide product category specific guidance and enhance comparability between assessments of the different suppliers for the same category (sector). The same applies to Product Environmental Footprint Category Rules (PEFCR)).  If no rules were used, leave this field empty.</p></td><td  class='small'>CarbonFootprint</td><td  class='small'>-</td><td  class='small'>Multiple ProductOrSpecificRules can be specifed, each with its own operator and ruleNames.</td><td  class='text'><p>array: ProductOrSectorSpecificRule</p></td><td  class='text'></td><td  class='text'></td><td  class='text'></td><td  class='text'></td></tr>
+<tr>
+<td  class='bold'>operator</td><td ></td><td  class='small'></td><td >SHALL</td><td  class='text'><p>Selection of operator of PCR being used for the PCF calculation. If operator is not available in the given list, or if a sector specific guidance has been followed, please set "Other" and include details under "otherOperatorName".</p></td><td  class='small'>ProductOrSectorSpecificRule</td><td  class='small'>-</td><td  class='small'></td><td  class='text'><p>PEF|EPD International|Other</p>
+<p>(string)</p></td><td  class='text'><p>Other</p></td><td  class='text'><p>Other</p></td><td  class='text'><p>Other</p></td><td  class='text'><p>PEF</p></td></tr>
+<tr>
+<td  class='bold'>ruleNames</td><td ></td><td  class='small'></td><td >SHALL</td><td  class='text'><p>Names of the product or sector specific rules being used for the PCF calculation.</p></td><td  class='small'>ProductOrSectorSpecificRule</td><td  class='small'>-</td><td  class='small'></td><td  class='text'><p>array: string</p></td><td  class='text'><p>['The Product Carbon Footprint Guideline for the Chemical Industry, v.3']</p></td><td  class='text'><p>['The Product Carbon Footprint Guideline for the Chemical Industry, v.3']</p></td><td  class='text'><p>['Catena-X Product Carbon Footprint Rulebook CX-PCF Rules, v.3']</p></td><td  class='text'><p>['GHG Protocol Land sector &amp; removals standard']</p></td></tr>
+<tr>
+<td  class='bold'>otherOperatorName</td><td ></td><td  class='small'></td><td >MAY</td><td  class='text'><p>If operator is Other, then this attribute must be populated with the name of the operator.</p></td><td  class='small'>ProductOrSectorSpecificRule</td><td  class='small'>-</td><td  class='small'></td><td  class='text'><p>string</p></td><td  class='text'></td><td  class='text'></td><td  class='text'><p>Catena-X</p></td><td  class='text'><p>GHG Protocol</p></td></tr>
+<tr>
+<td  class='bold'>exemptedEmissionsPercent</td><td >Exemption rules</td><td  class='small'>3.3.1.2 Criteria to exclude certain activities - Exemption rules</td><td >SHALL</td><td  class='text'><p>The percentage of emissions excluded from the PCF.</p></td><td  class='small'>CarbonFootprint</td><td  class='small'>-</td><td  class='small'>string<decimal> in 3.0, was Number in 2.x. Removed upper boundary of 5%.</td><td  class='text'><p>decimal</p>
+<p>(string)</p></td><td  class='text'><p>0</p></td><td  class='text'><p>0</p></td><td  class='text'><p>0.8</p></td><td  class='text'><p>0</p></td></tr>
+<tr>
+<td  class='bold'>exemptedEmissionsDescription</td><td >Exemption rules</td><td  class='small'>3.3.1.2 Criteria to exclude certain activities - Exemption rules</td><td >MAY</td><td  class='text'><p>If emissions exempted, rationale behind exclusion of specific PCF emissions.</p></td><td  class='small'>CarbonFootprint</td><td  class='small'>-</td><td  class='small'>optional in 3.0, was mandatory in 2.x</td><td  class='text'><p>string</p></td><td  class='text'></td><td  class='text'></td><td  class='text'><p>Using the most conservative emission factor from a region with higher energy intensive grid for input A resulted in a contribution of 0.8% for this input. This is less than 3% and therefore considered under the cut off rule</p></td><td  class='text'></td></tr>
+<tr>
+<td  class='bold'>allocationRulesDescription</td><td >Allocation rules</td><td  class='small'>3.3.1.3 Allocation</td><td >SHOULD</td><td  class='text'><p>Description of the allocation rules applied to the PCFs foreground data including an explanation of the underlying reasons (way of allocating all activities from manufacturing steps to the declared unit).</p></td><td  class='small'>CarbonFootprint</td><td  class='small'>-</td><td  class='small'></td><td  class='text'><p>string</p></td><td  class='text'><p>Mass allocation</p></td><td  class='text'><p>Mass allocation</p></td><td  class='text'></td><td  class='text'></td></tr>
+<tr>
+<td  class='bold'>secondaryEmissionFactorSources</td><td >Secondary emission factors sources</td><td  class='small'>3.2.3 Scope and boundary of the PACT Methodology</td><td >SHOULD</td><td  class='text'><p>The list of secondary data sources and versions which have been used by the data owner for the PCF calculation (e.g. databases such as ecoinvent) </p>
+<p>If no secondary data is used, this attribute MUST BE undefined.</p></td><td  class='small'>CarbonFootprint</td><td  class='small'>-</td><td  class='small'></td><td  class='text'><p>array: EmissionFactorSource</p></td><td  class='text'></td><td  class='text'></td><td  class='text'></td><td  class='text'></td></tr>
+<tr>
+<td  class='bold'>name</td><td ></td><td  class='small'></td><td >SHALL</td><td  class='text'><p>Name of the secondary emission factor database</p></td><td  class='small'>EmissionFactorSource</td><td  class='small'>-</td><td  class='small'></td><td  class='text'><p>string</p></td><td  class='text'><p>Ecoinvent</p></td><td  class='text'><p>Ecoinvent</p></td><td  class='text'><p>Sphera</p></td><td  class='text'><p>Sphera</p></td></tr>
+<tr>
+<td  class='bold'>version</td><td ></td><td  class='small'></td><td >SHALL</td><td  class='text'><p>Version of the secondary emission factor database</p></td><td  class='small'>EmissionFactorSource</td><td  class='small'>-</td><td  class='small'></td><td  class='text'><p>string</p></td><td  class='text'><p>3.1</p></td><td  class='text'><p>3.1</p></td><td  class='text'><p>2024</p></td><td  class='text'><p>2020</p></td></tr>
+<tr>
+<td  class='bold'>primaryDataShare</td><td >Primary Data Share</td><td  class='small'>4.2.2 Primary Data Share</td><td >SHALL</td><td  class='text'><p>Share of primary data in the final absolute PCF value excluding biogenic CO2 uptake (pcfExcludingBiogenicUptake).</p></td><td  class='small'>CarbonFootprint</td><td  class='small'>-</td><td  class='small'>string<decimal> in 3.0, was Number in 2.x</td><td  class='text'><p>decimal</p>
+<p>(string)</p></td><td  class='text'><p>12.9</p></td><td  class='text'><p>16.8</p></td><td  class='text'><p>13.1</p></td><td  class='text'><p>80.2</p></td></tr>
+<tr class='heading'>
+<td>dqi: DataQualityIndicators</td><td>Data Quality Indicators</td><td>4.2.3</td><td>SHALL-2027</td><td>None</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr>
+<td  class='bold'>technologicalDQR</td><td >Technological representativeness</td><td  class='small'></td><td >SHALL</td><td  class='text'><p>Quantitative data quality rating (DQR) based on the data quality matrix, scoring the technological representativeness of the sources used for the final absolute PCF excluding biogenic CO2 uptake calculation based on weighted average of all inputs. </p>
+<p>The value MUST be between <code>1</code> and <code>5</code> inclusive.</p></td><td  class='small'>DataQualityIndicators</td><td  class='small'>-</td><td  class='small'>string<decimal> in 3.0, was Number in 2.x</td><td  class='text'><p>decimal</p>
+<p>(string)</p></td><td  class='text'><p>1.5</p></td><td  class='text'><p>2.5</p></td><td  class='text'><p>2.3</p></td><td  class='text'><p>1</p></td></tr>
+<tr>
+<td  class='bold'>geographicalDQR</td><td >Geographical representativenes</td><td  class='small'></td><td >SHALL</td><td  class='text'><p>Quantitative data quality rating (DQR) based on the data quality matrix, scoring the geographical representativeness of the sources used for the final absolute PCF excluding biogenic CO2 uptake calculation based on weighted average of all inputs. </p>
+<p>The value MUST be between <code>1</code> and <code>5</code> inclusive.</p></td><td  class='small'>DataQualityIndicators</td><td  class='small'>-</td><td  class='small'>string<decimal> in 3.0, was Number in 2.x</td><td  class='text'><p>decimal</p>
+<p>(string)</p></td><td  class='text'><p>3.2</p></td><td  class='text'><p>4.1</p></td><td  class='text'><p>3.4</p></td><td  class='text'><p>2.2</p></td></tr>
+<tr>
+<td  class='bold'>temporalDQR</td><td >Temporal / Time representativenes</td><td  class='small'></td><td >SHALL</td><td  class='text'><p>Quantitative data quality rating (DQR) based on the data quality matrix, scoring the temporal representativeness of the sources used for the final absolute PCF excluding biogenic CO2 uptake calculation based on weighted average of all inputs. </p>
+<p>The value MUST be between <code>1</code> and <code>5</code> inclusive.</p></td><td  class='small'>DataQualityIndicators</td><td  class='small'>-</td><td  class='small'>string<decimal> in 3.0, was Number in 2.x</td><td  class='text'><p>decimal</p>
+<p>(string)</p></td><td  class='text'><p>2.4</p></td><td  class='text'><p>1.3</p></td><td  class='text'><p>3.1</p></td><td  class='text'><p>4</p></td></tr>
+<tr class='heading'>
+<td>verification: Verification</td><td>Verification information</td><td>None</td><td>MAY</td><td>None</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr>
+<td  class='bold'>coverage</td><td >Coverage</td><td  class='small'>5.3.3</td><td >MAY</td><td  class='text'><p>The coverage of the verification defines the type and level of GHG data to be verified.</p></td><td  class='small'>Verification</td><td  class='small'>-</td><td  class='small'>values changed from v2.x</td><td  class='text'><p>PCF calculation model|PCF program|product level</p>
+<p>(string)</p></td><td  class='text'></td><td  class='text'></td><td  class='text'><p>PCF calculation model</p></td><td  class='text'></td></tr>
+<tr>
+<td  class='bold'>providerName</td><td >Verification provider</td><td  class='small'>5.3.7</td><td >MAY</td><td  class='text'><p>The non-empty name of the independent third party engaged to undertake the verification.</p></td><td  class='small'>Verification</td><td  class='small'>-</td><td  class='small'>optional in version 3.0 was mandatory in 2.x</td><td  class='text'><p>string</p></td><td  class='text'></td><td  class='text'></td><td  class='text'><p>Auditor X</p></td><td  class='text'></td></tr>
+<tr>
+<td  class='bold'>completedAt</td><td ></td><td  class='small'></td><td >MAY</td><td  class='text'><p>The date at which the verification was completed</p></td><td  class='small'>Verification</td><td  class='small'>-</td><td  class='small'></td><td  class='text'><p>date-time</p>
+<p>(string)</p></td><td  class='text'></td><td  class='text'></td><td  class='text'><p>2024-01-31 00:00:00+00:00</p></td><td  class='text'></td></tr>
+<tr>
+<td  class='bold'>standardName</td><td ></td><td  class='small'></td><td >MAY</td><td  class='text'><p>Name of the standard against which the PCF was assured</p></td><td  class='small'>Verification</td><td  class='small'>-</td><td  class='small'></td><td  class='text'><p>string</p></td><td  class='text'></td><td  class='text'></td><td  class='text'><p>GHG Protocol Product standard, ISO Standard 14067</p></td><td  class='text'></td></tr>
+<tr>
+<td  class='bold'>comments</td><td ></td><td  class='small'></td><td >MAY</td><td  class='text'><p>Any additional comments that will clarify the interpretation of the verification.</p></td><td  class='small'>Verification</td><td  class='small'>-</td><td  class='small'></td><td  class='text'><p>string</p></td><td  class='text'></td><td  class='text'></td><td  class='text'><p>Verified solution X was used for the calculation of the PCFs</p></td><td  class='text'></td></tr>
+<tr>
+<td  class='bold'>extensions</td><td ></td><td  class='small'></td><td >MAY</td><td  class='text'><p>If defined, 1 or more data model extensions associated with the ProductFootprint.</p></td><td  class='small'>ProductFootprint</td><td  class='small'>-</td><td  class='small'></td><td  class='text'><p>array: DataModelExtension</p></td><td  class='text'></td><td  class='text'></td><td  class='text'></td><td  class='text'></td></tr>
+<tr>
+<td  class='bold'>specversion</td><td ></td><td  class='small'></td><td >MAY</td><td  class='text'><p>The version of the Data Model Extension specification. The value MUST be a string in the format major.minor.patch as defined in Semantic Versioning 2.0.0.</p></td><td  class='small'>DataModelExtension</td><td  class='small'>-</td><td  class='small'></td><td  class='text'><p>string</p></td><td  class='text'></td><td  class='text'></td><td  class='text'></td><td  class='text'></td></tr>
+<tr>
+<td  class='bold'>dataSchema</td><td ></td><td  class='small'></td><td >SHALL</td><td  class='text'><p>The value MUST be the URL to the publicly accessible Extension Schema File</p></td><td  class='small'>DataModelExtension</td><td  class='small'>-</td><td  class='small'></td><td  class='text'><p>uri</p>
+<p>(string)</p></td><td  class='text'></td><td  class='text'></td><td  class='text'></td><td  class='text'></td></tr>
+<tr>
+<td  class='bold'>documentation</td><td ></td><td  class='small'></td><td >MAY</td><td  class='text'><p>The value MUST be the URL to the publicly accessible Extension Documentation.</p></td><td  class='small'>DataModelExtension</td><td  class='small'>-</td><td  class='small'></td><td  class='text'><p>uri</p>
+<p>(string)</p></td><td  class='text'></td><td  class='text'></td><td  class='text'></td><td  class='text'></td></tr>
+</table></body></html>

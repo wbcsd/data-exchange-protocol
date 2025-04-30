@@ -1,0 +1,74 @@
+h4 {
+    font-size: 1.1em;
+    color: var(--heading-text);
+}
+
+pre,
+code,
+samp {
+    font-style: normal;
+}
+
+code {
+    font-size: 0.9em;
+}
+
+li {
+    margin: initial;
+    padding: initial;
+}
+
+dfn {
+    font-style: normal;
+    font-weight: bold;
+}
+
+dfn>code,
+dt>code {
+    font-weight: normal;
+}
+
+[data-link-type=element]::before,
+[data-link-type=element]::after {
+    content: initial;
+}
+
+strong.advisement {
+    text-align: inherit;
+}
+
+.json-schema-type {
+    font-family: monospace;
+}
+
+.json-schema-required {
+    color: rgba(160, 0, 0, 0.9);
+}
+
+.json-schema-enum code {
+    background-color: rgba(100, 100, 100, 0.03);
+    color: #666;
+    font-size: 0.8em;
+    border: 1px solid rgba(100, 100, 100, 0.9);
+    border-radius: 2px;
+    padding: 2px;
+    margin-top: 6px;
+    margin-left: 0px;
+    margin-right: 0px;
+    display: inline-block;
+}
+
+.x-unit {
+    font-style: italic;
+    font-size: 0.9em;
+}
+
+.x-rule {
+    font-style: normal;
+}
+
+.x-methodology {
+    font-style: normal;
+}
+
+
