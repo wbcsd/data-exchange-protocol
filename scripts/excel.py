@@ -271,7 +271,7 @@ class HtmlWriter:
     <style>
     html,body  { padding: 0; margin: 0; }    
     table,th,tr,td { border-collapse: collapse; padding: 0; margin: 0; border: 0; vertical-align: top; }
-    td,th      { padding-right: 4px; }
+    td,th      { padding-right: 2px; padding-left: 2px; border-right: 1px solid #AAAAAA; }
     h1,h2,h3   { border: none; margin: 0; }
     p          { margin: 4px; }
     li p       { margin: 0; }
