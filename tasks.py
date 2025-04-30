@@ -155,11 +155,13 @@ def build(c):
         Dependency("build/assets/logo.svg", ["assets/logo.svg"]), 
         Dependency("build/assets/logo-dark.svg", ["assets/logo-dark.svg"]), 
         Dependency("build/assets/custom.css", ["assets/custom.css"]), 
-        Dependency("build/assets/markdown.css", ["assets/markdown.css"]), 
-        Dependency("build/ref/methodology/pact-methodology-v3.0.pdf", ["ref/methodology/pact-methodology-v3.0.pdf"])
+        Dependency("build/assets/markdown.css", ["assets/markdown.css"])
         ],
         copy_file
         )
+    if not os.path.exists("build/ref"):
+        run("cp -R  ref build")
+        run("cp -R  assets build/ref")
 
 
 @task(help={"ver": "Major version to release, can be v2 or v3"})

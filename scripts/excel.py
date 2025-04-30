@@ -209,7 +209,6 @@ class ExcelWriter:
         # Apply styles to the row, first col (property name) will be bold
         self.format(self.ws[self.ws.max_row], self.styles["normal"])
         for column in self.columns.values():        
-            print(column)
             style = column.get("style", "normal")
             if style != "normal" and style != "text":
                 self.format(self.ws[self.ws.max_row][column["index-nr"]], self.styles[style])
@@ -270,7 +269,7 @@ class HtmlWriter:
     <title>PACT Simplified Data Model</title>
     <link rel='stylesheet' href='../assets/markdown.css'>
     <style>
-    body       { padding: 0; margin: 0; }    
+    html,body  { padding: 0; margin: 0; }    
     table,th,tr,td { border-collapse: collapse; padding: 0; margin: 0; border: 0; vertical-align: top; }
     td,th      { padding-right: 4px; }
     h1,h2,h3   { border: none; margin: 0; }
@@ -363,7 +362,7 @@ def generate(writer, title, schema, typename, examples_from_schema, example_obje
     # Validation rules legenda:
     validation_rules_legenda = schema["info"].get("x-rule","").strip()
     methodology_sections = schema["info"].get("x-methodology-sections", {})
-    logging.info(methodology_sections)
+    logging.debug(methodology_sections)
     writer.columns["reporting"]["description"] = validation_rules_legenda
 
     # Append the title and header rows
@@ -398,8 +397,8 @@ def generate(writer, title, schema, typename, examples_from_schema, example_obje
 
     # Inner function to write a property to the worksheet
     def write_property(name, info, parent, level, examples):
-        logging.info(f"Writing property {name} at level {level}")
-        logging.info(examples)
+        logging.debug(f"Writing property {name} at level {level}")
+        logging.debug(examples)
 
         # Extract the type and description of the property
         type = info.get("type", "")
@@ -433,7 +432,7 @@ def generate(writer, title, schema, typename, examples_from_schema, example_obje
         
         # Append a row to the worksheet
         rule = info.get("x-rule", "")
-        logging.info(f"Rule: {rule} mandatory: {mandatory} name: {name}")
+        logging.debug(f"Rule: {rule} mandatory: {mandatory} name: {name}")
         if mandatory and rule != "" and rule != "SHALL":
             raise Exception("Conflicting required status for " + name)
         if rule == "":
@@ -446,7 +445,7 @@ def generate(writer, title, schema, typename, examples_from_schema, example_obje
         section = info.get("x-methodology", "")
         section = str(section) + " " + methodology_sections.get(section, "")
         section = section.strip()
-        logging.info(section)
+        logging.debug(section)
 
         if examples_from_schema:
             exa = info.get("examples", []) + ['','','','']
@@ -481,8 +480,8 @@ def generate(writer, title, schema, typename, examples_from_schema, example_obje
         
     # Inner function to write a type to the worksheet
     def write_type(name, info, level, examples):
-        logging.info(f"Writing type {name} at level {level}")
-        logging.info(examples)
+        logging.debug(f"Writing type {name} at level {level}")
+        logging.debug(examples)
 
         if info.get("title") and name:
             # Append a row for the type itself and set background color to blue
@@ -494,7 +493,7 @@ def generate(writer, title, schema, typename, examples_from_schema, example_obje
                 continue
 
             # Extract the type and description of the property
-            logging.info(f"Writing property {prop_name}")
+            logging.debug(f"Writing property {prop_name}")
 
             if not examples_from_schema:
                 exa = [ex.get(prop_name) if isinstance(ex, dict) else None for ex in examples]
@@ -531,7 +530,6 @@ def generate_simplified_datamodel(input_path:str, output_path:str, title:str, ty
         if os.path.exists(example_path):
             with open(example_path) as file:
                 example = yaml.safe_load(file)
-                print(f"Found example {example_path}")
                 examples.append(example)
 
     # Generate the Excel file
