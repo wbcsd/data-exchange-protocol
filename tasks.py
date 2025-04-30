@@ -177,12 +177,12 @@ def release(c, ver="v2"):
     logging.info(f"Version: {version}, Date: {date}, Status: {status} Year: {year}")
     destination  = "../tr"
 
+    if not os.path.exists(destination):
+         raise Exception(f"Destination {destination} does not exist. Expecting the local path to the TR repository.")
     if status != "Release":
         raise Exception(f"Not a release version: {version}: {status}")
     if not is_repo_pristine("."):
         raise Exception("Working tree is dirty. Finish committing files or stash, then try again.")
-    if not os.path.exists(destination):
-        raise Exception(f"Destination {destination} does not exist. Expecting the local path to the TR repository.")
     if os.path.exists(f"{destination}/{date}"):
         raise Exception(f"Destination {destination}/{date} already exists. Expecting a new release.")
 
@@ -191,16 +191,28 @@ def release(c, ver="v2"):
     build(c)
 
     print("Publishing release") 
-    run(f"mkdir -p {destination}/{year}/data-exchange-protocol-{date}")
-    run(f"cp -R build/{ver}/* {destination}/{year}/data-exchange-protocol-{date}")
-    run(f"cp -R build/assets {destination}/{year}")
+    c.run(f"mkdir -p {destination}/{year}/data-exchange-protocol-{date}")
+    c.run(f"cp -R build/{ver}/* {destination}/{year}/data-exchange-protocol-{date}")
+    c.run(f"cp -R build/assets {destination}/{year}")
 
-    run(f"mkdir -p {destination}/data-exchange-protocol/{version}")
-    run(f"cp -R build/{ver}/* {destination}/data-exchange-protocol/{version}")
-    run(f"cp -R build/assets {destination}/data-exchange-protocol")
+    c.run(f"mkdir -p {destination}/data-exchange-protocol/{version}")
+    c.run(f"cp -R build/{ver}/* {destination}/data-exchange-protocol/{version}")
+    c.run(f"cp -R build/assets {destination}/data-exchange-protocol")
 
+    # determine latest version by listing the directory destination/data-exchange-protocol/*
+    versions = [
+        dir for dir in os.listdir(f"{destination}/data-exchange-protocol")
+        if os.path.isdir(f"{destination}/data-exchange-protocol/{dir}") and dir[0].isdigit()
+    ]
+    latest_version = max(versions, key=lambda v: [int(x) for x in v.lstrip('v').split('.')])
+    
+    logging.info(f"Latest version: {latest_version}")
+    c.run(f"rm -rf {destination}/data-exchange-protocol/latest")    
+    c.run(f"cp -R build/{ver} {destination}/data-exchange-protocol/latest")
+    
     print(f"Published release version {version} to {destination}")
     print(f"Commit and merge the pull request in the TR repository")
+
 
 @task(help={"ver": "Major version to serve, can be v2 or v3"}) 
 def serve(c, ver="v3"):
