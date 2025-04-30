@@ -83,6 +83,12 @@ example3:
     style: text
     description: |
         An example of how the data attribute could be populated (note exact syntax of each field is dependent on the solution used for data entry)
+example4:
+    title: Example 4
+    width: 30
+    style: text
+    description: |
+        An example of how the data attribute could be populated (note exact syntax of each field is dependent on the solution used for data entry)
 #mandatory:
 #    title: Mandatory
 #    description: >
@@ -296,7 +302,7 @@ class HtmlWriter:
 
     def write_title(self, title):
         self.output.write(f"""
-<tr class='title'><td colspan='{len(self.columns)}'><img src="../assets/logo-dark-margin.png" width="200" height="200"></td></tr>
+<tr class='title'><td colspan='{len(self.columns)}'><img src="../assets/logo-dark.svg" width="200" height="200"></td></tr>
 <tr class='title'><td colspan='{len(self.columns)}'><h2>{title}</h2></td></tr>""")
  
     def write_subtitle(self, subtitle):
@@ -343,7 +349,7 @@ class HtmlWriter:
         self.output.write("</tr>\n")
 
 
-def generate(writer, title, schema, typename):
+def generate(writer, title, schema, typename, examples_from_schema, example_objects):
     """
     @param ws: the worksheet to write to
     @param schema: the OpenAPI schema
@@ -391,13 +397,15 @@ def generate(writer, title, schema, typename):
         return type_description
 
     # Inner function to write a property to the worksheet
-    def write_property(name, info, parent, level):
+    def write_property(name, info, parent, level, examples):
+        logging.info(f"Writing property {name} at level {level}")
+        logging.info(examples)
 
         # Extract the type and description of the property
         type = info.get("type", "")
         
         if type == "object":
-            write_type(name, info, level + 1)
+            write_type(name, info, level + 1, examples)
             return
         
         type_description = get_type_description(info)
@@ -421,8 +429,6 @@ def generate(writer, title, schema, typename):
         # experiment: change the word property to attribute, use regex for word boundary
         description = re.sub(r'\bproperty\b', 'attribute', description)
 
-        examples = info.get("examples", []) + ['','','']
-        logging.debug(examples)
         mandatory = name in parent.get("required", [])
         
         # Append a row to the worksheet
@@ -442,6 +448,14 @@ def generate(writer, title, schema, typename):
         section = section.strip()
         logging.info(section)
 
+        if examples_from_schema:
+            exa = info.get("examples", []) + ['','','','']
+        elif info.get("type", None) == "array" and info["items"].get("type") == "object":
+            # no samples for an array: values shown for the properties of the objects within the array
+            exa = ['','','','']
+        else:
+            exa = examples + ['','','','']
+
         writer.write_property(dict(
             property = name,
             attribute = info.get("x-term", ""),
@@ -452,19 +466,24 @@ def generate(writer, title, schema, typename):
             category = parent.get("title", ""),
             unit = info.get("x-unit", "-"),
             accepted = type_description,
-            example1 = examples[0],
-            example2 = examples[1],
-            example3 = examples[2]
+            example1 = exa[0] if exa[0] is not None else "",
+            example2 = exa[1] if exa[1] is not None else "",
+            example3 = exa[2] if exa[2] is not None else "",
+            example4 = exa[3] if exa[3] is not None else ""
             ))
 
         if info.get("type", None) == "array" and info["items"].get("type") == "object":
             logging.debug(f"Writing array for {name} at level {level}")
-            write_type(None, info["items"], level + 1)
+            if not examples_from_schema:
+                examples = [ex[0] if isinstance(ex, list) else None for ex in examples]
+            write_type(None, info["items"], level + 1, examples)
 
         
     # Inner function to write a type to the worksheet
-    def write_type(name, info, level=0):
-        logging.debug(f"Writing type {name} at level {level}")
+    def write_type(name, info, level, examples):
+        logging.info(f"Writing type {name} at level {level}")
+        logging.info(examples)
+
         if info.get("title") and name:
             # Append a row for the type itself and set background color to blue
             writer.write_type([name + ": " + info["title"], info.get("x-term"), info.get("x-methodology"), info.get("x-rule"), info.get("summary")])
@@ -475,19 +494,24 @@ def generate(writer, title, schema, typename):
                 continue
 
             # Extract the type and description of the property
-            logging.debug(f"Writing property {prop_name}")
+            logging.info(f"Writing property {prop_name}")
 
-            write_property(prop_name, prop_info, info, level)
+            if not examples_from_schema:
+                exa = [ex.get(prop_name) if isinstance(ex, dict) else None for ex in examples]
+            else:
+                exa = None
+
+            write_property(prop_name, prop_info, info, level, exa)
 
 
     # Find the specified types in the schema
     type = schema["components"]["schemas"][typename]
-    write_type(typename, type)
+    write_type(typename, type, 0, example_objects)
 
 
 
 
-def openapi_to_excel(input_path, output_path:str, title, type):
+def generate_simplified_datamodel(input_path:str, output_path:str, title:str, type:str):
     """
     @param input_path: path to the OpenAPI schema file
     @param output_path: path to the output Excel file
@@ -500,16 +524,25 @@ def openapi_to_excel(input_path, output_path:str, title, type):
         schema = yaml.safe_load(file)
     schema = jsonref.replace_refs(schema, merge_props=True)
 
+    # Check if there are any examples files near the schema
+    examples = []
+    for i in range(1,5):
+        example_path = os.path.dirname(input_path) + f"/examples/example-{i}.yaml"
+        if os.path.exists(example_path):
+            with open(example_path) as file:
+                example = yaml.safe_load(file)
+                print(f"Found example {example_path}")
+                examples.append(example)
 
     # Generate the Excel file
     writer = ExcelWriter(output_path)
-    generate(writer, title, schema, type)
+    generate(writer, title, schema, type, len(examples) == 0, examples)
     writer.save()
 
     # Generate the HTML file
     output_path = output_path.removesuffix(".xlsx") + ".html"
     writer = HtmlWriter(output_path)
-    generate(writer, title, schema, type)
+    generate(writer, title, schema, type, len(examples) == 0, examples)
     writer.save()
 
 

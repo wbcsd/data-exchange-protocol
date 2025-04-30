@@ -123,7 +123,7 @@ def build(c):
     build_task([
         Dependency("build/v2/pact-simplified.xlsx", ["spec/v2/openapi.yaml"]),
         Dependency("build/v3/pact-simplified.xlsx", ["spec/v3/openapi.yaml"])],
-        lambda source, target: scripts.excel.openapi_to_excel(source, target, "PACT Simplified Data Model", "ProductFootprint")
+        lambda source, target: scripts.excel.generate_simplified_datamodel(source, target, "PACT Simplified Data Model", "ProductFootprint")
         )
     build_bikeshed([
         Dependency("build/faq/index.html", ["spec/faq/index.bs"]),
