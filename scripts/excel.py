@@ -331,7 +331,11 @@ class HtmlWriter:
         self.output.write("</tr>\n")
 
     def write_property(self, object):
-        self.output.write("<tr>\n")
+        # HACK:
+        if object["property"] == "extensions":
+            self.output.write("<tr class='heading'>\n")
+        else:
+            self.output.write("<tr>\n")
         
         # iterate over name and column in self.columns
         for name, column in self.columns.items():
