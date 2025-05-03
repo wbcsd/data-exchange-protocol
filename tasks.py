@@ -224,11 +224,40 @@ def serve(c, ver="v3"):
 @task
 def validate(c):
     """
-    Validate OpenAPI schema
+    Validate OpenAPI schema and example JSON files
     """
+
+    # Validate OpenAPI schema files
     run("openapi-spec-validator spec/v2/openapi.yaml")
     run("openapi-spec-validator spec/v3/openapi.yaml")
-    # TODO: Add markdownlint and bikeshed validation
+
+    # Validate example JSON files against the OpenAPI schema
+    checks = {
+        # v2
+        "spec/v2/examples/list-footprints-response.json": "spec/v2/openapi.yaml#paths/%2F2%2Ffootprints/get/responses/200/content/application%2Fjson/schema", 
+        "spec/v2/examples/get-footprint-response.json": "spec/v2/openapi.yaml#paths/%2F2%2Ffootprints%2F{id}/get/responses/200/content/application%2Fjson/schema", 
+        "spec/v2/examples/pf-response-event.json": "spec/v2/openapi.yaml#components/schemas/RequestFulfilledEvent",
+        "spec/v2/examples/invalid-response-all-properties.json": "spec/v2/openapi.yaml#paths/%2F2%2Ffootprints/get/responses/200/content/application%2Fjson/schema", 
+        "spec/v2/examples/error-response-access-denied.json": "spec/v2/openapi.yaml#paths/%2F2%2Ffootprints/get/responses/403/content/application%2Fjson/schema",
+        # v3
+        "spec/v3/examples/list-footprints-response.json": "spec/v3/openapi.yaml#paths/%2F3%2Ffootprints/get/responses/200/content/application%2Fjson/schema", 
+        "spec/v3/examples/get-footprint-response.json": "spec/v3/openapi.yaml#paths/%2F3%2Ffootprints%2F{id}/get/responses/200/content/application%2Fjson/schema", 
+        "spec/v3/examples/pf-response-event.json": "spec/v3/openapi.yaml#components/schemas/RequestFulfilledEvent",
+        "spec/v3/examples/invalid-response-all-properties.json": "spec/v3/openapi.yaml#paths/%2F3%2Ffootprints/get/responses/200/content/application%2Fjson/schema", 
+        "spec/v3/examples/error-response-access-denied.json": "spec/v3/openapi.yaml#paths/%2F3%2Ffootprints/get/responses/403/content/application%2Fjson/schema",
+        "spec/v3/examples/example-1.json": "spec/v3/openapi.yaml#components/schemas/ProductFootprint",
+        "spec/v3/examples/example-2.json": "spec/v3/openapi.yaml#components/schemas/ProductFootprint",
+        "spec/v3/examples/example-3.json": "spec/v3/openapi.yaml#components/schemas/ProductFootprint",
+        "spec/v3/examples/example-4.json": "spec/v3/openapi.yaml#components/schemas/ProductFootprint",
+    }
+    for data, schema in checks.items():
+        try:
+            scripts.schema.validate_json_data(schema, data)
+        except Exception as e:
+            print(f"Validation failed for {data} against {schema}: {e}")
+            raise
+
+
 
 @task
 def debug(c):
@@ -252,38 +281,17 @@ def experiment(c):
     # schema = scripts.schema.navigate_to(schema, "components/schemas/RequestCreatedEvent")
     # print(scripts.schema.dump_schema(schema))
 
-    def yaml_to_json(inp, out):
-        logging.info(f"Building {out}")
-        scripts.schema.yaml_to_json_file(inp, out)
-        scripts.schema.validate_json_data("spec/v3/openapi.yaml#components/schemas/ProductFootprint", out)
+    if False:
+        def yaml_to_json(inp, out):
+            logging.info(f"Building {out}")
+            scripts.schema.yaml_to_json_file(inp, out)
+            scripts.schema.validate_json_data("spec/v3/openapi.yaml#components/schemas/ProductFootprint", out)
 
-    build_task([
-        Dependency("spec/v3/examples/example-1.json", ["spec/v3/examples/example-1.yaml"]),
-        Dependency("spec/v3/examples/example-2.json", ["spec/v3/examples/example-2.yaml"]),
-        Dependency("spec/v3/examples/example-3.json", ["spec/v3/examples/example-3.yaml"]),
-        Dependency("spec/v3/examples/example-4.json", ["spec/v3/examples/example-4.yaml"])
-        ],
-        yaml_to_json
-    )
-    return
-
-    scripts.schema.validate_json_data(
-        "spec/v3/openapi.yaml#paths/%2F3%2Ffootprints/get/responses/200/content/application%2Fjson/schema", 
-        "spec/v3/examples/list-footprints-response.json"
-        )
-    scripts.schema.validate_json_data(
-        "spec/v3/openapi.yaml#paths/%2F3%2Ffootprints/get/responses/200/content/application%2Fjson/schema", 
-        "spec/v3/examples/invalid-response-all-properties.json"
-        )
-    scripts.schema.validate_json_data(
-        "spec/v3/openapi.yaml#paths/%2F3%2Ffootprints%2F{id}/get/responses/200/content/application%2Fjson/schema", 
-        "spec/v3/examples/get-footprint-response.json"
-        )
-    scripts.schema.validate_json_data(
-        "spec/v3/openapi.yaml#components/schemas/RequestFulfilledEvent", 
-        "spec/v3/examples/pf-response-event.json"
-        )
-    scripts.schema.validate_json_data(
-        "spec/v3/openapi.yaml#paths/%2F3%2Ffootprints/get/responses/403/content/application%2Fjson/schema", 
-        "spec/v3/examples/error-response-access-denied.json"
+        build_task([
+            Dependency("spec/v3/examples/example-1.json", ["spec/v3/examples/example-1.yaml"]),
+            Dependency("spec/v3/examples/example-2.json", ["spec/v3/examples/example-2.yaml"]),
+            Dependency("spec/v3/examples/example-3.json", ["spec/v3/examples/example-3.yaml"]),
+            Dependency("spec/v3/examples/example-4.json", ["spec/v3/examples/example-4.yaml"])
+            ],
+            yaml_to_json
         )
