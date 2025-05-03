@@ -46,7 +46,7 @@
           "otherOperatorName": "Tfs"
         }
       ],
-      "biogenicAccountingMethodology": "GHPG",
+      "biogenicAccountingMethodology": "GHGP",
       "boundaryProcessesDescription": "1) Material acquisition and preprocessing, including growth of corn 2) Production: fuel consumption, electricity consumption, water consumption, process-generated direct emissions 3) Distribution and storage: transportation of the finished product from manufacturing site to storage site",
       "referencePeriodStart": "2021-01-01T00:00:00Z",
       "referencePeriodEnd": "2022-01-01T00:00:00Z",

@@ -40,6 +40,7 @@
                 "biogenicCarbonWithdrawal": "0.0",
                 "aircraftGhgEmissions": "0.0",
                 "characterizationFactors": "AR6",
+                "ipccCharacterizationFactorsSources": ["AR6"],
                 "crossSectoralStandardsUsed": [
                     "GHG Protocol Product standard"
                 ],
@@ -57,7 +58,7 @@
                 "referencePeriodEnd": "2022-01-01T00:00:00Z",
                 "geographyCountrySubdivision": "US-NY",
                 "geography_country": "US",
-                "geographyRegionOrSubregion": "North America",
+                "geographyRegionOrSubregion": "Northern America",
                 "secondaryEmissionFactorSources": [
                     {
                         "name": "Ecoinvent",
