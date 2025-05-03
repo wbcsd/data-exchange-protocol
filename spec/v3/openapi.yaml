@@ -643,9 +643,10 @@ components:
             this defines the 'declared unit' of the product. Emissions in this carbon 
             footprint are expressed in kgCO2e per 'declared unit'. 
 
-            For example: a PCF for a 12 liter bottle of Ethanol states 2 kg of CO2e in 
-            emissions. In this case the declared unit is 12 liter Ethanol, thus the
-            `declaredUnitOfMeasurement` is "liter", and the `declaredUnitAmount` is 12.
+            For example: a PCF for a 12.5 liter bottle of Ethanol states 2 kg of CO2e in 
+            emissions. In this case the declared unit is 12.5 liter Ethanol, thus the
+            `declaredUnitOfMeasurement` is "liter", and the `declaredUnitAmount` is "12.5".
+            The `pcfIncludingBiogenicUptake` is "2.0" kgCO2e per "12.5 liter" of Ethanol.
           type: string
           enum:
             - liter
