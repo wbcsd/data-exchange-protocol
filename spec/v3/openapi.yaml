@@ -661,6 +661,7 @@ components:
             - megabit second
           x-term: Declared Unit
           x-methodology: 3.2.4
+          example: "liter"
         declaredUnitAmount:
           description: |
             The amount of <{CarbonFootprint/declaredUnitOfMeasurement|units}> contained
@@ -677,6 +678,7 @@ components:
           x-unit: declared unit
           x-term: Declared Unit
           x-methodology: 3.2.4
+          example: "12.5"
         productMassPerDeclaredUnit:
           description: |
             The mass (in kg) of the product excluding packaging. The 'declared unit' is
@@ -698,6 +700,7 @@ components:
           $ref: '#/components/schemas/Decimal'
           x-term: Declared Unit
           x-methodology: 3.2.4
+          example: "9.86"
         referencePeriodStart:
           description: |
             The start (inclusive) of the time boundary for which the PCF value
@@ -712,6 +715,7 @@ components:
           format: date-time
           x-term: Reference period
           x-methodology: 3.2.3
+          example: "2025-04-30T00:00:00+00:00"
         referencePeriodEnd:
           description: |
             The end (exclusive) of the time boundary for which the PCF value is
@@ -726,6 +730,7 @@ components:
           format: date-time
           x-term: Reference period
           x-methodology: 3.2.3
+          example: "2025-12-30T00:00:00Z"
         geographyRegionOrSubregion:
           description: |
             If present, the value MUST be one of the [=UN geographic regions=] or [=UN geographic subregions=]. See [[#dt-carbonfootprint-scope]] for further details. Additionally, see the [=PACT Methodology=] Section 3.2.3.
@@ -840,6 +845,7 @@ components:
           x-rule: SHALL
           x-term: PCF Excluding biogenic CO2 uptake 
           x-methodology: 3.3.1
+          example: "5.14"
           $ref: '#/components/schemas/Decimal'
         pcfIncludingBiogenicUptake:
           description: |
@@ -867,6 +873,7 @@ components:
           x-term: PCF Including biogenic CO2 uptake
           x-methodology: 3.3.1
           $ref: '#/components/schemas/Decimal'
+          example: "-14.22"
         fossilCarbonContent:
           description: |
             The fossil carbon content of the product (mass of carbon). 
@@ -1041,6 +1048,7 @@ components:
           x-term: Technological CO2 capture with geological storage
           x-rule: SHALL
           x-methodology: 3.3.2.5
+          example: false
         ccsTechnologicalCO2Capture:
           description: |
             The amount of CO2 captured with Carbon Capture and Storage (CCS) technologies.
@@ -1049,6 +1057,7 @@ components:
           x-term: Technological CO2 capture with geological storage
           x-rule: CCS
           x-methodology: 3.3.2.5
+          example: "-4.34"
         technologicalCO2CaptureOrigin:
           description: |
             For CCU: Information about the origin (fossil or biogenic) and path of the captured CO2 used in CCU, including 
