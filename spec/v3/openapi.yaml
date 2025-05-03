@@ -99,8 +99,26 @@ paths:
         criteria described under Parameters. Note that these are the same filters 
         used by the [[#request-created-event]] Event.
 
-        A host system MAY provide additional filter criteria for the data recipient
-        to use. These parameters MUST be prefixed with `x-<identifier>-`.  
+        Most criteria (like `productId`, `geography`, etc.) can contain multiple 
+        values. Each footprint in the resulting list MUST match for EACH single 
+        criterium at least ONE value.
+
+        For example, the query string for `ListFootprints` 
+
+        ```http
+        ?productId=x&productid=y&productid=z&geography=DE&geography=FR&validon=2025-04-01T00:00Z 
+        ```
+
+        translates to the following logic:
+
+        ```
+        (productId='x' OR productId='y' OR productId='z') AND
+        (geography='DE' OR geography='FR') AND
+        (validOn='2025-04-01T00:00Z')
+        ``` 
+
+        Additionally, a host system MAY provide additional filter criteria for the data 
+        recipient to use. These parameters MUST be prefixed with `x-<identifier>-`.  
         
         For example, to add functionality to search for product 
         footprints based on an invoice number, a software solution could choose 
@@ -1658,6 +1676,7 @@ components:
 
         Criteria to provide can be product id, geography, company identifier, validity 
         period, etc, see below for details.
+        For filtering logic, see [[#filtering]].
 
         If the data owner can *immediately* determine that it will not be able to 
         handle this request it MUST respond with an appropriate `4xx` error response, 
