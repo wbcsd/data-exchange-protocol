@@ -1016,7 +1016,7 @@ content-type: application/cloudevents+json; charset=UTF-8
 ```
 ```json
 {
-  "type": "org.wbcsd.pact.ProductFootprint.RequestCreated.3",
+  "type": "org.wbcsd.pact.ProductFootprint.RequestCreatedEvent.3",
   "specversion": "1.0",
   "id": "848dcf00-2c18-400d-bcb8-11e45bbf7ebd",
   "source": "//api.recipient.org/3/events",
