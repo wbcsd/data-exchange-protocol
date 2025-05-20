@@ -469,22 +469,22 @@ components:
       - exemptedEmissionsPercent
       - exemptedEmissionsDescription
       - packagingEmissionsIncluded
-      # oneOf:
-      # - oneOf:
-      #   - required:
-      #     - geographyRegionOrSubregion
-      #   - required:
-      #     - geographyCountry
-      #   - required:
-      #     - geographyCountrySubdivision
-      # - not:
-      #     anyOf:
-      #     - required:
-      #       - geographyRegionOrSubregion
-      #     - required:
-      #       - geographyCountry
-      #     - required:
-      #       - geographyCountrySubdivision
+      oneOf:
+      - oneOf:
+        - required:
+          - geographyRegionOrSubregion
+        - required:
+          - geographyCountry
+        - required:
+          - geographyCountrySubdivision
+      - not:
+          anyOf:
+          - required:
+            - geographyRegionOrSubregion
+          - required:
+            - geographyCountry
+          - required:
+            - geographyCountrySubdivision
       properties:
         declaredUnit:
           description: |

@@ -638,22 +638,22 @@ components:
       - ipccCharacterizationFactors
       - crossSectoralStandards
       - exemptedEmissionsPercent
-      # oneOf:
-      # - oneOf:
-      #   - required:
-      #     - geographyRegionOrSubregion
-      #   - required:
-      #     - geographyCountry
-      #   - required:
-      #     - geographyCountrySubdivision
-      # - not:
-      #     anyOf:
-      #     - required:
-      #       - geographyRegionOrSubregion
-      #     - required:
-      #       - geographyCountry
-      #     - required:
-      #       - geographyCountrySubdivision
+      oneOf:
+      - oneOf:
+        - required:
+          - geographyRegionOrSubregion
+        - required:
+          - geographyCountry
+        - required:
+          - geographyCountrySubdivision
+      - not:
+          anyOf:
+          - required:
+            - geographyRegionOrSubregion
+          - required:
+            - geographyCountry
+          - required:
+            - geographyCountrySubdivision
       properties:
         declaredUnitOfMeasurement:
           description: |
