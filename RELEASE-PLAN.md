@@ -20,7 +20,7 @@ This release plan indicates timelines of both the PACT Methodology and PACT Tech
 | [v2.1.0](https://wbcsd.github.io/tr/2023/data-exchange-protocol-20231207/)  | Nov 9, 2023 | Dec 7, 2023 | Apr 1, 2026 |
 | [v2.2.0](https://wbcsd.github.io/tr/2024/data-exchange-protocol-20240410/) | Jan 2024 | Apr 10, 2024 | Apr 1, 2026 |
 | [v2.3.0](https://wbcsd.github.io/tr/2024/data-exchange-protocol-20241024/) | Oct 2024 | Oct 24, 2024 | Apr 1, 2026 |
-| [v3.0.0](https://wbcsd.github.io/data-exchange-protocol/v3/) | Feb 2025 | Apr 2025 | |
+| [v3.0.0](https://wbcsd.github.io/data-exchange-protocol/v3/) | Feb 2025 | April 30, 2025 | |
 
 ## Notes on Timeline Updates
 * April 2025: Sunset dates for V2.x set to April 2026.
