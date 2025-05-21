@@ -16,7 +16,7 @@ Proposed
 
 ## Proposal
 
-Add a mandatory version parameter to all API endpoints in version 3.0 of the PACT Technical Specifications. For the 3.0 release, this parameter will be fixed to `version=3`.
+Add a mandatory `specVersion` parameter to all API endpoints in version 3.0 of the PACT Technical Specifications. For the 3.0 release, this parameter will be fixed to `specVersion=3`.
 
 Specifically:
 
@@ -26,8 +26,8 @@ Specifically:
    - Any other value will result in a 400 Bad Request error
 
 2. For asynchronous event-based communication:
-   - Add a required propery `version` to the CloudEvents data payload for the `Request Created Event`, requesting a PCF from the the data owner. 
-   - The only acceptable value in 3.0 will be `version=3`. This must be checked immediately upon receiving the request event and will result in an immediate 400 Bad Request error if not found.
+   - Add a required property `specVersion` to the CloudEvents data payload for the `Request Created Event`, requesting a PCF from the data owner.
+   - The only acceptable value in 3.0 will be `specVersion=3`. This value MUST be checked immediately upon receiving the request event and will result in an immediate 400 Bad Request error if not found.
 
 This change will allow us to:
 1. Establish the version parameter pattern in the API
@@ -79,4 +79,5 @@ Compared to one single API supporting multiple versions of the dara model, this 
 ### Backward Compatibility
 
 This change maintains backward compatibility with any draft implementations of 3.0, as it only adds a required parameter with a fixed value. Future minor releases that extend the allowed values of ` `version` will remain backward compatible with 3.0 implementations.
+
 
