@@ -43,7 +43,7 @@ This change will allow us to:
 
 2. **Minimal impact**: Since the parameter is fixed to `version=3` initially, there is minimal complexity added to current implementation efforts.
 
-3. **Alignment with best practices**: Many mature APIs include version parameters separate from the API version to allow for more flexible evolution. Examples include:
+3. **Known patterns**: Several mature APIs include version parameters separate from the API version to allow for more flexible evolution. Examples include:
 
    - **Stripe API**: Stripe uses a date-based versioning system where the API version is specified in request headers (`Stripe-Version`), while maintaining the same endpoints. This allows them to evolve their data models independently from the API structure.
    
@@ -63,9 +63,16 @@ This change will allow us to:
 
 ### Alternative Approaches
 
-1. **Wait for v4.0**: We could wait until v4.0 to implement multi-version support. This would delay the benefits of supporting multiple data model versions.
+1. **Wait for v4.0**: We could wait until v4.0 to implement multi-version support. Benefits are that we would have This would delay the benefits of supporting multiple data model versions.
 
 2. **Implement full multi-version support now**: We could implement the full solution proposed in ADR 0048 immediately, but this would introduce significant complexity without the benefit of feedback from real-world implementations.
+
+3. **Rely on current approach**: Currently software solutions can support multiple versions by implementing multiple versions of both data model *and* API, where the endpoint determines the version:
+
+   - pcf.exchange.com/pact/2/...
+   - pcf.exchange.com/pact/3/...
+
+Compared to one single API supporting multiple versions of the dara model, this approach incurs the extra overhead of implementing each version of the API as well. Note however, that for a typical software solution, the complexity of the API is much lower compared to the PCF data model and its corresponding logic and user-interface.
 
 3. **Use content negotiation**: We could use HTTP content negotiation mechanisms instead of query parameters. This was rejected as it would require more significant changes to client implementations.
 
