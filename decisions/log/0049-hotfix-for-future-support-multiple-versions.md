@@ -1,6 +1,6 @@
 # 49. Hotfix to include in 3.0 for future support for multiple versions
 
-Date: 2025-05-05
+Date: 2025-05-20
 
 ## Context
 
@@ -74,7 +74,7 @@ This change will allow us to:
 
 Compared to one single API supporting multiple versions of the dara model, this approach incurs the extra overhead of implementing each version of the API as well. Note however, that for a typical software solution, the complexity of the API is much lower compared to the PCF data model and its corresponding logic and user-interface.
 
-3. **Use content negotiation**: We could use HTTP content negotiation mechanisms instead of query parameters. This was rejected as it would require more significant changes to client implementations.
+4. **Use content negotiation**: We could use HTTP content negotiation mechanisms instead of query parameters. This was rejected as it would require more significant changes to client implementations.
 
 ### Backward Compatibility
 
