@@ -1,4 +1,4 @@
-# 49. Hotfix to include in 3.0 for future support for multiple versions
+# 49. Mandatory specVersion parameter to support future multiple versions
 
 Date: 2025-05-20
 
