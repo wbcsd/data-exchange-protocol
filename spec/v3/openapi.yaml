@@ -2043,7 +2043,7 @@ components:
     validOn:
       name: validOn
       description: |
-        If present, MUST match all PCFs which were valid on the date specified: validityPeriodStart <= validOn <= validityPeriodEnd. See [[#validity-period]] for determining validity period.
+        If present, MUST match all PCFs which were valid on the date specified: start validity period <= validOn <= end validity period. See [[#validity-period]] for determining validity period.
       in: query
       schema:
         type: string
@@ -2051,7 +2051,7 @@ components:
     validAfter:
       name: validAfter
       description: |
-        If present, MUST match PCFs with validityPeriodStart > validAfter. 
+        If present, MUST match PCFs with a validity period start > validAfter. 
         See [[#validity-period]] for determining validity period. 
       in: query
       schema:
@@ -2060,7 +2060,7 @@ components:
     validBefore:
       name: validBefore
       description: |
-        If present, MUST match PCFs with validityPeriodEnd < validBefore
+        If present, MUST match PCFs with a validity period end < validBefore
         See [[#validity-period]] for determining validity period. 
       in: query
       schema:
