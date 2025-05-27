@@ -18,8 +18,6 @@ pcf:
   productMassPerDeclaredUnit: 25
   referencePeriodStart: 2024-02-28T00:00:00Z
   referencePeriodEnd: 2024-09-30T00:00:00Z
-  geographyRegionOrSubregion: Northern Europe
-  geographyCountry: DE
   geographyCountrySubdivision: DE-BW
   boundaryProcessesDescription: |
     1) Material acquisition and preprocessing, including extraction of steel and aluminium

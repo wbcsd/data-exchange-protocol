@@ -57,8 +57,6 @@
                 "referencePeriodStart": "2021-01-01T00:00:00Z",
                 "referencePeriodEnd": "2022-01-01T00:00:00Z",
                 "geographyCountrySubdivision": "US-NY",
-                "geography_country": "US",
-                "geographyRegionOrSubregion": "Northern America",
                 "secondaryEmissionFactorSources": [
                     {
                         "name": "Ecoinvent",

@@ -19,8 +19,6 @@ pcf:
   productMassPerDeclaredUnit: 1
   referencePeriodStart: '2024-01-01T00:00:00Z'
   referencePeriodEnd: '2024-12-31T00:00:00Z'
-  geographyRegionOrSubregion: Northern America
-  geographyCountry: US
   geographyCountrySubdivision: US-TX
   boundaryProcessesDescription: |
     1) Material acquisition and preprocessing, including cultivation of sugar beet

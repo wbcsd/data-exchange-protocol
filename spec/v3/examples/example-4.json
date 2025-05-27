@@ -24,8 +24,6 @@
     "referencePeriodStart": "2024-02-25T00:00:00+00:00",
     "referencePeriodEnd": "2024-09-30T00:00:00+00:00",
     "geographyRegionOrSubregion": "Latin America and the Caribbean",
-    "geographyCountry": "BR",
-    "geographyCountrySubdivision": "BR-SP",
     "boundaryProcessesDescription": "1) Material acquisition and preprocessing, including cultivation of sugarcane\n2) Industrial processing: fuel consumption, electricity consumption, water consumption, process-generated direct emissions in order to extract, grind, wash and distill product\"\n",
     "pcfExcludingBiogenicUptake": "0.42",
     "pcfIncludingBiogenicUptake": "0.05",
