@@ -1184,7 +1184,7 @@ components:
           type: array
           items:
             type: string
-            enum:
+            x-enum:
               - ISO14067
               - ISO14083
               - ISO14040-44
@@ -1193,6 +1193,8 @@ components:
               - PACT-1.0
               - PACT-2.0
               - PACT-3.0
+              - PAS2050
+              - "..."
           minItems: 1
           uniqueItems: true
           x-term: Cross-sectoral standards
