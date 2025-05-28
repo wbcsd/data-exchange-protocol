@@ -8,16 +8,16 @@
     
     For more details, visit [Technical Specifications v3](https://docs.carbon-transparency.org/v3/).
     
-- **Why is PACT releasing a new version of the Technical Specifications?**
+- **Why did PACT release a new version of the Technical Specifications?**
     
-    PACT Technical Specifications V1 were released in June 2022, followed by V2 released February 2023.  PACT is releasing the PACT Technical Specifications V3 with an updated data model and protocol for exchanging product-level greenhouse gas (GHG) emission data based on the PACT Methodology V3 (previously Pathfinder Framework) . 
+    PACT Technical Specifications V1 were released in June 2022, followed by V2 released February 2023.  PACT released the PACT Technical Specifications V3 in April 2025 with an updated data model and protocol for exchanging product-level greenhouse gas (GHG) emission data based on the PACT Methodology V3 (previously Pathfinder Framework) . 
     
     This new version reflects feedback from a consensus-based decision-making process within PACT's Technology Working Group, where stakeholders actively address challenges related to Scope 3 and primary data sharing. The specifications have evolved through two years of collaboration with the WBCSD community, technology partners, and key initiatives.
     For more details, see the [Release Plan](https://github.com/wbcsd/data-exchange-protocol/blob/main/RELEASE-PLAN.md). 
     
 - **How were PACT Technical Specifications V3 developed?**
     
-    Following the V2 release, feedback was collected from global adopters of the technical specification. In parallel feedback was also raised regarding the PACT Methodology (previously Pathfinder Framework). All feedback received is documented here: https://backlog.carbon-transparency.org/. PACT convened two working groups since August 2023 to address the feedback and reach consensus regarding revisions (PACT Methodology Working Group and PACT Technology Working Group). The PACT Technology Working Group meets every 2-3 weeks at alternating times to support global participation. The PACT Technical Specification V3 was the outcome of consensus-based decision making process within the PACT Technology Working Group.
+    Following the V2 release, feedback was collected from global adopters of the technical specification. In parallel feedback was also raised regarding the PACT Methodology (previously Pathfinder Framework). All feedback received is documented here [here](https://backlog.carbon-transparency.org/). PACT convened two working groups since August 2023 to address the feedback and reach consensus regarding revisions (PACT Methodology Working Group and PACT Technology Working Group). The PACT Technology Working Group meets every 2-3 weeks at alternating times to support global participation. The PACT Technical Specification V3 was the outcome of consensus-based decision making process within the PACT Technology Working Group.
     
     Please see our [decision making criteria](https://wbcsd.sharepoint.com/sites/ClimateEnergy/Documents%20partages/Forms/AllItems.aspx?id=%2Fsites%2FClimateEnergy%2FDocuments%20partages%2FClimate%20Imperative%2F04%20Workstreams%2F05%20PACT%2F03%20Workstreams%2F99%20Overarching%2F06%20Standard%20Evolution%20Process%2FPACT%20Decision%20Making%20Policy%2Epdf&parent=%2Fsites%2FClimateEnergy%2FDocuments%20partages%2FClimate%20Imperative%2F04%20Workstreams%2F05%20PACT%2F03%20Workstreams%2F99%20Overarching%2F06%20Standard%20Evolution%20Process&p=true&ga=1) and the [Network contribution policy](https://wbcsd.sharepoint.com/sites/ClimateEnergy/Documents%20partages/Forms/AllItems.aspx?id=%2Fsites%2FClimateEnergy%2FDocuments%20partages%2FClimate%20Imperative%2F04%20Workstreams%2F05%20PACT%2F03%20Workstreams%2F04%20Technology%2F02%20Tech%20Working%20Group%2FPACT%20Network%20Contribution%20Policy%2Epdf&parent=%2Fsites%2FClimateEnergy%2FDocuments%20partages%2FClimate%20Imperative%2F04%20Workstreams%2F05%20PACT%2F03%20Workstreams%2F04%20Technology%2F02%20Tech%20Working%20Group&p=true&ga=1) for further information. Get in touch with PACT if you are interested in joining the working groups.
     
@@ -40,15 +40,15 @@
 
 ## Release Timeline and Feedback Process
 
-- **When will V3 be officially released?**
+- **When was V3 officially released?**
     
-    The release date is planned for late April 2025. 
+    V3 was released April 30, 2025, see the [release plan](https://docs.carbon-transparency.org/release-plan).
     
-    [Register for the events here to be part of the launch](https://wbcsd.my.salesforce-sites.com/GuestEventPageV2?aId=a5sVj0000004pFF) 
+    [Register for the launch events in June 2025 to learn more](https://wbcsd.my.salesforce-sites.com/GuestEventPageV2?aId=a5sVj0000004pFF) 
     
-- **Will there be a public review period for V3?**
+- **Was there a public review period for V3?**
     
-    Yes, the public consultation phase began February 18, 2025 and ends March 28, 2025.
+    Yes, the public consultation phase began February 18, 2025 and ended March 28, 2025.
     
 - **How can the community provide feedback on V3?**
     
@@ -68,7 +68,7 @@
     
 - **How can V3 be used?**
     
-    PACT encourages the adoption of the PACT Technical Specifications to create digital solutions supporting value chain transparency and decarbonization. PACT supports companies to create so-called "PACT Conformant Solutions", i.e. software which implements the Technical Specifications, and promotes conformant solutions via the PACT website and other marketing channels. The Technical Specifications include a license which explicitly allows for the creation of commercial derivatives https://docs.carbon-transparency.org/v3/#license Derivative works (software, derived specifications, etc.) must cite WBCSD PACT.
+    PACT encourages the adoption of the PACT Technical Specifications to create digital solutions supporting value chain transparency and decarbonization. PACT supports companies to create so-called "PACT Conformant Solutions", i.e. software which implements the Technical Specifications, and promotes conformant solutions via the PACT website and other marketing channels. The Technical Specifications include a license which explicitly allows for the creation of commercial derivatives, [see here](https://docs.carbon-transparency.org/v3/#license). Derivative works (software, derived specifications, etc.) must cite WBCSD PACT.
     
 
 ## Key Changes and Impact on V2 Users
@@ -89,7 +89,7 @@
     - Simplified filtering on a specific set of criteria to enable a data recipient to request relevant PCFs to the data owner.
     - Re-use of these criteria for requesting the creation of new PCFs  through the asynchronous Event API.
     - Deprecation of the previous optional OData V4 $filter.
-- **Will V3 be backwards compatible with V2?**
+- **Is V3 backwards compatible with V2?**
     
     No. V3.0 is a **major** version following V2.3, and it will not be backwards compatible. 
     
@@ -108,7 +108,7 @@
     
 - **Will PACT continue to maintain V2 and support solutions using V2 after V3 is released?**
     
-    Yes, PACT will continue to maintain all three stable minor versions of V2 (V2.1.0, V2.2.0, and V2.3.0) even after the release of V3. To encourage adoption of later versions of the standard, PACT will deprecate V2 at some point, after which PACT will no longer support solutions using V2.
+    Yes, PACT will continue to maintain all three stable minor versions of V2 (V2.1.0, V2.2.0, and V2.3.0) even after the release of V3. To encourage adoption of later versions of the standard, PACT will deprecate V2 in April 2026, after which PACT will no longer support nor promote solutions using V2.
     
     Access all the previous stable versions [here](https://docs.carbon-transparency.org/) 
     
@@ -116,26 +116,26 @@
     
 - **Does the release of V3 mean that a solution targeting V3 has to go through Conformance Testing again, even if it was tested for V2?**
     
-    Yes, Conformance Testing status is tied to a given version; to become Conformant to V3, solutions must complete the Conformance Testing process. This said, solutions will always retain conformance status to a given version.
+    Yes, Conformance Testing status is tied to a given version; to become Conformant to V3, solutions must complete the Conformance Testing process. This said, solutions will always retain conformance status to a given version. [Start the process here](https://www.carbon-transparency.org/guides/guide-join-pact-network).
     
     If you are already listed as a PACT Conformant solution for V2, you of course retain this status. To be listed as V3 conformant on the [PACT Website](https://www.carbon-transparency.org/network), you will need to complete the testing process for V3.
     
 - **Is there any timeline that is requiring V2 PACT Conformant Solutions to become conformant to V3 by?**
     
-    No, there is no fixed timeline for V2 PACT Conformant Solutions to become conformant to V3. PACT recommends solutions plan to become conformant within 6 months of the release of V3.
+    No, there is no fixed timeline for V2 PACT Conformant Solutions to become conformant to V3. PACT recommends solutions plan to become conformant within 6 months of the release of V3. However, solutions not conformant to V3 by the V2 deprecation timeline (April 2026) will no longer be promoted by PACT and removed from the PACT website.
     
 
 ## Support and Resources
 
 - **What resources are available to help adopt V3? Where can I find these resources?**
     
-    You can find all technical documentation related to V3 on https://docs.carbon-transparency.org/  
+    You can find all technical documentation related to V3 [here](https://docs.carbon-transparency.org)
     
-    All additional documentation can be found on https://www.carbon-transparency.org/pact-technology under the ‘Getting Started’ and ‘Developer Resources’ section. 
+    All additional documentation can be found [here](https://www.carbon-transparency.org/pact-technology) under the ‘Getting Started’ and ‘Developer Resources’ section. 
     
 - **Are there tools available to validate conformance with V3?**
     
-    Yes, PACT is building an Automated Conformance Testing service which any company may use on-demand to validate the conformance of their solution to any version of the PACT Technical Specifications (V2 or later). The service is currently in beta testing phase and is planned for release in May 2025. Use of the service will be mandatory to achieve conformance status to V3 or later. Learn more at https://github.com/wbcsd/pact-conformance-test-service
+    Yes, PACT offers a Conformance Tool which any company may use on-demand to automatically validate the conformance of their solution to any version of the PACT Technical Specifications (V2 or later). The tool will be launched in June 2025. Use of the tool will be mandatory to achieve conformance status. [Learn more](https://www.carbon-transparency.org/pact-network-services)
     
 - **What should I do if I have questions while implementing a V3 solution?**
     
