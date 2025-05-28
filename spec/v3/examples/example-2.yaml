@@ -25,9 +25,7 @@ pcf:
   productMassPerDeclaredUnit: 9.468
   referencePeriodStart: 2024-01-01T00:00:00Z
   referencePeriodEnd: 2024-12-31T00:00:00Z
-  geographyRegionOrSubregion: Northern America
   geographyCountry: US
-  geographyCountrySubdivision: US-TX
   boundaryProcessesDescription: |
     1) Material acquisition and preprocessing, including cultivation of sugar beet
     2) Production: fuel consumption, electricity consumption, water consumption, process-generated direct emissions from the fermentation and distillation of ethanol

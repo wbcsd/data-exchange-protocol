@@ -20,8 +20,6 @@ pcf:
   referencePeriodStart: 2024-02-25T00:00:00Z
   referencePeriodEnd: 2024-09-30T00:00:00Z
   geographyRegionOrSubregion: Latin America and the Caribbean
-  geographyCountry: BR
-  geographyCountrySubdivision: BR-SP
   boundaryProcessesDescription: |
     1) Material acquisition and preprocessing, including cultivation of sugarcane
     2) Industrial processing: fuel consumption, electricity consumption, water consumption, process-generated direct emissions in order to extract, grind, wash and distill product"
@@ -52,7 +50,7 @@ pcf:
   ccuCalculationApproach: 
   ccuCreditCertification: 
   ipccCharacterizationFactors: ['AR6']
-  crossSectoralStandards: [PEF]
+  crossSectoralStandards: [PEF,FUTURE-STANDARD]
   productOrSectorSpecificRules:
   - operator: PEF
     ruleNames: 

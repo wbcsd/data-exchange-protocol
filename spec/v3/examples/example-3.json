@@ -23,8 +23,6 @@
     "productMassPerDeclaredUnit": "25",
     "referencePeriodStart": "2024-02-28T00:00:00+00:00",
     "referencePeriodEnd": "2024-09-30T00:00:00+00:00",
-    "geographyRegionOrSubregion": "Northern Europe",
-    "geographyCountry": "DE",
     "geographyCountrySubdivision": "DE-BW",
     "boundaryProcessesDescription": "1) Material acquisition and preprocessing, including extraction of steel and aluminium\n2) Production: fuel consumption, electricity consumption, water consumption, process-generated direct emissions \n3) Distribution and storage: transportation of the finished product from manufacturing site to storage site (reported separately in outbound logistics)\"\n",
     "pcfExcludingBiogenicUptake": "77.0",

@@ -99,8 +99,34 @@ paths:
         criteria described under Parameters. Note that these are the same filters 
         used by the [[#request-created-event]] Event.
 
-        A host system MAY provide additional filter criteria for the data recipient
-        to use. These parameters MUST be prefixed with `x-<identifier>-`.  
+        Most criteria (like `productId`, `geography`, etc.) can contain multiple 
+        values. Each footprint in the resulting list MUST match for EACH single 
+        criterion at least ONE value.
+
+        So, the filtering logic is as follows:
+        - For each filter criterion (e.g., `productId`, `geography`, `classification`), if multiple values are provided, the filter matches if the footprint matches at least one of the values for that criterion (logical OR within a criterion).
+        - Across different criteria, a footprint must match all specified criteria (logical AND between criteria).
+
+        In other words:
+        - Within a single criterion: values are combined with OR.
+        - Between different criteria: criteria are combined with AND.
+
+        For example, the query string for `ListFootprints` 
+
+        ```http
+        ?productId=x&productid=y&productid=z&geography=DE&geography=FR&validon=2025-04-01T00:00Z 
+        ```
+
+        translates to the following logic:
+
+        ```
+        (productId='x' OR productId='y' OR productId='z') AND
+        (geography='DE' OR geography='FR') AND
+        (validOn='2025-04-01T00:00Z')
+        ``` 
+
+        Additionally, a host system MAY provide additional filter criteria for the data 
+        recipient to use. These parameters MUST be prefixed with `x-<identifier>-`.  
         
         For example, to add functionality to search for product 
         footprints based on an invoice number, a software solution could choose 
@@ -620,22 +646,22 @@ components:
       - ipccCharacterizationFactors
       - crossSectoralStandards
       - exemptedEmissionsPercent
-      # oneOf:
-      # - oneOf:
-      #   - required:
-      #     - geographyRegionOrSubregion
-      #   - required:
-      #     - geographyCountry
-      #   - required:
-      #     - geographyCountrySubdivision
-      # - not:
-      #     anyOf:
-      #     - required:
-      #       - geographyRegionOrSubregion
-      #     - required:
-      #       - geographyCountry
-      #     - required:
-      #       - geographyCountrySubdivision
+      oneOf:
+      - oneOf:
+        - required:
+          - geographyRegionOrSubregion
+        - required:
+          - geographyCountry
+        - required:
+          - geographyCountrySubdivision
+      - not:
+          anyOf:
+          - required:
+            - geographyRegionOrSubregion
+          - required:
+            - geographyCountry
+          - required:
+            - geographyCountrySubdivision
       properties:
         declaredUnitOfMeasurement:
           description: |
@@ -643,9 +669,10 @@ components:
             this defines the 'declared unit' of the product. Emissions in this carbon 
             footprint are expressed in kgCO2e per 'declared unit'. 
 
-            For example: a PCF for a 12 liter bottle of Ethanol states 2 kg of CO2e in 
-            emissions. In this case the declared unit is 12 liter Ethanol, thus the
-            `declaredUnitOfMeasurement` is "liter", and the `declaredUnitAmount` is 12.
+            For example: a PCF for a 12.5 liter bottle of Ethanol states 2 kg of CO2e in 
+            emissions. In this case the declared unit is 12.5 liter Ethanol, thus the
+            `declaredUnitOfMeasurement` is "liter", and the `declaredUnitAmount` is "12.5".
+            The `pcfIncludingBiogenicUptake` is "2.0" kgCO2e per "12.5 liter" of Ethanol.
           type: string
           enum:
             - liter
@@ -660,6 +687,7 @@ components:
             - megabit second
           x-term: Declared Unit
           x-methodology: 3.2.4
+          example: "liter"
         declaredUnitAmount:
           description: |
             The amount of <{CarbonFootprint/declaredUnitOfMeasurement|units}> contained
@@ -676,6 +704,7 @@ components:
           x-unit: declared unit
           x-term: Declared Unit
           x-methodology: 3.2.4
+          example: "12.5"
         productMassPerDeclaredUnit:
           description: |
             The mass (in kg) of the product excluding packaging. The 'declared unit' is
@@ -697,6 +726,7 @@ components:
           $ref: '#/components/schemas/Decimal'
           x-term: Declared Unit
           x-methodology: 3.2.4
+          example: "9.86"
         referencePeriodStart:
           description: |
             The start (inclusive) of the time boundary for which the PCF value
@@ -711,6 +741,7 @@ components:
           format: date-time
           x-term: Reference period
           x-methodology: 3.2.3
+          example: "2025-04-30T00:00:00+00:00"
         referencePeriodEnd:
           description: |
             The end (exclusive) of the time boundary for which the PCF value is
@@ -725,6 +756,7 @@ components:
           format: date-time
           x-term: Reference period
           x-methodology: 3.2.3
+          example: "2025-12-30T00:00:00Z"
         geographyRegionOrSubregion:
           description: |
             If present, the value MUST be one of the [=UN geographic regions=] or [=UN geographic subregions=]. See [[#dt-carbonfootprint-scope]] for further details. Additionally, see the [=PACT Methodology=] Section 3.2.3.
@@ -839,6 +871,7 @@ components:
           x-rule: SHALL
           x-term: PCF Excluding biogenic CO2 uptake 
           x-methodology: 3.3.1
+          example: "5.14"
           $ref: '#/components/schemas/Decimal'
         pcfIncludingBiogenicUptake:
           description: |
@@ -866,6 +899,7 @@ components:
           x-term: PCF Including biogenic CO2 uptake
           x-methodology: 3.3.1
           $ref: '#/components/schemas/Decimal'
+          example: "-14.22"
         fossilCarbonContent:
           description: |
             The fossil carbon content of the product (mass of carbon). 
@@ -1040,6 +1074,7 @@ components:
           x-term: Technological CO2 capture with geological storage
           x-rule: SHALL
           x-methodology: 3.3.2.5
+          example: false
         ccsTechnologicalCO2Capture:
           description: |
             The amount of CO2 captured with Carbon Capture and Storage (CCS) technologies.
@@ -1048,6 +1083,7 @@ components:
           x-term: Technological CO2 capture with geological storage
           x-rule: CCS
           x-methodology: 3.3.2.5
+          example: "-4.34"
         technologicalCO2CaptureOrigin:
           description: |
             For CCU: Information about the origin (fossil or biogenic) and path of the captured CO2 used in CCU, including 
@@ -1156,7 +1192,7 @@ components:
           type: array
           items:
             type: string
-            enum:
+            x-enum:
               - ISO14067
               - ISO14083
               - ISO14040-44
@@ -1165,6 +1201,8 @@ components:
               - PACT-1.0
               - PACT-2.0
               - PACT-3.0
+              - PAS2050
+              - "..."
           minItems: 1
           uniqueItems: true
           x-term: Cross-sectoral standards
@@ -1648,6 +1686,7 @@ components:
 
         Criteria to provide can be product id, geography, company identifier, validity 
         period, etc, see below for details.
+        For filtering logic, see [[#filtering]].
 
         If the data owner can *immediately* determine that it will not be able to 
         handle this request it MUST respond with an appropriate `4xx` error response, 
@@ -2014,7 +2053,7 @@ components:
     validOn:
       name: validOn
       description: |
-        If present, MUST match all PCFs which were valid on the date specified: validityPeriodStart <= validOn <= validityPeriodEnd. See [[#validity-period]] for determining validity period.
+        If present, MUST match all PCFs which were valid on the date specified: start validity period <= validOn <= end validity period. See [[#validity-period]] for determining validity period.
       in: query
       schema:
         type: string
@@ -2022,7 +2061,7 @@ components:
     validAfter:
       name: validAfter
       description: |
-        If present, MUST match PCFs with validityPeriodStart > validAfter. 
+        If present, MUST match PCFs with a validity period start > validAfter. 
         See [[#validity-period]] for determining validity period. 
       in: query
       schema:
@@ -2031,7 +2070,7 @@ components:
     validBefore:
       name: validBefore
       description: |
-        If present, MUST match PCFs with validityPeriodEnd < validBefore
+        If present, MUST match PCFs with a validity period end < validBefore
         See [[#validity-period]] for determining validity period. 
       in: query
       schema:

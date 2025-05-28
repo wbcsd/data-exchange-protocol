@@ -391,7 +391,7 @@ def generate(writer, title, schema, typename, examples_from_schema, example_obje
             type_description += " (" + info["comment"] + ")\n"
         else:
             type_description += "\n"
-        type_description += "|".join(info.get("enum", [])) + "\n"
+        type_description += "|".join(info.get("enum", info.get("x-enum", []))) + "\n"
         type_description = type_description.strip()
         if (type_description == ""):
             type_description = info.get("type","")
