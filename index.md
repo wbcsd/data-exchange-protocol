@@ -10,17 +10,17 @@ The PACT Technical Specifications describe the PCF data model and PCF exchange A
 All recent versions of the Technical Specifications are published here, including OpenAPI schema and a Simplified Data Model in Excel format.
 We welcome contributions, please visit the [WBCSD GitHub repository](https://github.com/wbcsd/data-exchange-protocol)
 
-For timelines, see [RELEASE PLAN](release-plan)
+For timelines, see [RELEASE PLAN](RELEASE-PLAN.md)
 
 ## 3.0.0 (latest stable)
 
-[PACT Technical Specifications 3.0.0](ref/data-exchange-protocol/3.0.0/) <br>
-[PACT Simplified Data Model 3.0.0 (Excel)](ref/data-exchange-protocol/3.0.0/pact-simplified.xlsx) <br>
-[PACT Simplified Data Model 3.0.0 (HTML)](ref/data-exchange-protocol/3.0.0/pact-simplified.html) <br>
-[PACT OpenAPI 3.0.0](ref/data-exchange-protocol/3.0.0/openapi.yaml) <br>
-[FAQ](ref/data-exchange-protocol/3.0.0/faq) <br>
+[PACT Technical Specifications 3.0.0](docs/../ref/data-exchange-protocol/3.0.0/) <br>
+[PACT Simplified Data Model 3.0.0 (Excel)](docs/../ref/data-exchange-protocol/3.0.0/pact-simplified.xlsx) <br>
+[PACT Simplified Data Model 3.0.0 (HTML)](docs/../ref/data-exchange-protocol/3.0.0/pact-simplified.html) <br>
+[PACT OpenAPI 3.0.0](docs/../ref/data-exchange-protocol/3.0.0/openapi.yaml) <br>
+[FAQ](docs/../ref/data-exchange-protocol/3.0.0/faq) <br>
 
-[PACT Methodology 3.0](ref/methodology/pact-methodology-v3.0.pdf)
+[PACT Methodology 3.0](docs/../ref/methodology/pact-methodology-v3.0.pdf)
 
 <!--
 ## 3.0.0 Draft for Consultation
