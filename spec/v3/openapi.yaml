@@ -101,7 +101,15 @@ paths:
 
         Most criteria (like `productId`, `geography`, etc.) can contain multiple 
         values. Each footprint in the resulting list MUST match for EACH single 
-        criterium at least ONE value.
+        criterion at least ONE value.
+
+        So, the filtering logic is as follows:
+        - For each filter criterion (e.g., `productId`, `geography`, `classification`), if multiple values are provided, the filter matches if the footprint matches at least one of the values for that criterion (logical OR within a criterion).
+        - Across different criteria, a footprint must match all specified criteria (logical AND between criteria).
+
+        In other words:
+        - Within a single criterion: values are combined with OR.
+        - Between different criteria: criteria are combined with AND.
 
         For example, the query string for `ListFootprints` 
 
