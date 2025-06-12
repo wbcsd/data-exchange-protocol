@@ -267,7 +267,7 @@ class HtmlWriter:
     <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <title>PACT Simplified Data Model</title>
-    <link rel='stylesheet' href='../assets/markdown.css'>
+    <link rel='stylesheet' href='assets/default.css'>
     <style>
     html,body  { padding: 0; margin: 0; }    
     table,th,tr,td { border-collapse: collapse; padding: 0; margin: 0; border: 0; vertical-align: top; }

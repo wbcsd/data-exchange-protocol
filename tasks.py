@@ -9,8 +9,9 @@ import scripts.openapi
 import scripts.excel
 from scripts.schema import schema_diff
 from scripts.patchup import patchup, parse_bikeshed_file
-from scripts.build import Dependency, fileset
+from scripts.build import Dependency, fileset, dependencies
 from invoke import task
+from packaging.version import Version
 
 
 # Tasks for building the bikeshed documentation and releasing the specification.
@@ -51,7 +52,7 @@ def render_markdown(input, output: str):
 <html lang="en">
 <head>
     <meta content="text/html; charset=utf-8" http-equiv="Content-Type"><html>
-    <link href="{rel_root_path}assets/markdown.css" rel="stylesheet" />
+    <link href="./assets/default.css" rel="stylesheet" />
 </head>
 <body>
     """
@@ -89,7 +90,6 @@ def build_bikeshed(dependencies):
 
 # Build Mermaid diagrams.
 def build_mermaid(dependencies):
-    return
     for dependency in dependencies:
         if dependency.outdated():
             logging.info(f"Building {dependency.target}")
@@ -126,37 +126,26 @@ def build(c):
         lambda source, target: scripts.excel.generate_simplified_datamodel(source, target, "PACT Simplified Data Model", "ProductFootprint")
         )
     build_bikeshed([
-        Dependency("build/faq/index.html", ["spec/faq/index.bs"]),
         Dependency("build/v1/index.html", ["spec/v1/index.bs", "spec/v1/examples/*", "LICENSE.md"]),
         Dependency("build/v2/index.html", ["spec/v2/index.bs", "spec/v2/examples/*", "LICENSE.md"]),
         Dependency("build/v3/index.html", ["spec/v3/index.md", "spec/v3/*.md", "spec/v3/examples/*", "LICENSE.md"])
         ])
-    build_mermaid([
-        Dependency(target, [source]) for source,target in fileset("./spec/**/*.mmd", "./build/**/*.svg")
-        ])
+    build_mermaid(
+        dependencies("./build/v2/**/*.svg", "./spec/v2/**/*.mmd")
+        )
     build_task([
         Dependency("build/index.html", ["index.md"]), 
-        Dependency("build/license.html", ["LICENSE.md"]),
         Dependency("build/release-plan.html", ["RELEASE-PLAN.md"]),
-        Dependency("build/v3/faq.html", ["spec/v3/faq.md"])
+        Dependency("build/faq.html", ["faq.md"]),
+        Dependency("build/v3/license.html", ["LICENSE.md"])
         ], 
         render_markdown
         )
-    build_task([
-        Dependency("build/assets/logo.svg", ["assets/logo.svg"]), 
-        Dependency("build/assets/logo-dark.svg", ["assets/logo-dark.svg"]), 
-        Dependency("build/assets/custom.css", ["assets/custom.css"]), 
-        Dependency("build/assets/markdown.css", ["assets/markdown.css"]), 
-        Dependency("build/v2/openapi.yaml", ["spec/v3/openapi.yaml"]), 
-        Dependency("build/v3/openapi.yaml", ["spec/v3/openapi.yaml"])], 
-        copy_file
-        )
-    build_task([
-        Dependency("build/assets/logo.svg", ["assets/logo.svg"]), 
-        Dependency("build/assets/logo-dark.svg", ["assets/logo-dark.svg"]), 
-        Dependency("build/assets/custom.css", ["assets/custom.css"]), 
-        Dependency("build/assets/markdown.css", ["assets/markdown.css"])
-        ],
+    build_task(
+        dependencies('./build/v2/assets/**/*', './assets/**/*') +
+        dependencies('./build/v3/assets/**/*', './assets/**/*') +
+        dependencies('./build/assets/**/*', './assets/**/*') +
+        dependencies('./build/v*/*.yaml', './spec/v*/*.yaml'),
         copy_file
         )
     if not os.path.exists("build/ref"):
@@ -193,23 +182,31 @@ def release(c, ver="v2"):
     print("Publishing release") 
     c.run(f"mkdir -p {destination}/{year}/data-exchange-protocol-{date}")
     c.run(f"cp -R build/{ver}/* {destination}/{year}/data-exchange-protocol-{date}")
-    c.run(f"cp -R build/assets {destination}/{year}")
 
     c.run(f"mkdir -p {destination}/data-exchange-protocol/{version}")
     c.run(f"cp -R build/{ver}/* {destination}/data-exchange-protocol/{version}")
-    c.run(f"cp -R build/assets {destination}/data-exchange-protocol")
 
     # determine latest version by listing the directory destination/data-exchange-protocol/*
     versions = [
-        dir for dir in os.listdir(f"{destination}/data-exchange-protocol")
+        Version(dir) for dir in os.listdir(f"{destination}/data-exchange-protocol")
         if os.path.isdir(f"{destination}/data-exchange-protocol/{dir}") and dir[0].isdigit()
     ]
-    latest_version = max(versions, key=lambda v: [int(x) for x in v.lstrip('v').split('.')])
+    current_version = Version(version)
+    latest_same_major_minor_version = max((v for v in versions if v.major == current_version.major and v.minor == current_version.minor), default=None)
+    latest_version = max(versions, default=None)
     
+    logging.info(f"Current version: {current_version}")
+    logging.info(f"Latest same major version: {latest_same_major_minor_version}")
     logging.info(f"Latest version: {latest_version}")
-    c.run(f"rm -rf {destination}/data-exchange-protocol/latest")    
-    c.run(f"cp -R build/{ver} {destination}/data-exchange-protocol/latest")
-    
+
+    if latest_same_major_minor_version is None or latest_same_major_minor_version <= current_version:
+        c.run(f"rm -rf {destination}/data-exchange-protocol/{current_version.major}.{current_version.minor}")    
+        c.run(f"cp -R {destination}/data-exchange-protocol/{current_version} {destination}/data-exchange-protocol/{current_version.major}.{current_version.minor}")
+
+    if latest_version is None or latest_version <= current_version:
+        c.run(f"rm -rf {destination}/data-exchange-protocol/latest")    
+        c.run(f"cp -R {destination}/data-exchange-protocol/{current_version} {destination}/data-exchange-protocol/latest")
+
     print(f"Published release version {version} to {destination}")
     print(f"Commit and merge the pull request in the TR repository")
 

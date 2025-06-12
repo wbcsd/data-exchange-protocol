@@ -36,25 +36,13 @@ def parse_bikeshed_file(bikeshed_file):
     
     return title, date, version, status
 
+INCLUDE_CSS = ["./assets/default.css", "./assets/custom.css"]
+
 INCLUDE_HEADER = """
-<link href="../assets/markdown.css" rel="stylesheet" />
-<link href="../assets/custom.css" rel="stylesheet" />
+<link href="./assets/markdown.css" rel="stylesheet" />
+<link href="./assets/custom.css" rel="stylesheet" />
 """
 
-# Patch the already generated html file with adapted title and status.
-def update_html_file(html_file, title, status):
-    with open(html_file, 'r') as file:
-        content = file.read()  
-    content = re.sub(r'(<title>).*(</title>)', r'\1' + title + r'\2', content, count=1)
-    content = re.sub(r'(<h1 .*>).*(</h1>)', r'\1' + title + r'\2', content, count=1)
-    subtitle = status
-    if status == "LD":
-        subtitle = "Living Document" 
-    content = re.sub(r'(<h2 .* id="profile-and-date">).*(</h2>)', r'\1' + subtitle + r'\2', content, count=1)
-    # Patch some CSS as well. 
-    content = re.sub(r'^\s*<body', INCLUDE_HEADER + '<body', content, count=1, flags=re.MULTILINE)
-    with open(html_file, 'w') as file:
-        file.write(content)
 
 # Patch the spec
 def patchup(input, output):
@@ -75,7 +63,30 @@ def patchup(input, output):
         print("Unknown status")
         return
     
-    update_html_file(output, title, status)
+    # Patch the already generated html file with adapted title and status.
+    with open(output, 'r') as file:
+        content = file.read()  
+    content = re.sub(r'(<title>).*(</title>)', r'\1' + title + r'\2', content, count=1)
+    content = re.sub(r'(<h1 .*>).*(</h1>)', r'\1' + title + r'\2', content, count=1)
+    subtitle = status
+    if status == "LD":
+        subtitle = "Living Document" 
+        url = f"https://wbcsd.github.io/data-exchange-protocol/v{version[0:1]}/"
+    else:
+        url = f"https://wbcsd.github.io/tr/{date[0:4]}/data-exchange-protocol-{date}/"
+    content = re.sub(r'(<h2 .* id="profile-and-date">).*(</h2>)', r'\1' + subtitle + r'\2', content, count=1)
+    content = re.sub(r'(<dt>This version:\s*\n\s*<dd><a ).*(</a>)', r'\1href="' + url + '">' + url + r'\2', content, count=1)
+
+    # Mix in some CSS as well
+    if False:
+        for css_file in INCLUDE_CSS:
+            with open(css_file, 'r') as css:
+                css_content = css.read()
+                content = re.sub(r'^\s*<body', '\n<style>\n' + css_content + '\n</style>\n<body', content, count=1, flags=re.MULTILINE)
+    else:
+        content = re.sub(r'^\s*<body', INCLUDE_HEADER + '<body', content, count=1, flags=re.MULTILINE)
+    with open(output, 'w') as file:
+        file.write(content)
 
 
 def extract_property_descriptions(input_file_path):
