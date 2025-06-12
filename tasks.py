@@ -154,7 +154,7 @@ def build(c):
 
 
 @task(help={"ver": "Major version to release, can be v2 or v3"})
-def release(c, ver="v2"):
+def release(c, ver="v3"):
     """
     Release a version of the specification. Specify the major 
     version to release, this can be v1, v2 or v3.

@@ -39,7 +39,7 @@ def parse_bikeshed_file(bikeshed_file):
 INCLUDE_CSS = ["./assets/default.css", "./assets/custom.css"]
 
 INCLUDE_HEADER = """
-<link href="./assets/markdown.css" rel="stylesheet" />
+<link href="./assets/default.css" rel="stylesheet" />
 <link href="./assets/custom.css" rel="stylesheet" />
 """
 
