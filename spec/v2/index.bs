@@ -9,12 +9,12 @@ In addition, for publishing a release:
   Update the Previous Version and TR links
 -->
 <pre class='metadata'>
-Text Macro: DATE 20241212
+Text Macro: DATE 20250224
 Text Macro: VERSION 2.3.1
-Text Macro: STATUS LD
+Text Macro: STATUS Release
 Title: Technical Specifications for PCF Data Exchange
-TR: https://wbcsd.github.io/tr/2024/data-exchange-protocol-20241024/
-Previous Version: https://wbcsd.github.io/tr/2024/data-exchange-protocol-20240410/
+TR: https://wbcsd.github.io/tr/data-exchange-protocol/latest/
+Previous Version: https://wbcsd.github.io/tr/2024/data-exchange-protocol-20241024/
 Level: 1
 Status: LD
 Shortname: data-exchange-protocol
@@ -28,7 +28,6 @@ Abstract: This document specifies a data model for GHG emission data at product 
 Markup Shorthands: markdown yes, idl yes, dfn yes
 Boilerplate: omit copyright, omit conformance
 Local Boilerplate: header yes
-Metadata Include: This version off
 </pre>
 
 # Introduction # {#intro}
@@ -2802,7 +2801,7 @@ path: ../../LICENSE.md
 
 # Appendix B: Changelog # {#changelog}
 
-## Version 2.3.1 (Feb 24, 2024) ## {#changelog-2.3.1}
+## Version 2.3.1 (Feb 24, 2025) ## {#changelog-2.3.1}
 
 Patch release. 
 
