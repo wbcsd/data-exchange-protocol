@@ -9,12 +9,12 @@ In addition, for publishing a release:
   Update the Previous Version and TR links
 -->
 <pre class='metadata'>
-Text Macro: DATE 20250430
-Text Macro: VERSION 3.0.0
+Text Macro: DATE 20250612
+Text Macro: VERSION 3.0.1
 Text Macro: STATUS Release
 Title: Technical Specifications for PCF Data Exchange
-TR: https://docs.carbon-transparency.org/ref/data-exchange-protocol/3.0.0/
-Previous Version: https://wbcsd.github.io/tr/2024/data-exchange-protocol-20241024/
+TR: https://wbcsd.github.io/tr/data-exchange-protocol/latest/
+Previous Version: https://wbcsd.github.io/tr/2025/data-exchange-protocol-20250430/
 Level: 1
 Status: LD
 Shortname: data-exchange-protocol
@@ -24,7 +24,6 @@ Abstract: This document specifies a data model for GHG emission data at product 
 Markup Shorthands: markdown yes, idl yes, dfn yes
 Boilerplate: omit copyright, omit conformance
 Local Boilerplate: header yes
-Metadata Include: This version off
 </pre>
 
 # Introduction # {#intro}
@@ -97,7 +96,7 @@ PACT would also like to expressly thank the 40+ solutions which implemented V2 o
 
 ## License ## {#section-license}
 
-Refer to the [LICENSE](https://docs.carbon-transparency.org/license) for use of this document. 
+Refer to the [LICENSE](license.html) for use of this document. 
 
 # Terminology # {#terminology}
 
@@ -1068,6 +1067,17 @@ content-length: 0
 
 # Appendix A: Changelog # {#changelog}
 
+## Version 3.0.1 (Jun 12, 2025) ## {#changelog-3.0.1}
+
+Patch release with clarifications after feedback:
+
+- Expanded on [filtering logic](#filtering)
+- Clarified description of [filtering parameters](#parameters).
+- Added extra examples.
+- Removed invalid geography properties in some examples.
+- Expanded on `declaredUnitofMeasurement` description.
+- Added removal of `biogenicAccountingMethodology` to changelog of [3.0.0](#changelog-3.0.0)
+
 ## Version 3.0.0 (Apr 30, 2025) ## {#changelog-3.0.0}
 
 Summary of major changes since version 2.3:
@@ -1135,6 +1145,7 @@ Summary of major changes since version 2.3:
     - `CarbonFootprint/otherBiogenicGhgEmissions`
     - `CarbonFootprint/crossSectoralStandardsUsed` (deprecated in 2.3, replaced by `CarbonFootprint/crossSectoralStandards`)
     - `CarbonFootprint/characterizationFactors` (deprecated in 2.2, replaced by `CarbonFootprint/ipccCharacterizationFactors`)
+    - `CarbonFootprint/biogenicAccountingMethodology` (removed, superseded by `CarbonFootprint/crossSectoralStandards` and description in `ProductFootprint/comment` )
     - `CarbonFootprint/uncertaintyAssessmentDescription`
     - `DataQualityIndicators/coveragePercent`
     - `DataQualityIndicators/reliabilityDQR`
@@ -1385,7 +1396,7 @@ The following changes have been applied for version 1.0.1
   },
   "PACT-METHODOLOGY": {
     "authors": [],
-    "href": "https://docs.carbon-transparency.org/spec/3.0.0/PACT_Methodology_3.0.0.pdf",
+    "href": "https://wbcsd.github.io/tr/methodology/3.0/pact-methodology-v3.0.pdf",
     "title": "PACT Methodology: Methodology for Calculating and Exchanging Cradle-to-Gate Product Carbon Footprints (PCFs) Version 3.0",
     "status": "LS",
     "publisher": "WBCSD"
