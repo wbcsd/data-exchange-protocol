@@ -301,7 +301,7 @@ class HtmlWriter:
 
     def write_title(self, title):
         self.output.write(f"""
-<tr class='title'><td colspan='{len(self.columns)}'><img src="../assets/logo-dark.svg" width="200" height="200"></td></tr>
+<tr class='title'><td colspan='{len(self.columns)}'><img src="assets/logo-dark.svg" width="200" height="200"></td></tr>
 <tr class='title'><td colspan='{len(self.columns)}'><h2>{title}</h2></td></tr>""")
  
     def write_subtitle(self, subtitle):
