@@ -28,6 +28,17 @@ dt>code {
     font-weight: normal;
 }
 
+h3 dfn>code {
+    font-family: inherit;
+    font-weight: inherit;
+    font-size: inherit;
+}
+
+ol.toc code {
+    font-family: inherit;
+    font-size: 1em;
+}
+
 [data-link-type=element]::before,
 [data-link-type=element]::after {
     content: initial;
@@ -69,6 +80,13 @@ strong.advisement {
 
 .x-methodology {
     font-style: normal;
+    font-size: 0.9em;;
+    color: #666;
 }
 
-
+.x-rule > a {
+    border: 1px solid var(--heading-text);
+    padding: 2px;
+    font-size: 0.9em;
+    text-decoration: none;
+}
