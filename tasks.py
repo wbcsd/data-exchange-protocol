@@ -148,10 +148,6 @@ def build(c):
         dependencies('./build/v*/*.yaml', './spec/v*/*.yaml'),
         copy_file
         )
-    if not os.path.exists("build/ref"):
-        run("cp -R  ref build")
-        run("cp -R  assets build/ref")
-
 
 @task(help={"ver": "Major version to release, can be v2 or v3"})
 def release(c, ver="v3"):
