@@ -6,14 +6,14 @@
     
     The PACT Technical Specifications V3 are an HTTP REST API specification for the secure exchange of Product Carbon Footprint (PCF) data across interoperable software solutions. The specification includes a data model for PCF data and an API for data exchange. Any solution which implements the specification is able to exchange PCF data in an interoperable way with each other. 
     
-    For more details, visit [Technical Specifications v3](https://docs.carbon-transparency.org/v3/).
+    For more details, visit [Technical Specifications v3](https://docs.carbon-transparency.org/tr/data-exchange-protocol/latest).
     
 - **Why did PACT release a new version of the Technical Specifications?**
     
     PACT Technical Specifications V1 were released in June 2022, followed by V2 released February 2023.  PACT released the PACT Technical Specifications V3 in April 2025 with an updated data model and protocol for exchanging product-level greenhouse gas (GHG) emission data based on the PACT Methodology V3 (previously Pathfinder Framework) . 
     
     This new version reflects feedback from a consensus-based decision-making process within PACT's Technology Working Group, where stakeholders actively address challenges related to Scope 3 and primary data sharing. The specifications have evolved through two years of collaboration with the WBCSD community, technology partners, and key initiatives.
-    For more details, see the [Release Plan](https://github.com/wbcsd/data-exchange-protocol/blob/main/RELEASE-PLAN.md). 
+    For more details, see the [Release Plan](RELEASE-PLAN.md). 
     
 - **How were PACT Technical Specifications V3 developed?**
     
@@ -42,7 +42,7 @@
 
 - **When was V3 officially released?**
     
-    V3 was released April 30, 2025, see the [release plan](https://docs.carbon-transparency.org/release-plan).
+    V3 was released April 30, 2025, see the [release plan](RELEASE-PLAN.md).
     
     [Register for the launch events in June 2025 to learn more](https://wbcsd.my.salesforce-sites.com/GuestEventPageV2?aId=a5sVj0000004pFF) 
     
@@ -68,7 +68,7 @@
     
 - **How can V3 be used?**
     
-    PACT encourages the adoption of the PACT Technical Specifications to create digital solutions supporting value chain transparency and decarbonization. PACT supports companies to create so-called "PACT Conformant Solutions", i.e. software which implements the Technical Specifications, and promotes conformant solutions via the PACT website and other marketing channels. The Technical Specifications include a license which explicitly allows for the creation of commercial derivatives, [see here](https://docs.carbon-transparency.org/v3/#license). Derivative works (software, derived specifications, etc.) must cite WBCSD PACT.
+    PACT encourages the adoption of the PACT Technical Specifications to create digital solutions supporting value chain transparency and decarbonization. PACT supports companies to create so-called "PACT Conformant Solutions", i.e. software which implements the Technical Specifications, and promotes conformant solutions via the PACT website and other marketing channels. The Technical Specifications include a license which explicitly allows for the creation of commercial derivatives, [see here](LICENSE.md). Derivative works (software, derived specifications, etc.) must cite WBCSD PACT.
     
 
 ## Key Changes and Impact on V2 Users
@@ -104,7 +104,7 @@
     
 - **What is the deprecation timeline for V2?**
     
-    See [Release Plan](https://github.com/wbcsd/data-exchange-protocol/blob/main/RELEASE-PLAN.md) for deprecation timelines.
+    See [Release Plan](RELEASE-PLAN.md) for deprecation timelines.
     
 - **Will PACT continue to maintain V2 and support solutions using V2 after V3 is released?**
     
@@ -112,7 +112,7 @@
     
     Access all the previous stable versions [here](https://docs.carbon-transparency.org/) 
     
-    Also, find the [Release Plan](https://github.com/wbcsd/data-exchange-protocol/blob/main/RELEASE-PLAN.md) 
+    Also, find the [Release Plan](RELEASE-PLAN.md) 
     
 - **Does the release of V3 mean that a solution targeting V3 has to go through Conformance Testing again, even if it was tested for V2?**
     
