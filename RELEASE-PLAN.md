@@ -7,8 +7,8 @@ This release plan indicates timelines of both the PACT Methodology and PACT Tech
 | Version| Draft Release | Published Release | Deprecation |
 | --- | --- | --- | --- |
 | [Version 1](https://wbcsd.github.io/tr/websitedocs/pathfinder_framework_v1.pdf ) | N/A | Jun 2022 | Oct 1, 2024 |
-| [Version 2](https://wbcsd.github.io/tr/2023/framework-20232601/framework.pdf) | N/A | Jan 26, 2023 | TBD |
-| Version 3 | January 27, 2025 | Apr 2025 | TBD |
+| [Version 2](https://wbcsd.github.io/tr/2023/framework-20232601/framework.pdf) | N/A | Jan 26, 2023 | Dec 31, 2027 |
+| Version 3 | January 27, 2025 | Apr 30, 2025 | TBD |
 
 ## Technical Specifications
 
