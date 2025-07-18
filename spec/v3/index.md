@@ -592,14 +592,15 @@ Generally, the data recipient sends a `RequestCreatedEvent` event to the data ow
 5. The data owner will authenticate with the data recipient and send either a `RequestFullfilledEvent` back with the PCF or a `RequestRejectedEvent` if it can not produce the PCF.
 
 
-### Sending an updated PCF
+### Publishing updates
 
 At any time after a data owner has sent a PCF to the data recipient, the data owner can send an update, for example because a PCF was updated or deprecated, or a new PCF was published, see [[#lifecycle]].
 
 In this case the data owner sends a `PublishedEvent` to the data recipient.
 
-1. The data owner authenticates with the data recipient and sends a `PublishedEvent` with the updated or created PCF.
-1. The data recipient should validate this incoming event and directly return a status code indicating succesful receipt (HTTP code 2xx) or an error (HTTP 4xx or 5xx). 
+1. The data owner authenticates with the data recipient and sends a `PublishedEvent` with one or more IDs of the updated or created PCF(s).
+2. The data recipient should validate this incoming event and directly return a status code indicating succesful receipt (HTTP code 2xx) or an error (HTTP 4xx or 5xx). 
+3. Afterwards the data recipient can use GetFootprint for each of the prodived IDs to retrieve the updated PCFs
 
 Refer to [[#action-events]] for detailed request and response formats.
 
@@ -1066,6 +1067,13 @@ content-length: 0
 
 
 # Appendix A: Changelog # {#changelog}
+
+## Version 3.0.2 (July 18, 2025) ## {#changelog-3.0.2}
+
+Patch release with fix after feedback:
+
+- Correct sign (<=0) of `technologicalCO2Removals`
+- Expanded text on [Asynchronous Updates](#publishing-updates)
 
 ## Version 3.0.1 (Jun 12, 2025) ## {#changelog-3.0.1}
 
