@@ -12,12 +12,12 @@ We welcome contributions, please visit the [WBCSD GitHub repository](https://git
 
 For timelines, see [RELEASE PLAN](RELEASE-PLAN.md)
 
-## 3.0.1 (latest stable)
+## 3.0.2 (latest stable)
 
 [PACT Technical Specifications 3.0.1](../tr/data-exchange-protocol/latest/) <br>
-[PACT Simplified Data Model 3.0.1 (Excel)](../tr/data-exchange-protocol/latest/pact-simplified.xlsx) <br>
-[PACT Simplified Data Model 3.0.1 (HTML)](../tr/data-exchange-protocol/latest/pact-simplified.html) <br>
-[PACT OpenAPI 3.0.1](../tr/data-exchange-protocol/latest/openapi.yaml) <br>
+[PACT Simplified Data Model 3.0.2 (Excel)](../tr/data-exchange-protocol/latest/pact-simplified.xlsx) <br>
+[PACT Simplified Data Model 3.0.2 (HTML)](../tr/data-exchange-protocol/latest/pact-simplified.html) <br>
+[PACT OpenAPI 3.0.2](../tr/data-exchange-protocol/latest/openapi.yaml) <br>
 [FAQ](faq.md) <br>
 
 [PACT Methodology 3.0](../tr/methodology/3.0/pact-methodology-v3.0.pdf)
