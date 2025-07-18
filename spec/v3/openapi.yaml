@@ -1103,7 +1103,7 @@ components:
           x-rule: CCS
           x-term: Technological CO2 removals
           x-methodology: 3.3.2.5
-          $ref: '#/components/schemas/PositiveOrZeroDecimal'
+          $ref: '#/components/schemas/NegativeOrZeroDecimal'
         ccuCarbonContent:
           description: |
             The amount of captured carbon (both biogenic and fossil) during CCU (Carbon Capture & Usage) in the product.
