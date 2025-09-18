@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+ <root>
+     <id>12345678-9abc-def0-1234-567812345678</id>
+     <specVersion>3.0.0</specVersion>
+     <created>2025-04-30T00:00:00Z</created>
+     <status>Active</status>
+     <validityPeriodStart>2024-12-31T00:00:00Z</validityPeriodStart>
+     <validityPeriodEnd>2027-12-31T00:00:00Z</validityPeriodEnd>
+     <companyName>Company 1</companyName>
+     <companyIds>urn:company:example:company1</companyIds>
+     <productDescription>Bioethanol 98%, sugar beet feedstock, bulk - no packaging</productDescription>
+     <productIds>urn:gtin:5695872369587</productIds>
+     <productClassifications>urn:pact:productclassification:cas:1456</productClassifications>
+     <productNameCompany>Product 1</productNameCompany>
+     <comment>
+         As using TfS, PDS and DQR calculations are slightly different
+         Use of Cool Farm Tool for emissions of sugar beet cultivation
+     </comment>
+     <pcf>
+         <declaredUnitOfMeasurement>kilogram</declaredUnitOfMeasurement>
+         <declaredUnitAmount>1</declaredUnitAmount>
+         <productMassPerDeclaredUnit>1</productMassPerDeclaredUnit>
+         <referencePeriodStart>2024-01-01T00:00:00Z</referencePeriodStart>
+         <referencePeriodEnd>2024-12-31T00:00:00Z</referencePeriodEnd>
+         <geographyCountrySubdivision>US-TX</geographyCountrySubdivision>
+         <boundaryProcessesDescription>
+             1) Material acquisition and preprocessing, including cultivation of sugar beet
+             2) Production: fuel consumption, electricity consumption, water consumption, process-generated direct emissions from the fermentation and distillation of ethanol
+         </boundaryProcessesDescription>
+         <pcfExcludingBiogenicUptake>0.384</pcfExcludingBiogenicUptake>
+         <pcfIncludingBiogenicUptake>-1.23</pcfIncludingBiogenicUptake>
+         <fossilCarbonContent>0</fossilCarbonContent>
+         <biogenicCarbonContent>0.44</biogenicCarbonContent>
+         <recycledCarbonContent>0</recycledCarbonContent>
+         <fossilGhgEmissions>0.35</fossilGhgEmissions>
+         <landUseChangeGhgEmissions>0</landUseChangeGhgEmissions>
+         <landCarbonLeakage>0</landCarbonLeakage>
+         <landManagementFossilGhgEmissions>0.03</landManagementFossilGhgEmissions>
+         <landManagementBiogenicCO2Emissions>0.004</landManagementBiogenicCO2Emissions>
+         <landManagementBiogenicCO2Removals>0</landManagementBiogenicCO2Removals>
+         <biogenicCO2Uptake>-1.61</biogenicCO2Uptake>
+         <biogenicNonCO2Emissions>0.002</biogenicNonCO2Emissions>
+         <landAreaOccupation>0.41</landAreaOccupation>
+         <aircraftGhgEmissions>0</aircraftGhgEmissions>
+         <packagingEmissionsIncluded>true</packagingEmissionsIncluded>
+         <ipccCharacterizationFactors>AR6</ipccCharacterizationFactors>
+         <crossSectoralStandards>GHGP-Product</crossSectoralStandards>
+         <crossSectoralStandards>PACT-3.0</crossSectoralStandards>
+         <productOrSectorSpecificRules>
+             <operator>Other</operator>
+             <ruleNames>The Product Carbon Footprint Guideline for the Chemical Industry, v.3</ruleNames>
+         </productOrSectorSpecificRules>
+         <otherOperatorName>TfS</otherOperatorName>
+         <exemptedEmissionsPercent>0</exemptedEmissionsPercent>
+         <allocationRulesDescription>Mass allocation</allocationRulesDescription>
+         <secondaryEmissionFactorSources>
+             <name>Ecoinvent</name>
+             <version>3.1</version>
+         </secondaryEmissionFactorSources>
+         <primaryDataShare>12.9</primaryDataShare>
+         <dqi>
+             <technologicalDQR>1.5</technologicalDQR>
+             <geographicalDQR>3.2</geographicalDQR>
+             <temporalDQR>2.4</temporalDQR>
+         </dqi>
+     </pcf>
+ </root>
