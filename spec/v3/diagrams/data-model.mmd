@@ -1,0 +1,131 @@
+classDiagram
+    class ProductFootprint {
+        string id
+        string specVersion
+        List[string]? precedingPfIds
+        string created
+        string status
+        string? validityPeriodStart
+        string? validityPeriodEnd
+        string companyName
+        List[Urn] companyIds
+        string productDescription
+        List[Urn] productIds
+        List[Urn]? productClassifications
+        string productNameCompany
+        string? comment
+        CarbonFootprint pcf
+        List[DataModelExtension]? extensions
+    }
+    class CarbonFootprint {
+        string declaredUnitOfMeasurement
+        Decimal declaredUnitAmount
+        Decimal productMassPerDeclaredUnit
+        string referencePeriodStart
+        string referencePeriodEnd
+        string? geographyRegionOrSubregion
+        string? geographyCountry
+        string? geographyCountrySubdivision
+        string? boundaryProcessesDescription
+        Decimal pcfExcludingBiogenicUptake
+        Decimal pcfIncludingBiogenicUptake
+        Decimal fossilCarbonContent
+        Decimal? biogenicCarbonContent
+        Decimal? recycledCarbonContent
+        Decimal fossilGhgEmissions
+        Decimal? landUseChangeGhgEmissions
+        Decimal? landCarbonLeakage
+        Decimal? landManagementFossilGhgEmissions
+        Decimal? landManagementBiogenicCO2Emissions
+        Decimal? landManagementBiogenicCO2Removals
+        Decimal? biogenicCO2Uptake
+        Decimal? biogenicNonCO2Emissions
+        Decimal? landAreaOccupation
+        Decimal? aircraftGhgEmissions
+        boolean? packagingEmissionsIncluded
+        Decimal? packagingGhgEmissions
+        Decimal? packagingBiogenicCarbonContent
+        Decimal? outboundLogisticsGhgEmissions
+        boolean? ccsTechnologicalCO2CaptureIncluded
+        Decimal? ccsTechnologicalCO2Capture
+        string? technologicalCO2CaptureOrigin
+        Decimal? technologicalCO2Removals
+        Decimal? ccuCarbonContent
+        string? ccuCalculationApproach
+        Uri? ccuCreditCertification
+        List[string] ipccCharacterizationFactors
+        List[string] crossSectoralStandards
+        List[ProductOrSectorSpecificRule]? productOrSectorSpecificRules
+        Decimal exemptedEmissionsPercent
+        string? exemptedEmissionsDescription
+        string? allocationRulesDescription
+        List[EmissionFactorSource]? secondaryEmissionFactorSources
+        Decimal? primaryDataShare
+        DataQualityIndicators? dqi
+        Verification? verification
+    }
+    class DataModelExtension {
+        string specVersion
+        string dataSchema
+        string? documentation
+        object data
+    }
+    class ProductOrSectorSpecificRule {
+        string operator
+        List[string] ruleNames
+        string? otherOperatorName
+    }
+    class EmissionFactorSource {
+        string name
+        string version
+    }
+    class DataQualityIndicators {
+        Decimal technologicalDQR
+        Decimal geographicalDQR
+        Decimal temporalDQR
+    }
+    class Verification {
+        string? coverage
+        string? providerName
+        string? completedAt
+        string? standardName
+        string? comments
+    }
+    class BaseEvent {
+        string type
+        string specversion
+        string id
+        string source
+        string time
+        object data
+    }
+    class PublishedEvent {
+        string? type
+        object? data
+    }
+    class RequestCreatedEvent {
+        string? type
+        object? data
+    }
+    class RequestFulfilledEvent {
+        string? type
+        object? data
+    }
+    class RequestRejectedEvent {
+        string? type
+        object? data
+    }
+    class Error {
+        string code
+        string message
+    }
+    ProductFootprint --> CarbonFootprint
+    ProductFootprint --> DataModelExtension
+    CarbonFootprint --> ProductOrSectorSpecificRule
+    CarbonFootprint --> EmissionFactorSource
+    CarbonFootprint --> DataQualityIndicators
+    CarbonFootprint --> Verification
+    BaseEvent <|-- PublishedEvent
+    BaseEvent <|-- RequestCreatedEvent
+    BaseEvent <|-- RequestFulfilledEvent
+    BaseEvent <|-- RequestRejectedEvent

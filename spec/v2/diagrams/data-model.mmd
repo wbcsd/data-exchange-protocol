@@ -1,0 +1,142 @@
+classDiagram
+    class ProductFootprint {
+        string id
+        string specVersion
+        List[string]? precedingPfIds
+        integer version
+        string created
+        string? updated
+        string status
+        string? statusComment
+        string? validityPeriodStart
+        string? validityPeriodEnd
+        string companyName
+        List[Urn] companyIds
+        string productDescription
+        List[Urn] productIds
+        List[Urn]? productClassifications
+        string productCategoryCpc
+        string productNameCompany
+        string comment
+        CarbonFootprint pcf
+        List[DataModelExtension]? extensions
+    }
+    class CarbonFootprint {
+        string declaredUnit
+        Decimal unitaryProductAmount
+        Decimal? productMassPerDeclaredUnit
+        Decimal pCfExcludingBiogenic
+        Decimal? pCfIncludingBiogenic
+        Decimal fossilGhgEmissions
+        Decimal fossilCarbonContent
+        Decimal biogenicCarbonContent
+        Decimal? dLucGhgEmissions
+        Decimal? landManagementGhgEmissions
+        Decimal? otherBiogenicGhgEmissions
+        Decimal? iLucGhgEmissions
+        Decimal? biogenicCarbonWithdrawal
+        Decimal? aircraftGhgEmissions
+        boolean packagingEmissionsIncluded
+        Decimal? packagingGhgEmissions
+        string characterizationFactors
+        List[string] ipccCharacterizationFactorsSources
+        List[string] crossSectoralStandardsUsed
+        List[string]? crossSectoralStandards
+        List[ProductOrSectorSpecificRule]? productOrSectorSpecificRules
+        string? biogenicAccountingMethodology
+        string boundaryProcessesDescription
+        string referencePeriodStart
+        string referencePeriodEnd
+        string? geographyRegionOrSubregion
+        string? geographyCountry
+        string? geographyCountrySubdivision
+        List[EmissionFactorDatabases]? secondaryEmissionFactorSources
+        number exemptedEmissionsPercent
+        string exemptedEmissionsDescription
+        string? allocationRulesDescription
+        string? uncertaintyAssessmentDescription
+        number? primaryDataShare
+        DataQualityIndicators? dqi
+        Assurance? assurance
+    }
+    class DataModelExtension {
+        string specVersion
+        string dataSchema
+        string? documentation
+        object data
+    }
+    class ProductOrSectorSpecificRule {
+        string operator
+        List[string] ruleNames
+        string? otherOperatorName
+    }
+    class EmissionFactorDatabases {
+        string name
+        string version
+    }
+    class DataQualityIndicators {
+        number coveragePercent
+        number technologicalDQR
+        number temporalDQR
+        number geographicalDQR
+        number completenessDQR
+        number reliabilityDQR
+    }
+    class Assurance {
+        boolean assurance
+        string? coverage
+        string? level
+        string? boundary
+        string providerName
+        string? completedAt
+        string? standardName
+        string? comments
+    }
+    class BaseEvent {
+        string specversion
+        string id
+        string source
+        string time
+    }
+    class PublishedEvent {
+        string type
+        string specversion
+        string id
+        string source
+        string time
+        object data
+    }
+    class RequestCreatedEvent {
+        string type
+        string specversion
+        string id
+        string source
+        string time
+        object data
+    }
+    class RequestFulfilledEvent {
+        string? type
+        string? specversion
+        string? id
+        string? source
+        string? time
+        object? data
+    }
+    class RequestRejectedEvent {
+        string? type
+        string? specversion
+        string? id
+        string? source
+        string? time
+        object? data
+    }
+    class Error {
+        string code
+        string message
+    }
+    ProductFootprint --> CarbonFootprint
+    ProductFootprint --> DataModelExtension
+    CarbonFootprint --> ProductOrSectorSpecificRule
+    CarbonFootprint --> EmissionFactorDatabases
+    CarbonFootprint --> DataQualityIndicators
+    CarbonFootprint --> Assurance

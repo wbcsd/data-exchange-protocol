@@ -7,6 +7,7 @@ import logging.config
 import markdown
 import scripts.openapi
 import scripts.excel
+import scripts.uml
 from scripts.schema import schema_diff
 from scripts.patchup import patchup, parse_bikeshed_file
 from scripts.build import Dependency, fileset, dependencies
@@ -125,13 +126,28 @@ def build(c):
         Dependency("build/v3/pact-simplified.xlsx", ["spec/v3/openapi.yaml"])],
         lambda source, target: scripts.excel.generate_simplified_datamodel(source, target, "PACT Simplified Data Model", "ProductFootprint")
         )
+    build_task([
+        Dependency("spec/v3/examples/example-1.json", ["spec/v3/examples/example-1.yaml"]),
+        Dependency("spec/v3/examples/example-2.json", ["spec/v3/examples/example-2.yaml"]),
+        Dependency("spec/v3/examples/example-3.json", ["spec/v3/examples/example-3.yaml"]),
+        Dependency("spec/v3/examples/example-4.json", ["spec/v3/examples/example-4.yaml"])
+        ],
+        scripts.schema.yaml_to_json_file
+        )
+    build_task([
+        Dependency("spec/v2/diagrams/data-model.mmd", ["spec/v2/openapi.yaml"]),
+        Dependency("spec/v3/diagrams/data-model.mmd", ["spec/v3/openapi.yaml"])
+        ],
+        scripts.uml.openapi_to_mermaid_file
+        )
     build_bikeshed([
         Dependency("build/v1/index.html", ["spec/v1/index.bs", "spec/v1/examples/*", "LICENSE.md"]),
         Dependency("build/v2/index.html", ["spec/v2/index.bs", "spec/v2/examples/*", "LICENSE.md"]),
         Dependency("build/v3/index.html", ["spec/v3/index.md", "spec/v3/*.md", "spec/v3/examples/*", "LICENSE.md"])
-        ])
+        ])    
     build_mermaid(
-        dependencies("./build/v2/**/*.svg", "./spec/v2/**/*.mmd")
+        dependencies("./build/v2/**/*.svg", "./spec/v2/**/*.mmd") +
+        dependencies("./build/v3/**/*.svg", "./spec/v3/**/*.mmd")
         )
     build_task([
         Dependency("build/index.html", ["index.md"]), 
