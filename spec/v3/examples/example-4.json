@@ -46,7 +46,8 @@
       "AR6"
     ],
     "crossSectoralStandards": [
-      "PEF"
+      "PEF",
+      "FUTURE-STANDARD"
     ],
     "productOrSectorSpecificRules": [
       {
