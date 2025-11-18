@@ -162,6 +162,10 @@ def release(c, ver="v3"):
     logging.info(f"Version: {version}, Date: {date}, Status: {status} Year: {year}")
     destination  = "../tr"
 
+    schema = scripts.schema.load_openapi_file(f"spec/{ver}/openapi.yaml")
+    if schema.get("info", {}).get("version") != version:
+        raise Exception(f"Version mismatch: OpenAPI schema version {schema.get('info', {}).get('version')} != expected version {version}")
+
     if not os.path.exists(destination):
          raise Exception(f"Destination {destination} does not exist. Expecting the local path to the TR repository.")
     if status != "Release":
