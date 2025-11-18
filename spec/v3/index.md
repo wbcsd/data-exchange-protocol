@@ -11,7 +11,7 @@ In addition, for publishing a release:
 <pre class='metadata'>
 Text Macro: DATE 20251118
 Text Macro: VERSION 3.0.3
-Text Macro: STATUS LD
+Text Macro: STATUS Release
 Title: Technical Specifications for PCF Data Exchange
 TR: https://wbcsd.github.io/tr/data-exchange-protocol/latest/
 Previous Version: https://wbcsd.github.io/tr/2025/data-exchange-protocol-20250430/
@@ -20,6 +20,11 @@ Status: LD
 Shortname: data-exchange-protocol
 Max ToC Depth: 2
 Mailing List: pact@wbcsd.org
+Editor: Gertjan Schuurmans (WBCSD), https://www.wbcsd.org, schuurmans@wbcsd.org
+Former Editor: Beth Hadley (WBCSD), https://www.wbcsd.org, hadley@wbcsd.org
+Former Editor: Martin Pompéry (SINE Foundation), https://sine.foundation, martin@sine.foundation
+Former Editor: Cecilia Valeri (WBCSD), https://www.wbcsd.org, valeri@wbcsd.org
+Former Editor: Raimundo Henriques (SINE Foundation), https://sine.foundation, raimundo@sine.foundation
 Abstract: This document specifies a data model for GHG emission data at product level based on the PACT Methodology (previously Pathfinder Framework) Version 3, and a protocol for interoperable exchange of GHG emission data at product level.
 Markup Shorthands: markdown yes, idl yes, dfn yes
 Boilerplate: omit copyright, omit conformance
@@ -1068,6 +1073,11 @@ content-length: 0
 
 
 # Appendix A: Changelog # {#changelog}
+
+## Version 3.0.3 (November 18, 2025) ## {#changelog-3.0.3}
+
+Patch release:
+- Less stringent demands for inclusion of a JSON error body (ADR-50) in authentication related responses. See [[#api-error-handling]]
 
 ## Version 3.0.2 (July 18, 2025) ## {#changelog-3.0.2}
 
