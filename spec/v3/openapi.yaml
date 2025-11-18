@@ -1338,7 +1338,7 @@ components:
       - dataSchema
       - data
       properties:
-        specversion:
+        specVersion:
           type: string
           description: |
             The version of the Data Model Extension specification. The value 
@@ -1942,7 +1942,7 @@ components:
       description: |
         Bad request.
 
-        Response body MUST contain a JSON <{Error}> object
+        Response body MUST contain a JSON <{Error}> object, except when the error is related to authentication, see [[#api-error-handling]].
       content:
         application/json:
           schema:
@@ -1960,7 +1960,7 @@ components:
       description: |
         The request is not authorized, the access token is invalid or has expired. 
 
-        Response body MUST contain a JSON <{Error}> object
+        Response body SHOULD contain a JSON <{Error}> object, see [[#api-error-handling]].
       content:
         application/json:
           schema:
@@ -1969,7 +1969,7 @@ components:
       description: |
         Token expired.
 
-        Response body MUST contain a JSON <{Error}> object
+        Response body SHOULD contain a JSON <{Error}> object, see [[#api-error-handling]].
       content:
         application/json:
           schema:
