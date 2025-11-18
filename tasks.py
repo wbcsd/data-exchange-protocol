@@ -150,7 +150,7 @@ def build(c):
         )
 
 @task(help={"ver": "Major version to release, can be v2 or v3"})
-def release(c, ver="v3"):
+def release(c, ver="v3", force=False):
     """
     Release a version of the specification. Specify the major 
     version to release, this can be v1, v2 or v3.
@@ -167,22 +167,27 @@ def release(c, ver="v3"):
         raise Exception(f"Version mismatch: OpenAPI schema version {schema.get('info', {}).get('version')} != expected version {version}")
 
     if not os.path.exists(destination):
-         raise Exception(f"Destination {destination} does not exist. Expecting the local path to the TR repository.")
+        raise Exception(f"Destination {destination} does not exist. Expecting the local path to the TR repository.")
     if status != "Release":
         raise Exception(f"Not a release version: {version}: {status}")
-    if not is_repo_pristine("."):
-        raise Exception("Working tree is dirty. Finish committing files or stash, then try again.")
-    if os.path.exists(f"{destination}/{date}"):
-        raise Exception(f"Destination {destination}/{date} already exists. Expecting a new release.")
-
+    #if not is_repo_pristine("."):
+    #    raise Exception("Working tree is dirty. Finish committing files or stash, then try again.")
+    if os.path.exists(f"{destination}/{year}/data-exchange-protocol-{date}") and not force:
+        raise Exception(f"Destination {destination}/{year}/data-exchange-protocol-{date} already exists. Expecting a new release.")
+    if os.path.exists(f"{destination}/data-exchange-protocol/{version}") and not force:
+        raise Exception(f"Destination {destination}/data-exchange-protocol/{version} already exists. Expecting a new release.")
+    
     print(f"Building release version {version}", file=sys.stderr)
     clean(c)
     build(c)
+    validate(c)
 
     print("Publishing release") 
+    c.run(f"rm -rf {destination}/{year}/data-exchange-protocol-{date}")
     c.run(f"mkdir -p {destination}/{year}/data-exchange-protocol-{date}")
     c.run(f"cp -R build/{ver}/* {destination}/{year}/data-exchange-protocol-{date}")
 
+    c.run(f"rm -rf {destination}/{year}/data-exchange-protocol-{date}")
     c.run(f"mkdir -p {destination}/data-exchange-protocol/{version}")
     c.run(f"cp -R build/{ver}/* {destination}/data-exchange-protocol/{version}")
 
