@@ -9,9 +9,9 @@ In addition, for publishing a release:
   Update the Previous Version and TR links
 -->
 <pre class='metadata'>
-Text Macro: DATE 20250224
-Text Macro: VERSION 2.3.1
-Text Macro: STATUS Release
+Text Macro: DATE 20251117
+Text Macro: VERSION 2.3.2
+Text Macro: STATUS LD
 Title: Technical Specifications for PCF Data Exchange
 TR: https://wbcsd.github.io/tr/data-exchange-protocol/latest/
 Previous Version: https://wbcsd.github.io/tr/2024/data-exchange-protocol-20241024/
@@ -2557,10 +2557,8 @@ with
 
 ## Error responses ## {#api-error-responses}
 
-The actions [=Action GetFootprint=], [=Action ListFootprints=], and
-[=Action Events=] specify general error response handling.
-
-This section specifies the shared HTTP error response handling across these actions.
+While actions [=Action GetFootprint=], [=Action ListFootprints=], and
+[=Action Events=] describe case-specific error response handling, this section specifies the shared HTTP error response handling across these actions.
 
 Error responses are specified in detail such that [=data recipients=] can understand
 the cause of the error, and so that potentially [=host systems=] can react on and resolve errors automatically.
@@ -2569,6 +2567,9 @@ Note: [=Action Authenticate=] specifies its own error responses (see [[#api-acti
 
 Whenever a [=host system=] returns an [=error response=], it MUST send a HTTP response such that
   - the HTTP Status Code equals the `HTTP Status Code` defined for the respective [=error response code=] (see <a href="#api-errors-table">Error Codes Table</a>)
+
+In addition, these actions MUST return a JSON [=error response=] object with more information, EXCEPT when the error is releated to authentication, in which case it is RECOMMENDED to include an error object, if possible. The reason for this is that authentication infrastructure can reside outside of the host system, so there might be no control over the error messages. If provided, the response should be:
+
   - with content type set to `application/json`, and
   - with response body the [=error response=]
 

@@ -34,9 +34,9 @@ Make the JSON error body **optional** for authentication errors while keeping it
 
 ### Specific Changes
 
-1. **Authentication Errors (HTTP 400, 401 from authentication endpoints)**: 
-   - JSON error body becomes optional
+1. **Authentication Errors (HTTP 400, 401 origination from authentication infrastructure)**: 
    - HTTP status code alone is sufficient for conformance
+   - JSON error body becomes optional
    
 2. **All Other API Errors**: 
    - JSON error body remains mandatory (no change to existing behavior)
@@ -47,7 +47,7 @@ Make the JSON error body **optional** for authentication errors while keeping it
 > "All error responses MUST include a JSON error object with code and message fields"
 
 **Proposed specification text:**
-> "All error responses MUST include a JSON error object with code and message fields, except for authentication errors (HTTP 400, 401 from authentication endpoints) where the JSON error body is optional"
+> "All error responses MUST include a JSON error object with code and message fields, except for authentication errors (HTTP 400, 401 from authentication infrastructure) where the JSON error body is optional"
 
 ### Conformance Tool Changes
 
@@ -90,4 +90,5 @@ This change is **backwards compatible** because:
 
 ## Decision
 
-**Proposed** - To be presented at the next Tech WG meeting for community feedback and consensus.
+Presented at the Tech WG meeting 8/10/2025 for community feedback and consensus.
+Consensus reached and to be included in next patch release.

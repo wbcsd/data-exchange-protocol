@@ -9,9 +9,9 @@ In addition, for publishing a release:
   Update the Previous Version and TR links
 -->
 <pre class='metadata'>
-Text Macro: DATE 20250718
-Text Macro: VERSION 3.0.2
-Text Macro: STATUS Release
+Text Macro: DATE 20251118
+Text Macro: VERSION 3.0.3
+Text Macro: STATUS LD
 Title: Technical Specifications for PCF Data Exchange
 TR: https://wbcsd.github.io/tr/data-exchange-protocol/latest/
 Previous Version: https://wbcsd.github.io/tr/2025/data-exchange-protocol-20250430/
@@ -433,7 +433,8 @@ The following section briefly describes some of the additional functionality whi
 
 ## Error Handling ## {#api-error-handling}
 
-The actions [GetFootprint](#action-getfootprint), [ListFootprints](#action-listfootprints) and [Events](#action-events) MUST return an appropriate HTTP status code and MUST include a JSON <{Error}> object with information on the error.
+The actions [GetFootprint](#action-getfootprint), [ListFootprints](#action-listfootprints) and [Events](#action-events) MUST return an appropriate HTTP status code. 
+In addition, these actions MUST return a JSON <{Error}> object with more information, except when the error is releated to authentication, in which case it is RECOMMENDED to include an <{Error}> object, if possible. The reason for this is that authentication infrastructure can reside outside of the host system, so there is might be no control over the error messages.
 
 Error responses are specified in detail such that data recipients can understand the cause of the error, and so that potentially host systems can act on and resolve errors automatically.
 
