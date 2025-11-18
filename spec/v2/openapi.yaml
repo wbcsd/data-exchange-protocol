@@ -2,7 +2,7 @@ openapi: 3.1.0
 info:
   title: PACT API Specification
   summary: Technical Specifications for PCF Data Exchange
-  version: 2.3.1
+  version: 2.3.2
   contact: 
     name: WBCSD PACT Project
     url: https://github.com/wbcsd
@@ -1036,7 +1036,7 @@ components:
       - dataSchema
       - data
       properties:
-        specversion:
+        specVersion:
           type: string
           description: |
             The version of the Data Model Extension specification. The value 
