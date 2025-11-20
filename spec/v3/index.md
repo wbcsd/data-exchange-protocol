@@ -11,7 +11,7 @@ In addition, for publishing a release:
 <pre class='metadata'>
 Text Macro: DATE 20251120
 Text Macro: VERSION 3.0.4
-Text Macro: STATUS Release
+Text Macro: STATUS LD
 Title: Technical Specifications for PCF Data Exchange
 TR: https://wbcsd.github.io/tr/data-exchange-protocol/latest/
 Previous Version: https://wbcsd.github.io/tr/2025/data-exchange-protocol-20250430/

@@ -258,8 +258,6 @@ def process_all_of(type):
               otherwise returns the original type definition.
     """
     if "allOf" in type:
-        print("Found ALLOF!!!!")
-        print(yaml.dump(type))
         for subtype in type["allOf"]:
             for key, value in subtype.items():
                 if key != "properties":
