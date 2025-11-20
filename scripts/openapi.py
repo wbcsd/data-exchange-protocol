@@ -138,13 +138,13 @@ def write_property(output, type, name, property, termdef=True, recursive=False):
     output.write("\n\n")
     if property.get("x-unit"):
         output.write(f"<div class='x-unit'>{property['x-unit']}")
-        if property.get("comment"):
-            output.write(f", {sanitize(property['comment'])}")
+        if property.get("x-comment"):
+            output.write(f", {sanitize(property['x-comment'])}")
         output.write("</div>")
     if property.get("x-rule"):
         output.write(f"<div class='x-rule'><a href='#reporting-rules'>{property['x-rule']}</a>")
-        if property.get("comment") and not property.get("x-unit"):
-            output.write(f", {sanitize(property['comment'])}")
+        if property.get("x-comment") and not property.get("x-unit"):
+            output.write(f", {sanitize(property['x-comment'])}")
         output.write("</div>")
     if property.get("x-methodology"):
         output.write(f"<div class='x-methodology'>Methodology section {property['x-methodology']}</div>")
@@ -212,9 +212,9 @@ def generate_type_description(output, schema, type_name, type):
         description = description.replace("\n\n", "\n\n\n")
         output.write(f"{description}\n")
         output.write("\n")
-    if "example" in type:
+    if "x-example" in type:
         output.write('<div class="example">\n')
-        output.write(type['example'])
+        output.write(type["x-example"])
         output.write("\n</div>\n\n")
     if "properties" in type:
         output.write("### Properties\n\n")
@@ -224,20 +224,7 @@ def generate_type_description(output, schema, type_name, type):
                 continue
             write_property(output, type, name, property)
         write_defs_end(output)
-    if "x-externalDocs" in type:
-        output.write("### External Docs\n")
-        output.write("\n")
-        output.write(f"[{type['x-externalDocs']['description']}]({type['x-externalDocs']['url']})\n")
-        output.write("\n")
-    if "x-examples" in type:
-        output.write("### Examples\n")
-        output.write("\n")
-        for example in type["x-examples"]:
-            output.write(f"#### {example['title']}\n")
-            output.write("\n")
-            output.write(f"{example['description']}\n")
-            output.write("\n")
-     
+
 
 def generate_data_model(input_path, output_path):
     # Load the schema from the file
@@ -289,8 +276,8 @@ def generate_operation(output, path, method, operation):
                     for name, property in variant["properties"].items():
                         write_property(output, variant, name, property, termdef=False, recursive=True)
                     write_defs_end(output)
-                    if "examples" in variant:
-                        output.write(variant['examples'][0])
+                    if "x-example" in variant:
+                        output.write(variant['x-example'])
             else:
                 output.write("\n\n**Request Body**\n\n")
                 output.write(f"`content-type: {content_type}`\n")

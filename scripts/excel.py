@@ -387,8 +387,8 @@ def generate(writer, title, schema, typename, examples_from_schema, example_obje
             else:
                 type_description = "object"
         type_description += " " + info.get("format", "")
-        if info.get("comment"):
-            type_description += " (" + info["comment"] + ")\n"
+        if info.get("x-comment"):
+            type_description += " (" + info["x-comment"] + ")\n"
         else:
             type_description += "\n"
         type_description += "|".join(info.get("enum", info.get("x-enum", []))) + "\n"
@@ -412,7 +412,7 @@ def generate(writer, title, schema, typename, examples_from_schema, example_obje
             return
         
         type_description = get_type_description(info)
-        description = info.get("summary") or info.get("description") or "N/A"
+        description = info.get("x-short-description") or info.get("description") or "N/A"
         
         for key, value in filter_text.items():
             description = description.replace(key, value)
@@ -445,7 +445,6 @@ def generate(writer, title, schema, typename, examples_from_schema, example_obje
             else:
                 rule = "MAY"
 
-
         section = info.get("x-methodology", "")
         section = str(section) + " " + methodology_sections.get(section, "")
         section = section.strip()
@@ -464,7 +463,7 @@ def generate(writer, title, schema, typename, examples_from_schema, example_obje
             attribute = info.get("x-term", ""),
             section = section,
             reporting = rule,
-            comment = info.get("title", "") + info.get("x-comment", "") + info.get("note", ""),
+            comment = info.get("title", info.get("x-note", "")),
             description = description,
             category = parent.get("title", ""),
             unit = info.get("x-unit", "-"),
@@ -489,7 +488,7 @@ def generate(writer, title, schema, typename, examples_from_schema, example_obje
 
         if info.get("title") and name:
             # Append a row for the type itself and set background color to blue
-            writer.write_type([name + ": " + info["title"], info.get("x-term"), info.get("x-methodology"), info.get("x-rule"), info.get("summary")])
+            writer.write_type([name + ": " + info["title"], info.get("x-term"), info.get("x-methodology"), info.get("x-rule"), info.get("x-short-description")])
 
         for prop_name, prop_info in info.get("properties", {}).items():
             # Skip obsolete properties
@@ -548,41 +547,3 @@ def generate_simplified_datamodel(input_path:str, output_path:str, title:str, ty
     writer.save()
 
 
-
-# if __name__ == "__main__":
-#     # Get command line args
-#     if len(sys.argv) < 2:
-#         print("Usage: python3 generate-excel.py <input-path>")
-#         print("This script generates an Excel file from a OpenAPI schema.")
-#         print("")
-#         print("Example:")
-#         print("python3 generate-excel pact-openapi-2.2.1-wip.yaml")
-#         print()
-#         exit()
-#     input_path = sys.argv[1]
-#     if not os.path.exists(input_path):
-#         print("File not found:", input_path)
-#         exit()
-#     status = " (Living Document)"
-#     if (len(sys.argv) >= 3):
-#         status = " (" + sys.argv[2].upper() + ")"
-    
-#     # Load the schema from the file
-#     with open(input_path) as file:
-#         schema1 = yaml.safe_load(file)
-#     schema = jsonref.replace_refs(schema1, merge_props=True)
-
-#     # Create a new workbook and select the active worksheet
-#     wb = Workbook()
-#     ws = wb.active
-#     ws.title = "PACT Simplified Data Model"
-#     ws.sheet_view.zoomScale = 140
-
-#     generate_excel(ws, schema, ["ProductFootprint"])
-
-#     # Save the workbook to a file
-#     output_path = os.path.basename(input_path)
-#     output_path = output_path.replace('-openapi-', '-simplified-model-')
-#     output_path = output_path.replace(".yaml", "") + ".xlsx"
-#     output_path = os.path.join(os.path.dirname(input_path), output_path)
-#     wb.save(output_path)

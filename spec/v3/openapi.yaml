@@ -2,7 +2,7 @@ openapi: 3.1.0
 info:
   title: PACT API Specification
   summary: Technical Specifications for PCF Data Exchange
-  version: 3.0.3
+  version: 3.0.4
   contact: 
     name: WBCSD PACT Project
     url: https://github.com/wbcsd
@@ -210,13 +210,13 @@ paths:
                     items:
                       $ref: '#/components/schemas/ProductFootprint'
         '400':
-          $ref: '#/components/schemas/BadRequestResponse'
+          $ref: '#/components/responses/BadRequestResponse'
         '401':
-          $ref: '#/components/schemas/UnauthorizedResponse'
+          $ref: '#/components/responses/UnauthorizedResponse'
         '403':
-          $ref: '#/components/schemas/ForbiddenResponse'
+          $ref: '#/components/responses/ForbiddenResponse'
         '500':
-          $ref: '#/components/schemas/InternalErrorResponse'
+          $ref: '#/components/responses/InternalErrorResponse'
       security:
       - BearerAuth: []
   /3/footprints/{id}:
@@ -278,23 +278,23 @@ paths:
                       The product footprint requested, see <{ProductFootprint}>.
                     $ref: '#/components/schemas/ProductFootprint'
         '400':
-          $ref: '#/components/schemas/BadRequestResponse'
+          $ref: '#/components/responses/BadRequestResponse'
         '401':
-          $ref: '#/components/schemas/UnauthorizedResponse'
+          $ref: '#/components/responses/UnauthorizedResponse'
         '403':
           description: | 
             The data recipient is not allowed to access the requested ProductFootprint.
 
             Response body MUST contain a JSON <{Error}> object
-          $ref: '#/components/schemas/ForbiddenResponse'
+          $ref: '#/components/responses/ForbiddenResponse'
         '404':
           description: |
             The requested ProductFootprint was not found.
 
             Response body MUST contain a JSON <{Error}> object
-          $ref: '#/components/schemas/NotFoundResponse'
+          $ref: '#/components/responses/NotFoundResponse'
         '500':
-          $ref: '#/components/schemas/InternalErrorResponse'
+          $ref: '#/components/responses/InternalErrorResponse'
       security:
       - BearerAuth: []
   /3/events:
@@ -346,13 +346,13 @@ paths:
             body will be empty.
             
         '400':
-          $ref: '#/components/schemas/BadRequestResponse'
+          $ref: '#/components/responses/BadRequestResponse'
         '401':
-          $ref: '#/components/schemas/UnauthorizedResponse'
+          $ref: '#/components/responses/UnauthorizedResponse'
         '403':
-          $ref: '#/components/schemas/ForbiddenResponse'
+          $ref: '#/components/responses/ForbiddenResponse'
         '500':
-          $ref: '#/components/schemas/InternalErrorResponse'
+          $ref: '#/components/responses/InternalErrorResponse'
       security:
       - BearerAuth: []
 components:
@@ -378,7 +378,7 @@ components:
 
         Each `ProductFootprint` can and should be updated over time, for instance to
         incorporate new or refined data from [=data owners=] (see [[#lifecycle]]).
-      summary: |
+      x-short-description: |
         The ProductFootprint represents the footprint of a product.
       type: object
       title: ProductFootprint
@@ -434,7 +434,7 @@ components:
         #     PCF will generate a new ID, so this field is no longer needed.
             
         #     See [[#lifecycle]] for details.
-        #   note: Deprecated in 3.0. MUST be 1.
+        #   x-note: Deprecated in 3.0. MUST be 1.
         #   type: integer
         #   format: int32
         #   minimum: 0
@@ -456,7 +456,7 @@ components:
         #     the updated property redundant.
             
         #     See [[#lifecycle]] for details.
-        #   note: Deprecated in 3.0.
+        #   x-note: Deprecated in 3.0.
         #   type: string
         #   format: date-time
         status:
@@ -482,7 +482,7 @@ components:
             the <{CarbonFootprint/referencePeriodEnd}>
 
             See [[#validity-period]] for details.
-          summary: |
+          x-short-description: |
             The start date and time of the validity period. The period of time between the 
             validityPeriodStart and validityPeriodEnd is defined as the "validity period", 
             and represents the time period during which the PCF is valid. Specifying the 
@@ -509,7 +509,7 @@ components:
           description: |
             The non-empty set of Uniform Resource Names ([[!RFC8141|URN]]). Each value of 
             this set is supposed to uniquely identify the ProductFootprint Data Owner. 
-          summary: |
+          x-short-description: |
             A list of company identifiers which represent the companies that are considered 
             data owners of the PCF. In a large organization, this may include multiple
             subsidiaries or legal entities of a given corporation, hence the need to provide 
@@ -537,7 +537,7 @@ components:
             The non-empty set of Product IDs in [[!RFC8141|URN]] format. Each of the values in the set is 
             supposed to uniquely identify the product. See [[#product-identifier-urns]] for syntax and
             examples.
-          summary: |
+          x-short-description: |
             All relevant product identifiers to identify the product for which the provided 
             PCF was calculated (e.g. supplier part number, GTIN, article number, batch number, etc.)
           type: array
@@ -550,8 +550,8 @@ components:
             The non-empty set of Product Classifications in [[!RFC8141|URN]] format. Each of the values 
             in the set can classify the product as part of distinct groupings and categorizations. 
             See [[#product-classification-urns]].
-          note: Replaces productCategoryCpc deprecated in 2.3
-          summary: |
+          x-note: Replaces productCategoryCpc deprecated in 2.3
+          x-short-description: |
             A list of classification or category identifiers in URN format. Use well known urn's here, 
             or adhere to recommended urn:pact: format. For example UN CPC, CAS Numbr, CN Code etc.
             
@@ -602,7 +602,7 @@ components:
           description: |
             The carbon footprint of the given product with value conforming to the data 
             type <{CarbonFootprint}>.
-          summary:
+          x-short-description:
             The carbon footprint of the given product.
           $ref: '#/components/schemas/CarbonFootprint'
         extensions: 
@@ -628,7 +628,7 @@ components:
         2. Has a regional or sub-regional geographical granularity, then the property <{CarbonFootprint/geographyRegionOrSubregion}> MUST be `defined` and the properties <{CarbonFootprint/geographyCountry}> and <{CarbonFootprint/geographyCountrySubdivision}> MUST be `undefined`;
         3. Has a country-specific geographical granularity, then property <{CarbonFootprint/geographyCountry}> MUST be `defined` AND the properties <{CarbonFootprint/geographyRegionOrSubregion}> and <{CarbonFootprint/geographyCountrySubdivision}> MUST be `undefined`;
         4. Has a country subdivision-specific geographical granularity, then property <{CarbonFootprint/geographyCountrySubdivision}> MUST be `defined` AND the properties <{CarbonFootprint/geographyRegionOrSubregion}> and <{CarbonFootprint/geographyCountry}> MUST be `undefined`.
-      summary: |
+      x-short-description: |
         The CarbonFootprint represents the carbon footprint of a product and related data 
         in accordance with the PACT Methodology.
       title: CarbonFootprint
@@ -687,7 +687,7 @@ components:
             - megabit second
           x-term: Declared Unit
           x-methodology: 3.2.4
-          example: "liter"
+          examples: ["liter"]
         declaredUnitAmount:
           description: |
             The amount of <{CarbonFootprint/declaredUnitOfMeasurement|units}> contained
@@ -695,7 +695,7 @@ components:
 
             For example: if the product is a car door weighing 80kg, `declaredUnitAmount` 
             will be `80` and `declaredUnitOfMeasurement` will be `kilogram`.
-          summary: |
+          x-short-description: |
             The amount of units contained within the product to which the PCF refers. 
             This is not representing the total annual quantity supplied (e.g. if the product is 
             supplied in bulk in kg, which is the declared unit selected, the value MUST be 1)
@@ -704,7 +704,7 @@ components:
           x-unit: declared unit
           x-term: Declared Unit
           x-methodology: 3.2.4
-          example: "12.5"
+          examples: ["12.5"]
         productMassPerDeclaredUnit:
           description: |
             The mass (in kg) of the product excluding packaging. The 'declared unit' is
@@ -722,18 +722,18 @@ components:
             For the full list of declared units requiring to report a mass per declared unit 
             attribute please refer to table 4 in the PACT Methodology.
 
-          note: mandatory in 3.0, optional in v2.x
+          x-note: mandatory in 3.0, optional in v2.x
           $ref: '#/components/schemas/Decimal'
           x-term: Declared Unit
           x-methodology: 3.2.4
-          example: "9.86"
+          examples: ["9.86"]
         referencePeriodStart:
           description: |
             The start (inclusive) of the time boundary for which the PCF value
             is considered to be representative. Specifically, this start date
             represents the earliest date from which activity data was collected
             to include in the PCF calculation. 
-          summary: |
+          x-short-description: |
             The start date and time of the earliest activity data used to calculate the 
             PCF. This start date can be considered the start of the period over which 
             the given PCF is referencing, or reporting on.
@@ -741,14 +741,14 @@ components:
           format: date-time
           x-term: Reference period
           x-methodology: 3.2.3
-          example: "2025-04-30T00:00:00+00:00"
+          examples: ["2025-04-30T00:00:00+00:00"]
         referencePeriodEnd:
           description: |
             The end (exclusive) of the time boundary for which the PCF value is
             considered to be representative. Specifically, this end date
             represents the latest date from which activity data was collected
             to include in the PCF calculation.
-          summary: |
+          x-short-description: |
             The end date and time of the latest activity data used to calculate the PCF. 
             This end date can be considered the end of the period over which the given 
             PCF is referencing, or reporting on.
@@ -756,12 +756,12 @@ components:
           format: date-time
           x-term: Reference period
           x-methodology: 3.2.3
-          example: "2025-12-30T00:00:00Z"
+          examples: ["2025-12-30T00:00:00Z"]
         geographyRegionOrSubregion:
           description: |
             If present, the value MUST be one of the [=UN geographic regions=] or [=UN geographic subregions=]. See [[#dt-carbonfootprint-scope]] for further details. Additionally, see the [=PACT Methodology=] Section 3.2.3.
 
-          summary: |
+          x-short-description: |
             The geographic representation of the PCF should be reported at different 
             levels of granularity, depending on the preference of the data owner 
             (e.g., at a plant, region, or country level). This attribute specifies 
@@ -802,7 +802,7 @@ components:
             If present, the value MUST conform to the [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) 
             country code.
             See [[#dt-carbonfootprint-scope]] for further details.
-          summary: |
+          x-short-description: |
             The geographic representation of the PCF should be reported at different levels
             of granularity, depending on the preference of the data owner (e.g., at a 
             plant, region, or country level). This field indicates the country to which 
@@ -810,17 +810,17 @@ components:
             country code (https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)
           type: string
           pattern: '^[A-Z]{2}$'
-          comment: ISO 3166-1 alpha-2
+          x-comment: ISO 3166-1 alpha-2
           x-rule: SHOULD
           x-term: Country
           x-methodology: 3.2.3
           examples:
-            - US
-            - DE
+          - US
+          - DE
         geographyCountrySubdivision:
           description: |
             If present, a [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2) country and subdivision code. See [[#dt-carbonfootprint-scope]] for further details.
-          summary: |
+          x-short-description: |
             The geographic representation of the PCF should be reported at different 
             levels of granularity, depending on the preference of the data owner 
             (e.g., at a plant, region, or country level). This attribute represents 
@@ -829,20 +829,20 @@ components:
             the USA. Follows ISO 3166-2 (https://en.wikipedia.org/wiki/ISO_3166-2)
           type: string
           pattern: '^[A-Z]{2}-[A-Z0-9]{1,3}$'
-          comment: ISO 3166-2
+          x-comment: ISO 3166-2
           x-rule: SHOULD
           x-term: Country subdivision
           x-methodology: 3.2.3
           examples:
-            - US-CA
-            - DE-BW
+          - US-CA
+          - DE-BW
         boundaryProcessesDescription:
           description: |
             Brief description of the processes attributable to each life cycle stage included 
             in the PCF (e.g. electricity consumption for manufacturing), especially those 
             that significantly contribute manufacturing steps of the product (including 
             general description of used technologies).
-          note: optional in 3.0, was mandatory in 2.x
+          x-note: optional in 3.0, was mandatory in 2.x
           type: string
           x-rule: SHOULD
           x-methodology: 3.2
@@ -859,7 +859,7 @@ components:
             Excluding:
             - Biogenic Product CO2 uptake
           x-unit: kgCO2e/declared unit
-          x-comment: | 
+          x-note: | 
             PCF (Excl. biogenic CO2 uptake) = 
               fossilGhgEmissions + 
               landUseChangeGhgEmissions + 
@@ -871,7 +871,7 @@ components:
           x-rule: SHALL
           x-term: PCF Excluding biogenic CO2 uptake 
           x-methodology: 3.3.1
-          example: "5.14"
+          examples: ["5.14"]
           $ref: '#/components/schemas/Decimal'
         pcfIncludingBiogenicUptake:
           description: |
@@ -885,7 +885,7 @@ components:
             - Biogenic Product CO2 uptake
 
           x-unit: kgCO2e/declared unit
-          x-comment: |
+          x-note: |
             PCF (Incl. biogenic CO2 uptake) = 
               fossilGhgEmissions + 
               landUseChangeGhgEmissions + 
@@ -899,7 +899,7 @@ components:
           x-term: PCF Including biogenic CO2 uptake
           x-methodology: 3.3.1
           $ref: '#/components/schemas/Decimal'
-          example: "-14.22"
+          examples: ["-14.22"]
         fossilCarbonContent:
           description: |
             The fossil carbon content of the product (mass of carbon). 
@@ -930,7 +930,7 @@ components:
             fugitive emissions, and from process emissions. 
             
             Expressed in kgCO2e per declared unit. 
-          summary: |
+          x-short-description: |
             The emissions from fossil sources as a result of fuel combustion, from fugitive 
             emissions, and from process emissions. 
           x-unit: kgCO2e/declared unit
@@ -945,14 +945,14 @@ components:
           x-unit: kgCO2e/declared unit
           x-rule: BIO
           x-term: Land use and land use change emissions or LUC emissions
-          x-comment: Replaces dLucGhgEmissions
+          x-note: Replaces dLucGhgEmissions
           x-methodology: 3.3.2.4
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
         landCarbonLeakage:
           description: |
             Placeholder for indirect land use change causing displacement of food production, outside of value-chain 
           x-unit: kgCO2e/declared unit
-          x-comment: Placeholder.
+          x-note: Placeholder.
           $ref: '#/components/schemas/PositiveOrZeroDecimal'
         landManagementFossilGhgEmissions:
           description: |
@@ -990,7 +990,7 @@ components:
           x-term: Biogenic CO2 uptake
           x-methodology: 3.3.2.4
           $ref: '#/components/schemas/NegativeOrZeroDecimal'
-          x-comment: Replaces biogenicCarbonWithdrawal
+          x-note: Replaces biogenicCarbonWithdrawal
         biogenicNonCO2Emissions:
           description: |
             CH4 emissions from land management practices and  the oxidation and transformation or degradation of biomass.
@@ -1074,7 +1074,7 @@ components:
           x-term: Technological CO2 capture with geological storage
           x-rule: SHALL
           x-methodology: 3.3.2.5
-          example: false
+          examples: [false]
         ccsTechnologicalCO2Capture:
           description: |
             The amount of CO2 captured with Carbon Capture and Storage (CCS) technologies.
@@ -1083,7 +1083,7 @@ components:
           x-term: Technological CO2 capture with geological storage
           x-rule: CCS
           x-methodology: 3.3.2.5
-          example: "-4.34"
+          examples: ["-4.34"]
         technologicalCO2CaptureOrigin:
           description: |
             For CCU: Information about the origin (fossil or biogenic) and path of the captured CO2 used in CCU, including 
@@ -1137,8 +1137,8 @@ components:
             IPCC report version number and MUST be an integer.
 
             Per the Methodology the latest available characterization factor version shall be used, i.e., `["AR6"]`. In the event this is not possible, include the set of all characterization factors used.
-          note: supersedes `characterizationFactors` deprecated in 2.3.
-          summary: |              
+          x-note: supersedes `characterizationFactors` deprecated in 2.3.
+          x-short-description: |              
             The IPCC (Intergovernmental Panel of Climate Change) frequently releases (GWP) 
             global warming potential values for climate gases related to CO2. These GWP 
             values are released in Assessment Reports (AR), which are numbered. 
@@ -1185,8 +1185,8 @@ components:
               :: for the Publicly Available Specification (PAS) 2050, "Specification for the assessment of the life cycle greenhouse gas emissions of goods and services". The use of this standard is permitted but not recommended.
 
             The enumeration of standards above CAN evolve in future revisions. A host system MUST accept ProductFootprints from later revisions with `crossSectoralStandards` containing values that are not defined in this specification.
-          note: Supersedes `crossSectoralStandardsUsed` deprecated in version 2.3.
-          summary: |
+          x-note: Supersedes `crossSectoralStandardsUsed` deprecated in version 2.3.
+          x-short-description: |
             The cross-sectoral standards applied for calculating or allocating GHG 
             emissions. If multiple apply, list all.
           type: array
@@ -1212,7 +1212,7 @@ components:
         productOrSectorSpecificRules:
           description: |
             The product-specific or sector-specific rules applied for calculating or allocating GHG emissions. If no product or sector specific rules were followed, this set MUST be empty.
-          summary: |
+          x-short-description: |
             The product-specific or sector-specific rules applied for calculating or 
             allocating GHG emissions. Sector specific guidance frameworks, such as 
             Product Category Rules (PCR), are sets of rules for how to calculate and 
@@ -1228,7 +1228,7 @@ components:
           uniqueItems: true
           x-term: Product or sector specific rules
           x-methodology: 3.1.2
-          note: Multiple ProductOrSpecificRules can be specifed, each with its own operator and ruleNames.
+          x-note: Multiple ProductOrSpecificRules can be specifed, each with its own operator and ruleNames.
           examples: 
           -  
             - operator: PEF
@@ -1241,21 +1241,19 @@ components:
         exemptedEmissionsPercent:
           description: |
             The percentage of emissions excluded from the PCF. 
-          note: string<decimal> in 3.0, was Number in 2.x. Removed upper boundary of 5%.
+          x-note: string<decimal> in 3.0, was Number in 2.x. Removed upper boundary of 5%.
           x-term: Exemption rules
           x-methodology: 3.3.1.2
           $ref: '#/components/schemas/Decimal'
-          examples:
-            - "5.3"
-            - "10.4"
+          examples: ["5.3", "10.4"]
         exemptedEmissionsDescription:
           description: |
             Rationale behind exclusion of specific PCF emissions, CAN be the empty string if no emissions were excluded.
-          summary: |
+          x-short-description: |
             If emissions exempted, rationale behind exclusion of specific PCF emissions.
           x-term: Exemption rules
           x-methodology: 3.3.1.2
-          note: optional in 3.0, was mandatory in 2.x
+          x-note: optional in 3.0, was mandatory in 2.x
           type: string
         allocationRulesDescription:
           description: |
@@ -1271,7 +1269,7 @@ components:
             If secondary data was used to calculate the <{CarbonFootprint}>, then it MUST include the property <{CarbonFootprint/secondaryEmissionFactorSources}> with value the emission factors used for the <{CarbonFootprint}> calculation.
 
             If no secondary data is used, this property MUST BE undefined.
-          summary: |
+          x-short-description: |
             The list of secondary data sources and versions which have been used by 
             the data owner for the PCF calculation (e.g. databases such as ecoinvent)
 
@@ -1290,7 +1288,7 @@ components:
         primaryDataShare:
           description: |
             Share of primary data in the final absolute PCF value excluding biogenic CO2 uptake (pcfExcludingBiogenicUptake).
-          note: string<decimal> in 3.0, was Number in 2.x
+          x-note: string<decimal> in 3.0, was Number in 2.x
           x-rule: SHALL
           x-term: Primary Data Share
           x-methodology: 4.2.2
@@ -1317,8 +1315,9 @@ components:
         [JSON Representation of a Data Model Extension](https://wbcsd.github.io/data-model-extensions/spec/#instantiation).
 
         See [[!DATA-MODEL-EXTENSIONS]] for technical details and [[!EXTENSIONS-GUIDANCE]] for data model extension guidance.
-      example: |
+      x-example: |
         Example imaginary Data Model Extension for encoding shipment-related data, encoded in JSON:
+
         ```json
         {
           "specVersion": "2.0.0",
@@ -1401,21 +1400,21 @@ components:
             of the operator.
           type: string
           minLength: 1
-      example: |
-          ```json
-          {
-            "operator": "PEF",
-            "ruleNames": [
-              "PEF 1.0",
-              "Other"
-            ]
-          }
-          ```
+      x-example: |
+        ```json
+        {
+          "operator": "PEF",
+          "ruleNames": [
+            "PEF 1.0",
+            "Other"
+          ]
+        }
+        ```
     EmissionFactorSource:
       title: EmissionFactorSource
       description: |
         References emission factor databases, see [=PACT Methodology=] Section 4.1.3.2.
-
+      
         ```json
         {
           "name": "ecoinvent",
@@ -1432,18 +1431,18 @@ components:
             Name of the secondary emission factor database
           $ref: '#/components/schemas/NonEmptyString'
           examples:
-            - ecoinvent
+          - ecoinvent
         version:
           description: |
             Version of the secondary emission factor database
           $ref: '#/components/schemas/NonEmptyString'
           examples:
-            - 3.9.1
+          - 3.9.1
     DataQualityIndicators:
       title: DataQualityIndicators
       description: | 
         Data type DataQualityIndicators contains the quantitative data quality indicators.  
-      example: |
+      x-example: |
         Example value for the case that all DQIs are known but no coverage after exemption assessment performed:
 
         ```json
@@ -1452,7 +1451,7 @@ components:
           "geographicalDQR": "2.0"
           "temporalDQR": "3.0",
         }
-        ```        
+        ```
       type: object
       x-methodology: 4.2.3
       required:
@@ -1469,7 +1468,7 @@ components:
 
             The value MUST be between `1` and `5` inclusive.
 
-          note: string<decimal> in 3.0, was Number in 2.x
+          x-note: string<decimal> in 3.0, was Number in 2.x
           x-term: Technological representativeness
           x-rule: SHALL
           $ref: '#/components/schemas/Decimal'
@@ -1481,7 +1480,7 @@ components:
             weighted average of all inputs.
 
             The value MUST be between `1` and `5` inclusive.
-          note: string<decimal> in 3.0, was Number in 2.x
+          x-note: string<decimal> in 3.0, was Number in 2.x
           x-term: Geographical representativenes
           x-rule: SHALL
           $ref: '#/components/schemas/Decimal'
@@ -1493,7 +1492,7 @@ components:
             weighted average of all inputs.
 
             The value MUST be between `1` and `5` inclusive.
-          note: string<decimal> in 3.0, was Number in 2.x
+          x-note: string<decimal> in 3.0, was Number in 2.x
           x-term: Temporal / Time representativenes
           x-rule: SHALL
           $ref: '#/components/schemas/Decimal'
@@ -1501,8 +1500,8 @@ components:
       title: Verification
       description: |
         Contains the verification in conformance with the PACT Methodology.
-      note: Renamed from `Assurance` in 3.0
-      example: |
+      x-note: Renamed from `Assurance` in 3.0
+      x-example: |
         ```json 
         {
           "coverage": "PCF program",
@@ -1517,7 +1516,7 @@ components:
           description: |
             The coverage of the verification defines the type and level of GHG data to be verified.
           type: string
-          note: values changed from v2.x
+          x-note: values changed from v2.x
           enum:
             - PCF calculation model
             - PCF program
@@ -1527,7 +1526,7 @@ components:
         providerName:
           description: |
             The non-empty name of the independent third party engaged to undertake the verification.
-          note: optional in version 3.0 was mandatory in 2.x
+          x-note: optional in version 3.0 was mandatory in 2.x
           type: string
           x-term: Verification provider
           x-methodology: 5.3.7
@@ -1565,22 +1564,22 @@ components:
       type: string
       format: decimal
       pattern: ^[+]?(\d*[1-9]\d*)(\.\d+)?|(0+\.\d*[1-9]\d*)$
-      comment: '> 0'
+      x-comment: '> 0'
     PositiveOrZeroDecimal:
       type: string
       format: decimal
       pattern: ^[+]?\d+(\.\d+)?$
-      comment: '>= 0'
+      x-comment: '>= 0'
     NegativeOrZeroDecimal:
       type: string
       format: decimal
       pattern: ^(-\d+(\.\d+)?)|0+(\.0+)?$
-      comment: '<= 0'
+      x-comment: '<= 0'
     NegativeNonZeroDecimal:
       type: string
       format: decimal
       pattern: ^-((\d*[1-9]\d*)(\.\d+)?|(0+\.\d*[1-9]\d*))$
-      comment: '< 0'
+      x-comment: '< 0'
 
     # -----------
     # Events
@@ -1633,8 +1632,7 @@ components:
         The data recipient can retrieve the *actual* Product Footprints by calling the 
         [=Action GetFootprint=] action on the data owner's systems.
       type: object
-      examples:
-      - | 
+      x-example: |
         ```http
         POST /3/events HTTP/1.1
         Host: api.example.com
@@ -1697,8 +1695,7 @@ components:
         owner MUST send a follow-up event back to the data recipient at some time in the future. 
         This follow up event MUST be either a `RequestFulfilledEvent` or `RequestRejectedEvent`. 
         
-      examples:
-      - |
+      x-example: |
         ```http
         POST /3/events HTTP/1.1
         Host: api.example.com
@@ -1788,9 +1785,7 @@ components:
         If the [=data recipient=] cannot be reached by the [=data owner=], the data owner 
         SHOULD retry to send the event at a later time, using an exponential backoff
         strategy. It SHOULD abandon sending the event after 72 hours. 
-      type: object
-      examples:
-      - |
+      x-example: |
         ```http
         POST /3/events HTTP/1.1
         Host: api.example.com
@@ -1824,6 +1819,7 @@ components:
           }
         }
         ```
+      type: object
       properties:
         $ref: '#/components/schemas/BaseEvent/properties'
         type:
@@ -1862,8 +1858,7 @@ components:
         SHOULD retry to send the event at a later time, using an exponential backoff
         strategy. It SHOULD abandon sending the event after 72 hours. 
 
-      examples:
-      - |
+      x-example: |
         ```http
         POST /3/events HTTP/1.1
         Host: api.example.com
@@ -1905,8 +1900,6 @@ components:
             error:
               $ref: '#/components/schemas/Error'
               
-    # ---------------
-    # Error Responses
     Error:
       title: Error
       description: Object with error code and description, to be returned by the API methods 
@@ -1931,13 +1924,14 @@ components:
       required:
       - code
       - message
-      example: |
+      x-example: |
         ```json
         { 
           "code": "NotFound",
           "message": "The requested footprint could not be found." 
         }
         ```
+  responses:
     BadRequestResponse:
       description: |
         Bad request.
