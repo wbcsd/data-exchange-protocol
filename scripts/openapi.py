@@ -245,6 +245,32 @@ def generate_data_model(input_path, output_path):
             # for name in ["ProductFootprint", "CarbonFootprint"]:
             generate_type_description(output, schema, name, type)
 
+def process_all_of(type):
+    """
+    Processes the 'allOf' keyword in a JSON schema type definition by merging the properties
+    of all referenced types into the main type definition.
+
+    Args:
+        type (dict): The JSON schema type definition that may contain an 'allOf' key.
+
+    Returns:
+        dict: The updated type definition with merged properties if 'allOf' was present,
+              otherwise returns the original type definition.
+    """
+    if "allOf" in type:
+        print("Found ALLOF!!!!")
+        print(yaml.dump(type))
+        for subtype in type["allOf"]:
+            for key, value in subtype.items():
+                if key != "properties":
+                    type[key] = value
+                elif not "properties" in type:
+                    type["properties"] = value
+                else:
+                    for name, property in subtype["properties"].items():
+                        type["properties"][name] = property
+        del type["allOf"]
+    return type
 
 def generate_operation(output, path, method, operation):
     output.write(f"## <dfn>{operation['summary']}</dfn>")
@@ -268,6 +294,7 @@ def generate_operation(output, path, method, operation):
         for content_type, content in operation["requestBody"]["content"].items():
             if "oneOf" in content["schema"]:
                 for variant in content["schema"]["oneOf"]:
+                    variant = process_all_of(variant)
                     output.write(f"### {variant['title']}\n\n")
                     output.write(variant["description"])
                     output.write("\n\n**Request Body**\n\n")

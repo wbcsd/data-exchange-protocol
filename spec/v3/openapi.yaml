@@ -1616,7 +1616,6 @@ components:
           description: The event payload.
 
     PublishedEvent:
-      $ref: '#/components/schemas/BaseEvent'
       title: Published Event
       description: |
         Notification that a ProductFootprint has been published (either new or updated).
@@ -1631,7 +1630,6 @@ components:
         
         The data recipient can retrieve the *actual* Product Footprints by calling the 
         [=Action GetFootprint=] action on the data owner's systems.
-      type: object
       x-example: |
         ```http
         POST /3/events HTTP/1.1
@@ -1650,32 +1648,33 @@ components:
           }
         }
         ```
-      properties:
-        $ref: '#/components/schemas/BaseEvent/properties'
-        type:
-          type: string
-          const: org.wbcsd.pact.ProductFootprint.PublishedEvent.3
-          description: Event type identifier.
-        data:
-          type: object
-          description: |
-            Object containing the list of Product Footprint Ids that have been published or updated by the data owner.
-            
-            ```
-            "data": { 
-              "pfIds": [ "uuid1", "uuid2", ... ] 
-            }
-            ```
+      allOf:
+        - $ref: '#/components/schemas/BaseEvent'
+        - type: object
           properties:
-            pfIds:
-              type: array
-              description: The list of Product Footprint Ids that have been published or updated by the data owner.
-              items:
-                type: string
-                format: uuid
+            type:
+              type: string
+              const: org.wbcsd.pact.ProductFootprint.PublishedEvent.3
+              description: Event type identifier.
+            data:
+              type: object
+              description: |
+                Object containing the list of Product Footprint Ids that have been published or updated by the data owner.
+                
+                ```
+                "data": { 
+                  "pfIds": [ "uuid1", "uuid2", ... ] 
+                }
+                ```
+              properties:
+                pfIds:
+                  type: array
+                  description: The list of Product Footprint Ids that have been published or updated by the data owner.
+                  items:
+                    type: string
+                    format: uuid
     
     RequestCreatedEvent:
-      $ref: '#/components/schemas/BaseEvent'
       title: Request Created Event
       description: |
         A data recipient requests a ProductFootprint from the data owner. The data recipient
@@ -1715,57 +1714,62 @@ components:
           }
         }
         ```
-      type: object
-      properties:
-        $ref: '#/components/schemas/BaseEvent/properties'
-        type:
-          type: string
-          const: org.wbcsd.pact.ProductFootprint.RequestCreatedEvent.3
-          description: Event type identifier.
-        data:
-          type: object
-          description: |
-            Criteria for filtering ProductFootprint requests.
+      allOf:
+        - $ref: '#/components/schemas/BaseEvent'
+        - type: object
           properties:
-            productId: 
-              description:
-                $ref: '#/components/parameters/productId/description'
-              $ref: '#/components/parameters/productId/schema'
-            companyId:
-              description: 
-                $ref: '#/components/parameters/companyId/description'
-              $ref: '#/components/parameters/companyId/schema'
-            geography:
-              description: 
-                $ref: '#/components/parameters/geography/description'
-              $ref: '#/components/parameters/geography/schema'
-            classification:
-              description:
-                $ref: '#/components/parameters/classification/description'
-              $ref: '#/components/parameters/classification/schema'
-            validOn:
-              description:
-                $ref: '#/components/parameters/validOn/description'
-              $ref: '#/components/parameters/validOn/schema'
-            validAfter:
-              description:
-                $ref: '#/components/parameters/validAfter/description'
-              $ref: '#/components/parameters/validAfter/schema'
-            validBefore:
-              description:
-                $ref: '#/components/parameters/validBefore/description'
-              $ref: '#/components/parameters/validBefore/schema'
-            status:       
-              description:
-                $ref: '#/components/parameters/status/description'
-              $ref: '#/components/parameters/status/schema'
-            comment:
-              description: |
-                Free text comment.
+            type:
               type: string
-          
+              const: org.wbcsd.pact.ProductFootprint.RequestCreatedEvent.3
+              description: Event type identifier.
+            data:
+              type: object
+              description: |
+                Criteria for filtering ProductFootprint requests.
+              properties:
+                productId: 
+                  type: array
+                  items:
+                    type: string
+                  description: Filter by product identifiers
+                companyId:
+                  type: array
+                  items:
+                    type: string
+                  description: Filter by company identifiers
+                geography:
+                  type: array
+                  items:
+                    type: string
+                  description: Filter by geography
+                classification:
+                  type: array
+                  items:
+                    type: string
+                  description: Filter by product classification
+                validOn:
+                  type: string
+                  format: date-time
+                  description: Filter by validity date
+                validAfter:
+                  type: string
+                  format: date-time
+                  description: Filter by validity after date
+                validBefore:
+                  type: string
+                  format: date-time
+                  description: Filter by validity before date
+                status:
+                  type: array
+                  items:
+                    type: string
+                    enum: [Active, Deprecated]
+                  description: Filter by status
+                comment:
+                  description: |
+                    Free text comment.
+                  type: string
     RequestFulfilledEvent:
-      $ref: '#/components/schemas/BaseEvent'
       title: Request Fulfilled Event
       description: | 
         Notification that the request for PCF(s) has been fulfilled by the data owner. 
@@ -1812,41 +1816,41 @@ components:
                 }
               }, 
               { 
-                "id": "079e425a-464f-528d-341d-4a944a1dfd71",
+                "id": "079e425a-464f-528d-341d-4a944a1dfd71"
                 ...
               }
             ]
           }
         }
         ```
-      type: object
-      properties:
-        $ref: '#/components/schemas/BaseEvent/properties'
-        type:
-          type: string
-          const: org.wbcsd.pact.ProductFootprint.RequestFulfilledEvent.3
-          description: Event type identifier.
-        data:
-          type: object
-          description: data object
-          required:
-            - requestEventId
-            - pfs
+      allOf:
+        - $ref: '#/components/schemas/BaseEvent'
+        - type: object
           properties:
-            requestEventId:
-              description: The ID of the request event that has been fulfilled.
+            type:
               type: string
-            pfs:
-              description: |
-                The list of ProductFootprints resulting from the original 
-                that have been returned. This list MUST be non-empty.
-              type: array
-              minItems: 1
-              items:
-                $ref: '#/components/schemas/ProductFootprint'
+              const: org.wbcsd.pact.ProductFootprint.RequestFulfilledEvent.3
+              description: Event type identifier.
+            data:
+              type: object
+              description: data object
+              required:
+                - requestEventId
+                - pfs
+              properties:
+                requestEventId:
+                  description: The ID of the request event that has been fulfilled.
+                  type: string
+                pfs:
+                  description: |
+                    The list of ProductFootprints resulting from the original 
+                    that have been returned. This list MUST be non-empty.
+                  type: array
+                  minItems: 1
+                  items:
+                    $ref: '#/components/schemas/ProductFootprint'
 
     RequestRejectedEvent:
-      $ref: '#/components/schemas/BaseEvent'
       title: Request Rejected Event
       description: |
         Notification that a request for a ProductFootprint can not be fulfilled.
@@ -1880,25 +1884,26 @@ components:
           }
         }
         ```
-      type: object
-      properties:
-        $ref: '#/components/schemas/BaseEvent/properties'
-        type:
-          type: string
-          const: org.wbcsd.pact.ProductFootprint.RequestRejectedEvent.3
-          description: Event type identifier.
-        data:
-          type: object
-          description: data object
-          required:
-            - requestEventId
-            - error
+      allOf:
+        - $ref: '#/components/schemas/BaseEvent'
+        - type: object
           properties:
-            requestEventId:
-              description: The ID of the RequestCreateEvent that has been rejected.
+            type:
               type: string
-            error:
-              $ref: '#/components/schemas/Error'
+              const: org.wbcsd.pact.ProductFootprint.RequestRejectedEvent.3
+              description: Event type identifier.
+            data:
+              type: object
+              description: data object
+              required:
+                - requestEventId
+                - error
+              properties:
+                requestEventId:
+                  description: The ID of the RequestCreateEvent that has been rejected.
+                  type: string
+                error:
+                  $ref: '#/components/schemas/Error'
               
     Error:
       title: Error
