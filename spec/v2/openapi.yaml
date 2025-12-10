@@ -329,7 +329,8 @@ components:
         companyName:
           description: |
             The name of the company that is the ProductFootprint Data Owner
-          $ref: '#/components/schemas/NonEmptyString'
+          type: string
+          minLength: 1
         companyIds:
           description: |
             The non-empty set of Uniform Resource Names ([[!RFC8141|URN]]). Each value of 
@@ -399,13 +400,15 @@ components:
             The UN Central Product Classification Code (CPC) for the given product. The relevant 
             CPC code may be identified here https://unstats.un.org/unsd/classifications/Econ/cpc 
             Advisement: This property will become optional in v3
-          $ref: '#/components/schemas/NonEmptyString'
+          type: string
+          minLength: 1
         productNameCompany:
           description: |
             The non-empty trade name of the product.
           x-short-description: |
             The trade name of the product in order for it to be recognizable by the receiver of the PCF information          
-          $ref: '#/components/schemas/NonEmptyString'
+          type: string
+          minLength: 1
         comment:
           description: |
             Advisement: OPTIONAL in 3.0.
@@ -507,8 +510,10 @@ components:
             The amount of Declared Units contained within the product to which the PCF refers to. 
             This is not representing the total annual quantity supplied (e.g. if the product is 
             supplied in bulk in kg, which is the declared unit selected, please enter 1)   
-          x-unit: declared unit       
-          $ref: '#/components/schemas/PositiveNonZeroDecimal'
+          x-unit: declared unit
+          type: string
+          format: decimal
+          x-comment: '> 0'
         productMassPerDeclaredUnit:
           description: |
             
@@ -519,8 +524,8 @@ components:
             If the declared unit is `liter`, this attribute SHOULD be populated with the mass of 1 liter of product (i.e. the density of the product).
             If the declared unit is `kilogram`, this attribute SHOULD by definition be populated with `1`.
             If the product mass is not relevant (i.e. PCF is for an energy (kWh, MJ), logistics (ton.km) or service product), this attribute SHOULD be populated with `0`.          
-          $ref: '#/components/schemas/Decimal'
-
+          type: string
+          format: decimal
         pCfExcludingBiogenic:
           description: |
             The product carbon footprint of the product <i>excluding</i> biogenic CO2 emissions. 
@@ -528,7 +533,9 @@ components:
           x-short-description: |
             The PCF of the product excluding biogenic CO2 emissions.
           x-unit: kgCO2e/declared unit
-          $ref: '#/components/schemas/PositiveOrZeroDecimal'
+          type: string
+          format: decimal
+          x-comment: '>= 0'
         pCfIncludingBiogenic:
           description: |
             If present, the product carbon footprint of the product <i>including all</i> biogenic emissions (CO2 and otherwise). 
@@ -538,7 +545,8 @@ components:
           x-short-description: |
             The PCF of the product including ALL biogenic emissions (CO2 and otherwise).
           x-unit: kgCO2e/declared unit
-          $ref: '#/components/schemas/Decimal'
+          type: string
+          format: decimal
         fossilGhgEmissions:
           description: |
             The emissions from fossil sources as a result of fuel combustion, from fugitive emissions, and from process emissions. 
@@ -547,7 +555,9 @@ components:
             The emissions from fossil sources as a result of fuel combustion, from fugitive 
             emissions, and from process emissions. 
           x-unit: kgCO2e/declared unit
-          $ref: '#/components/schemas/PositiveOrZeroDecimal'
+          type: string
+          format: decimal
+          x-comment: '>= 0'
         fossilCarbonContent:
           description: |
             The fossil carbon content of the product (mass of carbon). 
@@ -555,7 +565,9 @@ components:
           x-short-description: |
             The fossil carbon content of the product (mass of carbon).
           x-unit: kgC/declared unit
-          $ref: '#/components/schemas/PositiveOrZeroDecimal'
+          type: string
+          format: decimal
+          x-comment: '>= 0'
         biogenicCarbonContent:
           description: |
             The biogenic carbon content of the product (mass of carbon). 
@@ -563,7 +575,9 @@ components:
           x-short-description: |
             The biogenic carbon content of the product (mass of carbon).
           x-unit: kgC/declared unit
-          $ref: '#/components/schemas/PositiveOrZeroDecimal'
+          type: string
+          format: decimal
+          x-comment: '>= 0'
         dLucGhgEmissions:
           description: |
             If present, emissions resulting from recent (i.e., previous 20 years) carbon stock loss due to land conversion directly on the area of land under consideration. 
@@ -577,7 +591,9 @@ components:
             direct land use change (dLUC) where available, otherwise statistical land use 
             change (sLUC) can be used.
           x-unit: kgCO2e/declared unit
-          $ref: '#/components/schemas/PositiveOrZeroDecimal'
+          type: string
+          format: decimal
+          x-comment: '>= 0'
         landManagementGhgEmissions:
           description: |
             If present, GHG emissions and removals associated with land-management-related changes, including non-CO2 sources.
@@ -586,7 +602,9 @@ components:
             GHG emissions and removals associated with land-management-related changes, 
             including non-CO2 sources.
           x-unit: kgCO2e/declared unit
-          $ref: '#/components/schemas/PositiveOrZeroDecimal'
+          type: string
+          format: decimal
+          x-comment: '>= 0'
         otherBiogenicGhgEmissions:
           description: |
             If present, all other biogenic GHG emissions associated with product manufacturing and transport that are not included in dLUC (<{CarbonFootprint/dLucGhgEmissions}>), iLUC (<{CarbonFootprint/iLucGhgEmissions}>), and land management (<{CarbonFootprint/landManagementGhgEmissions}>).
@@ -596,7 +614,9 @@ components:
             that are not included in dLUC (dLucGhgEmissions), iLUC (iLucGhgEmissions), and land 
             management (landManagementGhgEmissions). 
           x-unit: kgCO2e/declared unit
-          $ref: '#/components/schemas/PositiveOrZeroDecimal'
+          type: string
+          format: decimal
+          x-comment: '>= 0'
         iLucGhgEmissions:
           description: |
             If present, emissions resulting from recent (i.e., previous 20 years) carbon stock loss due to land conversion on land not owned or controlled by the company or in its supply chain, induced by change in demand for products produced or sourced by the company.
@@ -607,7 +627,9 @@ components:
             land conversion on land not owned or controlled by the company or in its supply 
             chain, induced by change in demand for products produced or sourced by the company.
           x-unit: kgCO2e/declared unit
-          $ref: '#/components/schemas/PositiveOrZeroDecimal'
+          type: string
+          format: decimal
+          x-comment: '>= 0'
         biogenicCarbonWithdrawal:
           description: |
             If present, the Biogenic Carbon contained in the product converted to kilogram of CO2e. 
@@ -615,7 +637,9 @@ components:
           x-short-description: |
             The Biogenic Carbon contained in the product converted to kilogram of CO2e.
           x-unit: kgCO2e/declared unit
-          $ref: '#/components/schemas/NegativeOrZeroDecimal'
+          type: string
+          format: decimal
+          x-comment: '<= 0'
         aircraftGhgEmissions:
           description: |
             If present, the GHG emissions resulting from aircraft engine usage for the transport of the product, excluding radiative forcing. 
@@ -624,7 +648,9 @@ components:
             The GHG emissions resulting from aircraft engine usage for the transport of the
             product, excluding radiative forcing.
           x-unit: kgCO2e/declared unit
-          $ref: '#/components/schemas/PositiveOrZeroDecimal'
+          type: string
+          format: decimal
+          x-comment: '>= 0'
         packagingEmissionsIncluded:
           description: |
             A boolean flag indicating whether packaging emissions are included in the PCF (<{CarbonFootprint/pCfExcludingBiogenic}>, <{CarbonFootprint/pCfIncludingBiogenic}>).
@@ -639,7 +665,9 @@ components:
           x-short-description: |
             Emissions resulting from the packaging of the product. The value MUST NOT 
             be defined if packagingEmissionsIncluded is False.
-          $ref: '#/components/schemas/PositiveOrZeroDecimal'
+          type: string
+          format: decimal
+          x-comment: '>= 0'
           x-unit: kgCO2e/declared unit
         characterizationFactors:
           description: |
@@ -950,8 +978,10 @@ components:
             may be excluded) as well as any relevant sector specific guidelines 
             referring to exemption rules/cut-off criteria.
             Advisement: The upper boundary of this property (currently `5`) will be removed in version 3 of the Technical Specifications.
-          $ref: '#/components/schemas/Percent'
-          maximum: 5
+          type: number
+          format: double
+          minimum: 0
+          maximum: 100
         exemptedEmissionsDescription:
           description: |
             Advisement: OPTIONAL in 3.0.
@@ -990,7 +1020,10 @@ components:
           x-short-description: |
             Share of primary data in the final PCF, calculated according to 
             the PACT Methodology.
-          $ref: '#/components/schemas/Percent'
+          type: number
+          format: double
+          minimum: 0
+          maximum: 100
         dqi:
           description: |
             If present, the Data Quality Indicators (dqi) in accordance with the [=PACT Methodology=] Sections 4.2.1 and 4.2.3, Appendix B.
@@ -1125,11 +1158,13 @@ components:
         name:
           description: |
             Name of the secondary emission factor databases
-          $ref: '#/components/schemas/NonEmptyString'
+          type: string
+          minLength: 1
         version:
           description: |
             Version of the secondary emission factor databases
-          $ref: '#/components/schemas/NonEmptyString'
+          type: string
+          minLength: 1
 
     DataQualityIndicators:
       description: | 
@@ -1168,7 +1203,10 @@ components:
           x-short-description: |
             Percentage of PCF included in the data quality assessment based on 
             the >5% emissions threshold.
-          $ref: '#/components/schemas/Percent'
+          type: number
+          format: double
+          minimum: 0
+          maximum: 100
         technologicalDQR:
           description: |
             Quantitative data quality rating (DQR) based on the data quality matrix (See [=PACT Methodology=] Table 9),
@@ -1346,50 +1384,15 @@ components:
 
     # -----------
     # Simple types
-    NonEmptyString:
-      type: string
-      minLength: 1
     Urn:
       type: string
       format: urn
       pattern: '^([uU][rR][nN]):'
-    Uri:
-      type: string
-      format: uri
-    Percent:
-      type: number
-      format: double
-      minimum: 0
-      maximum: 100
     FloatBetween1And3:
       type: number
       format: float
-      maximum: 3
       minimum: 1
-    Decimal:
-      type: string
-      format: decimal
-      pattern: ^[+-]?\d+(\.\d+)?$
-    PositiveNonZeroDecimal:
-      type: string
-      format: decimal
-      pattern: ^[+]?(\d*[1-9]\d*)(\.\d+)?|(0+\.\d*[1-9]\d*)$
-      x-comment: '> 0'
-    PositiveOrZeroDecimal:
-      type: string
-      format: decimal
-      pattern: ^[+]?\d+(\.\d+)?$
-      x-comment: '>= 0'
-    NegativeOrZeroDecimal:
-      type: string
-      format: decimal
-      pattern: ^(-\d+(\.\d+)?)|0+(\.0+)?$
-      x-comment: '<= 0'
-    NegativeNonZeroDecimal:
-      type: string
-      format: decimal
-      pattern: ^-((\d*[1-9]\d*)(\.\d+)?|(0+\.\d*[1-9]\d*))$
-      x-comment: '< 0'
+      maximum: 3
 
     # -----------
     # Events
@@ -1443,7 +1446,7 @@ components:
           description: Event identifier. Must be able to uniquely identify the event by source and id.
         source:
           type: string
-          format: uri
+          format: uri-reference
           description: The domain and endpoint of the application from which the event originates.
         time:
           type: string
@@ -1483,7 +1486,7 @@ components:
           description: Event identifier. Must be able to uniquely identify the event by source and id.
         source:
           type: string
-          format: uri
+          format: uri-reference
           description: The domain and endpoint of the application from which the event originates.
         time:
           type: string
@@ -1517,7 +1520,7 @@ components:
           description: Event identifier. Must be able to uniquely identify the event by source and id.
         source:
           type: string
-          format: uri
+          format: uri-reference
           description: The domain and endpoint of the application from which the event originates.
         time:
           type: string
@@ -1553,7 +1556,7 @@ components:
           description: Event identifier. Must be able to uniquely identify the event by source and id.
         source:
           type: string
-          format: uri
+          format: uri-reference
           description: The domain and endpoint of the application from which the event originates.
         time:
           type: string

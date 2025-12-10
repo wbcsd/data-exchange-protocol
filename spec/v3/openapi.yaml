@@ -504,7 +504,8 @@ components:
         companyName:
           description: |
             The name of the company that is the PCF Data Owner
-          $ref: '#/components/schemas/NonEmptyString'
+          type: string
+          minLength: 1
         companyIds:
           description: |
             The non-empty set of Uniform Resource Names ([[!RFC8141|URN]]). Each value of 
@@ -568,7 +569,8 @@ components:
           description: |
             The name with which the company producing the product refers to it, i.e. the product's trade name.
             Recognizable by the receiver of the PCF information.
-          $ref: '#/components/schemas/NonEmptyString'
+          type: string
+          minLength: 1
         comment:
           description: |
             Any additional information related to the PCF. Whereas the property productDescription 
@@ -700,7 +702,9 @@ components:
             This is not representing the total annual quantity supplied (e.g. if the product is 
             supplied in bulk in kg, which is the declared unit selected, the value MUST be 1)
             
-          $ref: '#/components/schemas/PositiveNonZeroDecimal'
+          type: string
+          format: decimal
+          x-comment: '> 0'
           x-unit: declared unit
           x-term: Declared Unit
           x-methodology: 3.2.4
@@ -723,7 +727,8 @@ components:
             attribute please refer to table 4 in the PACT Methodology.
 
           x-note: mandatory in 3.0, optional in v2.x
-          $ref: '#/components/schemas/Decimal'
+          type: string
+          format: decimal
           x-term: Declared Unit
           x-methodology: 3.2.4
           examples: ["9.86"]
@@ -872,7 +877,8 @@ components:
           x-term: PCF Excluding biogenic CO2 uptake 
           x-methodology: 3.3.1
           examples: ["5.14"]
-          $ref: '#/components/schemas/Decimal'
+          type: string
+          format: decimal
         pcfIncludingBiogenicUptake:
           description: |
             The PCF of the product:
@@ -898,7 +904,8 @@ components:
           x-rule: SHALL
           x-term: PCF Including biogenic CO2 uptake
           x-methodology: 3.3.1
-          $ref: '#/components/schemas/Decimal'
+          type: string
+          format: decimal
           examples: ["-14.22"]
         fossilCarbonContent:
           description: |
@@ -907,7 +914,9 @@ components:
           x-rule: SHALL
           x-term: Fossil carbon content
           x-methodology: 3.3.2.4
-          $ref: '#/components/schemas/PositiveOrZeroDecimal'
+          type: string
+          format: decimal
+          x-comment: '>= 0'
         biogenicCarbonContent:
           description: |
             The biogenic carbon content of the product (mass of carbon). 
@@ -915,11 +924,15 @@ components:
           x-rule: BIO
           x-term: Biogenic carbon content
           x-methodology: 3.3.2.4
-          $ref: '#/components/schemas/PositiveOrZeroDecimal'
+          type: string
+          format: decimal
+          x-comment: '>= 0'
         recycledCarbonContent:
           description: |
             The carbon content (both biogenic and fossil) from recycled material in the product (mass of carbon).
-          $ref: '#/components/schemas/PositiveOrZeroDecimal'
+          type: string
+          format: decimal
+          x-comment: '>= 0'
           x-unit: kgC/declared unit
           x-rule: SHOULD
           x-term: Recycled carbon content
@@ -937,7 +950,9 @@ components:
           x-rule: SHALL
           x-term: Fossil emissions
           x-methodology: 3.3.2.4
-          $ref: '#/components/schemas/PositiveOrZeroDecimal'
+          type: string
+          format: decimal
+          x-comment: '>= 0'
         landUseChangeGhgEmissions:
           description: |
             GHG emissions from land-use change, such as deforestation or conversion
@@ -947,13 +962,17 @@ components:
           x-term: Land use and land use change emissions or LUC emissions
           x-note: Replaces dLucGhgEmissions
           x-methodology: 3.3.2.4
-          $ref: '#/components/schemas/PositiveOrZeroDecimal'
+          type: string
+          format: decimal
+          x-comment: '>= 0'
         landCarbonLeakage:
           description: |
             Placeholder for indirect land use change causing displacement of food production, outside of value-chain 
           x-unit: kgCO2e/declared unit
           x-note: Placeholder.
-          $ref: '#/components/schemas/PositiveOrZeroDecimal'
+          type: string
+          format: decimal
+          x-comment: '>= 0'
         landManagementFossilGhgEmissions:
           description: |
             Fossil CO2, N2O, fossil CH4, HFCs and PFCs emissions due to land 
@@ -964,7 +983,9 @@ components:
           x-rule: BIO-2027
           x-term: Fossil emissions - land management
           x-methodology: 3.3.2.4
-          $ref: '#/components/schemas/PositiveOrZeroDecimal'
+          type: string
+          format: decimal
+          x-comment: '>= 0'
         landManagementBiogenicCO2Emissions:
           description: |
             Biogenic CO2 emissions occurring due to recurring land management actions on 
@@ -973,7 +994,9 @@ components:
           x-rule: BIO-2027
           x-term: Land management CO2 emissions
           x-methodology: 3.3.2.4
-          $ref: '#/components/schemas/PositiveOrZeroDecimal'
+          type: string
+          format: decimal
+          x-comment: '>= 0'
         landManagementBiogenicCO2Removals:
           description: |
             Biogenic CO2 removals resulting from a net increase in carbon stored in land-based carbon 
@@ -981,7 +1004,9 @@ components:
           x-unit: kgCO2e/declared unit
           x-term: Land management CO2 removals
           x-methodology: 3.3.2.4
-          $ref: '#/components/schemas/NegativeOrZeroDecimal'
+          type: string
+          format: decimal
+          x-comment: '<= 0'
         biogenicCO2Uptake:
           description: |
             Temporary CO2 uptake of biomass in the product at point of leaving factory gate.
@@ -989,7 +1014,9 @@ components:
           x-rule: BIO
           x-term: Biogenic CO2 uptake
           x-methodology: 3.3.2.4
-          $ref: '#/components/schemas/NegativeOrZeroDecimal'
+          type: string
+          format: decimal
+          x-comment: '<= 0'
           x-note: Replaces biogenicCarbonWithdrawal
         biogenicNonCO2Emissions:
           description: |
@@ -998,12 +1025,16 @@ components:
           x-rule: BIO
           x-term: Biogenic non-CO2 emissions
           x-methodology: 3.3.2.4
-          $ref: '#/components/schemas/PositiveOrZeroDecimal'
+          type: string
+          format: decimal
+          x-comment: '>= 0'
         landAreaOccupation:
           description: |
             The amount of agricultural land occupied in the reporting year to produce the product.
           x-unit: (m2/year) / declared unit
-          $ref: '#/components/schemas/PositiveOrZeroDecimal'
+          type: string
+          format: decimal
+          x-comment: '>= 0'
           x-term: Land occupation
           x-methodology: 3.3.2.4
         aircraftGhgEmissions:
@@ -1015,7 +1046,9 @@ components:
           x-unit: kgCO2e/declared unit
           x-term: Aircraft emissions
           x-methodology: 3.3.2.1
-          $ref: '#/components/schemas/PositiveOrZeroDecimal'
+          type: string
+          format: decimal
+          x-comment: '>= 0'
         packagingEmissionsIncluded:
           description: |
             Indicates whether packaging emissions are included in the scope 
@@ -1037,7 +1070,9 @@ components:
             undefined if `packagingEmissionsIncluded` is false.
 
             Packaging emissions are excluding biogenic CO2 uptake.
-          $ref: '#/components/schemas/PositiveOrZeroDecimal'
+          type: string
+          format: decimal
+          x-comment: '>= 0'
           x-rule: SHOULD
           x-unit: kgCO2e/declared unit
           x-term: Packaging emissions
@@ -1045,7 +1080,9 @@ components:
         packagingBiogenicCarbonContent:
           description: |
             The biogenic carbon content of the packaging (mass of carbon).
-          $ref: '#/components/schemas/PositiveOrZeroDecimal'
+          type: string
+          format: decimal
+          x-comment: '>= 0'
           x-unit: kgC/declared unit
           x-term: Packaging biogenic carbon content
           x-methodology: 3.3.1.1
@@ -1058,7 +1095,9 @@ components:
             PCF is not responsible for the outbound logistics. 
             
             The outbound logistics emissions are excluding biogenic CO2 uptake.
-          $ref: '#/components/schemas/PositiveOrZeroDecimal'
+          type: string
+          format: decimal
+          x-comment: '>= 0'
           x-rule: SHOULD
           x-unit: kgCO2e/declared unit
           x-term: Outbound logistics emissions
@@ -1078,7 +1117,9 @@ components:
         ccsTechnologicalCO2Capture:
           description: |
             The amount of CO2 captured with Carbon Capture and Storage (CCS) technologies.
-          $ref: '#/components/schemas/NegativeOrZeroDecimal'
+          type: string
+          format: decimal
+          x-comment: '<= 0'
           x-unit: kgCO2e/declared unit
           x-term: Technological CO2 capture with geological storage
           x-rule: CCS
@@ -1103,11 +1144,15 @@ components:
           x-rule: CCS
           x-term: Technological CO2 removals
           x-methodology: 3.3.2.5
-          $ref: '#/components/schemas/NegativeOrZeroDecimal'
+          type: string
+          format: decimal
+          x-comment: '<= 0'
         ccuCarbonContent:
           description: |
             The amount of captured carbon (both biogenic and fossil) during CCU (Carbon Capture & Usage) in the product.
-          $ref: '#/components/schemas/PositiveOrZeroDecimal'
+          type: string
+          format: decimal
+          x-comment: '>= 0'
           x-unit: kgC/declared unit
           x-term: CCU carbon content
           x-rule: CCU
@@ -1126,7 +1171,8 @@ components:
           description: |
             (Only for Credit Approach) a URL to documentation verifying the certification from an external bookkeeping scheme. 
             This attribute ensures reliability and avoids double counting of credits within the crediting system.
-          $ref: '#/components/schemas/Uri' 
+          type: string
+          format: uri
           x-term: CCU credit certification
           x-methodology: 3.3.2.5
           x-rule: CCU
@@ -1244,7 +1290,8 @@ components:
           x-note: string<decimal> in 3.0, was Number in 2.x. Removed upper boundary of 5%.
           x-term: Exemption rules
           x-methodology: 3.3.1.2
-          $ref: '#/components/schemas/Decimal'
+          type: string
+          format: decimal
           examples: ["5.3", "10.4"]
         exemptedEmissionsDescription:
           description: |
@@ -1292,7 +1339,8 @@ components:
           x-rule: SHALL
           x-term: Primary Data Share
           x-methodology: 4.2.2
-          $ref: '#/components/schemas/Decimal'
+          type: string
+          format: decimal
         dqi:
           description: |
             Data Quality Indicators (dqi) in accordance with the PACT Methodology.
@@ -1429,13 +1477,15 @@ components:
         name:
           description: |
             Name of the secondary emission factor database
-          $ref: '#/components/schemas/NonEmptyString'
+          type: string
+          minLength: 1
           examples:
           - ecoinvent
         version:
           description: |
             Version of the secondary emission factor database
-          $ref: '#/components/schemas/NonEmptyString'
+          type: string
+          minLength: 1
           examples:
           - 3.9.1
     DataQualityIndicators:
@@ -1471,7 +1521,8 @@ components:
           x-note: string<decimal> in 3.0, was Number in 2.x
           x-term: Technological representativeness
           x-rule: SHALL
-          $ref: '#/components/schemas/Decimal'
+          type: string
+          format: decimal
         geographicalDQR:
           description: |
             Quantitative data quality rating (DQR) based on the data quality matrix,
@@ -1483,7 +1534,8 @@ components:
           x-note: string<decimal> in 3.0, was Number in 2.x
           x-term: Geographical representativenes
           x-rule: SHALL
-          $ref: '#/components/schemas/Decimal'
+          type: string
+          format: decimal
         temporalDQR:
           description: |
             Quantitative data quality rating (DQR) based on the data quality matrix,
@@ -1495,7 +1547,8 @@ components:
           x-note: string<decimal> in 3.0, was Number in 2.x
           x-term: Temporal / Time representativenes
           x-rule: SHALL
-          $ref: '#/components/schemas/Decimal'
+          type: string
+          format: decimal
     Verification:
       title: Verification
       description: |
@@ -1546,40 +1599,10 @@ components:
 
     # -----------
     # Simple types
-    NonEmptyString:
-      type: string
-      minLength: 1
     Urn:
       type: string
       format: urn
       pattern: '^([uU][rR][nN]):'
-    Uri:
-      type: string
-      format: uri
-    Decimal:
-      type: string
-      format: decimal
-      pattern: ^[+-]?\d+(\.\d+)?$
-    PositiveNonZeroDecimal:
-      type: string
-      format: decimal
-      pattern: ^[+]?(\d*[1-9]\d*)(\.\d+)?|(0+\.\d*[1-9]\d*)$
-      x-comment: '> 0'
-    PositiveOrZeroDecimal:
-      type: string
-      format: decimal
-      pattern: ^[+]?\d+(\.\d+)?$
-      x-comment: '>= 0'
-    NegativeOrZeroDecimal:
-      type: string
-      format: decimal
-      pattern: ^(-\d+(\.\d+)?)|0+(\.0+)?$
-      x-comment: '<= 0'
-    NegativeNonZeroDecimal:
-      type: string
-      format: decimal
-      pattern: ^-((\d*[1-9]\d*)(\.\d+)?|(0+\.\d*[1-9]\d*))$
-      x-comment: '< 0'
 
     # -----------
     # Events
@@ -1603,10 +1626,20 @@ components:
           description: CloudEvents version.
         id:
           type: string
+          minLength: 1
           description: Event identifier. Must be able to uniquely identify the event by source and id.
+          examples: 
+          - 193440ed-4f9b-4b3b-9c05bc35-68f8
+          - event-1234
         source:
           type: string
-          description: The domain and endpoint of the application from which the event originates.
+          minLength: 1
+          format: uri-reference
+          description: Identifies the context in which an event happened. This can include information such as the domain, organization, application 
+           or process that produced the event. Source + id MUST be unique for each distinct event. The uri-reference 
+          examples: 
+          - /pact/api/v3/events
+          - https://api.example.com/v3/events
         time:
           type: string
           format: date-time
