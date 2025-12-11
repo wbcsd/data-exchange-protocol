@@ -12,21 +12,21 @@ We welcome contributions, please visit the [WBCSD GitHub repository](https://git
 
 For timelines, see [RELEASE PLAN](RELEASE-PLAN.md)
 
-## 3.0.2 (latest stable)
+## 3.0.3 (latest stable)
 
-[PACT Technical Specifications 3.0.2](../tr/data-exchange-protocol/latest/) <br>
-[PACT Simplified Data Model 3.0.2 (Excel)](../tr/data-exchange-protocol/latest/pact-simplified.xlsx) <br>
-[PACT Simplified Data Model 3.0.2 (HTML)](../tr/data-exchange-protocol/latest/pact-simplified.html) <br>
-[PACT OpenAPI 3.0.2](../tr/data-exchange-protocol/latest/openapi.yaml) <br>
+[PACT Technical Specifications 3.0.3](../tr/data-exchange-protocol/latest/) <br>
+[PACT Simplified Data Model 3.0.3 (Excel)](../tr/data-exchange-protocol/latest/pact-simplified.xlsx) <br>
+[PACT Simplified Data Model 3.0.3 (HTML)](../tr/data-exchange-protocol/latest/pact-simplified.html) <br>
+[PACT OpenAPI 3.0.3](../tr/data-exchange-protocol/latest/openapi.yaml) <br>
 [FAQ](faq.md) <br>
 
 [PACT Methodology 3.0](../tr/methodology/3.0/pact-methodology-v3.0.pdf)
 
-## 2.3.1 (latest 2.x release)
+## 2.3.2 (latest 2.x release)
 
-[PACT Technical Specifications 2.3.1](../tr/data-exchange-protocol/2.3.1/) <br>
-[PACT OpenAPI 2.3.1](../tr/data-exchange-protocol/2.3.1/openapi.yaml) <br>
-[PACT Simplified Data Model 2.3.1](../tr/data-exchange-protocol/2.3.1/pact-simplified.xlsx) <br>
+[PACT Technical Specifications 2.3.1](../tr/data-exchange-protocol/2.3) <br>
+[PACT OpenAPI 2.3.1](../tr/data-exchange-protocol/2.3/openapi.yaml) <br>
+[PACT Simplified Data Model 2.3.1](../tr/data-exchange-protocol/2.3/pact-simplified.xlsx) <br>
 
 [PACT Methodology 2.0](../tr/methodology/2.0/framework.pdf)
 
